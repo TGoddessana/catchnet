@@ -1,0 +1,243 @@
+@use "variables" as vars;
+
+.cn-fix {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-3);
+}
+
+.cn-fix__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-2);
+}
+
+.cn-fix__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--gt-color-accent-text);
+  }
+}
+
+// A soft beat beside the status while the agent works: movement, not alarm.
+.cn-fix__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: vars.$radius-pill;
+  background: currentColor;
+  animation: cn-fix-pulse 1.4s var(--gt-ease) infinite;
+}
+
+@keyframes cn-fix-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-fix__pulse {
+    animation: none;
+  }
+}
+
+.cn-fix__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--gt-color-text-2);
+
+  &--quiet {
+    font-size: 13px;
+    color: var(--gt-color-text-3);
+  }
+}
+
+.cn-fix__reason {
+  display: block;
+  margin-top: 6px;
+  color: var(--gt-color-text-3);
+  font-size: 13px;
+}
+
+.cn-fix__repo {
+  font-family: var(--gt-font-code);
+  font-size: 13px;
+  color: var(--gt-color-text-1);
+}
+
+.cn-fix__action {
+  align-self: flex-start;
+}
+
+.cn-fix__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.cn-fix__step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gt-color-text-3);
+
+  &--now {
+    color: var(--gt-color-text-1);
+    font-weight: var(--gt-weight-medium);
+  }
+
+  &--done {
+    color: var(--gt-color-text-2);
+  }
+}
+
+.cn-fix__step-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--gt-color-control);
+  border-radius: vars.$radius-pill;
+
+  mat-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .cn-fix__step--now & {
+    border-color: var(--gt-color-accent);
+    box-shadow: inset 0 0 0 3px var(--gt-color-surface);
+    background: var(--gt-color-accent);
+  }
+
+  .cn-fix__step--done & {
+    border-color: var(--gt-color-success-dot);
+    color: var(--gt-color-success-text);
+  }
+}
+
+// The pull request is the thing to act on, so it reads as one link block.
+.cn-fix__pr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: vars.$radius-control;
+  color: var(--gt-color-text-1);
+  text-decoration: none;
+  transition: background var(--gt-duration-fast) var(--gt-ease);
+
+  &:hover {
+    background: var(--gt-color-subtle);
+  }
+
+  > mat-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--gt-color-success-text);
+
+    &:last-child {
+      width: 14px;
+      height: 14px;
+      color: var(--gt-color-text-3);
+    }
+  }
+}
+
+.cn-fix__pr-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cn-fix__pr-title {
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+}
+
+.cn-fix__pr-repo {
+  overflow: hidden;
+  font-family: var(--gt-font-code);
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cn-fix__facts {
+  > div {
+    padding: 8px 0;
+    font-size: 13px;
+  }
+
+  dd {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.cn-fix__details {
+  border-top: 1px solid var(--gt-color-rule);
+  padding-top: var(--gt-space-3);
+
+  summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-fix__summary {
+  margin: var(--gt-space-3) 0 0;
+  font-size: 13px;
+  line-height: 20px;
+
+  dt {
+    margin-top: 10px;
+    color: var(--gt-color-text-3);
+    font-weight: var(--gt-weight-medium);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  dd {
+    margin: 2px 0 0;
+    color: var(--gt-color-text-2);
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+
+  code {
+    padding: 0 3px;
+    border-radius: 4px;
+    background: var(--gt-color-subtle);
+    font-family: var(--gt-font-code);
+    font-size: 12px;
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-fix__meta {
+  margin: 0;
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}

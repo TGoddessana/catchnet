@@ -231,6 +231,13 @@
             </div>
           </dl>
         </section>
+        @if (orgSlug() && issue.project.slug) {
+          <gt-autofix-panel
+            [orgSlug]="orgSlug()!"
+            [issueId]="+issue.id"
+            [projectSlug]="issue.project.slug"
+          ></gt-autofix-panel>
+        }
         <gt-issue-detail-tags [issueID]="issueID()"></gt-issue-detail-tags>
       </aside>
     </div>

@@ -272,6 +272,12 @@
                   } @else if (isNew(element)) {
                     <span class="cn-badge cn-badge--accent" i18n>New</span>
                   }
+                  @if (fixBadge(element.id); as fix) {
+                    <span class="cn-badge cn-badge--{{ fix.tone }}">
+                      <mat-icon aria-hidden="true" [svgIcon]="fix.icon"></mat-icon>
+                      {{ fix.label }}
+                    </span>
+                  }
                 </span>
                 <span class="cn-issue__meta">
                   @if (appliedProjectCount() !== 1) {

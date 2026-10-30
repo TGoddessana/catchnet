@@ -21,6 +21,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
 import { IssueDetailService } from "./issue-detail.service";
 import { DaysAgoPipe } from "../../shared/days-ago.pipe";
 import { IssueDetailTagsComponent } from "./issue-detail-tags/issue-detail-tags.component";
+import { AutofixPanelComponent } from "./autofix-panel/autofix-panel.component";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { OrganizationsService } from "src/app/api/organizations.service";
@@ -32,7 +33,11 @@ import { MatDialog } from "@angular/material/dialog";
 const STATUS_CONFIG = {
   resolved: { label: $localize`Fixed`, icon: "check", tone: "success" },
   unresolved: { label: $localize`Open`, icon: "notifications", tone: "accent" },
-  ignored: { label: $localize`Muted`, icon: "notifications_off", tone: "neutral" },
+  ignored: {
+    label: $localize`Muted`,
+    icon: "notifications_off",
+    tone: "neutral",
+  },
 } as const;
 
 type IssueStatusType = keyof typeof STATUS_CONFIG;
@@ -51,6 +56,7 @@ type IssueStatusType = keyof typeof STATUS_CONFIG;
     MatIconModule,
     MatButtonModule,
     IssueDetailTagsComponent,
+    AutofixPanelComponent,
     TitleCasePipe,
     DatePipe,
     DaysAgoPipe,
@@ -117,7 +123,8 @@ export class IssueDetailComponent implements OnInit {
   });
 
   private statusConfig = computed(
-    () => STATUS_CONFIG[(this.issue()?.status ?? "unresolved") as IssueStatusType],
+    () =>
+      STATUS_CONFIG[(this.issue()?.status ?? "unresolved") as IssueStatusType],
   );
   statusIcon = computed(() => this.statusConfig().icon);
   statusLabel = computed(() => this.statusConfig().label);
@@ -148,6 +155,7 @@ export class IssueDetailComponent implements OnInit {
   });
   issueID = input.required<string>({ alias: "issue-id" });
   organization = this.organizationsService.activeOrganization;
+  orgSlug = this.organizationsService.activeOrganizationSlug;
   participantCountPluralMapping: { [k: string]: string } = {
     "=0": "No Participants",
     "=1": "1 Participant",

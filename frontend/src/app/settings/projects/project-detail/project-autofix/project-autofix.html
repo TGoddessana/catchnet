@@ -1,0 +1,132 @@
+<section class="cn-settings-section" id="autofix">
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Autofix</h2>
+    <p class="cn-settings-section__text" i18n
+      >An AI agent reads an error, writes a fix with a test, and opens a draft
+      pull request in your repository. It never merges; you review first.</p
+    >
+  </div>
+
+  @if (canWriteProject()) {
+    <form
+      class="cn-settings-section__body cn-autofix"
+      [formGroup]="form"
+      (ngSubmit)="save()"
+    >
+      @if (error()) {
+        <mat-error class="server-error">{{ error() }}</mat-error>
+      }
+
+      <fieldset class="cn-autofix__group">
+        <legend class="cn-autofix__legend" i18n>When to write a fix</legend>
+        <mat-radio-group formControlName="mode" class="cn-autofix__modes">
+          @for (option of modes; track option.value) {
+            <mat-radio-button [value]="option.value">
+              <span class="cn-autofix__mode-label">{{ option.label }}</span>
+              <span class="cn-autofix__mode-text">{{ option.text }}</span>
+            </mat-radio-button>
+          }
+        </mat-radio-group>
+      </fieldset>
+
+      <div class="cn-autofix__row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n>GitHub repository</mat-label>
+          <input
+            matInput
+            formControlName="repository"
+            placeholder="owner/name"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          @if (form.controls.repository.errors?.pattern) {
+            <mat-error i18n>Use the owner/name form, like acme/shop</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n>Base branch</mat-label>
+          <input matInput formControlName="defaultBranch" spellcheck="false" />
+        </mat-form-field>
+      </div>
+      @if (needsRepository() && form.controls.repository.touched) {
+        <p class="cn-autofix__hint cn-autofix__hint--needed" i18n
+          >Add the repository the fixes should go to.</p
+        >
+      }
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label i18n>Agent</mat-label>
+        <mat-select formControlName="agent">
+          <mat-option value="claude">Claude Code</mat-option>
+          <mat-option value="codex">Codex</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      @if (mode() === "auto") {
+        <div class="cn-autofix__row">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label i18n>Start after this many events</mat-label>
+            <input matInput type="number" min="1" formControlName="minEvents" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label i18n>Fixes per day, at most</mat-label>
+            <input
+              matInput
+              type="number"
+              min="1"
+              max="100"
+              formControlName="dailyLimit"
+            />
+          </mat-form-field>
+        </div>
+        <p class="cn-autofix__hint" i18n
+          >Only errors first seen after you turn this on are picked up. Errors
+          that point outside your code, like timeouts from other services, are
+          skipped.</p
+        >
+      }
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label i18n>Path prefix in stack traces (optional)</mat-label>
+        <input
+          matInput
+          formControlName="codeRoot"
+          placeholder="/app/"
+          spellcheck="false"
+        />
+        <mat-hint i18n
+          >If your deployed files live under a folder like /app/, enter it so
+          the agent finds them in the repository.</mat-hint
+        >
+      </mat-form-field>
+
+      <div class="cn-settings-section__footer">
+        <gt-loading-button
+          i18n-buttonText
+          buttonText="Save"
+          [loading]="saving()"
+          [disabled]="form.pristine"
+        ></gt-loading-button>
+      </div>
+    </form>
+  } @else if (settings.value(); as value) {
+    <dl class="cn-settings-section__body cn-kv">
+      <div>
+        <dt i18n>When</dt>
+        <dd>
+          @for (option of modes; track option.value) {
+            @if (option.value === value.mode) {
+              {{ option.label }}
+            }
+          }
+        </dd>
+      </div>
+      @if (value.repository) {
+        <div>
+          <dt i18n>Repository</dt>
+          <dd>{{ value.repository }}</dd>
+        </div>
+      }
+    </dl>
+  }
+</section>

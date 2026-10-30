@@ -1633,6 +1633,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/0/projects/{organization_id_or_slug}/{project_slug}/autofix/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Autofix Settings */
+        get: operations["apps_autofix_api_get_autofix_settings"];
+        /** Update Autofix Settings */
+        put: operations["apps_autofix_api_update_autofix_settings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/0/organizations/{organization_id_or_slug}/issues/{issue_id}/fixes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Issue Fixes */
+        get: operations["apps_autofix_api_list_issue_fixes"];
+        put?: never;
+        /** Request Issue Fix */
+        post: operations["apps_autofix_api_request_issue_fix"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/0/organizations/{organization_id_or_slug}/fixes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Fixes
+         * @description Recent fix runs. With ``issue`` ids, only the newest run per issue,
+         *     which is what the issue list's status badges need.
+         */
+        get: operations["apps_autofix_api_list_fixes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/0/organizations/{organization_id_or_slug}/fixes/usage/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Fix Usage */
+        get: operations["apps_autofix_api_get_fix_usage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/0/autofix/runner/claim/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Claim Job */
+        post: operations["apps_autofix_runner_api_claim_job"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/0/autofix/runner/attempts/{attempt_id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Attempt */
+        patch: operations["apps_autofix_runner_api_update_attempt"];
+        trace?: never;
+    };
+    "/api/0/autofix/runner/open-prs/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Open Prs
+         * @description Fix PRs still open, so the runner can notice merges and closes.
+         */
+        get: operations["apps_autofix_runner_api_list_open_prs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/0/teams/{organization_id_or_slug}/{team_slug}/": {
         parameters: {
             query?: never;
@@ -2262,10 +2390,6 @@ export interface components {
             enableOrganizationCreation: boolean;
             /** Stripepublickey */
             stripePublicKey: string | null;
-            /** Plausibleurl */
-            plausibleUrl: string | null;
-            /** Plausibledomain */
-            plausibleDomain: string | null;
             /** Chatwootwebsitetoken */
             chatwootWebsiteToken: string | null;
             /** Sentrydsn */
@@ -5268,7 +5392,7 @@ export interface components {
             /** Overagecostcents */
             overageCostCents: number;
             /** Reportedcostcents */
-            reportedCostCents?: number;
+            reportedCostCents: number;
             /** Throttlerate */
             throttleRate: number;
         };
@@ -5330,6 +5454,285 @@ export interface components {
             projects: string[];
             /** Version */
             version?: string | null;
+        };
+        /** AutofixSettingsSchema */
+        AutofixSettingsSchema: {
+            /** Isready */
+            isReady: boolean;
+            /**
+             * Mode
+             * @default off
+             */
+            mode: string;
+            /**
+             * Agent
+             * @default claude
+             */
+            agent: string;
+            /** Repository */
+            repository?: string | null;
+            /**
+             * Default Branch
+             * @default main
+             */
+            defaultBranch: string;
+            /** Code Root */
+            codeRoot?: string | null;
+            /**
+             * Min Events
+             * @default 1
+             */
+            minEvents: number;
+            /**
+             * Daily Limit
+             * @default 5
+             */
+            dailyLimit: number;
+            /** Auto Since */
+            autoSince?: string | null;
+        };
+        /** AutofixSettingsIn */
+        AutofixSettingsIn: {
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "off" | "manual" | "auto";
+            /**
+             * Agent
+             * @default claude
+             * @enum {string}
+             */
+            agent: "claude" | "codex";
+            /**
+             * Repository
+             * @default
+             */
+            repository: string;
+            /**
+             * Defaultbranch
+             * @default main
+             */
+            defaultBranch: string;
+            /**
+             * Coderoot
+             * @default
+             */
+            codeRoot: string;
+            /**
+             * Minevents
+             * @default 1
+             */
+            minEvents: number;
+            /**
+             * Dailylimit
+             * @default 5
+             */
+            dailyLimit: number;
+        };
+        /** FixAttemptSchema */
+        FixAttemptSchema: {
+            /** Id */
+            id: string;
+            /** Issueid */
+            issueID: string;
+            /** Projectid */
+            projectID: string;
+            /**
+             * Datecreated
+             * Format: date-time
+             */
+            dateCreated: string;
+            /** Costusd */
+            costUsd?: string | null;
+            /** Issuetitle */
+            issueTitle: string;
+            /** Issueshortid */
+            issueShortID: string;
+            /**
+             * Status
+             * @default queued
+             */
+            status: string;
+            /**
+             * Trigger
+             * @default manual
+             */
+            trigger: string;
+            /** Agent */
+            agent: string;
+            /** Model */
+            model?: string | null;
+            /** Repository */
+            repository: string;
+            /** Branch */
+            branch?: string | null;
+            /** Pr Url */
+            prUrl?: string | null;
+            /** Pr Number */
+            prNumber?: number | null;
+            /** Summary */
+            summary?: string | null;
+            /** Confidence */
+            confidence?: string | null;
+            /** Failure Reason */
+            failureReason?: string | null;
+            /** Triage */
+            triage?: Record<string, unknown> | null;
+            /**
+             * Ci Status
+             * @default
+             */
+            ciStatus: string | null;
+            /**
+             * Ci Iterations
+             * @default 0
+             */
+            ciIterations: number;
+            /**
+             * Input Tokens
+             * @default 0
+             */
+            inputTokens: number;
+            /**
+             * Cached Input Tokens
+             * @default 0
+             */
+            cachedInputTokens: number;
+            /**
+             * Output Tokens
+             * @default 0
+             */
+            outputTokens: number;
+            /**
+             * Duration S
+             * @default 0
+             */
+            durationS: number;
+            /** Started At */
+            startedAt?: string | null;
+            /** Finished At */
+            finishedAt?: string | null;
+        };
+        /** FixListFilters */
+        FixListFilters: {
+            /**
+             * Issue
+             * @default
+             */
+            issue: string;
+            /** Project */
+            project?: number | null;
+        };
+        /** FixUsageSchema */
+        FixUsageSchema: {
+            /**
+             * Since
+             * Format: date-time
+             */
+            since: string;
+            /** Attempts */
+            attempts: number;
+            /** Prsopened */
+            prsOpened: number;
+            /** Merged */
+            merged: number;
+            /** Nofix */
+            noFix: number;
+            /** Failed */
+            failed: number;
+            /** Costusd */
+            costUsd: string;
+            /** Inputtokens */
+            inputTokens: number;
+            /** Outputtokens */
+            outputTokens: number;
+        };
+        /** RunnerJobSchema */
+        RunnerJobSchema: {
+            /** Id */
+            id: number;
+            /** Issue Id */
+            issue_id: number;
+            /** Short Id */
+            short_id: string;
+            /** Issue Url */
+            issue_url: string;
+            /** Title */
+            title: string;
+            /** Repository */
+            repository: string;
+            /** Default Branch */
+            default_branch: string;
+            /** Agent */
+            agent: string;
+            /** Code Root */
+            code_root: string;
+            /** Triage */
+            triage: boolean;
+            /** Report */
+            report: string;
+        };
+        /** RunnerUpdateIn */
+        RunnerUpdateIn: {
+            /** Status */
+            status?: ("triaging" | "running" | "pr_opened" | "no_fix" | "failed" | "merged" | "closed") | null;
+            /** Model */
+            model?: string | null;
+            /** Branch */
+            branch?: string | null;
+            /** Prurl */
+            prUrl?: string | null;
+            /** Prnumber */
+            prNumber?: number | null;
+            /** Summary */
+            summary?: string | null;
+            /** Confidence */
+            confidence?: ("high" | "medium" | "low" | "") | null;
+            /** Failurereason */
+            failureReason?: string | null;
+            /** Triage */
+            triage?: {
+                [key: string]: unknown;
+            } | null;
+            /** Cistatus */
+            ciStatus?: ("" | "pending" | "passed" | "failed") | null;
+            /** Ciiterations */
+            ciIterations?: number | null;
+            /**
+             * Addinputtokens
+             * @default 0
+             */
+            addInputTokens: number;
+            /**
+             * Addcachedinputtokens
+             * @default 0
+             */
+            addCachedInputTokens: number;
+            /**
+             * Addoutputtokens
+             * @default 0
+             */
+            addOutputTokens: number;
+            /**
+             * Addcostusd
+             * @default 0
+             */
+            addCostUsd: number | string;
+            /**
+             * Adddurations
+             * @default 0
+             */
+            addDurationS: number;
+        };
+        /** RunnerOpenPRSchema */
+        RunnerOpenPRSchema: {
+            /** Id */
+            id: number;
+            /** Repository */
+            repository: string;
+            /** Pr Number */
+            pr_number: number;
         };
         /**
          * TeamProjectSchema
@@ -8907,6 +9310,233 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    apps_autofix_api_get_autofix_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id_or_slug: string;
+                project_slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AutofixSettingsSchema"];
+                };
+            };
+        };
+    };
+    apps_autofix_api_update_autofix_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id_or_slug: string;
+                project_slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AutofixSettingsIn"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AutofixSettingsSchema"];
+                };
+            };
+        };
+    };
+    apps_autofix_api_list_issue_fixes: {
+        parameters: {
+            query?: {
+                /** @description Number of results to return per page. */
+                limit?: number | null;
+                /** @description The pagination cursor value. */
+                cursor?: string | null;
+            };
+            header?: never;
+            path: {
+                organization_id_or_slug: string;
+                issue_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FixAttemptSchema"][];
+                };
+            };
+        };
+    };
+    apps_autofix_api_request_issue_fix: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id_or_slug: string;
+                issue_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FixAttemptSchema"];
+                };
+            };
+        };
+    };
+    apps_autofix_api_list_fixes: {
+        parameters: {
+            query?: {
+                issue?: string;
+                project?: number | null;
+                /** @description Number of results to return per page. */
+                limit?: number | null;
+                /** @description The pagination cursor value. */
+                cursor?: string | null;
+            };
+            header?: never;
+            path: {
+                organization_id_or_slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FixAttemptSchema"][];
+                };
+            };
+        };
+    };
+    apps_autofix_api_get_fix_usage: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                organization_id_or_slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FixUsageSchema"];
+                };
+            };
+        };
+    };
+    apps_autofix_runner_api_claim_job: {
+        parameters: {
+            query?: {
+                runner?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunnerJobSchema"];
+                };
+            };
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    apps_autofix_runner_api_update_attempt: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                attempt_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RunnerUpdateIn"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    apps_autofix_runner_api_list_open_prs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunnerOpenPRSchema"][];
+                };
             };
         };
     };

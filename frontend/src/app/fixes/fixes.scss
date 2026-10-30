@@ -1,0 +1,36 @@
+// Tables stop at 960px app-wide; the strip above lines up with them.
+.cn-fixes .cn-strip {
+  max-width: 960px;
+  margin-bottom: var(--gt-space-5);
+}
+
+.cn-fixes__short-id {
+  margin-right: 6px;
+  font-family: var(--gt-font-code);
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-fixes__trigger {
+  display: block;
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-fixes__pr {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+
+  mat-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.cn-fixes__table {
+  time {
+    white-space: nowrap;
+  }
+}

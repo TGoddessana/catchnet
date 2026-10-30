@@ -96,6 +96,11 @@ export const routes: Routes = [
             },
           },
           {
+            path: "fixes",
+            loadChildren: () => import("./fixes/routes"),
+            title: () => $localize`Fixes`,
+          },
+          {
             path: "logs",
             loadChildren: () => import("./logs/routes"),
             title: () => $localize`Logs`,

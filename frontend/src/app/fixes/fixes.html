@@ -1,0 +1,118 @@
+<!--
+  Fixes: what the hotfix agent did across the organization. The strip answers
+  "is it worth it" (runs, pull requests, merges, spend over 30 days); the
+  table lists each run newest first, linking to its issue and pull request.
+-->
+<section class="l-body cn-fixes">
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Fixes</h1>
+      <p class="cn-title-row__sub" i18n
+        >Pull requests catchnet wrote for your errors. Turn it on per project in
+        project settings.</p
+      >
+    </div>
+  </header>
+
+  @if (usage.value(); as u) {
+    <dl class="cn-strip" i18n-aria-label aria-label="Last 30 days">
+      <div class="cn-strip__cell">
+        <dt i18n>Fix runs, 30 days</dt>
+        <dd>{{ u.attempts }}</dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Pull requests</dt>
+        <dd>
+          {{ u.prsOpened }}
+          @if (prRate() !== null) {
+            <span class="cn-strip__unit">{{ prRate() }}%</span>
+          }
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Merged</dt>
+        <dd>{{ u.merged }}</dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Model spend</dt>
+        <dd>{{ cost(u.costUsd) }}</dd>
+      </div>
+    </dl>
+  }
+
+  @if (fixes.value(); as fixes) {
+    @if (fixes.length) {
+      <table class="cn-table cn-fixes__table">
+        <thead>
+          <tr>
+            <th i18n>Issue</th>
+            <th i18n>Result</th>
+            <th class="cn-table__hide-sm" i18n>Pull request</th>
+            <th class="cn-num cn-table__hide-sm" i18n>Cost</th>
+            <th class="cn-num" i18n>Started</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fix of fixes; track fix.id) {
+            <tr>
+              <td class="cn-table__identity">
+                <a [routerLink]="['/', orgSlug(), 'issues', fix.issueID]">
+                  <span class="cn-fixes__short-id">{{ fix.issueShortID }}</span>
+                  {{ fix.issueTitle }}
+                </a>
+                @if (fix.trigger === "auto") {
+                  <span class="cn-fixes__trigger" i18n
+                    >Started automatically</span
+                  >
+                }
+              </td>
+              <td>
+                <span
+                  class="cn-badge cn-badge--{{ status(fix.status).tone }}"
+                  >{{ status(fix.status).label }}</span
+                >
+              </td>
+              <td class="cn-table__hide-sm">
+                @if (fix.prUrl) {
+                  <a
+                    class="cn-fixes__pr"
+                    [href]="fix.prUrl"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <mat-icon
+                      aria-hidden="true"
+                      [svgIcon]="
+                        fix.status === 'merged'
+                          ? 'git_merge'
+                          : 'git_pull_request'
+                      "
+                    ></mat-icon>
+                    #{{ fix.prNumber }}
+                  </a>
+                } @else {
+                  <span class="cn-table__none">—</span>
+                }
+              </td>
+              <td class="cn-num cn-table__hide-sm">{{ cost(fix.costUsd) }}</td>
+              <td class="cn-num">
+                <time
+                  [dateTime]="fix.dateCreated"
+                  [title]="fix.dateCreated | date: 'medium'"
+                  >{{ fix.dateCreated | daysAgo }}</time
+                >
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="cn-empty">
+        <p class="cn-empty__text" i18n
+          >No fixes yet. Connect a project to its repository in project
+          settings, then ask for a fix on any issue.</p
+        >
+      </div>
+    }
+  }
+</section>

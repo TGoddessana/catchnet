@@ -29,6 +29,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { ProjectAlertsComponent } from "./project-alerts/project-alerts.component";
 import { ProjectEnvironments } from "./project-environments/project-environments";
+import { ProjectAutofix } from "./project-autofix/project-autofix";
 import { CopyInputComponent } from "../../../shared/copy-input/copy-input.component";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
 import { MatInputModule } from "@angular/material/input";
@@ -77,6 +78,7 @@ class CustomErrorStateMatcher implements ErrorStateMatcher {
     LoadingButtonComponent,
     CopyInputComponent,
     ProjectEnvironments,
+    ProjectAutofix,
     ProjectAlertsComponent,
     MatButtonModule,
     RouterLink,
@@ -87,7 +89,8 @@ class CustomErrorStateMatcher implements ErrorStateMatcher {
   ],
 })
 export class ProjectDetailComponent implements OnInit {
-  settingsFor = (project: string) => $localize`Settings for ${project}:project:`;
+  settingsFor = (project: string) =>
+    $localize`Settings for ${project}:project:`;
   #service = inject(ProjectDetailService);
   #orgService = inject(OrganizationsService);
   #snackBar = inject(MatSnackBar);

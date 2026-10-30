@@ -1,0 +1,203 @@
+<!--
+  The fix for this issue, in the order someone needs it: whether there is
+  one and where it stands, then the pull request to review, then what the
+  agent changed and why. Setup and retry are the only actions.
+-->
+<section class="cn-panel cn-fix" i18n-aria-label aria-label="Autofix">
+  <header class="cn-fix__head">
+    <h2 class="cn-panel__title cn-fix__title">
+      <mat-icon svgIcon="auto_fix_high" aria-hidden="true"></mat-icon>
+      <ng-container i18n>Autofix</ng-container>
+    </h2>
+    @if (status(); as s) {
+      <span class="cn-badge cn-badge--{{ s.tone }}">
+        @if (s.busy) {
+          <span class="cn-fix__pulse" aria-hidden="true"></span>
+        }
+        {{ s.label }}
+      </span>
+    }
+  </header>
+
+  @if (!loaded()) {
+    <p class="cn-fix__text cn-fix__text--quiet" i18n>Loading…</p>
+  } @else if (!settings.value()?.isReady) {
+    <p class="cn-fix__text" i18n
+      >catchnet can open a pull request that fixes this error once the project
+      is connected to its GitHub repository.</p
+    >
+    @if (canWriteProject()) {
+      <a
+        mat-stroked-button
+        class="cn-fix__action"
+        [routerLink]="['/', orgSlug(), 'settings', 'projects', projectSlug()]"
+        fragment="autofix"
+        i18n
+        >Connect a repository</a
+      >
+    } @else {
+      <p class="cn-fix__text cn-fix__text--quiet" i18n
+        >A project admin can connect one in the project's settings.</p
+      >
+    }
+  } @else if (latest(); as fix) {
+    @if (status()?.busy) {
+      <ol class="cn-fix__steps" i18n-aria-label aria-label="Progress">
+        @for (step of steps(); track step.label) {
+          <li class="cn-fix__step cn-fix__step--{{ step.state }}">
+            <span class="cn-fix__step-mark" aria-hidden="true">
+              @if (step.state === "done") {
+                <mat-icon svgIcon="check"></mat-icon>
+              }
+            </span>
+            {{ step.label }}
+          </li>
+        }
+      </ol>
+      <p class="cn-fix__text cn-fix__text--quiet" i18n
+        >This usually takes a minute or two. You can leave this page.</p
+      >
+    }
+
+    @if (fix.prUrl) {
+      <a class="cn-fix__pr" [href]="fix.prUrl" target="_blank" rel="noopener">
+        <mat-icon
+          [svgIcon]="fix.status === 'merged' ? 'git_merge' : 'git_pull_request'"
+          aria-hidden="true"
+        ></mat-icon>
+        <span class="cn-fix__pr-text">
+          <span class="cn-fix__pr-title" i18n
+            >Pull request #{{ fix.prNumber }}</span
+          >
+          <span class="cn-fix__pr-repo">{{ fix.repository }}</span>
+        </span>
+        <mat-icon svgIcon="open_in_new" aria-hidden="true"></mat-icon>
+      </a>
+      <dl class="cn-kv cn-fix__facts">
+        @if (fix.ciStatus) {
+          <div>
+            <dt i18n>Checks</dt>
+            <dd>
+              <span
+                class="cn-dot cn-dot--{{
+                  fix.ciStatus === 'passed'
+                    ? 'success'
+                    : fix.ciStatus === 'failed'
+                      ? 'warning'
+                      : 'accent'
+                }}"
+                aria-hidden="true"
+              ></span>
+              @switch (fix.ciStatus) {
+                @case ("passed") {
+                  <ng-container i18n>Passed</ng-container>
+                }
+                @case ("failed") {
+                  <ng-container i18n>Failing</ng-container>
+                }
+                @default {
+                  <ng-container i18n>Running</ng-container>
+                }
+              }
+            </dd>
+          </div>
+        }
+        @if (fix.confidence) {
+          <div>
+            <dt i18n>Agent's confidence</dt>
+            <dd>{{ fix.confidence | titlecase }}</dd>
+          </div>
+        }
+      </dl>
+    }
+
+    @if (fix.status === "no_fix" || fix.status === "failed") {
+      <p class="cn-fix__text">
+        @if (fix.status === "no_fix") {
+          <ng-container i18n
+            >The agent did not find a change it trusts.</ng-container
+          >
+        } @else {
+          <ng-container i18n
+            >The fix run stopped before it finished.</ng-container
+          >
+        }
+        @if (failureText()) {
+          <span class="cn-fix__reason">{{ failureText() }}</span>
+        }
+      </p>
+    }
+
+    @if (summaryParts().length && !status()?.busy && fix.status !== "no_fix") {
+      <details class="cn-fix__details">
+        <summary i18n>What the agent changed</summary>
+        <dl class="cn-fix__summary">
+          @for (part of summaryParts(); track part.label) {
+            <dt>{{ part.label }}</dt>
+            <dd>
+              @for (seg of part.segments; track $index) {
+                @if (seg.code) {
+                  <code>{{ seg.text }}</code>
+                } @else {
+                  {{ seg.text }}
+                }
+              }
+            </dd>
+          }
+        </dl>
+      </details>
+    }
+
+    @if (
+      !status()?.busy && fix.status !== "pr_opened" && fix.status !== "merged"
+    ) {
+      <button
+        mat-stroked-button
+        class="cn-fix__action"
+        [disabled]="requesting()"
+        (click)="requestFix()"
+        i18n
+      >
+        Try again
+      </button>
+    }
+
+    <p class="cn-fix__meta">
+      {{ agentName() }}
+      @if (fix.costUsd) {
+        · {{ formatCost(fix.costUsd) }}
+      }
+      @if (fix.durationS) {
+        · {{ formatDuration(fix.durationS) }}
+      }
+      ·
+      <time [dateTime]="fix.dateCreated">{{ fix.dateCreated | daysAgo }}</time>
+      @if (fix.trigger === "auto") {
+        · <ng-container i18n>started automatically</ng-container>
+      }
+      @if (earlier()) {
+        ·
+        <span i18n>{earlier(), plural,
+          =1 {1 earlier run}
+          other {{{ earlier() }} earlier runs}
+        }</span>
+      }
+    </p>
+  } @else {
+    <p class="cn-fix__text" i18n
+      >An AI agent reads this error, writes a fix with a test, and opens a pull
+      request in
+      <span class="cn-fix__repo">{{ settings.value()?.repository }}</span
+      >. Nothing is merged until you approve it.</p
+    >
+    <button
+      mat-flat-button
+      class="cn-fix__action"
+      [disabled]="requesting()"
+      (click)="requestFix()"
+    >
+      <mat-icon svgIcon="auto_fix_high"></mat-icon>
+      <ng-container i18n>Write a fix</ng-container>
+    </button>
+  }
+</section>

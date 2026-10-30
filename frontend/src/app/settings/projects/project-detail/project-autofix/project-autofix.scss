@@ -1,0 +1,57 @@
+.cn-autofix__group {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.cn-autofix__legend {
+  margin-bottom: var(--gt-space-2);
+  padding: 0;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}
+
+.cn-autofix__modes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  // Two lines per option: what it is, then what it does.
+  ::ng-deep .mdc-label {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+  }
+}
+
+.cn-autofix__mode-label {
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}
+
+.cn-autofix__mode-text {
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-autofix__row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--gt-space-3);
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cn-autofix__hint {
+  margin: -4px 0 0;
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+
+  &--needed {
+    color: var(--gt-color-warning-text);
+  }
+}

@@ -1,7 +1,7 @@
 @if (activeProject(); as project) {
   <!--
     One settings section per topic, most needed first: the setup code a new
-    project is opened for, then name and platform, environments, alerts and
+    project is opened for, then name and platform, autofix, environments, alerts and
     personal notifications. Deleting the project comes last.
   -->
   <section class="l-body">
@@ -188,6 +188,10 @@
         </section>
       }
 
+      <gt-project-autofix
+        [orgSlug]="orgSlug()"
+        [projectSlug]="projectSlug()"
+      ></gt-project-autofix>
       <gt-project-environments
         [orgSlug]="orgSlug()"
         [projectSlug]="projectSlug()"

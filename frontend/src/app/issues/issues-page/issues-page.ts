@@ -8,6 +8,7 @@ import {
   computed,
   OnInit,
   OnDestroy,
+  resource,
   signal,
   ViewChild,
 } from "@angular/core";
@@ -25,6 +26,7 @@ import { Issue, IssueStatus } from "../interfaces";
 import { DaysAgoPipe } from "../../shared/days-ago.pipe";
 import { IssueZeroStatesComponent } from "../issue-zero-states/issue-zero-states.component";
 import { OrganizationsService } from "src/app/api/organizations.service";
+import { AutofixService, fixStatus } from "src/app/api/autofix.service";
 import {
   stringArrAttribute,
   stringAttribute,
@@ -94,6 +96,22 @@ export class IssuesPage implements OnInit, OnDestroy {
   });
 
   issues = this.service.issuesWithSelected;
+  #autofix = inject(AutofixService);
+  /** Newest fix per issue on this page, for the row badges. */
+  #fixes = resource({
+    params: () => ({
+      org: this.orgSlug(),
+      ids: (this.issues() ?? []).map((issue) => Number(issue.id)),
+    }),
+    loader: ({ params }) =>
+      this.#autofix.latestFixes(params.org, params.ids).catch(() => []),
+  });
+  #fixByIssue = computed(
+    () =>
+      new Map(
+        (this.#fixes.value() ?? []).map((fix) => [Number(fix.issueID), fix]),
+      ),
+  );
 
   areAllSelected = this.service.areAllSelected;
   multipleProjectIssuesSelected = computed(() => {
@@ -150,7 +168,9 @@ export class IssuesPage implements OnInit, OnDestroy {
 
   private readonly fullQuery = computed(() => this.query() ?? "is:unresolved");
   activeStatus = computed<IssueStatus | "all">(() => {
-    const match = this.fullQuery().match(/(?:^|\s)is:(unresolved|resolved|ignored)\b/);
+    const match = this.fullQuery().match(
+      /(?:^|\s)is:(unresolved|resolved|ignored)\b/,
+    );
     return (match?.[1] as IssueStatus | undefined) ?? "all";
   });
   /** The query without its status token; what the search box shows. */
@@ -171,9 +191,7 @@ export class IssuesPage implements OnInit, OnDestroy {
         return "";
     }
   });
-  summaryCount = computed(
-    () => this.paginator()?.hits ?? this.issues().length,
-  );
+  summaryCount = computed(() => this.paginator()?.hits ?? this.issues().length);
   newestSeen = computed(() => {
     const seen = this.issues().map((issue) => issue.lastSeen);
     return seen.length ? seen.reduce((a, b) => (a > b ? a : b)) : null;
@@ -371,6 +389,20 @@ export class IssuesPage implements OnInit, OnDestroy {
   }
 
   /** First seen within the last day. */
+  /** A fix worth seeing from the list: one in progress or waiting for
+   * review. Settled outcomes stay on the issue page. */
+  fixBadge(issueId: number | string) {
+    const fix = this.#fixByIssue().get(Number(issueId));
+    if (!fix) return null;
+    if (fix.status === "pr_opened") {
+      return { ...fixStatus(fix.status), icon: "git_pull_request" };
+    }
+    const status = fixStatus(fix.status);
+    return status.busy
+      ? { ...status, label: $localize`Fixing`, icon: "auto_fix_high" }
+      : null;
+  }
+
   isNew(issue: Issue) {
     return Date.now() - new Date(issue.firstSeen).getTime() < 86_400_000;
   }

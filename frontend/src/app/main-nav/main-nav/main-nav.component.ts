@@ -60,7 +60,9 @@ export class MainNavComponent {
   readonly collapseLabel = $localize`Collapse sidebar`;
   readonly expandLabel = $localize`Expand sidebar`;
   readonly jumpLabel = $localize`Jump to a page or project`;
-  readonly jumpShortcut = /Mac|iPhone|iPad/.test(globalThis.navigator?.platform ?? "")
+  readonly jumpShortcut = /Mac|iPhone|iPad/.test(
+    globalThis.navigator?.platform ?? "",
+  )
     ? "⌘K"
     : "Ctrl K";
 
@@ -69,6 +71,11 @@ export class MainNavComponent {
       name: $localize`Issues`,
       icon: "breaking_news",
       route: ["org_slug", "issues"],
+    },
+    {
+      name: $localize`Fixes`,
+      icon: "git_pull_request",
+      route: ["org_slug", "fixes"],
     },
     {
       name: $localize`Performance`,
