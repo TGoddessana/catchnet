@@ -10,140 +10,224 @@
   }
 }
 
-dl {
-  margin-top: 0;
+// catchnet issue detail: breadcrumb, header with badges and actions, then a
+// main column and an aside of flat panels.
+.cn-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-5);
+  max-width: 1400px;
+  margin-top: var(--gt-space-6);
+}
 
-  > div {
-    margin-bottom: 15px;
+.cn-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-accent-text);
   }
+}
 
-  // this was done to mimic a table I removed, design preferences
-  // aren't set in stone here
+.cn-detail__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gt-space-4);
+}
+
+.cn-detail__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-2);
+  min-width: 0;
+  flex: 1 1 480px;
+}
+
+.cn-detail__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gt-space-2);
+}
+
+.cn-detail__title {
+  margin: var(--gt-space-1) 0 0;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: var(--gt-weight-strong);
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.cn-detail__message {
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--gt-color-text-2);
+  overflow-wrap: anywhere;
+}
+
+.cn-detail__culprit {
+  margin: 0;
+  font-family: var(--gt-font-code);
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+  overflow-wrap: anywhere;
+}
+
+.cn-detail__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+}
+
+.cn-detail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--gt-space-5);
+  align-items: start;
+
+  @media screen and (max-width: vars.$large - 1) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.cn-detail__main,
+.cn-detail__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-5);
+  min-width: 0;
+}
+
+.cn-detail__story {
+  margin: 0 0 var(--gt-space-5);
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--gt-color-text-2);
+
+  strong {
+    font-weight: var(--gt-weight-strong);
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--gt-space-3);
+  margin: 0;
+}
+
+.cn-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-1);
+  padding: var(--gt-space-3) var(--gt-space-4);
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-color-subtle);
+
   dt {
-    font-weight: 500;
-    opacity: 0.54;
-    margin: 2px 0;
+    font-size: 12px;
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-3);
   }
 
   dd {
     margin: 0;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: var(--gt-weight-strong);
+    font-variant-numeric: tabular-nums;
   }
 }
 
-.event-detail-card {
-  margin-right: 16px;
-
-  .tab-nav-container {
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--mat-sys-outline-variant);
-  }
-
-  @media screen and (max-width: vars.$medium - 1) {
-    margin-right: 0;
-  }
-
-  > .tabbed-nav {
-    margin: -16px -16px 16px;
-  }
-}
-
-mat-grid-list {
-  height: 90vh;
-}
-
-.tags {
+// Section tabs: a segmented control on the page.
+.cn-detail__tabs {
   display: flex;
-  justify-content: space-between;
 }
 
-.row {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 30px;
+.cn-count {
+  margin-left: 6px;
+  padding: 0 7px;
+  border-radius: var(--gt-radius-pill);
+  background: var(--gt-color-subtle);
+  font-size: 12px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-2);
+}
 
-  @media screen and (max-width: vars.$medium - 1) {
-    flex-direction: column-reverse;
-  }
+.cn-detail__tab-panel {
+  padding: var(--gt-space-5) var(--gt-space-6);
 
-  .left {
-    flex: 75%;
-    overflow: hidden;
-
-    @media screen and (max-width: vars.$medium - 1) {
-      width: 100%;
-    }
-  }
-
-  .right {
-    flex: 25%;
-
-    @media screen and (max-width: vars.$medium - 1) {
-      width: 100%;
-      margin-bottom: 30px;
-    }
+  @media screen and (max-width: vars.$small - 1) {
+    padding: var(--gt-space-4);
   }
 }
 
-table.mat-table {
-  background: none;
-}
-
-.report-badge > span {
-  text-overflow: initial;
-}
-
-.issue-header-wrapper {
+.cn-steps {
   display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-  gap: 8px;
-  margin-bottom: 8px;
+  li {
+    display: flex;
+    gap: var(--gt-space-3);
+  }
+
+  p {
+    margin: 0 0 var(--gt-space-2);
+    color: var(--gt-color-text-2);
+  }
+
+  strong {
+    font-weight: var(--gt-weight-strong);
+    color: var(--gt-color-text-1);
+  }
 }
 
-.top-bar-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-indicator {
-  display: flex;
+.cn-steps__n {
+  display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  position: relative; 
+  width: 24px;
+  height: 24px;
+  border-radius: var(--gt-radius-pill);
+  background: var(--gt-color-accent-soft);
+  font-size: 12px;
+  font-weight: var(--gt-weight-strong);
+  color: var(--gt-color-accent-text);
+}
 
-  mat-icon {
-    color: var(--mat-sys-outline);
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
-    margin: 8px;
+.cn-facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-3);
+  margin: 0;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gt-space-3);
   }
 
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    bottom: 4px;
-    right: 0;
-    width: 4px;
-    border-radius: 4px; 
+  dt {
+    color: var(--gt-color-text-3);
   }
 
-  &.level--sample::after   { background-color: var(--mat-sys-outline); }
-  &.level--debug::after    { background-color: var(--mat-sys-outline-variant); }
-  &.level--info::after     { background-color: var(--info-color); }
-  &.level--warning::after  { background-color: var(--warning-color); }
-  &.level--error::after    { background-color: var(--mat-sys-error); }
-
-
-  &.level--fatal::after {
-    background: repeating-linear-gradient(
-      -60deg,
-      var(--mat-sys-error),
-      var(--mat-sys-error) 5px,
-      var(--mat-sys-surface) 5px,
-      var(--mat-sys-surface) 10px
-    );
+  dd {
+    margin: 0;
+    text-align: right;
+    font-weight: var(--gt-weight-medium);
+    overflow-wrap: anywhere;
   }
 }

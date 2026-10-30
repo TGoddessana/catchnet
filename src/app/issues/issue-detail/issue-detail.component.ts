@@ -10,12 +10,14 @@ import {
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, RouterModule } from "@angular/router";
-import { MatBadgeModule } from "@angular/material/badge";
+import { Clipboard } from "@angular/cdk/clipboard";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatCardModule } from "@angular/material/card";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { DetailHeaderComponent } from "src/app/shared/detail/header/header.component";
 import { IssueDetailService } from "./issue-detail.service";
 import { DaysAgoPipe } from "../../shared/days-ago.pipe";
 import { IssueDetailTagsComponent } from "./issue-detail-tags/issue-detail-tags.component";
@@ -23,17 +25,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { DatePipe, TitleCasePipe } from "@angular/common";
-import { BackLinkComponent } from "src/app/shared/detail/back-link/back-link.component";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
-import { IssueStatusUpdateDropdownComponent } from "src/app/shared/issue-status-update-dropdown/issue-status-update-dropdown";
 import { IssueStatus } from "../interfaces";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 
 const STATUS_CONFIG = {
-  resolved: { label: $localize`Resolved`, icon: "done" },
-  unresolved: { label: $localize`Unresolved`, icon: "priority_high" },
-  ignored: { label: $localize`Ignored`, icon: "notifications_off" },
+  resolved: { label: $localize`Fixed`, icon: "check", tone: "success" },
+  unresolved: { label: $localize`Open`, icon: "notifications", tone: "accent" },
+  ignored: { label: $localize`Muted`, icon: "notifications_off", tone: "neutral" },
 } as const;
 
 type IssueStatusType = keyof typeof STATUS_CONFIG;
@@ -47,27 +46,24 @@ type IssueStatusType = keyof typeof STATUS_CONFIG;
     MatCardModule,
     RouterModule,
     MatTabsModule,
-    MatBadgeModule,
+    MatMenuModule,
+    MatDividerModule,
     MatIconModule,
     MatButtonModule,
     IssueDetailTagsComponent,
     TitleCasePipe,
     DatePipe,
     DaysAgoPipe,
-    DetailHeaderComponent,
-    BackLinkComponent,
-    TopAppBar,
-    IssueStatusUpdateDropdownComponent,
   ],
 })
 export class IssueDetailComponent implements OnInit {
-  issuesText = $localize`Issues`;
-  allIssuesFor = (project: string) => $localize`All issues for ${project}:project:`;
   private issueService = inject(IssueDetailService);
   private organizationsService = inject(OrganizationsService);
   private route = inject(ActivatedRoute);
   protected breakPointObserver = inject(BreakpointObserver);
   private dialog = inject(MatDialog);
+  private clipboard = inject(Clipboard);
+  private snackbar = inject(MatSnackBar);
 
   issue = this.issueService.issue;
   issueTitle = computed(() => {
@@ -120,12 +116,24 @@ export class IssueDetailComponent implements OnInit {
     }
   });
 
-  statusIcon = computed(() => {
-    const issue = this.issue();
-    if (!issue) return "error";
+  private statusConfig = computed(
+    () => STATUS_CONFIG[(this.issue()?.status ?? "unresolved") as IssueStatusType],
+  );
+  statusIcon = computed(() => this.statusConfig().icon);
+  statusLabel = computed(() => this.statusConfig().label);
+  statusTone = computed(() => this.statusConfig().tone);
 
-    const config = STATUS_CONFIG[issue.status as IssueStatusType];
-    return config?.icon ?? "error";
+  /** Badge and dot tone for the level. The level is always shown as text. */
+  levelTone = computed(() => {
+    switch (this.issue()?.level) {
+      case "fatal":
+      case "error":
+        return "error";
+      case "warning":
+        return "warning";
+      default:
+        return "neutral";
+    }
   });
 
   resolvedInRelease = computed(() => {
@@ -195,6 +203,11 @@ export class IssueDetailComponent implements OnInit {
         this.issueService.deleteIssue(id.toString());
       }
     });
+  }
+
+  copyLink() {
+    this.clipboard.copy(window.location.href.split("?")[0]);
+    this.snackbar.open($localize`Link copied`, undefined, { duration: 2500 });
   }
 
   generateBackLink(projectId: string) {

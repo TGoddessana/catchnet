@@ -67,11 +67,11 @@ ul {
 }
 
 .category {
-  font-weight: 700;
+  font-weight: var(--gt-weight-strong);
 }
 
 .error {
-  background-color: var(--mat-sys-surface-container-high);
+  background-color: var(--gt-color-error-soft);
 }
 
 table {
@@ -83,17 +83,16 @@ table {
     width: 24px;
     padding-right: 8px;
 
-    // TODO: Use theme colors
     .error {
-      color: red;
+      color: var(--gt-color-error-text);
     }
 
     .ui {
-      color: rebeccapurple;
+      color: var(--gt-color-accent-text);
     }
 
     .xhr {
-      color: green;
+      color: var(--gt-color-success-text);
     }
   }
 

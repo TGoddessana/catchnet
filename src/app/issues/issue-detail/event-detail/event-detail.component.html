@@ -12,7 +12,7 @@
   <section class="mat-typography">
     <section class="header">
       <div>
-        <h2 i18n>Event</h2>
+        <h2 i18n>This time</h2>
         <p>
           <a>{{ event?.id }}</a>
         </p>
@@ -33,7 +33,7 @@
               $safeNavigationMigration(event?.id) +
               '/json/'
             "
-            >raw JSON</a
+            >Raw data</a
           >
           <span class="action-separator" aria-hidden="true">·</span></ng-container>
           <button
@@ -43,7 +43,7 @@
             (cdkCopyToClipboardCopied)="onCopiedForAI()"
             i18n
           >
-            copy for AI
+            Copy for AI
           </button>
         </p>
       </div>

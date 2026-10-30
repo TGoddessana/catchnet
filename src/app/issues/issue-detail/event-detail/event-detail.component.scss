@@ -9,9 +9,37 @@ section {
   }
 }
 
+// catchnet: section headings inside the technical details are quiet, one
+// step below the page's panel titles.
+:host ::ng-deep {
+  h2 {
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: var(--gt-weight-strong);
+  }
+
+  h3 {
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: var(--gt-weight-strong);
+  }
+
+  mat-divider {
+    border-top-color: var(--gt-color-subtle);
+  }
+}
+
 .header {
   display: flex;
   justify-content: space-between;
+  gap: var(--gt-space-3);
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+
+  a {
+    color: var(--gt-color-accent-text);
+    font-weight: var(--gt-weight-medium);
+  }
 
   @media screen and (max-width: vars.$small - 1) {
     flex-direction: column-reverse;
@@ -41,9 +69,9 @@ section {
   border: none;
   background: none;
   font: inherit;
-  font-weight: 700;
+  font-weight: var(--gt-weight-medium);
   cursor: pointer;
-  color: var(--mat-sys-on-surface);
+  color: var(--gt-color-accent-text);
   text-decoration: none;
 }
 

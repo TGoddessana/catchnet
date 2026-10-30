@@ -1,5 +1,4 @@
 @if (initialLoadComplete() && issue() === null) {
-  <gt-top-app-bar />
   <section class="l-body l-body--full-width">
     @if (organization(); as organization) {
       <mat-card class="auth-form issue-404">
@@ -26,51 +25,148 @@
   </section>
 }
 @if (issue(); as issue) {
-  <gt-top-app-bar>
-    <ng-container slot="left">
-      <gt-back-link
-        [backLinkText]="
-          isMobile() ? issuesText : allIssuesFor(issue.project.name)
-        "
-        [backLinkParams]="generateBackLink(issue.project.id)"
-      />
-    </ng-container>
-    <ng-container slot="right">
-      <div class="top-bar-actions">
-        <gt-issue-status-update-dropdown
-          [selectedValue]="issue.status"
-          [showResolveInNextRelease]="true"
-          [resolvedInRelease]="!!resolvedInRelease()"
-          (optionSelected)="updateIssueStatus($event)"
-          (resolveInNextReleaseSelected)="resolveInNextRelease()"
-        />
+  <section class="l-body l-body--full-width cn-detail">
+    <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+      <a [routerLink]="['..']" [queryParams]="generateBackLink(issue.project.id)" i18n
+        >Issues</a
+      >
+      <span aria-hidden="true">/</span>
+      <span>{{ issue.project.name }}</span>
+    </nav>
+
+    <header class="cn-detail__header">
+      <div class="cn-detail__heading">
+        <div class="cn-detail__badges">
+          <span class="cn-badge cn-badge--{{ levelTone() }}">
+            <span class="cn-dot cn-dot--{{ levelTone() }}" aria-hidden="true"></span>
+            {{ issue.level | titlecase }}
+          </span>
+          <span class="cn-badge" [class]="'cn-badge--' + statusTone()">
+            <mat-icon aria-hidden="true">{{ statusIcon() }}</mat-icon>
+            {{ statusLabel() }}
+          </span>
+          @if (resolvedInRelease(); as release) {
+            <span class="cn-badge" i18n>Fixed in {{ release }}</span>
+          }
+        </div>
+        <h1 class="cn-detail__title">{{ issueTitle()[0] }}</h1>
+        @if (issueSubtitle()) {
+          <p class="cn-detail__message">{{ issueSubtitle() }}</p>
+        }
+        @if (issueTitle()[1]; as culprit) {
+          <p class="cn-detail__culprit">{{ culprit }}</p>
+        }
+      </div>
+      <div class="cn-detail__actions">
+        @if (issue.status === "unresolved") {
+          <button mat-flat-button (click)="updateIssueStatus('resolved')">
+            <mat-icon>check</mat-icon>
+            <ng-container i18n>Mark as fixed</ng-container>
+          </button>
+          <button mat-stroked-button (click)="updateIssueStatus('ignored')" i18n>
+            Mute
+          </button>
+        } @else {
+          <button mat-stroked-button (click)="updateIssueStatus('unresolved')" i18n>
+            Reopen
+          </button>
+        }
         <button
           mat-icon-button
-          class="medium-icon-button"
-          (click)="deleteIssue()"
+          [matMenuTriggerFor]="moreMenu"
+          i18n-aria-label
+          aria-label="More actions"
         >
-          <mat-icon>delete</mat-icon>
+          <mat-icon>more_horiz</mat-icon>
         </button>
+        <mat-menu #moreMenu="matMenu" xPosition="before">
+          @if (issue.status !== "resolved") {
+            <button mat-menu-item (click)="resolveInNextRelease()">
+              <mat-icon>rocket_launch</mat-icon>
+              <span i18n>Mark as fixed in the next release</span>
+            </button>
+          }
+          <button mat-menu-item (click)="copyLink()">
+            <mat-icon>content_copy</mat-icon>
+            <span i18n>Copy link</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="deleteIssue()">
+            <mat-icon>delete_outline</mat-icon>
+            <span i18n>Delete issue</span>
+          </button>
+        </mat-menu>
       </div>
-    </ng-container>
-  </gt-top-app-bar>
-  <section class="l-body l-body--full-width">
-    <div class="issue-header-wrapper">
-      <div class="status-indicator" [class]="'level--' + issue.level">
-        <mat-icon>{{ statusIcon() }}</mat-icon>
-      </div>
+    </header>
 
-      <gt-detail-header [title]="issueTitle()!" [subtitle]="issueSubtitle()" />
-    </div>
+    <div class="cn-detail__grid">
+      <div class="cn-detail__main">
+        <section class="cn-panel" i18n-aria-label aria-label="What happened">
+          <h2 class="cn-panel__title" i18n>What happened</h2>
+          <p class="cn-detail__story">
+            @if (issue.userCount) {
+              <ng-container i18n
+                >This has happened
+                <strong>{issue.count, plural, =1 {once} other {{{ issue.count }} times}}</strong>
+                to
+                <strong>{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}</strong>
+                since
+                <time [dateTime]="issue.firstSeen">{{ issue.firstSeen | date: "MMM d" }}</time>.</ng-container
+              >
+            } @else {
+              <ng-container i18n
+                >This has happened
+                <strong>{issue.count, plural, =1 {once} other {{{ issue.count }} times}}</strong>
+                since
+                <time [dateTime]="issue.firstSeen">{{ issue.firstSeen | date: "MMM d" }}</time>.</ng-container
+              >
+            }
+            @if (issue.status === "unresolved") {
+              {{ " " }}<ng-container i18n
+                >The last time was
+                <time [dateTime]="issue.lastSeen" [title]="issue.lastSeen | date: 'medium'">{{
+                  issue.lastSeen | daysAgo
+                }}</time
+                >.</ng-container
+              >
+            }
+          </p>
+          <dl class="cn-stats">
+            <div class="cn-stat">
+              <dt i18n>Times</dt>
+              <dd>{{ issue.count }}</dd>
+            </div>
+            <div class="cn-stat">
+              <dt i18n>People affected</dt>
+              <dd>{{ issue.userCount || "—" }}</dd>
+            </div>
+            <div class="cn-stat">
+              <dt i18n>Started</dt>
+              <dd>
+                <time [dateTime]="issue.firstSeen" [title]="issue.firstSeen | date: 'medium'">{{
+                  issue.firstSeen | daysAgo
+                }}</time>
+              </dd>
+            </div>
+            <div class="cn-stat">
+              <dt i18n>Last seen</dt>
+              <dd>
+                <time [dateTime]="issue.lastSeen" [title]="issue.lastSeen | date: 'medium'">{{
+                  issue.lastSeen | daysAgo
+                }}</time>
+              </dd>
+            </div>
+          </dl>
+        </section>
 
-    <div class="row">
-      <mat-card class="event-detail-card left">
-        <div class="tab-nav-container">
+        <div class="cn-detail__tabs">
           <nav
+            class="cn-segmented"
             mat-tab-nav-bar
-            class="tabbed-nav"
             mat-stretch-tabs="false"
             [tabPanel]="tabPanel"
+            i18n-aria-label
+            aria-label="Issue sections"
           >
             <a
               mat-tab-link
@@ -80,7 +176,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
               #details="routerLinkActive"
               i18n
-              >Event Details</a
+              >Technical details</a
             >
             <a
               mat-tab-link
@@ -89,21 +185,11 @@
               [active]="reports.isActive"
               #reports="routerLinkActive"
             >
+              <ng-container i18n>Feedback</ng-container>
               @if (issue.userReportCount > 0) {
-                <span
-                  [matBadge]="
-                    issue.userReportCount < 100
-                      ? issue.userReportCount.toString()
-                      : '99+'
-                  "
-                  matBadgeOverlap="false"
-                  class="report-badge"
-                  i18n
-                  >User Reports</span
-                >
-              }
-              @if (issue.userReportCount === 0) {
-                <ng-container i18n>User Reports</ng-container>
+                <span class="cn-count">{{
+                  issue.userReportCount < 100 ? issue.userReportCount : "99+"
+                }}</span>
               }
             </a>
             <a
@@ -113,18 +199,11 @@
               [active]="comments.isActive"
               #comments="routerLinkActive"
             >
+              <ng-container i18n>Comments</ng-container>
               @if (issue.numComments > 0) {
-                <span
-                  [matBadge]="
-                    issue.numComments < 100 ? issue.numComments : '99+'
-                  "
-                  matBadgeOverlap="false"
-                  class="report-badge"
-                  i18n
-                  >Comments
-                </span>
-              } @else {
-                <span i18n>Comments</span>
+                <span class="cn-count">{{
+                  issue.numComments < 100 ? issue.numComments : "99+"
+                }}</span>
               }
             </a>
             <a
@@ -138,54 +217,59 @@
             >
           </nav>
         </div>
-        <mat-card-content>
+        <section class="cn-panel cn-detail__tab-panel">
           <mat-tab-nav-panel #tabPanel>
             <router-outlet></router-outlet>
           </mat-tab-nav-panel>
-        </mat-card-content>
-      </mat-card>
-      <aside class="right">
-        <mat-card appearance="outlined">
-          <mat-card-content>
-            <dl>
-              <div>
-                <dt i18n class="caption-text">Issue #</dt>
-                <dd class="body-text">{{ issue?.shortId }}</dd>
-              </div>
-              <div>
-                <dt i18n class="caption-text">Events</dt>
-                <dd class="body-text">{{ issue?.count }}</dd>
-              </div>
-              <div>
-                <dt i18n class="caption-text">Level</dt>
-                <dd class="body-text">{{ issue.level | titlecase }}</dd>
-              </div>
-              @if (resolvedInRelease(); as release) {
+        </section>
+      </div>
+
+      <aside class="cn-detail__aside">
+        @if (issue.status === "unresolved") {
+          <section class="cn-panel" i18n-aria-label aria-label="What to do next">
+            <h2 class="cn-panel__title" i18n>What to do next</h2>
+            <ol class="cn-steps">
+              <li>
+                <span class="cn-steps__n" aria-hidden="true">1</span>
                 <div>
-                  <dt class="caption-text" i18n>Resolved in</dt>
-                  <dd class="body-text">{{ release }}</dd>
+                  <p i18n>Send it to the person who looks after this code.</p>
+                  <button mat-stroked-button (click)="copyLink()" i18n>
+                    Copy link
+                  </button>
                 </div>
-              }
-              <div>
-                <dt i18n class="caption-text">First Seen</dt>
-                <dd class="body-text">{{ issue.firstSeen | daysAgo }}</dd>
-                <dd class="caption-text">
-                  {{
-                    $safeNavigationMigration(issue?.firstSeen) | date: "long"
-                  }}
-                </dd>
-              </div>
-              <div>
-                <dt i18n class="caption-text">Last Seen</dt>
-                <dd class="body-text">{{ issue.lastSeen | daysAgo }}</dd>
-                <dd class="caption-text">
-                  {{ $safeNavigationMigration(issue?.lastSeen) | date: "long" }}
-                </dd>
-              </div>
-            </dl>
-          </mat-card-content>
-        </mat-card>
+              </li>
+              <li>
+                <span class="cn-steps__n" aria-hidden="true">2</span>
+                <p i18n
+                  >Once it is fixed, press <strong>Mark as fixed</strong>. If it
+                  happens again, it shows up here as open.</p
+                >
+              </li>
+            </ol>
+          </section>
+        }
         <gt-issue-detail-tags [issueID]="issueID()"></gt-issue-detail-tags>
+        <section class="cn-panel" i18n-aria-label aria-label="Details">
+          <h2 class="cn-panel__title" i18n>Details</h2>
+          <dl class="cn-facts">
+            <div>
+              <dt i18n>Issue ID</dt>
+              <dd>{{ issue.shortId }}</dd>
+            </div>
+            <div>
+              <dt i18n>Project</dt>
+              <dd>{{ issue.project.name }}</dd>
+            </div>
+            <div>
+              <dt i18n>First seen</dt>
+              <dd>{{ issue.firstSeen | date: "medium" }}</dd>
+            </div>
+            <div>
+              <dt i18n>Last seen</dt>
+              <dd>{{ issue.lastSeen | date: "medium" }}</dd>
+            </div>
+          </dl>
+        </section>
       </aside>
     </div>
   </section>
