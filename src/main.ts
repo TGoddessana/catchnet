@@ -14,7 +14,12 @@ import { MAT_CARD_CONFIG } from "@angular/material/card";
 import { routes, TemplatePageTitleStrategy } from "./app/app.routes";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { LessAnnoyingErrorStateMatcher } from "./app/shared/less-annoying-error-state-matcher";
-import { ErrorStateMatcher } from "@angular/material/core";
+import {
+  ErrorStateMatcher,
+  MAT_RIPPLE_GLOBAL_OPTIONS,
+} from "@angular/material/core";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from "@angular/material/slide-toggle";
 import { CustomMicroSentryErrorHandler } from "./app/custom-microsentry-error-handler";
 import {
   HttpHandlerFn,
@@ -111,9 +116,30 @@ const bootstrap = () =>
       provideMicroSentry({
         ignoreErrors: [serverErrorsRegex],
       }),
+      // Toasts sit at the bottom right, out of the way of the content.
       {
         provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-        useValue: { duration: snackBarDuration },
+        useValue: {
+          duration: snackBarDuration,
+          horizontalPosition: "end",
+          verticalPosition: "bottom",
+        },
+      },
+      // Inputs carry their label above the box (see _form-field.scss), so it
+      // always floats, and they reserve no empty line for a hint.
+      {
+        provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+        useValue: {
+          appearance: "outline",
+          floatLabel: "always",
+          subscriptSizing: "dynamic",
+        },
+      },
+      // No ink ripples: controls answer with a colour change instead.
+      { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } },
+      {
+        provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS,
+        useValue: { hideIcon: true },
       },
       {
         provide: MAT_CARD_CONFIG,

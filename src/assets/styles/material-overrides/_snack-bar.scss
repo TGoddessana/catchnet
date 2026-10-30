@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+// Toasts: a small near-black card at the bottom right (position set in
+// main.ts), 14px text, the action in the accent's light tint.
+:root {
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--gt-color-primary),
+      container-shape: 10px,
+      supporting-text-color: var(--gt-color-on-primary),
+      supporting-text-font: var(--gt-font-ui),
+      supporting-text-size: 14px,
+      supporting-text-weight: var(--gt-weight-medium),
+      button-color: light-dark(#67d4e8, #0e7490),
+    )
+  );
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  box-shadow: var(--gt-overlay-shadow) !important;
+}
