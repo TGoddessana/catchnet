@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="nb">
   <file id="ngi18n" original="ng.template">
-    <unit id="827275858583778252">
-      <segment state="translated">
-        <source>Organization Invite</source>
+    <unit id="5488246343470396091">
+      <segment state="initial">
+        <source>Organization invite</source>
         <target>Invitasjon til organisasjon</target>
       </segment>
     </unit>
@@ -11,12 +11,6 @@
       <segment state="translated">
         <source>Create New Organization</source>
         <target>Opprett ny organisasjon</target>
-      </segment>
-    </unit>
-    <unit id="2804049603671779506">
-      <segment state="translated">
-        <source>Delete User Account</source>
-        <target>Slett brukerkonto</target>
       </segment>
     </unit>
     <unit id="1203636405699791528">
@@ -35,24 +29,6 @@
       <segment state="translated">
         <source>Auth Tokens</source>
         <target>Auth tokens</target>
-      </segment>
-    </unit>
-    <unit id="7345261406944700511">
-      <segment state="translated">
-        <source>Create New Token</source>
-        <target>Lag nytt token</target>
-      </segment>
-    </unit>
-    <unit id="7890916963184797167">
-      <segment state="initial">
-        <source>Authentication tokens give you access to the GlitchTip API. You can create these tokens as authentication to gain specific access around the app.</source>
-        <target>Auth tokens gir deg tilgang til GlitchTip APIet. Du kan benytte disse til å gi forskjellige og tilpassede tilganger i applikasjonen.</target>
-      </segment>
-    </unit>
-    <unit id="7538977961049758582">
-      <segment state="translated">
-        <source>Your Tokens</source>
-        <target>Dine tokens</target>
       </segment>
     </unit>
     <unit id="4587452935087847438">
@@ -89,18 +65,6 @@
       <segment state="translated">
         <source>Issues</source>
         <target>Problemer</target>
-      </segment>
-    </unit>
-    <unit id="3056614778231322145">
-      <segment state="translated">
-        <source>No user reports have been submitted.</source>
-        <target>Ingen rapporter har blitt sendt inn av brukere.</target>
-      </segment>
-    </unit>
-    <unit id="6509290351210910224">
-      <segment state="initial">
-        <source>To enable user reports, take a look at `showReportDialog` in the JS SDK.</source>
-        <target>For å benytte brukerrapporter, ta en titt på `showReportDialog` i JS SDK.</target>
       </segment>
     </unit>
     <unit id="4053112335752964687">
@@ -161,12 +125,6 @@
       <segment state="initial">
         <source>Code must be of length 6, 8, or 16</source>
         <target>Koden må være 6 eller 16 tegn lang</target>
-      </segment>
-    </unit>
-    <unit id="2454050363478003966">
-      <segment state="translated">
-        <source>Login</source>
-        <target>Logg inn</target>
       </segment>
     </unit>
     <unit id="9040838861188606319">
@@ -271,28 +229,10 @@
         <target>Logg ut</target>
       </segment>
     </unit>
-    <unit id="1399934467160441489">
-      <segment state="translated">
-        <source>Create a New Organization</source>
-        <target>Opprett en ny organisasjon</target>
-      </segment>
-    </unit>
-    <unit id="7079167664042577585">
-      <segment state="translated">
-        <source>This is the first step to get started with GlitchTip.</source>
-        <target>Dette er første steg for å komme i gang med GlitchTip.</target>
-      </segment>
-    </unit>
-    <unit id="4551866846795587701">
-      <segment state="translated">
-        <source>Create Organization</source>
-        <target>Lag organisasjon</target>
-      </segment>
-    </unit>
-    <unit id="2935794773842380882">
+    <unit id="6008221043375089635">
       <segment state="initial">
-        <source>Organization creation has been disabled on this instance of GlitchTip. Contact an administrator to be invited into an existing organization.</source>
-        <target> Registrering er deaktivert. Kontakt en administrator for å bli invitert til en eksisterende organisasjon. </target>
+        <source>This is the first step to get started with catchnet.</source>
+        <target>Dette er første steg for å komme i gang med GlitchTip.</target>
       </segment>
     </unit>
     <unit id="3301086086650990787">
@@ -358,24 +298,6 @@
         <target>Responstid</target>
       </segment>
     </unit>
-    <unit id="8470311110519302542">
-      <segment state="translated">
-        <source>No data</source>
-        <target>Ingen data</target>
-      </segment>
-    </unit>
-    <unit id="4426319772533875265">
-      <segment state="initial">
-        <source> Settings </source>
-        <target> Innstillinger </target>
-      </segment>
-    </unit>
-    <unit id="6998318993417414160">
-      <segment state="translated">
-        <source>Response Time</source>
-        <target>Responstid</target>
-      </segment>
-    </unit>
     <unit id="8154453727027523235">
       <segment state="translated">
         <source>Alerts</source>
@@ -428,12 +350,6 @@
       <segment state="translated">
         <source>Projects</source>
         <target>Prosjekter</target>
-      </segment>
-    </unit>
-    <unit id="5534317372657539313">
-      <segment state="translated">
-        <source>Create New Alert</source>
-        <target>Opprett nytt varsel</target>
       </segment>
     </unit>
     <unit id="5841403146698469514">
@@ -490,12 +406,6 @@
         <target>Logg inn med <ph id="0" equiv="INTERPOLATION" disp="{{ socialApp.name }}"/></target>
       </segment>
     </unit>
-    <unit id="1830742686550996935">
-      <segment state="initial">
-        <source>This organization has no projects.</source>
-        <target>This organization has no projects.</target>
-      </segment>
-    </unit>
     <unit id="100331146953492785">
       <segment state="initial">
         <source>Connect your <ph id="0" equiv="INTERPOLATION" disp="{{ activeProjectPlatformName() }}"/> project to GlitchTip</source>
@@ -514,94 +424,16 @@
         <target>If you go to this project&apos;s <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a data-cy=&quot;platform-settings-link&quot; [routerLink]=&quot;[ &apos;/&apos;, activeOrganizationSlug(), &apos;settings&apos;, &apos;projects&apos;, projectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;"> settings page</pc>, you can pick a platform. If you do, you&apos;ll get more specific instructions about how to get started. </target>
       </segment>
     </unit>
-    <unit id="4388879716045736175">
+    <unit id="8753161405363995526">
       <segment state="initial">
-        <source>Note</source>
-        <target>Note</target>
-      </segment>
-    </unit>
-    <unit id="3821671973040323145">
-      <segment state="initial">
-        <source> Because you are an admin for <ph id="0" equiv="INTERPOLATION" disp="{{ project.organization.name }}"/>, you have access to all of its projects. However, if you want to view issues for <ph id="1" equiv="INTERPOLATION_1" disp="{{ project.name }}"/>, you must be a member of one of its teams. </source>
-        <target> Because you are an admin for <ph id="0" equiv="INTERPOLATION" disp="{{ project.organization.name }}"/>, you have access to all of its projects. However, if you want to view issues for <ph id="1" equiv="INTERPOLATION_1" disp="{{ project.name }}"/>, you must be a member of one of its teams. </target>
-      </segment>
-    </unit>
-    <unit id="5621052107213107389">
-      <segment state="initial">
-        <source>Update Project</source>
-        <target>Update Project</target>
-      </segment>
-    </unit>
-    <unit id="5923980840626905087">
-      <segment state="initial">
-        <source> Platform Documentation </source>
-        <target> Platform Documentation </target>
-      </segment>
-    </unit>
-    <unit id="7033296732013526864">
-      <segment state="initial">
-        <source>Client Keys (DSN)</source>
-        <target>Client Keys (DSN)</target>
-      </segment>
-    </unit>
-    <unit id="1744184913467319832">
-      <segment state="initial">
-        <source> Data Source Name: The code that connects your project to GlitchTip. Install a library into your project, then configure it with the DSN so that it knows how to send errors to your GlitchTip account. </source>
-        <target> Data Source Name: The code that connects your project to GlitchTip. Install a library into your project, then configure it with the DSN so that it knows how to send errors to your GlitchTip account. </target>
-      </segment>
-    </unit>
-    <unit id="1308044504532512434">
-      <segment state="initial">
-        <source>Personal Project Notifications</source>
-        <target>Personal Project Notifications</target>
-      </segment>
-    </unit>
-    <unit id="6699311255070036397">
-      <segment state="initial">
-        <source>Edit whether or not you want to receive notifications for this project</source>
-        <target>Edit whether or not you want to receive notifications for this project</target>
-      </segment>
-    </unit>
-    <unit id="2431017377186650072">
-      <segment state="initial">
-        <source>Edit Preferences</source>
-        <target>Edit Preferences</target>
-      </segment>
-    </unit>
-    <unit id="6302903762785466130">
-      <segment state="initial">
-        <source>Delete Project</source>
-        <target>Delete Project</target>
-      </segment>
-    </unit>
-    <unit id="7226346166840376717">
-      <segment state="initial">
-        <source>By deleting your project, you will lose all associated data. This cannot be undone.</source>
-        <target>By deleting your project, you will lose all associated data. This cannot be undone.</target>
+        <source>Delete project</source>
+        <target>Delete project</target>
       </segment>
     </unit>
     <unit id="7819314041543176992">
       <segment state="initial">
         <source>Close</source>
         <target>Close</target>
-      </segment>
-    </unit>
-    <unit id="6940348790913679018">
-      <segment state="initial">
-        <source>To add a project to this organization, press the &quot;Create New Project&quot; button.</source>
-        <target>To add a project to this organization, press the &quot;Create New Project&quot; button.</target>
-      </segment>
-    </unit>
-    <unit id="3834295552674710150">
-      <segment state="initial">
-        <source>In order to use GlitchTip, you&apos;ll need to create an organization.</source>
-        <target>In order to use GlitchTip, you&apos;ll need to create an organization.</target>
-      </segment>
-    </unit>
-    <unit id="2959157372543624146">
-      <segment state="initial">
-        <source>Create new project in <ph id="0" equiv="INTERPOLATION" disp="{{ organization.name }}"/> </source>
-        <target>Create new project in <ph id="0" equiv="INTERPOLATION" disp="{{ organization.name }}"/> </target>
       </segment>
     </unit>
     <unit id="4894116049835995028">
@@ -640,52 +472,10 @@
         <target>Now that you have an organization and a subscription, create a project.</target>
       </segment>
     </unit>
-    <unit id="2167503793894173335">
-      <segment state="initial">
-        <source>Create a New Team</source>
-        <target>Create a New Team</target>
-      </segment>
-    </unit>
-    <unit id="6240182255609880044">
-      <segment state="initial">
-        <source>Your team slug can only consist of letters, numbers, underscores and/or hyphens.</source>
-        <target>Your team slug can only consist of letters, numbers, underscores and/or hyphens.</target>
-      </segment>
-    </unit>
     <unit id="182653714972067036">
       <segment state="initial">
         <source>Enter a valid slug to create a team</source>
         <target>Enter a valid slug to create a team</target>
-      </segment>
-    </unit>
-    <unit id="5105557512709552795">
-      <segment state="initial">
-        <source>Add Member</source>
-        <target>Add Member</target>
-      </segment>
-    </unit>
-    <unit id="3348547714642337740">
-      <segment state="initial">
-        <source>No members</source>
-        <target>No members</target>
-      </segment>
-    </unit>
-    <unit id="5432975988429346472">
-      <segment state="initial">
-        <source>This team doesn&apos;t have any members</source>
-        <target>This team doesn&apos;t have any members</target>
-      </segment>
-    </unit>
-    <unit id="3768641442274728020">
-      <segment state="initial">
-        <source>No projects</source>
-        <target>No projects</target>
-      </segment>
-    </unit>
-    <unit id="332657983215308739">
-      <segment state="initial">
-        <source>This team doesn&apos;t have any projects</source>
-        <target>This team doesn&apos;t have any projects</target>
       </segment>
     </unit>
     <unit id="2314099574053878289">
@@ -694,58 +484,16 @@
         <target>Enter a team name</target>
       </segment>
     </unit>
-    <unit id="2832668001279440249">
+    <unit id="5739247641350798317">
       <segment state="initial">
-        <source>Delete Team</source>
-        <target>Delete Team</target>
+        <source>Delete team</source>
+        <target>Delete team</target>
       </segment>
     </unit>
-    <unit id="2501480779300161804">
+    <unit id="3854363836178152005">
       <segment state="initial">
-        <source>By deleting your team, you will lose all associated data. This cannot be undone.</source>
-        <target>By deleting your team, you will lose all associated data. This cannot be undone.</target>
-      </segment>
-    </unit>
-    <unit id="1678548018195726594">
-      <segment state="initial">
-        <source>Create Team</source>
-        <target>Create Team</target>
-      </segment>
-    </unit>
-    <unit id="1743088859194300989">
-      <segment state="initial">
-        <source>Your Teams</source>
-        <target>Your Teams</target>
-      </segment>
-    </unit>
-    <unit id="7478140689790892603">
-      <segment state="initial">
-        <source>Teams are for managing issue notifications and workflow. View permissions are handled through <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a routerLink=&quot;../members&quot;&gt;" dispEnd="&lt;/a&gt;"> organization membership.</pc></source>
-        <target>Teams are for managing issue notifications and workflow. View permissions are handled through <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a routerLink=&quot;../members&quot;&gt;" dispEnd="&lt;/a&gt;"> organization membership.</pc></target>
-      </segment>
-    </unit>
-    <unit id="4479333657075318113">
-      <segment state="initial">
-        <source>You aren&apos;t part of any teams. Join a team below or press the &quot;Create Team&quot; button in the upper right.</source>
-        <target>You aren&apos;t part of any teams. Join a team below or press the &quot;Create Team&quot; button in the upper right.</target>
-      </segment>
-    </unit>
-    <unit id="4687980611669913181">
-      <segment state="initial">
-        <source>You don&apos;t have any teams set up. Teams determine which users have access to projects in your organization.</source>
-        <target>You don&apos;t have any teams set up. Teams determine which users have access to projects in your organization.</target>
-      </segment>
-    </unit>
-    <unit id="6560990714812373531">
-      <segment state="initial">
-        <source>To create a new team, press the &quot;Create Team&quot; button in the upper right.</source>
-        <target>To create a new team, press the &quot;Create Team&quot; button in the upper right.</target>
-      </segment>
-    </unit>
-    <unit id="4358157694468493157">
-      <segment state="initial">
-        <source>Other Teams</source>
-        <target>Other Teams</target>
+        <source>Create team</source>
+        <target>Create team</target>
       </segment>
     </unit>
     <unit id="8951128623878467862">
@@ -790,16 +538,10 @@
         <target>Role</target>
       </segment>
     </unit>
-    <unit id="231679111972850796">
+    <unit id="3908083542172712051">
       <segment state="initial">
-        <source>Added</source>
-        <target>Added</target>
-      </segment>
-    </unit>
-    <unit id="1581886603273423006">
-      <segment state="initial">
-        <source>Account Owner</source>
-        <target>Account Owner</target>
+        <source>Account owner</source>
+        <target>Account owner</target>
       </segment>
     </unit>
     <unit id="6895800612787584413">
@@ -824,42 +566,6 @@
       <segment state="initial">
         <source>Unrestricted access to the organization, its data, and its settings. Can add, modify, and delete projects and members.</source>
         <target>Unrestricted access to the organization, its data, and its settings. Can add, modify, and delete projects and members.</target>
-      </segment>
-    </unit>
-    <unit id="3444805486131364421">
-      <segment state="initial">
-        <source>Scopes:</source>
-        <target>Scopes:</target>
-      </segment>
-    </unit>
-    <unit id="2267387778265004491">
-      <segment state="initial">
-        <source>Organization Account Ownership</source>
-        <target>Organization Account Ownership</target>
-      </segment>
-    </unit>
-    <unit id="6146979090477797496">
-      <segment state="initial">
-        <source> The account owner has access to the organization&apos;s GlitchTip subscription settings. If you are the current account owner or have an owner role, you may transfer ownership to this member. </source>
-        <target> The account owner has access to the organization&apos;s GlitchTip subscription settings. If you are the current account owner or have an owner role, you may transfer ownership to this member. </target>
-      </segment>
-    </unit>
-    <unit id="5909691734964157223">
-      <segment state="initial">
-        <source> This member is the organization account owner and has access to the organization&apos;s GlitchTip subscription settings. </source>
-        <target> This member is the organization account owner and has access to the organization&apos;s GlitchTip subscription settings. </target>
-      </segment>
-    </unit>
-    <unit id="3916787140877704867">
-      <segment state="initial">
-        <source>Team(s)</source>
-        <target>Team(s)</target>
-      </segment>
-    </unit>
-    <unit id="9208909205064884220">
-      <segment state="initial">
-        <source>This user isn&apos;t on any teams.</source>
-        <target>This user isn&apos;t on any teams.</target>
       </segment>
     </unit>
     <unit id="1398754421418372278">
@@ -914,12 +620,6 @@
       <segment state="initial">
         <source>Associated Project</source>
         <target>Associated Project</target>
-      </segment>
-    </unit>
-    <unit id="6910864712437104509">
-      <segment state="initial">
-        <source>Uptime email notifications are sent to the team assigned to the associated project.</source>
-        <target>Uptime email notifications are sent to the team assigned to the associated project.</target>
       </segment>
     </unit>
     <unit id="3335933778689867657">
@@ -1066,12 +766,6 @@
         <target>Use only letters, numbers, underscores and/or hyphens</target>
       </segment>
     </unit>
-    <unit id="3811407979880504315">
-      <segment state="initial">
-        <source>System Info</source>
-        <target>System Info</target>
-      </segment>
-    </unit>
     <unit id="4052010728262248283">
       <segment state="initial">
         <source>Backend configuration</source>
@@ -1082,12 +776,6 @@
       <segment state="initial">
         <source>Documentation</source>
         <target>Documentation</target>
-      </segment>
-    </unit>
-    <unit id="8316175416734096923">
-      <segment state="initial">
-        <source> Uptime check interval: <ph id="0" equiv="INTERPOLATION" disp="{{ monitor.interval | number }}"/> seconds </source>
-        <target> Uptime check interval: <ph id="0" equiv="INTERPOLATION" disp="{{ monitor.interval | number }}"/> seconds </target>
       </segment>
     </unit>
     <unit id="7464216857382824881">
@@ -1214,16 +902,10 @@
         <target>Confirm password</target>
       </segment>
     </unit>
-    <unit id="1017066204420437090">
+    <unit id="1145954726038707116">
       <segment state="initial">
-        <source>Set New Password</source>
-        <target>Set New Password</target>
-      </segment>
-    </unit>
-    <unit id="6359908116364527838">
-      <segment state="initial">
-        <source>Project Alerts</source>
-        <target>Project Alerts</target>
+        <source>Project alerts</source>
+        <target>Project alerts</target>
       </segment>
     </unit>
     <unit id="8222747160094057941">
@@ -1706,12 +1388,6 @@
         <target> Enter comment text. </target>
       </segment>
     </unit>
-    <unit id="2356238621860719183">
-      <segment state="initial">
-        <source>Submit Comment</source>
-        <target>Submit Comment</target>
-      </segment>
-    </unit>
     <unit id="4921417678631898927">
       <segment state="initial">
         <source>Delete comment?</source>
@@ -2174,12 +1850,6 @@
         <target>You&apos;re not on the team for at least one of the selected projects. Ask an organization admin to add you.</target>
       </segment>
     </unit>
-    <unit id="282624574787482024">
-      <segment state="initial">
-        <source>{VAR_PLURAL, plural, =0 {events} =1 {1 event} other {<ph id="0" equiv="INTERPOLATION"/> events}}</source>
-        <target>{VAR_PLURAL, plural, =0 {events} =1 {1 event} other {<ph id="0" equiv="INTERPOLATION"/> events}}</target>
-      </segment>
-    </unit>
     <unit id="2744811510684419754">
       <segment state="initial">
         <source>Loading issues</source>
@@ -2198,12 +1868,6 @@
         <target>{VAR_PLURAL, plural, =1 {1 selected} other {<ph id="0" equiv="INTERPOLATION"/> selected}}</target>
       </segment>
     </unit>
-    <unit id="6763803853838721617">
-      <segment state="initial">
-        <source>The last time was <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.lastSeen&quot; [title]=&quot;issue.lastSeen | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ issue.lastSeen | daysAgo }}"/></pc>.</source>
-        <target>The last time was <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.lastSeen&quot; [title]=&quot;issue.lastSeen | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ issue.lastSeen | daysAgo }}"/></pc>.</target>
-      </segment>
-    </unit>
     <unit id="4641277617053474967">
       <segment state="initial">
         <source>All <ph id="0" equiv="INTERPOLATION" disp="{{ numberOfSelectedIssues() }}"/> issues on this page are selected.</source>
@@ -2220,12 +1884,6 @@
       <segment state="initial">
         <source> Undo </source>
         <target> Undo </target>
-      </segment>
-    </unit>
-    <unit id="1647770775567131539">
-      <segment state="translated">
-        <source>Trend:</source>
-        <target>Trend:</target>
       </segment>
     </unit>
     <unit id="5696506580783597529">
@@ -2444,12 +2102,6 @@
         <target>Search logs</target>
       </segment>
     </unit>
-    <unit id="2737721078026311574">
-      <segment state="initial">
-        <source>Search message body...</source>
-        <target>Search message body...</target>
-      </segment>
-    </unit>
     <unit id="2218082343053095278">
       <segment state="initial">
         <source>Service</source>
@@ -2466,30 +2118,6 @@
       <segment state="initial">
         <source>Loading logs</source>
         <target>Loading logs</target>
-      </segment>
-    </unit>
-    <unit id="4802437878460003316">
-      <segment state="initial">
-        <source>No matching logs</source>
-        <target>No matching logs</target>
-      </segment>
-    </unit>
-    <unit id="3208062810604819243">
-      <segment state="initial">
-        <source>Try adjusting or clearing your filters.</source>
-        <target>Try adjusting or clearing your filters.</target>
-      </segment>
-    </unit>
-    <unit id="2387128922474445063">
-      <segment state="initial">
-        <source>No logs yet</source>
-        <target>No logs yet</target>
-      </segment>
-    </unit>
-    <unit id="8043281408144413530">
-      <segment state="initial">
-        <source>Configure your SDK to start capturing logs.</source>
-        <target>Configure your SDK to start capturing logs.</target>
       </segment>
     </unit>
     <unit id="3894950702316166331">
@@ -2684,12 +2312,6 @@
         <target> for details.</target>
       </segment>
     </unit>
-    <unit id="400576290335781665">
-      <segment state="initial">
-        <source>View all transaction groups</source>
-        <target>View all transaction groups</target>
-      </segment>
-    </unit>
     <unit id="5939888207002128512">
       <segment state="initial">
         <source>Transaction group not found</source>
@@ -2714,86 +2336,10 @@
         <target> View all transaction groups in <ph id="0" equiv="INTERPOLATION" disp="{{ organization.name }}"/> </target>
       </segment>
     </unit>
-    <unit id="4157071276755070841">
-      <segment state="initial">
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Avg Duration</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.avgDuration! | humanizeDuration }}"/>
-          </pc>
-        </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Avg Duration</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.avgDuration! | humanizeDuration }}"/>
-          </pc>
-        </target>
-      </segment>
-    </unit>
-    <unit id="662936269308455040">
-      <segment state="initial">
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Transaction Count</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.count }}"/>
-          </pc>
-        </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Transaction Count</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.count }}"/>
-          </pc>
-        </target>
-      </segment>
-    </unit>
-    <unit id="6037692836891993429">
-      <segment state="initial">
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Operation</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.op }}"/>
-          </pc>
-        </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Operation</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.op }}"/>
-          </pc>
-        </target>
-      </segment>
-    </unit>
-    <unit id="4865153778652456586">
-      <segment state="initial">
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Method</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.method }}"/>
-          </pc>
-        </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Method</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.method }}"/>
-          </pc>
-        </target>
-      </segment>
-    </unit>
     <unit id="5131472756655110143">
       <segment state="initial">
         <source>Span breakdown</source>
         <target>Span breakdown</target>
-      </segment>
-    </unit>
-    <unit id="1711594638667505824">
-      <segment state="initial">
-        <source>No span data available yet</source>
-        <target>No span data available yet</target>
-      </segment>
-    </unit>
-    <unit id="3097284290343622068">
-      <segment state="initial">
-        <source>Span data will appear here once child spans are recorded for this transaction group.</source>
-        <target>Span data will appear here once child spans are recorded for this transaction group.</target>
       </segment>
     </unit>
     <unit id="3512487748216221583">
@@ -2856,58 +2402,22 @@
         <target>Loading…</target>
       </segment>
     </unit>
-    <unit id="127037155895787578">
-      <segment state="initial">
-        <source>Transaction groups</source>
-        <target>Transaction groups</target>
-      </segment>
-    </unit>
     <unit id="596137046478261006">
       <segment state="initial">
         <source>Loading transaction groups</source>
         <target>Loading transaction groups</target>
       </segment>
     </unit>
-    <unit id="5977844493953232241">
+    <unit id="275122132113901028">
       <segment state="initial">
-        <source> There was an error processing your request </source>
-        <target> There was an error processing your request </target>
+        <source>{VAR_PLURAL, plural, =1 {1 transaction} other {<ph id="0" equiv="INTERPOLATION"/> transactions}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 transaction} other {<ph id="0" equiv="INTERPOLATION"/> transactions}}</target>
       </segment>
     </unit>
-    <unit id="5504009211874075446">
+    <unit id="9123998424549902878">
       <segment state="initial">
-        <source> There were errors while processing your request </source>
-        <target> There were errors while processing your request </target>
-      </segment>
-    </unit>
-    <unit id="5701618810648052610">
-      <segment state="initial">
-        <source>Title</source>
-        <target>Title</target>
-      </segment>
-    </unit>
-    <unit id="678589061657776031">
-      <segment state="initial">
-        <source>{VAR_PLURAL, plural, =1 {1 Transaction} other {<ph id="0" equiv="INTERPOLATION"/> Transactions}}</source>
-        <target>{VAR_PLURAL, plural, =1 {1 Transaction} other {<ph id="0" equiv="INTERPOLATION"/> Transactions}}</target>
-      </segment>
-    </unit>
-    <unit id="5981381846274463587">
-      <segment state="initial">
-        <source>Average Duration</source>
-        <target>Average Duration</target>
-      </segment>
-    </unit>
-    <unit id="5589145458945303023">
-      <segment state="initial">
-        <source>No transactions</source>
-        <target>No transactions</target>
-      </segment>
-    </unit>
-    <unit id="953535088200530364">
-      <segment state="initial">
-        <source>Performance data appears here once your app sends transactions.</source>
-        <target>Performance data appears here once your app sends transactions.</target>
+        <source>Average duration</source>
+        <target>Average duration</target>
       </segment>
     </unit>
     <unit id="3232264192332205443">
@@ -2944,24 +2454,6 @@
       <segment state="initial">
         <source>Scopes</source>
         <target>Scopes</target>
-      </segment>
-    </unit>
-    <unit id="858351361293679688">
-      <segment state="initial">
-        <source>No tokens</source>
-        <target>No tokens</target>
-      </segment>
-    </unit>
-    <unit id="7175145836216322796">
-      <segment state="initial">
-        <source>Create a token to use the GlitchTip API.</source>
-        <target>Create a token to use the GlitchTip API.</target>
-      </segment>
-    </unit>
-    <unit id="1054182833797503465">
-      <segment state="initial">
-        <source>Back to auth tokens</source>
-        <target>Back to auth tokens</target>
       </segment>
     </unit>
     <unit id="4077520913910941990">
@@ -3010,28 +2502,28 @@
         <target>Select at least one scope</target>
       </segment>
     </unit>
-    <unit id="918986430725137551">
+    <unit id="5385408710926538560">
       <segment state="initial">
-        <source>Create Token</source>
-        <target>Create Token</target>
+        <source>Create token</source>
+        <target>Create token</target>
       </segment>
     </unit>
-    <unit id="6475969597256383239">
+    <unit id="4765715527929190364">
       <segment state="initial">
-        <source>Email Addresses</source>
-        <target>Email Addresses</target>
+        <source>Email addresses</source>
+        <target>Email addresses</target>
       </segment>
     </unit>
-    <unit id="5314138898559452100">
+    <unit id="5628164219997802241">
       <segment state="initial">
-        <source> Primary </source>
-        <target> Primary </target>
+        <source>Primary</source>
+        <target>Primary</target>
       </segment>
     </unit>
-    <unit id="8723088463093015914">
+    <unit id="4163658450493387918">
       <segment state="initial">
-        <source> Unverified </source>
-        <target> Unverified </target>
+        <source>Unverified</source>
+        <target>Unverified</target>
       </segment>
     </unit>
     <unit id="510225673022156846">
@@ -3052,12 +2544,6 @@
         <target>Remove email address</target>
       </segment>
     </unit>
-    <unit id="4879517228803151475">
-      <segment state="initial">
-        <source>Email Address</source>
-        <target>Email Address</target>
-      </segment>
-    </unit>
     <unit id="1686212905795661329">
       <segment state="initial">
         <source> Please enter a valid email address. </source>
@@ -3068,12 +2554,6 @@
       <segment state="initial">
         <source> This email address is already on the list. </source>
         <target> This email address is already on the list. </target>
-      </segment>
-    </unit>
-    <unit id="5168224160973980905">
-      <segment state="initial">
-        <source>Add Email Address</source>
-        <target>Add Email Address</target>
       </segment>
     </unit>
     <unit id="2973061628865967914">
@@ -3214,18 +2694,6 @@
         <target>Disable</target>
       </segment>
     </unit>
-    <unit id="4948744459319367893">
-      <segment state="initial">
-        <source>Register Security Key</source>
-        <target>Register Security Key</target>
-      </segment>
-    </unit>
-    <unit id="5891459482875358861">
-      <segment state="initial">
-        <source>Set up a hardware device as a second factor to sign in.</source>
-        <target>Set up a hardware device as a second factor to sign in.</target>
-      </segment>
-    </unit>
     <unit id="8693083713920193137">
       <segment state="initial">
         <source> To add a security key to your account, plug it in, click the button below and follow the prompt from your browser. </source>
@@ -3286,12 +2754,6 @@
         <target>Send me project alerts</target>
       </segment>
     </unit>
-    <unit id="9097450677105109097">
-      <segment state="initial">
-        <source> This is the default setting for project alerts. You can change the setting per project below. </source>
-        <target> This is the default setting for project alerts. You can change the setting per project below. </target>
-      </segment>
-    </unit>
     <unit id="1466910410488617155">
       <segment state="initial">
         <source>Default Notifications</source>
@@ -3318,8 +2780,8 @@
     </unit>
     <unit id="8585474066646620696">
       <segment state="initial">
-        <source>Default <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span &gt;" dispEnd="&lt;/span &gt;">(<ph id="1" equiv="INTERPOLATION" disp="{{ (subscribeByDefault()) === true ? onText : offText }}"/>)</pc></source>
-        <target>Default <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span &gt;" dispEnd="&lt;/span &gt;">(<ph id="1" equiv="INTERPOLATION" disp="{{ (subscribeByDefault()) === true ? onText : offText }}"/>)</pc></target>
+        <source>Default <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span &gt;" dispEnd="&lt;/span &gt;">(<ph id="1" equiv="INTERPOLATION" disp="{{ subscribeByDefault() === true ? onText : offText }}"/>)</pc></source>
+        <target>Default <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span &gt;" dispEnd="&lt;/span &gt;">(<ph id="1" equiv="INTERPOLATION" disp="{{ subscribeByDefault() === true ? onText : offText }}"/>)</pc></target>
       </segment>
     </unit>
     <unit id="6793423169871086690">
@@ -3364,40 +2826,16 @@
         <target>Dark</target>
       </segment>
     </unit>
-    <unit id="5097410080658371920">
-      <segment state="initial">
-        <source>Update Preferences</source>
-        <target>Update Preferences</target>
-      </segment>
-    </unit>
-    <unit id="7744292213705278878">
-      <segment state="initial">
-        <source>User Profile</source>
-        <target>User Profile</target>
-      </segment>
-    </unit>
-    <unit id="7777236975974969865">
-      <segment state="initial">
-        <source>Social Auth Accounts</source>
-        <target>Social Auth Accounts</target>
-      </segment>
-    </unit>
     <unit id="1259421956660976189">
       <segment state="initial">
         <source>Add Account</source>
         <target>Add Account</target>
       </segment>
     </unit>
-    <unit id="6794398718047270044">
+    <unit id="8129364327738393411">
       <segment state="initial">
-        <source>No connected accounts</source>
-        <target>No connected accounts</target>
-      </segment>
-    </unit>
-    <unit id="4417619564210882782">
-      <segment state="initial">
-        <source>Connect a social login to sign in with it.</source>
-        <target>Connect a social login to sign in with it.</target>
+        <source>No connected accounts yet.</source>
+        <target>No connected accounts yet.</target>
       </segment>
     </unit>
     <unit id="1009948558077383451">
@@ -3410,12 +2848,6 @@
       <segment state="initial">
         <source>A password is required to sign up</source>
         <target>A password is required to sign up</target>
-      </segment>
-    </unit>
-    <unit id="3241357959735682038">
-      <segment state="initial">
-        <source>Confirm Password</source>
-        <target>Confirm Password</target>
       </segment>
     </unit>
     <unit id="3786809661134536914">
@@ -3440,34 +2872,10 @@
         <target> By creating an account, you agree to our <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a class=&quot;auth-link&quot; href=&quot;https://glitchtip.com/legal/tos&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; &gt;" dispEnd="&lt;/a &gt;">Terms of Service</pc> and <pc id="1" equivStart="START_LINK_1" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a class=&quot;auth-link&quot; href=&quot;https://glitchtip.com/legal/privacy&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; &gt;" dispEnd="&lt;/a &gt;">Privacy Policy</pc>. </target>
       </segment>
     </unit>
-    <unit id="5387848024685492875">
-      <segment state="initial">
-        <source>View all Releases</source>
-        <target>View all Releases</target>
-      </segment>
-    </unit>
     <unit id="491451322889220316">
       <segment state="initial">
         <source>Loading release files</source>
         <target>Loading release files</target>
-      </segment>
-    </unit>
-    <unit id="7003790776240394114">
-      <segment state="initial">
-        <source>Filename</source>
-        <target>Filename</target>
-      </segment>
-    </unit>
-    <unit id="1871336547835393592">
-      <segment state="initial">
-        <source>There are no files associated with this release.</source>
-        <target>There are no files associated with this release.</target>
-      </segment>
-    </unit>
-    <unit id="6135551083632800789">
-      <segment state="initial">
-        <source>Release files for </source>
-        <target>Release files for </target>
       </segment>
     </unit>
     <unit id="929931417515884982">
@@ -3482,46 +2890,10 @@
         <target>Version</target>
       </segment>
     </unit>
-    <unit id="7120781274846803553">
-      <segment state="initial">
-        <source>Date Created</source>
-        <target>Date Created</target>
-      </segment>
-    </unit>
-    <unit id="8033508513197634301">
-      <segment state="initial">
-        <source>No releases</source>
-        <target>No releases</target>
-      </segment>
-    </unit>
-    <unit id="3154215924252206494">
-      <segment state="initial">
-        <source>Releases appear here once you send release data with your events.</source>
-        <target>Releases appear here once you send release data with your events.</target>
-      </segment>
-    </unit>
-    <unit id="2215374638124405279">
-      <segment state="initial">
-        <source>Send Reset Password Email</source>
-        <target>Send Reset Password Email</target>
-      </segment>
-    </unit>
     <unit id="9146510295912883664">
       <segment state="initial">
         <source>Your password has been changed.</source>
         <target>Your password has been changed.</target>
-      </segment>
-    </unit>
-    <unit id="3541923058828207879">
-      <segment state="initial">
-        <source>Back to members</source>
-        <target>Back to members</target>
-      </segment>
-    </unit>
-    <unit id="2288101943814243419">
-      <segment state="initial">
-        <source>Basics</source>
-        <target>Basics</target>
       </segment>
     </unit>
     <unit id="3715596725146409911">
@@ -3548,40 +2920,22 @@
         <target>Member</target>
       </segment>
     </unit>
-    <unit id="7612440083886953496">
+    <unit id="227121252510918433">
       <segment state="initial">
-        <source>Update Member</source>
-        <target>Update Member</target>
+        <source>Transfer ownership</source>
+        <target>Transfer ownership</target>
       </segment>
     </unit>
-    <unit id="8152807564169066325">
+    <unit id="6309828574111583895">
       <segment state="initial">
-        <source>Transfer Ownership</source>
-        <target>Transfer Ownership</target>
+        <source>Change password</source>
+        <target>Change password</target>
       </segment>
     </unit>
-    <unit id="1481645236299803925">
+    <unit id="2918022374617289491">
       <segment state="initial">
-        <source> Change Password </source>
-        <target> Change Password </target>
-      </segment>
-    </unit>
-    <unit id="9188868345776929450">
-      <segment state="initial">
-        <source>Organization Members</source>
-        <target>Organization Members</target>
-      </segment>
-    </unit>
-    <unit id="3008762316154356763">
-      <segment state="initial">
-        <source> Account Owner </source>
-        <target> Account Owner </target>
-      </segment>
-    </unit>
-    <unit id="3335368438049125287">
-      <segment state="initial">
-        <source> Invite Pending </source>
-        <target> Invite Pending </target>
+        <source>Invite pending</source>
+        <target>Invite pending</target>
       </segment>
     </unit>
     <unit id="115447290058892677">
@@ -3632,42 +2986,6 @@
         <target>Are you sure you want to remove <ph id="0" equiv="PH" disp="member.email"/> from this organization?</target>
       </segment>
     </unit>
-    <unit id="5926658517548210439">
-      <segment state="initial">
-        <source> Add Member to Organization </source>
-        <target> Add Member to Organization </target>
-      </segment>
-    </unit>
-    <unit id="2214043942921449831">
-      <segment state="initial">
-        <source>Email(s)</source>
-        <target>Email(s)</target>
-      </segment>
-    </unit>
-    <unit id="2559630426089556979">
-      <segment state="initial">
-        <source>Invite a member to join this organization via their email address.</source>
-        <target>Invite a member to join this organization via their email address.</target>
-      </segment>
-    </unit>
-    <unit id="6897988037897344822">
-      <segment state="initial">
-        <source>If they do not already have an account, they will first be asked to create one.</source>
-        <target>If they do not already have an account, they will first be asked to create one.</target>
-      </segment>
-    </unit>
-    <unit id="9200128029436327726">
-      <segment state="initial">
-        <source>Only existing GlitchTip users may be invited.</source>
-        <target>Only existing GlitchTip users may be invited.</target>
-      </segment>
-    </unit>
-    <unit id="1259270873004577425">
-      <segment state="initial">
-        <source>Multiple emails delimited by commas.</source>
-        <target>Multiple emails delimited by commas.</target>
-      </segment>
-    </unit>
     <unit id="388172323153025983">
       <segment state="initial">
         <source> Enter a valid email</source>
@@ -3686,58 +3004,16 @@
         <target>Team</target>
       </segment>
     </unit>
-    <unit id="3207604937156175649">
-      <segment state="initial">
-        <source>Add Team</source>
-        <target>Add Team</target>
-      </segment>
-    </unit>
-    <unit id="8913401436752573259">
-      <segment state="initial">
-        <source>No Teams</source>
-        <target>No Teams</target>
-      </segment>
-    </unit>
-    <unit id="2185826118019934285">
-      <segment state="initial">
-        <source>Add Member(s)</source>
-        <target>Add Member(s)</target>
-      </segment>
-    </unit>
-    <unit id="432834967329800065">
-      <segment state="initial">
-        <source>General Settings</source>
-        <target>General Settings</target>
-      </segment>
-    </unit>
     <unit id="6439365426343089851">
       <segment state="initial">
         <source>General</source>
         <target>General</target>
       </segment>
     </unit>
-    <unit id="8751977620930715509">
+    <unit id="7093928105617239602">
       <segment state="initial">
-        <source>Update Name</source>
-        <target>Update Name</target>
-      </segment>
-    </unit>
-    <unit id="6083399226303311703">
-      <segment state="initial">
-        <source>Delete Organization</source>
-        <target>Delete Organization</target>
-      </segment>
-    </unit>
-    <unit id="4605882393434832327">
-      <segment state="initial">
-        <source> By deleting this organization, you will lose all data including projects and their associated events. </source>
-        <target> By deleting this organization, you will lose all data including projects and their associated events. </target>
-      </segment>
-    </unit>
-    <unit id="5527977519316114214">
-      <segment state="initial">
-        <source>Create a New Project</source>
-        <target>Create a New Project</target>
+        <source>Delete organization</source>
+        <target>Delete organization</target>
       </segment>
     </unit>
     <unit id="365917971431677426">
@@ -3758,28 +3034,10 @@
         <target>Add a team to this project</target>
       </segment>
     </unit>
-    <unit id="4090842231818610126">
+    <unit id="4301597531652727075">
       <segment state="initial">
-        <source> Teams are for managing issue notifications and workflow. </source>
-        <target> Teams are for managing issue notifications and workflow. </target>
-      </segment>
-    </unit>
-    <unit id="8906199686828527073">
-      <segment state="initial">
-        <source>Add a team</source>
-        <target>Add a team</target>
-      </segment>
-    </unit>
-    <unit id="8435281898584959676">
-      <segment state="initial">
-        <source>Create a new team for this project</source>
-        <target>Create a new team for this project</target>
-      </segment>
-    </unit>
-    <unit id="2489114267038713519">
-      <segment state="initial">
-        <source>Create Project</source>
-        <target>Create Project</target>
+        <source>Create project</source>
+        <target>Create project</target>
       </segment>
     </unit>
     <unit id="1009468913199651665">
@@ -4292,22 +3550,10 @@
         <target>Success: Your recipient has been updated</target>
       </segment>
     </unit>
-    <unit id="4435324863259316135">
-      <segment state="initial">
-        <source>Back to Projects</source>
-        <target>Back to Projects</target>
-      </segment>
-    </unit>
     <unit id="2032719064430979056">
       <segment state="initial">
         <source>Select a valid platform</source>
         <target>Select a valid platform</target>
-      </segment>
-    </unit>
-    <unit id="3701263529457744501">
-      <segment state="initial">
-        <source>Update Platform</source>
-        <target>Update Platform</target>
       </segment>
     </unit>
     <unit id="4588245440707810961">
@@ -4334,12 +3580,6 @@
         <target>Environments</target>
       </segment>
     </unit>
-    <unit id="6522129131388866369">
-      <segment state="initial">
-        <source> If you initialize an open-source Sentry SDK with an environment, it will tag events with that environment and GlitchTip will keep a record of them. The environments persist even if the event that reported it is deleted, which is why hiding is an option. </source>
-        <target> If you initialize an open-source Sentry SDK with an environment, it will tag events with that environment and GlitchTip will keep a record of them. The environments persist even if the event that reported it is deleted, which is why hiding is an option. </target>
-      </segment>
-    </unit>
     <unit id="3712758505200425308">
       <segment state="initial">
         <source>Visible</source>
@@ -4362,18 +3602,6 @@
       <segment state="initial">
         <source>Hide</source>
         <target>Hide</target>
-      </segment>
-    </unit>
-    <unit id="3935445601531613483">
-      <segment state="initial">
-        <source>organization</source>
-        <target>organization</target>
-      </segment>
-    </unit>
-    <unit id="1665408336289253972">
-      <segment state="initial">
-        <source>date created</source>
-        <target>date created</target>
       </segment>
     </unit>
     <unit id="5986789075000344504">
@@ -4808,12 +4036,6 @@
         <target>Slug</target>
       </segment>
     </unit>
-    <unit id="6234831298944462737">
-      <segment state="initial">
-        <source>Back to Teams</source>
-        <target>Back to Teams</target>
-      </segment>
-    </unit>
     <unit id="1173743626401426314">
       <segment state="initial">
         <source>Delete team?</source>
@@ -4826,22 +4048,10 @@
         <target>Are you sure you want to delete this team?</target>
       </segment>
     </unit>
-    <unit id="850544545559918850">
+    <unit id="7305408602869665674">
       <segment state="initial">
-        <source>{VAR_PLURAL, plural, =1 {1 Member} other {<ph id="0" equiv="INTERPOLATION"/> Members}}</source>
-        <target>{VAR_PLURAL, plural, =1 {1 Member} other {<ph id="0" equiv="INTERPOLATION"/> Members}}</target>
-      </segment>
-    </unit>
-    <unit id="6524067569228558279">
-      <segment state="initial">
-        <source>Leave Team</source>
-        <target>Leave Team</target>
-      </segment>
-    </unit>
-    <unit id="4286313840809916278">
-      <segment state="initial">
-        <source>Join Team</source>
-        <target>Join Team</target>
+        <source>{VAR_PLURAL, plural, =1 {1 project} other {<ph id="0" equiv="INTERPOLATION"/> projects}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 project} other {<ph id="0" equiv="INTERPOLATION"/> projects}}</target>
       </segment>
     </unit>
     <unit id="5581711712041838743">
@@ -4902,12 +4112,6 @@
       <segment state="initial">
         <source>Each megabyte of file storage is counted as an event</source>
         <target>Each megabyte of file storage is counted as an event</target>
-      </segment>
-    </unit>
-    <unit id="3339635399692804137">
-      <segment state="initial">
-        <source>To view issues for this project, add yourself to the corresponding team.</source>
-        <target>To view issues for this project, add yourself to the corresponding team.</target>
       </segment>
     </unit>
     <unit id="1941477924301007516">
@@ -5126,10 +4330,10 @@
         <target> Manage email addresses </target>
       </segment>
     </unit>
-    <unit id="3066529007110893482">
+    <unit id="6922839297299632161">
       <segment state="initial">
-        <source>Server timezone</source>
-        <target>Server timezone</target>
+        <source>Server time zone</source>
+        <target>Server time zone</target>
       </segment>
     </unit>
     <unit id="1219103917591133799">
@@ -5154,24 +4358,6 @@
       <segment state="initial">
         <source>User registration</source>
         <target>User registration</target>
-      </segment>
-    </unit>
-    <unit id="1721731140760414858">
-      <segment state="initial">
-        <source>GlitchTip version</source>
-        <target>GlitchTip version</target>
-      </segment>
-    </unit>
-    <unit id="4143980839813043576">
-      <segment state="initial">
-        <source>GlitchTip instance name</source>
-        <target>GlitchTip instance name</target>
-      </segment>
-    </unit>
-    <unit id="3578239557119794125">
-      <segment state="initial">
-        <source>See <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;https://glitchtip.com/documentation/install&quot; target=&quot;_blank&quot; &gt;" dispEnd="&lt;/a &gt;">GlitchTip installation and configuration docs</pc>. </source>
-        <target>See <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;https://glitchtip.com/documentation/install&quot; target=&quot;_blank&quot; &gt;" dispEnd="&lt;/a &gt;">GlitchTip installation and configuration docs</pc>. </target>
       </segment>
     </unit>
     <unit id="5452964567933451288">
@@ -5210,12 +4396,6 @@
         <target>Time</target>
       </segment>
     </unit>
-    <unit id="4295547764764047619">
-      <segment state="initial">
-        <source>No monitor checks were found.</source>
-        <target>No monitor checks were found.</target>
-      </segment>
-    </unit>
     <unit id="8507842320502214175">
       <segment state="initial">
         <source> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. There <ph id="2" equiv="ICU" disp="{uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}" subFlows="1561221854942158918"/> set up for this project. Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to <ph id="4" equiv="INTERPOLATION_2" disp="{{ canWriteProject() ? &quot;change&quot; : &quot;see&quot; }}"/> your alerts. </source>
@@ -5228,12 +4408,6 @@
         <target>{VAR_PLURAL, plural, =1 {is 1 uptime alert} other {are <ph id="0" equiv="INTERPOLATION"/> uptime alerts}}</target>
       </segment>
     </unit>
-    <unit id="14674649579778080">
-      <segment state="initial">
-        <source>Heartbeat URL endpoint</source>
-        <target>Heartbeat URL endpoint</target>
-      </segment>
-    </unit>
     <unit id="4244938793593193832">
       <segment state="initial">
         <source> Configure your project to send a POST request with no content to the following URL at your specified interval. If GlitchTip does not receive this request within the interval, your site status will be marked as down. </source>
@@ -5244,18 +4418,6 @@
       <segment state="initial">
         <source>Endpoint URL</source>
         <target>Endpoint URL</target>
-      </segment>
-    </unit>
-    <unit id="7758726334480915397">
-      <segment state="initial">
-        <source>View all uptime monitors</source>
-        <target>View all uptime monitors</target>
-      </segment>
-    </unit>
-    <unit id="6409746709109864687">
-      <segment state="initial">
-        <source>Uptime details for <ph id="0" equiv="monitor" disp="monitor"/></source>
-        <target>Uptime details for <ph id="0" equiv="monitor" disp="monitor"/></target>
       </segment>
     </unit>
     <unit id="264516374370637359">
@@ -5336,22 +4498,10 @@
         <target>This will use approximately <ph id="0" equiv="INTERPOLATION" disp="{{ intervalPerMonth | number: &quot;1.0-0&quot; }}"/> <pc id="1" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[]&quot; (click)=&quot;openEventInfoDialog()&quot;&gt;" dispEnd="&lt;/a&gt;">events</pc> per month, exceeding the <ph id="2" equiv="INTERPOLATION_1" disp="{{ totalEventsAllowed | number: &quot;1.0-0&quot; }}"/> events your organization&apos;s subscription allows for.</target>
       </segment>
     </unit>
-    <unit id="2281481329213880659">
+    <unit id="8877195635897543239">
       <segment state="initial">
-        <source>Update Monitor</source>
-        <target>Update Monitor</target>
-      </segment>
-    </unit>
-    <unit id="4761957245336071240">
-      <segment state="initial">
-        <source>Create Monitor</source>
-        <target>Create Monitor</target>
-      </segment>
-    </unit>
-    <unit id="2044535834632996695">
-      <segment state="initial">
-        <source>Add monitor</source>
-        <target>Add monitor</target>
+        <source>Create monitor</source>
+        <target>Create monitor</target>
       </segment>
     </unit>
     <unit id="3249513483374643425">
@@ -5364,18 +4514,6 @@
       <segment state="initial">
         <source>Loading monitors</source>
         <target>Loading monitors</target>
-      </segment>
-    </unit>
-    <unit id="4545186191685636796">
-      <segment state="initial">
-        <source>No uptime monitors</source>
-        <target>No uptime monitors</target>
-      </segment>
-    </unit>
-    <unit id="1190219267773780159">
-      <segment state="initial">
-        <source>Add a monitor to get alerted when a site or service goes down.</source>
-        <target>Add a monitor to get alerted when a site or service goes down.</target>
       </segment>
     </unit>
     <unit id="8384428628181609310">
@@ -5408,10 +4546,10 @@
         <target>Project (A-Z)</target>
       </segment>
     </unit>
-    <unit id="2091819265387325352">
+    <unit id="7862874719281607802">
       <segment state="initial">
-        <source>Response Time (ms)</source>
-        <target>Response Time (ms)</target>
+        <source>Response time (ms)</source>
+        <target>Response time (ms)</target>
       </segment>
     </unit>
     <unit id="2629601911923442777">
@@ -5420,22 +4558,10 @@
         <target> <ph id="0" equiv="INTERPOLATION" disp="{{ model.name | date: &quot;short&quot; }}"/><ph id="1" equiv="LINE_BREAK" type="fmt" disp="&lt;br /&gt;"/> <ph id="2" equiv="INTERPOLATION_1" disp="{{ model.value }}"/>ms </target>
       </segment>
     </unit>
-    <unit id="8621472262044489748">
-      <segment state="initial">
-        <source>View monitor details</source>
-        <target>View monitor details</target>
-      </segment>
-    </unit>
     <unit id="8499812568313163264">
       <segment state="initial">
         <source>Monitor has been deleted.</source>
         <target>Monitor has been deleted.</target>
-      </segment>
-    </unit>
-    <unit id="1852327910193425166">
-      <segment state="initial">
-        <source>Create a New Uptime Monitor</source>
-        <target>Create a New Uptime Monitor</target>
       </segment>
     </unit>
     <unit id="6339199160877142273">
@@ -5456,22 +4582,10 @@
         <target>Hvor i koden</target>
       </segment>
     </unit>
-    <unit id="6398752392522613511">
-      <segment state="translated">
-        <source>This time</source>
-        <target>Denne gangen</target>
-      </segment>
-    </unit>
     <unit id="4519978959602054033">
       <segment state="translated">
         <source>Most common</source>
         <target>Vanligst</target>
-      </segment>
-    </unit>
-    <unit id="3239474234588340491">
-      <segment state="initial">
-        <source>Fixed in <ph id="0" equiv="INTERPOLATION" disp="{{ release }}"/></source>
-        <target>Fixed in <ph id="0" equiv="INTERPOLATION" disp="{{ release }}"/></target>
       </segment>
     </unit>
     <unit id="7458870133993547687">
@@ -5516,34 +4630,10 @@
         <target>Slett problemet</target>
       </segment>
     </unit>
-    <unit id="2088838495759658460">
-      <segment state="translated">
-        <source>What happened</source>
-        <target>Hva som skjedde</target>
-      </segment>
-    </unit>
-    <unit id="6501386344990074537">
-      <segment state="initial">
-        <source>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> to <pc id="2" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="3" equiv="ICU_1" disp="{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}" subFlows="7747169762350532375"/></pc> since <pc id="4" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="5" equiv="INTERPOLATION_2" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</source>
-        <target>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> to <pc id="2" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="3" equiv="ICU_1" disp="{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}" subFlows="7747169762350532375"/></pc> since <pc id="4" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="5" equiv="INTERPOLATION_2" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</target>
-      </segment>
-    </unit>
-    <unit id="5376008226368173506">
-      <segment state="initial">
-        <source>{VAR_PLURAL, plural, =1 {once} other {<ph id="0" equiv="INTERPOLATION"/> times}}</source>
-        <target>{VAR_PLURAL, plural, =1 {once} other {<ph id="0" equiv="INTERPOLATION"/> times}}</target>
-      </segment>
-    </unit>
     <unit id="2548204464334795778">
       <segment state="initial">
         <source>{VAR_PLURAL, plural, =1 {1 person} other {<ph id="0" equiv="INTERPOLATION"/> people}}</source>
         <target>{VAR_PLURAL, plural, =1 {1 person} other {<ph id="0" equiv="INTERPOLATION"/> people}}</target>
-      </segment>
-    </unit>
-    <unit id="3875928342499212488">
-      <segment state="initial">
-        <source>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> since <pc id="2" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="3" equiv="INTERPOLATION_1" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</source>
-        <target>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> since <pc id="2" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="3" equiv="INTERPOLATION_1" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</target>
       </segment>
     </unit>
     <unit id="5421076199587087589">
@@ -5580,36 +4670,6 @@
       <segment state="translated">
         <source>Feedback</source>
         <target>Tilbakemeldinger</target>
-      </segment>
-    </unit>
-    <unit id="8904685289655594624">
-      <segment state="translated">
-        <source>What to do next</source>
-        <target>Hva du gjør nå</target>
-      </segment>
-    </unit>
-    <unit id="1243328179106709524">
-      <segment state="translated">
-        <source>Send it to the person who looks after this code.</source>
-        <target>Send det til personen som har ansvar for denne koden.</target>
-      </segment>
-    </unit>
-    <unit id="6143795228406387052">
-      <segment state="translated">
-        <source> Copy link </source>
-        <target> Kopier lenke </target>
-      </segment>
-    </unit>
-    <unit id="7180995564793658999">
-      <segment state="initial">
-        <source>Once it is fixed, press <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;">Mark as fixed</pc>. If it happens again, it shows up here as open.</source>
-        <target>Once it is fixed, press <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;">Mark as fixed</pc>. If it happens again, it shows up here as open.</target>
-      </segment>
-    </unit>
-    <unit id="5028777105388019087">
-      <segment state="translated">
-        <source>Details</source>
-        <target>Detaljer</target>
       </segment>
     </unit>
     <unit id="7647042449918022269">
@@ -5718,12 +4778,6 @@
       <segment state="translated">
         <source>Merge into one issue</source>
         <target>Slå sammen til ett problem</target>
-      </segment>
-    </unit>
-    <unit id="2357482879735947487">
-      <segment state="translated">
-        <source>Select issues to fix, mute or merge several at once.</source>
-        <target>Velg problemer for å fikse, dempe eller slå sammen flere samtidig.</target>
       </segment>
     </unit>
     <unit id="5280218112746407598">
@@ -5894,16 +4948,10 @@
         <target>Only organization owners can transfer account ownership.</target>
       </segment>
     </unit>
-    <unit id="2174738705830273795">
+    <unit id="3437865020727336465">
       <segment state="initial">
-        <source>Invite Member</source>
-        <target>Invite Member</target>
-      </segment>
-    </unit>
-    <unit id="7658402240953727096">
-      <segment state="initial">
-        <source>Name:</source>
-        <target>Name:</target>
+        <source>Invite member</source>
+        <target>Invite member</target>
       </segment>
     </unit>
     <unit id="335117862527248159">
@@ -5942,40 +4990,10 @@
         <target>Innstillingsseksjoner</target>
       </segment>
     </unit>
-    <unit id="566779619857361601">
+    <unit id="9140864773379514810">
       <segment state="initial">
-        <source>Changing team settings requires the Admin role or above.</source>
-        <target>Changing team settings requires the Admin role or above.</target>
-      </segment>
-    </unit>
-    <unit id="3988396843447895249">
-      <segment state="initial">
-        <source>You aren&apos;t part of any teams. Join a team below.</source>
-        <target>You aren&apos;t part of any teams. Join a team below.</target>
-      </segment>
-    </unit>
-    <unit id="4996058620223747754">
-      <segment state="initial">
-        <source>You aren&apos;t part of any teams. Press the &quot;Create Team&quot; button in the upper right, or ask an organization Manager or Owner to add you to one.</source>
-        <target>You aren&apos;t part of any teams. Press the &quot;Create Team&quot; button in the upper right, or ask an organization Manager or Owner to add you to one.</target>
-      </segment>
-    </unit>
-    <unit id="3755188974614921924">
-      <segment state="initial">
-        <source>You aren&apos;t part of any teams. Ask an organization Manager or Owner to add you to one.</source>
-        <target>You aren&apos;t part of any teams. Ask an organization Manager or Owner to add you to one.</target>
-      </segment>
-    </unit>
-    <unit id="7015957513839092035">
-      <segment state="initial">
-        <source>Ask an organization Manager or Owner to create one.</source>
-        <target>Ask an organization Manager or Owner to create one.</target>
-      </segment>
-    </unit>
-    <unit id="164308497633977757">
-      <segment state="initial">
-        <source>Ask an organization owner, manager, or admin to create one.</source>
-        <target>Ask an organization owner, manager, or admin to create one.</target>
+        <source>Changing team settings needs the Admin role or above.</source>
+        <target>Changing team settings needs the Admin role or above.</target>
       </segment>
     </unit>
     <unit id="2554609627485860092">
@@ -5990,10 +5008,1036 @@
         <target> There is no project associated with this monitor, so no notifications will be sent for monitor events. <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (canWriteProject()) {" dispEnd="}"> Visit the <pc id="1" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[&apos;./update&apos;]&quot;&gt;" dispEnd="&lt;/a&gt;">monitor settings</pc> page to associate this monitor with a project. </pc></target>
       </segment>
     </unit>
-    <unit id="8234871669027443991">
+    <unit id="3018924331017627562">
       <segment state="initial">
-        <source>Ask an organization Admin or above to add one.</source>
-        <target>Ask an organization Admin or above to add one.</target>
+        <source>catchnet</source>
+        <target>catchnet</target>
+      </segment>
+    </unit>
+    <unit id="3393133458004181121">
+      <segment state="initial">
+        <source>All categories</source>
+        <target>All categories</target>
+      </segment>
+    </unit>
+    <unit id="6170082236603228916">
+      <segment state="initial">
+        <source>Request</source>
+        <target>Request</target>
+      </segment>
+    </unit>
+    <unit id="1139624927916459217">
+      <segment state="initial">
+        <source>This event</source>
+        <target>This event</target>
+      </segment>
+    </unit>
+    <unit id="211513738539049591">
+      <segment state="initial">
+        <source>How often</source>
+        <target>How often</target>
+      </segment>
+    </unit>
+    <unit id="5729418620241283277">
+      <segment state="initial">
+        <source>Events</source>
+        <target>Events</target>
+      </segment>
+    </unit>
+    <unit id="5911214550882917183">
+      <segment state="initial">
+        <source>State</source>
+        <target>State</target>
+      </segment>
+    </unit>
+    <unit id="2134457458264375607">
+      <segment state="initial">
+        <source>Fixed in</source>
+        <target>Fixed in</target>
+      </segment>
+    </unit>
+    <unit id="7903133227524026916">
+      <segment state="initial">
+        <source><ph id="0" equiv="PH" disp="total"/> events in the last 14 days</source>
+        <target><ph id="0" equiv="PH" disp="total"/> events in the last 14 days</target>
+      </segment>
+    </unit>
+    <unit id="8515666729051918917">
+      <segment state="initial">
+        <source><ph id="0" equiv="PH" disp="total"/> events in the last 24 hours</source>
+        <target><ph id="0" equiv="PH" disp="total"/> events in the last 24 hours</target>
+      </segment>
+    </unit>
+    <unit id="3553585318727813098">
+      <segment state="initial">
+        <source>Change the trend period</source>
+        <target>Change the trend period</target>
+      </segment>
+    </unit>
+    <unit id="4747940509314227461">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ issues().length }}"/> of <ph id="1" equiv="INTERPOLATION_1" disp="{{ summaryCount() }}"/></source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ issues().length }}"/> of <ph id="1" equiv="INTERPOLATION_1" disp="{{ summaryCount() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="4713003419468555269">
+      <segment state="initial">
+        <source>No feedback yet</source>
+        <target>No feedback yet</target>
+      </segment>
+    </unit>
+    <unit id="3417238479788357902">
+      <segment state="initial">
+        <source>People can describe what they were doing when an error happened. Turn it on with showReportDialog in the JS SDK.</source>
+        <target>People can describe what they were doing when an error happened. Turn it on with showReportDialog in the JS SDK.</target>
+      </segment>
+    </unit>
+    <unit id="1973757892929418316">
+      <segment state="initial">
+        <source>Log in to catchnet</source>
+        <target>Log in to catchnet</target>
+      </segment>
+    </unit>
+    <unit id="2012659005494284050">
+      <segment state="initial">
+        <source>Forgot your password?</source>
+        <target>Forgot your password?</target>
+      </segment>
+    </unit>
+    <unit id="1721839189566022188">
+      <segment state="initial">
+        <source>What your app logged, newest first.</source>
+        <target>What your app logged, newest first.</target>
+      </segment>
+    </unit>
+    <unit id="1334206562663359316">
+      <segment state="initial">
+        <source>Search log messages</source>
+        <target>Search log messages</target>
+      </segment>
+    </unit>
+    <unit id="6035549592328076369">
+      <segment state="initial">
+        <source>All levels</source>
+        <target>All levels</target>
+      </segment>
+    </unit>
+    <unit id="3165072126652953624">
+      <segment state="initial">
+        <source>No logs match these filters. Clear them to see every log.</source>
+        <target>No logs match these filters. Clear them to see every log.</target>
+      </segment>
+    </unit>
+    <unit id="1651198966226050034">
+      <segment state="initial">
+        <source>No logs yet. Turn on logging in your SDK and they stream in here.</source>
+        <target>No logs yet. Turn on logging in your SDK and they stream in here.</target>
+      </segment>
+    </unit>
+    <unit id="5034473762587110175">
+      <segment state="initial">
+        <source>Open navigation</source>
+        <target>Open navigation</target>
+      </segment>
+    </unit>
+    <unit id="2765507593757945216">
+      <segment state="initial">
+        <source>New organization</source>
+        <target>New organization</target>
+      </segment>
+    </unit>
+    <unit id="3196693437757658114">
+      <segment state="initial">
+        <source>Usually your company or team. Projects, members and alerts live inside it.</source>
+        <target>Usually your company or team. Projects, members and alerts live inside it.</target>
+      </segment>
+    </unit>
+    <unit id="5243233792859835904">
+      <segment state="initial">
+        <source>Organization name</source>
+        <target>Organization name</target>
+      </segment>
+    </unit>
+    <unit id="71431750545763103">
+      <segment state="initial">
+        <source>Creating organizations is turned off on this server. Ask an administrator to invite you to an existing one.</source>
+        <target>Creating organizations is turned off on this server. Ask an administrator to invite you to an existing one.</target>
+      </segment>
+    </unit>
+    <unit id="2611475427610660053">
+      <segment state="initial">
+        <source>Transactions</source>
+        <target>Transactions</target>
+      </segment>
+    </unit>
+    <unit id="8864288285279476751">
+      <segment state="initial">
+        <source>Method</source>
+        <target>Method</target>
+      </segment>
+    </unit>
+    <unit id="6521414370349944484">
+      <segment state="initial">
+        <source>No spans yet. They show up here once child spans are recorded for this transaction group.</source>
+        <target>No spans yet. They show up here once child spans are recorded for this transaction group.</target>
+      </segment>
+    </unit>
+    <unit id="7515585277609614727">
+      <segment state="initial">
+        <source>How long each kind of request or task takes, by transaction group.</source>
+        <target>How long each kind of request or task takes, by transaction group.</target>
+      </segment>
+    </unit>
+    <unit id="313854265968026491">
+      <segment state="initial">
+        <source>Transaction</source>
+        <target>Transaction</target>
+      </segment>
+    </unit>
+    <unit id="3194424597072267957">
+      <segment state="initial">
+        <source>No transactions yet. Turn on tracing in your SDK and they show up here.</source>
+        <target>No transactions yet. Turn on tracing in your SDK and they show up here.</target>
+      </segment>
+    </unit>
+    <unit id="7662015208795302518">
+      <segment state="initial">
+        <source>Delete account</source>
+        <target>Delete account</target>
+      </segment>
+    </unit>
+    <unit id="439421944476106091">
+      <segment state="initial">
+        <source>Removes your user and your access to every organization.</source>
+        <target>Removes your user and your access to every organization.</target>
+      </segment>
+    </unit>
+    <unit id="1635166394021927849">
+      <segment state="initial">
+        <source>Auth tokens</source>
+        <target>Auth tokens</target>
+      </segment>
+    </unit>
+    <unit id="4440196256439958466">
+      <segment state="initial">
+        <source>Tokens let scripts and tools use the catchnet API as you, limited to the scopes you pick.</source>
+        <target>Tokens let scripts and tools use the catchnet API as you, limited to the scopes you pick.</target>
+      </segment>
+    </unit>
+    <unit id="5382715531175540381">
+      <segment state="initial">
+        <source>New token</source>
+        <target>New token</target>
+      </segment>
+    </unit>
+    <unit id="3193976279273491157">
+      <segment state="initial">
+        <source>Actions</source>
+        <target>Actions</target>
+      </segment>
+    </unit>
+    <unit id="4356380398783669401">
+      <segment state="initial">
+        <source>No tokens yet. A new token appears here with its scopes.</source>
+        <target>No tokens yet. A new token appears here with its scopes.</target>
+      </segment>
+    </unit>
+    <unit id="8191335195814023306">
+      <segment state="initial">
+        <source>At least 8 characters. You stay logged in after changing it.</source>
+        <target>At least 8 characters. You stay logged in after changing it.</target>
+      </segment>
+    </unit>
+    <unit id="2160978867170969270">
+      <segment state="initial">
+        <source>Alerts go to the primary address. You can log in with any verified one.</source>
+        <target>Alerts go to the primary address. You can log in with any verified one.</target>
+      </segment>
+    </unit>
+    <unit id="6872828477582079289">
+      <segment state="initial">
+        <source>Add an email address</source>
+        <target>Add an email address</target>
+      </segment>
+    </unit>
+    <unit id="8497146370841352640">
+      <segment state="initial">
+        <source>A 6-digit code from an app on your phone, asked for at every login.</source>
+        <target>A 6-digit code from an app on your phone, asked for at every login.</target>
+      </segment>
+    </unit>
+    <unit id="9041314938896860938">
+      <segment state="initial">
+        <source>A hardware key or passkey you touch or unlock to log in.</source>
+        <target>A hardware key or passkey you touch or unlock to log in.</target>
+      </segment>
+    </unit>
+    <unit id="418740200823377360">
+      <segment state="initial">
+        <source>Whether alert emails reach you. This is the default for every project; you can change it per project.</source>
+        <target>Whether alert emails reach you. This is the default for every project; you can change it per project.</target>
+      </segment>
+    </unit>
+    <unit id="8190456424078094416">
+      <segment state="initial">
+        <source>By project</source>
+        <target>By project</target>
+      </segment>
+    </unit>
+    <unit id="2218697712739917757">
+      <segment state="initial">
+        <source>Turn alerts on or off for one project, or let it follow the default.</source>
+        <target>Turn alerts on or off for one project, or let it follow the default.</target>
+      </segment>
+    </unit>
+    <unit id="3679829855154179183">
+      <segment state="initial">
+        <source>Your name, the time zone dates are shown in, and the theme.</source>
+        <target>Your name, the time zone dates are shown in, and the theme.</target>
+      </segment>
+    </unit>
+    <unit id="5134745148043977084">
+      <segment state="initial">
+        <source>Save preferences</source>
+        <target>Save preferences</target>
+      </segment>
+    </unit>
+    <unit id="5659640923263690937">
+      <segment state="initial">
+        <source>Account sections</source>
+        <target>Account sections</target>
+      </segment>
+    </unit>
+    <unit id="3433047944194115494">
+      <segment state="initial">
+        <source>Two-factor auth</source>
+        <target>Two-factor auth</target>
+      </segment>
+    </unit>
+    <unit id="3627684294873608184">
+      <segment state="initial">
+        <source>Connected accounts</source>
+        <target>Connected accounts</target>
+      </segment>
+    </unit>
+    <unit id="2880471822874502110">
+      <segment state="initial">
+        <source>Log in with an account from another service.</source>
+        <target>Log in with an account from another service.</target>
+      </segment>
+    </unit>
+    <unit id="2308975396733519902">
+      <segment state="initial">
+        <source>Create an account</source>
+        <target>Create an account</target>
+      </segment>
+    </unit>
+    <unit id="4207916966377787111">
+      <segment state="initial">
+        <source>Created</source>
+        <target>Created</target>
+      </segment>
+    </unit>
+    <unit id="7879546973853685748">
+      <segment state="initial">
+        <source>Released</source>
+        <target>Released</target>
+      </segment>
+    </unit>
+    <unit id="9005457553529671208">
+      <segment state="initial">
+        <source>Commits</source>
+        <target>Commits</target>
+      </segment>
+    </unit>
+    <unit id="5474613569599874194">
+      <segment state="initial">
+        <source>Deploys</source>
+        <target>Deploys</target>
+      </segment>
+    </unit>
+    <unit id="2432093903373755152">
+      <segment state="initial">
+        <source>Source files</source>
+        <target>Source files</target>
+      </segment>
+    </unit>
+    <unit id="8455204924704616723">
+      <segment state="initial">
+        <source>File</source>
+        <target>File</target>
+      </segment>
+    </unit>
+    <unit id="1324359997838665586">
+      <segment state="initial">
+        <source>No source files for this release. Upload source maps to see readable stack traces for its errors.</source>
+        <target>No source files for this release. Upload source maps to see readable stack traces for its errors.</target>
+      </segment>
+    </unit>
+    <unit id="9112034082545177870">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ count }}"/> in total, newest first</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ count }}"/> in total, newest first</target>
+      </segment>
+    </unit>
+    <unit id="7340635086968864058">
+      <segment state="initial">
+        <source>No releases yet. They show up here once your app sends its release name with its events.</source>
+        <target>No releases yet. They show up here once your app sends its release name with its events.</target>
+      </segment>
+    </unit>
+    <unit id="4371680625121499898">
+      <segment state="initial">
+        <source>Reset your password</source>
+        <target>Reset your password</target>
+      </segment>
+    </unit>
+    <unit id="5111842031822965750">
+      <segment state="initial">
+        <source>Send reset link</source>
+        <target>Send reset link</target>
+      </segment>
+    </unit>
+    <unit id="327534766307158513">
+      <segment state="initial">
+        <source>Remembered it?</source>
+        <target>Remembered it?</target>
+      </segment>
+    </unit>
+    <unit id="8282309360961339523">
+      <segment state="initial">
+        <source>Set a new password</source>
+        <target>Set a new password</target>
+      </segment>
+    </unit>
+    <unit id="3551597027565719993">
+      <segment state="initial">
+        <source>Added <ph id="0" equiv="INTERPOLATION" disp="{{ member.dateCreated | date }}"/></source>
+        <target>Added <ph id="0" equiv="INTERPOLATION" disp="{{ member.dateCreated | date }}"/></target>
+      </segment>
+    </unit>
+    <unit id="2741553799314718632">
+      <segment state="initial">
+        <source>What this person can see and change in the organization.</source>
+        <target>What this person can see and change in the organization.</target>
+      </segment>
+    </unit>
+    <unit id="3768927257183755959">
+      <segment state="initial">
+        <source>Save</source>
+        <target>Save</target>
+      </segment>
+    </unit>
+    <unit id="5220827832846747610">
+      <segment state="initial">
+        <source>Teams this person belongs to.</source>
+        <target>Teams this person belongs to.</target>
+      </segment>
+    </unit>
+    <unit id="1706470228597151674">
+      <segment state="initial">
+        <source>Not on any team yet.</source>
+        <target>Not on any team yet.</target>
+      </segment>
+    </unit>
+    <unit id="5448250423159030072">
+      <segment state="initial">
+        <source>Account ownership</source>
+        <target>Account ownership</target>
+      </segment>
+    </unit>
+    <unit id="3905876795549292879">
+      <segment state="initial">
+        <source>The account owner manages the organization&apos;s subscription.</source>
+        <target>The account owner manages the organization&apos;s subscription.</target>
+      </segment>
+    </unit>
+    <unit id="3040925054075759715">
+      <segment state="initial">
+        <source>Make <ph id="0" equiv="INTERPOLATION" disp="{{ member.email }}"/> the account owner.</source>
+        <target>Make <ph id="0" equiv="INTERPOLATION" disp="{{ member.email }}"/> the account owner.</target>
+      </segment>
+    </unit>
+    <unit id="1284060999264704046">
+      <segment state="initial">
+        <source>This person is the account owner.</source>
+        <target>This person is the account owner.</target>
+      </segment>
+    </unit>
+    <unit id="4484617691903089526">
+      <segment state="initial">
+        <source><ph id="0" equiv="ICU" disp="{members.length, plural, =1 {1 person} other {{{ members.length }} people}}" subFlows="7747169762350532375"/> in <ph id="1" equiv="INTERPOLATION_1" disp="{{ activeOrganizationDetail()?.name }}"/></source>
+        <target><ph id="0" equiv="ICU" disp="{members.length, plural, =1 {1 person} other {{{ members.length }} people}}" subFlows="7747169762350532375"/> in <ph id="1" equiv="INTERPOLATION_1" disp="{{ activeOrganizationDetail()?.name }}"/></target>
+      </segment>
+    </unit>
+    <unit id="3463797202358605584">
+      <segment state="initial">
+        <source>Invite</source>
+        <target>Invite</target>
+      </segment>
+    </unit>
+    <unit id="6950709550164920678">
+      <segment state="initial">
+        <source>Invite members</source>
+        <target>Invite members</target>
+      </segment>
+    </unit>
+    <unit id="4900524059915832269">
+      <segment state="initial">
+        <source>People without an account are asked to create one first.</source>
+        <target>People without an account are asked to create one first.</target>
+      </segment>
+    </unit>
+    <unit id="7334664808246694669">
+      <segment state="initial">
+        <source>Only people who already have an account can be invited.</source>
+        <target>Only people who already have an account can be invited.</target>
+      </segment>
+    </unit>
+    <unit id="7516704169675525177">
+      <segment state="initial">
+        <source>Separate several addresses with commas.</source>
+        <target>Separate several addresses with commas.</target>
+      </segment>
+    </unit>
+    <unit id="5227520619702195679">
+      <segment state="initial">
+        <source>What they can see and change. You can change it later.</source>
+        <target>What they can see and change. You can change it later.</target>
+      </segment>
+    </unit>
+    <unit id="8374005152080281567">
+      <segment state="initial">
+        <source>Optional. Teams decide which projects they see.</source>
+        <target>Optional. Teams decide which projects they see.</target>
+      </segment>
+    </unit>
+    <unit id="8794427930159632234">
+      <segment state="initial">
+        <source>No teams yet</source>
+        <target>No teams yet</target>
+      </segment>
+    </unit>
+    <unit id="4976965009176595392">
+      <segment state="initial">
+        <source>Send invites</source>
+        <target>Send invites</target>
+      </segment>
+    </unit>
+    <unit id="945085903935422089">
+      <segment state="initial">
+        <source>Settings for the <ph id="0" equiv="INTERPOLATION" disp="{{ activeOrg.name }}"/> organization.</source>
+        <target>Settings for the <ph id="0" equiv="INTERPOLATION" disp="{{ activeOrg.name }}"/> organization.</target>
+      </segment>
+    </unit>
+    <unit id="2004609861986596623">
+      <segment state="initial">
+        <source>Shown in the sidebar and in emails catchnet sends.</source>
+        <target>Shown in the sidebar and in emails catchnet sends.</target>
+      </segment>
+    </unit>
+    <unit id="1970558220572598781">
+      <segment state="initial">
+        <source>Removes every project, issue and event in it. This cannot be undone.</source>
+        <target>Removes every project, issue and event in it. This cannot be undone.</target>
+      </segment>
+    </unit>
+    <unit id="690303224540954504">
+      <segment state="initial">
+        <source>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ activeOrg.name }}"/> and everything in it.</source>
+        <target>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ activeOrg.name }}"/> and everything in it.</target>
+      </segment>
+    </unit>
+    <unit id="8540729217579212886">
+      <segment state="initial">
+        <source>New project</source>
+        <target>New project</target>
+      </segment>
+    </unit>
+    <unit id="8991319406662170497">
+      <segment state="initial">
+        <source>A project collects the errors of one app or service. You get its setup code right after.</source>
+        <target>A project collects the errors of one app or service. You get its setup code right after.</target>
+      </segment>
+    </unit>
+    <unit id="7023385889710331946">
+      <segment state="initial">
+        <source>What the app is written in. It picks the setup guide.</source>
+        <target>What the app is written in. It picks the setup guide.</target>
+      </segment>
+    </unit>
+    <unit id="6712755866980113715">
+      <segment state="initial">
+        <source>Usually the app&apos;s name, such as web or billing-api.</source>
+        <target>Usually the app&apos;s name, such as web or billing-api.</target>
+      </segment>
+    </unit>
+    <unit id="2813203376157857672">
+      <segment state="initial">
+        <source>The team that sees this project&apos;s issues and gets its alerts.</source>
+        <target>The team that sees this project&apos;s issues and gets its alerts.</target>
+      </segment>
+    </unit>
+    <unit id="1148580104303860524">
+      <segment state="initial">
+        <source>New team</source>
+        <target>New team</target>
+      </segment>
+    </unit>
+    <unit id="5217524798738013084">
+      <segment state="initial">
+        <source>Send an email or a webhook when this project&apos;s errors cross a threshold you set.</source>
+        <target>Send an email or a webhook when this project&apos;s errors cross a threshold you set.</target>
+      </segment>
+    </unit>
+    <unit id="110120110137304636">
+      <segment state="initial">
+        <source>New alert</source>
+        <target>New alert</target>
+      </segment>
+    </unit>
+    <unit id="1898058490803978010">
+      <segment state="initial">
+        <source>Created <ph id="0" equiv="INTERPOLATION" disp="{{ project.dateCreated | date: &quot;mediumDate&quot; }}"/></source>
+        <target>Created <ph id="0" equiv="INTERPOLATION" disp="{{ project.dateCreated | date: &quot;mediumDate&quot; }}"/></target>
+      </segment>
+    </unit>
+    <unit id="3585984106786689241">
+      <segment state="initial">
+        <source>View issues</source>
+        <target>View issues</target>
+      </segment>
+    </unit>
+    <unit id="2215272820018380966">
+      <segment state="initial">
+        <source>You can change this project&apos;s settings because you are an admin of <ph id="0" equiv="INTERPOLATION" disp="{{ project.organization.name }}"/>. To see its issues, join one of its teams.</source>
+        <target>You can change this project&apos;s settings because you are an admin of <ph id="0" equiv="INTERPOLATION" disp="{{ project.organization.name }}"/>. To see its issues, join one of its teams.</target>
+      </segment>
+    </unit>
+    <unit id="1020732716418946003">
+      <segment state="initial">
+        <source>Setup code</source>
+        <target>Setup code</target>
+      </segment>
+    </unit>
+    <unit id="9068466979700526588">
+      <segment state="initial">
+        <source>Install an SDK in your app and give it this DSN, so it knows where to send errors.</source>
+        <target>Install an SDK in your app and give it this DSN, so it knows where to send errors.</target>
+      </segment>
+    </unit>
+    <unit id="2419006590817891116">
+      <segment state="initial">
+        <source>Setup guide for <ph id="0" equiv="INTERPOLATION" disp="{{ getPlatformName(project.platform) }}"/></source>
+        <target>Setup guide for <ph id="0" equiv="INTERPOLATION" disp="{{ getPlatformName(project.platform) }}"/></target>
+      </segment>
+    </unit>
+    <unit id="1203312461457950425">
+      <segment state="initial">
+        <source>Security endpoint</source>
+        <target>Security endpoint</target>
+      </segment>
+    </unit>
+    <unit id="8218359335580289116">
+      <segment state="initial">
+        <source>Shown in lists and filters across catchnet.</source>
+        <target>Shown in lists and filters across catchnet.</target>
+      </segment>
+    </unit>
+    <unit id="562690777697414490">
+      <segment state="initial">
+        <source>The language or framework the project runs on. It picks the setup guide above.</source>
+        <target>The language or framework the project runs on. It picks the setup guide above.</target>
+      </segment>
+    </unit>
+    <unit id="5967527020153018537">
+      <segment state="initial">
+        <source>Clear platform</source>
+        <target>Clear platform</target>
+      </segment>
+    </unit>
+    <unit id="5900236585725902780">
+      <segment state="initial">
+        <source>Your notifications</source>
+        <target>Your notifications</target>
+      </segment>
+    </unit>
+    <unit id="4841235382767147744">
+      <segment state="initial">
+        <source>Whether you get emails about this project is set in your account.</source>
+        <target>Whether you get emails about this project is set in your account.</target>
+      </segment>
+    </unit>
+    <unit id="8512969405910625016">
+      <segment state="initial">
+        <source>Notification settings apply per project.</source>
+        <target>Notification settings apply per project.</target>
+      </segment>
+    </unit>
+    <unit id="3107905422978085237">
+      <segment state="initial">
+        <source>Open notification settings</source>
+        <target>Open notification settings</target>
+      </segment>
+    </unit>
+    <unit id="5813267492852629411">
+      <segment state="initial">
+        <source>Removes the project with all its issues and events. This cannot be undone.</source>
+        <target>Removes the project with all its issues and events. This cannot be undone.</target>
+      </segment>
+    </unit>
+    <unit id="6561056648798100149">
+      <segment state="initial">
+        <source>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ project.name }}"/> and everything it has received.</source>
+        <target>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ project.name }}"/> and everything it has received.</target>
+      </segment>
+    </unit>
+    <unit id="5342180019869279870">
+      <segment state="initial">
+        <source>Errors are tagged with the environment your SDK reports, such as production or staging. Hide one to leave it out of filters.</source>
+        <target>Errors are tagged with the environment your SDK reports, such as production or staging. Hide one to leave it out of filters.</target>
+      </segment>
+    </unit>
+    <unit id="5636875950746599528">
+      <segment state="initial">
+        <source>No environments yet. They appear here once an event reports one.</source>
+        <target>No environments yet. They appear here once an event reports one.</target>
+      </segment>
+    </unit>
+    <unit id="8421602876110934393">
+      <segment state="initial">
+        <source>Open a project&apos;s settings for its setup code, environments and teams.</source>
+        <target>Open a project&apos;s settings for its setup code, environments and teams.</target>
+      </segment>
+    </unit>
+    <unit id="1721315171916851231">
+      <segment state="initial">
+        <source>Letters, numbers, underscores and hyphens</source>
+        <target>Letters, numbers, underscores and hyphens</target>
+      </segment>
+    </unit>
+    <unit id="1162903517846219476">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =0 {No members yet} =1 {1 member} other {<ph id="0" equiv="INTERPOLATION"/> members}}</source>
+        <target>{VAR_PLURAL, plural, =0 {No members yet} =1 {1 member} other {<ph id="0" equiv="INTERPOLATION"/> members}}</target>
+      </segment>
+    </unit>
+    <unit id="8011041868490696670">
+      <segment state="initial">
+        <source>Add a member</source>
+        <target>Add a member</target>
+      </segment>
+    </unit>
+    <unit id="896407838930646903">
+      <segment state="initial">
+        <source>Everyone is already on this team</source>
+        <target>Everyone is already on this team</target>
+      </segment>
+    </unit>
+    <unit id="3034958254400730760">
+      <segment state="initial">
+        <source>Add a project</source>
+        <target>Add a project</target>
+      </segment>
+    </unit>
+    <unit id="597644640015830204">
+      <segment state="initial">
+        <source>Every project is already on this team</source>
+        <target>Every project is already on this team</target>
+      </segment>
+    </unit>
+    <unit id="5367020503354903001">
+      <segment state="initial">
+        <source>The team&apos;s slug, shown after # wherever the team appears.</source>
+        <target>The team&apos;s slug, shown after # wherever the team appears.</target>
+      </segment>
+    </unit>
+    <unit id="858592354685834555">
+      <segment state="initial">
+        <source>Its projects and members stay in the organization. This cannot be undone.</source>
+        <target>Its projects and members stay in the organization. This cannot be undone.</target>
+      </segment>
+    </unit>
+    <unit id="7803099382814958474">
+      <segment state="initial">
+        <source>Delete #<ph id="0" equiv="INTERPOLATION" disp="{{ team()?.slug }}"/>.</source>
+        <target>Delete #<ph id="0" equiv="INTERPOLATION" disp="{{ team()?.slug }}"/>.</target>
+      </segment>
+    </unit>
+    <unit id="2009532346751172251">
+      <segment state="initial">
+        <source>Teams decide which projects people see and who hears about their issues.</source>
+        <target>Teams decide which projects people see and who hears about their issues.</target>
+      </segment>
+    </unit>
+    <unit id="5077171561940262649">
+      <segment state="initial">
+        <source>You&apos;re in it</source>
+        <target>You&apos;re in it</target>
+      </segment>
+    </unit>
+    <unit id="8307140841776883735">
+      <segment state="initial">
+        <source>Join</source>
+        <target>Join</target>
+      </segment>
+    </unit>
+    <unit id="8904826282875215662">
+      <segment state="initial">
+        <source>No teams yet. Create one to group people around projects.</source>
+        <target>No teams yet. Create one to group people around projects.</target>
+      </segment>
+    </unit>
+    <unit id="8470095145612853829">
+      <segment state="initial">
+        <source>No teams yet. Ask an organization manager or owner to create one.</source>
+        <target>No teams yet. Ask an organization manager or owner to create one.</target>
+      </segment>
+    </unit>
+    <unit id="334182473010900434">
+      <segment state="initial">
+        <source>No projects yet. Create one to get the setup code for your app.</source>
+        <target>No projects yet. Create one to get the setup code for your app.</target>
+      </segment>
+    </unit>
+    <unit id="7972980847793988528">
+      <segment state="initial">
+        <source>No projects yet. Ask an organization owner, manager or admin to create one.</source>
+        <target>No projects yet. Ask an organization owner, manager or admin to create one.</target>
+      </segment>
+    </unit>
+    <unit id="8238658995714900345">
+      <segment state="initial">
+        <source><ph id="0" equiv="ICU" disp="{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}}" subFlows="556381734012115817"/> in <ph id="1" equiv="INTERPOLATION_1" disp="{{ orgs.length }}"/> organizations</source>
+        <target><ph id="0" equiv="ICU" disp="{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}}" subFlows="556381734012115817"/> in <ph id="1" equiv="INTERPOLATION_1" disp="{{ orgs.length }}"/> organizations</target>
+      </segment>
+    </unit>
+    <unit id="8042861271886887578">
+      <segment state="initial">
+        <source>To start catching errors, create an organization first.</source>
+        <target>To start catching errors, create an organization first.</target>
+      </segment>
+    </unit>
+    <unit id="4852115625162521529">
+      <segment state="initial">
+        <source>Open issues</source>
+        <target>Open issues</target>
+      </segment>
+    </unit>
+    <unit id="8649946906321476069">
+      <segment state="initial">
+        <source>Latest issue</source>
+        <target>Latest issue</target>
+      </segment>
+    </unit>
+    <unit id="416345554106398613">
+      <segment state="initial">
+        <source>Not a member</source>
+        <target>Not a member</target>
+      </segment>
+    </unit>
+    <unit id="3120170941966679663">
+      <segment state="initial">
+        <source>Join one of this project&apos;s teams to see its issues</source>
+        <target>Join one of this project&apos;s teams to see its issues</target>
+      </segment>
+    </unit>
+    <unit id="2529200880958269600">
+      <segment state="initial">
+        <source>How this catchnet server is set up. Change these in the server&apos;s environment, not here.</source>
+        <target>How this catchnet server is set up. Change these in the server&apos;s environment, not here.</target>
+      </segment>
+    </unit>
+    <unit id="6752137416774957872">
+      <segment state="initial">
+        <source>Read from the server when the app loaded.</source>
+        <target>Read from the server when the app loaded.</target>
+      </segment>
+    </unit>
+    <unit id="4482826498369538608">
+      <segment state="initial">
+        <source>Server version</source>
+        <target>Server version</target>
+      </segment>
+    </unit>
+    <unit id="8948444690892731948">
+      <segment state="initial">
+        <source>Instance name</source>
+        <target>Instance name</target>
+      </segment>
+    </unit>
+    <unit id="2174200934060459788">
+      <segment state="initial">
+        <source>Installing and configuring the server.</source>
+        <target>Installing and configuring the server.</target>
+      </segment>
+    </unit>
+    <unit id="1250564359892919675">
+      <segment state="initial">
+        <source>Installation and configuration docs</source>
+        <target>Installation and configuration docs</target>
+      </segment>
+    </unit>
+    <unit id="262574579392352983">
+      <segment state="initial">
+        <source>Check log</source>
+        <target>Check log</target>
+      </segment>
+    </unit>
+    <unit id="2335033852604698379">
+      <segment state="initial">
+        <source>No checks yet.</source>
+        <target>No checks yet.</target>
+      </segment>
+    </unit>
+    <unit id="4517730664301491853">
+      <segment state="initial">
+        <source>No data yet</source>
+        <target>No data yet</target>
+      </segment>
+    </unit>
+    <unit id="5359709553291955255">
+      <segment state="initial">
+        <source>Checked every</source>
+        <target>Checked every</target>
+      </segment>
+    </unit>
+    <unit id="8650499415827640724">
+      <segment state="initial">
+        <source>Type</source>
+        <target>Type</target>
+      </segment>
+    </unit>
+    <unit id="7420481936731662034">
+      <segment state="initial">
+        <source>Recent checks</source>
+        <target>Recent checks</target>
+      </segment>
+    </unit>
+    <unit id="1457803245534039402">
+      <segment state="initial">
+        <source>Heartbeat URL</source>
+        <target>Heartbeat URL</target>
+      </segment>
+    </unit>
+    <unit id="4648509224758313965">
+      <segment state="initial">
+        <source>What to check</source>
+        <target>What to check</target>
+      </segment>
+    </unit>
+    <unit id="4675772062963539336">
+      <segment state="initial">
+        <source>The address catchnet checks, and how it checks it.</source>
+        <target>The address catchnet checks, and how it checks it.</target>
+      </segment>
+    </unit>
+    <unit id="1074002438441274017">
+      <segment state="initial">
+        <source>When it counts as down</source>
+        <target>When it counts as down</target>
+      </segment>
+    </unit>
+    <unit id="5334263805050261653">
+      <segment state="initial">
+        <source>How often to check, how long to wait, and what a healthy answer looks like.</source>
+        <target>How often to check, how long to wait, and what a healthy answer looks like.</target>
+      </segment>
+    </unit>
+    <unit id="7676275705571615947">
+      <segment state="initial">
+        <source>Who hears about it</source>
+        <target>Who hears about it</target>
+      </segment>
+    </unit>
+    <unit id="276186190603399538">
+      <segment state="initial">
+        <source>Alerts go to the team assigned to the associated project.</source>
+        <target>Alerts go to the team assigned to the associated project.</target>
+      </segment>
+    </unit>
+    <unit id="7000649363168371045">
+      <segment state="initial">
+        <source>Save changes</source>
+        <target>Save changes</target>
+      </segment>
+    </unit>
+    <unit id="1023747262902181380">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =1 {1 monitor is down} other {<ph id="0" equiv="INTERPOLATION"/> monitors are down}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 monitor is down} other {<ph id="0" equiv="INTERPOLATION"/> monitors are down}}</target>
+      </segment>
+    </unit>
+    <unit id="3818657053994409319">
+      <segment state="initial">
+        <source>Every monitor is up.</source>
+        <target>Every monitor is up.</target>
+      </segment>
+    </unit>
+    <unit id="8653223531015406304">
+      <segment state="initial">
+        <source>New monitor</source>
+        <target>New monitor</target>
+      </segment>
+    </unit>
+    <unit id="8058994642732449354">
+      <segment state="initial">
+        <source>Monitor</source>
+        <target>Monitor</target>
+      </segment>
+    </unit>
+    <unit id="3306897466025163304">
+      <segment state="initial">
+        <source>Waiting for the first check</source>
+        <target>Waiting for the first check</target>
+      </segment>
+    </unit>
+    <unit id="7587809611036552587">
+      <segment state="initial">
+        <source>No monitors yet. Add one to hear about it when a site or service goes down.</source>
+        <target>No monitors yet. Add one to hear about it when a site or service goes down.</target>
+      </segment>
+    </unit>
+    <unit id="4216647619829183478">
+      <segment state="initial">
+        <source>No monitors yet. Ask an organization admin or above to add one.</source>
+        <target>No monitors yet. Ask an organization admin or above to add one.</target>
+      </segment>
+    </unit>
+    <unit id="283086264084677206">
+      <segment state="initial">
+        <source>Monitor settings</source>
+        <target>Monitor settings</target>
+      </segment>
+    </unit>
+    <unit id="7422414345245927066">
+      <segment state="initial">
+        <source>Delete this monitor</source>
+        <target>Delete this monitor</target>
+      </segment>
+    </unit>
+    <unit id="400629673766323342">
+      <segment state="initial">
+        <source>Its check history goes with it. This can&apos;t be undone.</source>
+        <target>Its check history goes with it. This can&apos;t be undone.</target>
+      </segment>
+    </unit>
+    <unit id="7071087015048411049">
+      <segment state="initial">
+        <source>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ monitor.name }}"/> and all of its uptime data.</source>
+        <target>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ monitor.name }}"/> and all of its uptime data.</target>
+      </segment>
+    </unit>
+    <unit id="5361301900908448889">
+      <segment state="initial">
+        <source> Delete monitor </source>
+        <target> Delete monitor </target>
+      </segment>
+    </unit>
+    <unit id="8250498880894120269">
+      <segment state="initial">
+        <source>catchnet checks the address on a schedule and tells your team when it stops answering.</source>
+        <target>catchnet checks the address on a schedule and tells your team when it stops answering.</target>
       </segment>
     </unit>
   </file>

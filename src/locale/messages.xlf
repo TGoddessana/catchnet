@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US">
   <file id="ngi18n" original="ng.template">
-    <unit id="827275858583778252">
+    <unit id="5488246343470396091">
       <segment>
-        <source>Organization Invite</source>
+        <source>Organization invite</source>
       </segment>
     </unit>
     <unit id="8464263618615235731">
       <segment>
         <source>Create New Organization</source>
-      </segment>
-    </unit>
-    <unit id="2804049603671779506">
-      <segment>
-        <source>Delete User Account</source>
       </segment>
     </unit>
     <unit id="1203636405699791528">
@@ -29,21 +24,6 @@
     <unit id="3078760420237279624">
       <segment>
         <source>Auth Tokens</source>
-      </segment>
-    </unit>
-    <unit id="7345261406944700511">
-      <segment>
-        <source>Create New Token</source>
-      </segment>
-    </unit>
-    <unit id="7890916963184797167">
-      <segment>
-        <source>Authentication tokens give you access to the GlitchTip API. You can create these tokens as authentication to gain specific access around the app.</source>
-      </segment>
-    </unit>
-    <unit id="7538977961049758582">
-      <segment>
-        <source>Your Tokens</source>
       </segment>
     </unit>
     <unit id="4587452935087847438">
@@ -81,11 +61,6 @@
         <source>Members</source>
       </segment>
     </unit>
-    <unit id="1399934467160441489">
-      <segment>
-        <source>Create a New Organization</source>
-      </segment>
-    </unit>
     <unit id="22386476955637539">
       <segment>
         <source>Enter the code from the authenticator app on your mobile device. If you’ve lost your device, you may enter one of your recovery codes.</source>
@@ -94,16 +69,6 @@
     <unit id="1466012768716286509">
       <segment>
         <source>Sign Up</source>
-      </segment>
-    </unit>
-    <unit id="6509290351210910224">
-      <segment>
-        <source>To enable user reports, take a look at `showReportDialog` in the JS SDK.</source>
-      </segment>
-    </unit>
-    <unit id="2454050363478003966">
-      <segment>
-        <source>Login</source>
       </segment>
     </unit>
     <unit id="2907070106267329067">
@@ -119,11 +84,6 @@
     <unit id="4915431133669985304">
       <segment>
         <source>Profile</source>
-      </segment>
-    </unit>
-    <unit id="3056614778231322145">
-      <segment>
-        <source>No user reports have been submitted.</source>
       </segment>
     </unit>
     <unit id="3328654199895417292">
@@ -171,11 +131,6 @@
         <source>Log Out</source>
       </segment>
     </unit>
-    <unit id="4551866846795587701">
-      <segment>
-        <source>Create Organization</source>
-      </segment>
-    </unit>
     <unit id="2336550011721758066">
       <segment>
         <source>Log in</source>
@@ -216,9 +171,9 @@
         <source>Teams</source>
       </segment>
     </unit>
-    <unit id="7079167664042577585">
+    <unit id="6008221043375089635">
       <segment>
-        <source>This is the first step to get started with GlitchTip.</source>
+        <source>This is the first step to get started with catchnet.</source>
       </segment>
     </unit>
     <unit id="7830707034534607415">
@@ -241,11 +196,6 @@
         <source>Your password should be at least 8 characters long</source>
       </segment>
     </unit>
-    <unit id="2935794773842380882">
-      <segment>
-        <source>Organization creation has been disabled on this instance of GlitchTip. Contact an administrator to be invited into an existing organization.</source>
-      </segment>
-    </unit>
     <unit id="3301086086650990787">
       <segment>
         <source>Register</source>
@@ -259,11 +209,6 @@
     <unit id="8520023152129279437">
       <segment>
         <source>Log In</source>
-      </segment>
-    </unit>
-    <unit id="4426319772533875265">
-      <segment>
-        <source> Settings </source>
       </segment>
     </unit>
     <unit id="375247309021166846">
@@ -299,19 +244,9 @@
         <source>Response time</source>
       </segment>
     </unit>
-    <unit id="6998318993417414160">
-      <segment>
-        <source>Response Time</source>
-      </segment>
-    </unit>
     <unit id="8154453727027523235">
       <segment>
         <source>Alerts</source>
-      </segment>
-    </unit>
-    <unit id="8470311110519302542">
-      <segment>
-        <source>No data</source>
       </segment>
     </unit>
     <unit id="8998179362936748717">
@@ -332,11 +267,6 @@
     <unit id="4292593925952604077">
       <segment>
         <source>Send an email to team members on this project.</source>
-      </segment>
-    </unit>
-    <unit id="5534317372657539313">
-      <segment>
-        <source>Create New Alert</source>
       </segment>
     </unit>
     <unit id="5841403146698469514">
@@ -419,84 +349,14 @@
         <source>If you go to this project&apos;s <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a data-cy=&quot;platform-settings-link&quot; [routerLink]=&quot;[ &apos;/&apos;, activeOrganizationSlug(), &apos;settings&apos;, &apos;projects&apos;, projectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;"> settings page</pc>, you can pick a platform. If you do, you&apos;ll get more specific instructions about how to get started. </source>
       </segment>
     </unit>
-    <unit id="1308044504532512434">
-      <segment>
-        <source>Personal Project Notifications</source>
-      </segment>
-    </unit>
-    <unit id="1744184913467319832">
-      <segment>
-        <source> Data Source Name: The code that connects your project to GlitchTip. Install a library into your project, then configure it with the DSN so that it knows how to send errors to your GlitchTip account. </source>
-      </segment>
-    </unit>
-    <unit id="1830742686550996935">
-      <segment>
-        <source>This organization has no projects.</source>
-      </segment>
-    </unit>
-    <unit id="2431017377186650072">
-      <segment>
-        <source>Edit Preferences</source>
-      </segment>
-    </unit>
-    <unit id="2959157372543624146">
-      <segment>
-        <source>Create new project in <ph id="0" equiv="INTERPOLATION" disp="{{ organization.name }}"/> </source>
-      </segment>
-    </unit>
     <unit id="3647474424920112919">
       <segment>
         <source>Connect your project to GlitchTip</source>
       </segment>
     </unit>
-    <unit id="3821671973040323145">
+    <unit id="8753161405363995526">
       <segment>
-        <source> Because you are an admin for <ph id="0" equiv="INTERPOLATION" disp="{{ project.organization.name }}"/>, you have access to all of its projects. However, if you want to view issues for <ph id="1" equiv="INTERPOLATION_1" disp="{{ project.name }}"/>, you must be a member of one of its teams. </source>
-      </segment>
-    </unit>
-    <unit id="3834295552674710150">
-      <segment>
-        <source>In order to use GlitchTip, you&apos;ll need to create an organization.</source>
-      </segment>
-    </unit>
-    <unit id="4388879716045736175">
-      <segment>
-        <source>Note</source>
-      </segment>
-    </unit>
-    <unit id="5621052107213107389">
-      <segment>
-        <source>Update Project</source>
-      </segment>
-    </unit>
-    <unit id="5923980840626905087">
-      <segment>
-        <source> Platform Documentation </source>
-      </segment>
-    </unit>
-    <unit id="6302903762785466130">
-      <segment>
-        <source>Delete Project</source>
-      </segment>
-    </unit>
-    <unit id="6699311255070036397">
-      <segment>
-        <source>Edit whether or not you want to receive notifications for this project</source>
-      </segment>
-    </unit>
-    <unit id="6940348790913679018">
-      <segment>
-        <source>To add a project to this organization, press the &quot;Create New Project&quot; button.</source>
-      </segment>
-    </unit>
-    <unit id="7033296732013526864">
-      <segment>
-        <source>Client Keys (DSN)</source>
-      </segment>
-    </unit>
-    <unit id="7226346166840376717">
-      <segment>
-        <source>By deleting your project, you will lose all associated data. This cannot be undone.</source>
+        <source>Delete project</source>
       </segment>
     </unit>
     <unit id="7819314041543176992">
@@ -504,14 +364,9 @@
         <source>Close</source>
       </segment>
     </unit>
-    <unit id="1678548018195726594">
+    <unit id="3854363836178152005">
       <segment>
-        <source>Create Team</source>
-      </segment>
-    </unit>
-    <unit id="1743088859194300989">
-      <segment>
-        <source>Your Teams</source>
+        <source>Create team</source>
       </segment>
     </unit>
     <unit id="182653714972067036">
@@ -524,54 +379,14 @@
         <source>Now that you have an organization and a subscription, create a project.</source>
       </segment>
     </unit>
-    <unit id="2167503793894173335">
-      <segment>
-        <source>Create a New Team</source>
-      </segment>
-    </unit>
     <unit id="2314099574053878289">
       <segment>
         <source>Enter a team name</source>
       </segment>
     </unit>
-    <unit id="2501480779300161804">
+    <unit id="5739247641350798317">
       <segment>
-        <source>By deleting your team, you will lose all associated data. This cannot be undone.</source>
-      </segment>
-    </unit>
-    <unit id="2832668001279440249">
-      <segment>
-        <source>Delete Team</source>
-      </segment>
-    </unit>
-    <unit id="332657983215308739">
-      <segment>
-        <source>This team doesn&apos;t have any projects</source>
-      </segment>
-    </unit>
-    <unit id="3348547714642337740">
-      <segment>
-        <source>No members</source>
-      </segment>
-    </unit>
-    <unit id="3768641442274728020">
-      <segment>
-        <source>No projects</source>
-      </segment>
-    </unit>
-    <unit id="4358157694468493157">
-      <segment>
-        <source>Other Teams</source>
-      </segment>
-    </unit>
-    <unit id="4479333657075318113">
-      <segment>
-        <source>You aren&apos;t part of any teams. Join a team below or press the &quot;Create Team&quot; button in the upper right.</source>
-      </segment>
-    </unit>
-    <unit id="4687980611669913181">
-      <segment>
-        <source>You don&apos;t have any teams set up. Teams determine which users have access to projects in your organization.</source>
+        <source>Delete team</source>
       </segment>
     </unit>
     <unit id="4894116049835995028">
@@ -579,19 +394,9 @@
         <source>Questions about subscriptions? Need assistance, or a bigger plan? Contact us at <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;mailto:{{ billingEmail }}&quot;&gt;" dispEnd="&lt;/a &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ billingEmail }}"/></pc>.</source>
       </segment>
     </unit>
-    <unit id="5105557512709552795">
-      <segment>
-        <source>Add Member</source>
-      </segment>
-    </unit>
     <unit id="5363625141068095814">
       <segment>
         <source>This organization has a trial subscription to GlitchTip.</source>
-      </segment>
-    </unit>
-    <unit id="5432975988429346472">
-      <segment>
-        <source>This team doesn&apos;t have any members</source>
       </segment>
     </unit>
     <unit id="5799782740550832490">
@@ -602,21 +407,6 @@
     <unit id="7486830422791899026">
       <segment>
         <source>If you have questions about your subscription, please contact us at <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;mailto:{{ billingEmail }}&quot;&gt;" dispEnd="&lt;/a &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ billingEmail }}"/></pc>. </source>
-      </segment>
-    </unit>
-    <unit id="6240182255609880044">
-      <segment>
-        <source>Your team slug can only consist of letters, numbers, underscores and/or hyphens.</source>
-      </segment>
-    </unit>
-    <unit id="6560990714812373531">
-      <segment>
-        <source>To create a new team, press the &quot;Create Team&quot; button in the upper right.</source>
-      </segment>
-    </unit>
-    <unit id="7478140689790892603">
-      <segment>
-        <source>Teams are for managing issue notifications and workflow. View permissions are handled through <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a routerLink=&quot;../members&quot;&gt;" dispEnd="&lt;/a&gt;"> organization membership.</pc></source>
       </segment>
     </unit>
     <unit id="8120474743695089696">
@@ -644,9 +434,9 @@
         <source>You have been invited to join<pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"> <ph id="1" equiv="INTERPOLATION" disp="{{ acceptInfo.orgUser.organization.name }}"/> </pc> so you can keep track of errors.</source>
       </segment>
     </unit>
-    <unit id="1581886603273423006">
+    <unit id="3908083542172712051">
       <segment>
-        <source>Account Owner</source>
+        <source>Account owner</source>
       </segment>
     </unit>
     <unit id="1740276691614535252">
@@ -657,26 +447,6 @@
     <unit id="1922838090212936091">
       <segment>
         <source>Admin privileges on any teams of which user is a member. They can create new teams and projects, as well as delete teams and projects they are already members of. Additionally, they can manage memberships of teams that they are members of.</source>
-      </segment>
-    </unit>
-    <unit id="2267387778265004491">
-      <segment>
-        <source>Organization Account Ownership</source>
-      </segment>
-    </unit>
-    <unit id="231679111972850796">
-      <segment>
-        <source>Added</source>
-      </segment>
-    </unit>
-    <unit id="3444805486131364421">
-      <segment>
-        <source>Scopes:</source>
-      </segment>
-    </unit>
-    <unit id="3916787140877704867">
-      <segment>
-        <source>Team(s)</source>
       </segment>
     </unit>
     <unit id="4145496584631696119">
@@ -694,16 +464,6 @@
         <source>Email</source>
       </segment>
     </unit>
-    <unit id="5909691734964157223">
-      <segment>
-        <source> This member is the organization account owner and has access to the organization&apos;s GlitchTip subscription settings. </source>
-      </segment>
-    </unit>
-    <unit id="6146979090477797496">
-      <segment>
-        <source> The account owner has access to the organization&apos;s GlitchTip subscription settings. If you are the current account owner or have an owner role, you may transfer ownership to this member. </source>
-      </segment>
-    </unit>
     <unit id="6895800612787584413">
       <segment>
         <source>Members can view and act on events, as well as view most other data within the organization.</source>
@@ -712,11 +472,6 @@
     <unit id="6921336596257236722">
       <segment>
         <source>New version available. Load New Version?</source>
-      </segment>
-    </unit>
-    <unit id="9208909205064884220">
-      <segment>
-        <source>This user isn&apos;t on any teams.</source>
       </segment>
     </unit>
     <unit id="1312433286376470649">
@@ -732,11 +487,6 @@
     <unit id="1418979860895365047">
       <segment>
         <source> GlitchTip will &quot;ping&quot; the specified URL using an HTTP HEAD request with no payload. </source>
-      </segment>
-    </unit>
-    <unit id="6910864712437104509">
-      <segment>
-        <source>Uptime email notifications are sent to the team assigned to the associated project.</source>
       </segment>
     </unit>
     <unit id="3255939212816298806">
@@ -839,11 +589,6 @@
         <source>Issue not found</source>
       </segment>
     </unit>
-    <unit id="3811407979880504315">
-      <segment>
-        <source>System Info</source>
-      </segment>
-    </unit>
     <unit id="4052010728262248283">
       <segment>
         <source>Backend configuration</source>
@@ -909,11 +654,6 @@
         <source>If string isn&apos;t found in response body, the monitor will report as down</source>
       </segment>
     </unit>
-    <unit id="8316175416734096923">
-      <segment>
-        <source> Uptime check interval: <ph id="0" equiv="INTERPOLATION" disp="{{ monitor.interval | number }}"/> seconds </source>
-      </segment>
-    </unit>
     <unit id="8483269670688589838">
       <segment>
         <source>Your current is required to change your password</source>
@@ -932,11 +672,6 @@
     <unit id="960665565485640516">
       <segment>
         <source>Something went wrong</source>
-      </segment>
-    </unit>
-    <unit id="1017066204420437090">
-      <segment>
-        <source>Set New Password</source>
       </segment>
     </unit>
     <unit id="1431416938026210429">
@@ -981,9 +716,9 @@
         <source>Copy</source>
       </segment>
     </unit>
-    <unit id="6359908116364527838">
+    <unit id="1145954726038707116">
       <segment>
-        <source>Project Alerts</source>
+        <source>Project alerts</source>
       </segment>
     </unit>
     <unit id="6373761293150491680">
@@ -1396,11 +1131,6 @@
         <source>Test failed: <ph id="0" equiv="message" disp="result.message"/></source>
       </segment>
     </unit>
-    <unit id="1054182833797503465">
-      <segment>
-        <source>Back to auth tokens</source>
-      </segment>
-    </unit>
     <unit id="106540908567590802">
       <segment>
         <source>On-demand billing is not available on this server right now, so the spend cap cannot be changed.</source>
@@ -1409,11 +1139,6 @@
     <unit id="1100140275003658560">
       <segment>
         <source>Least Frequent</source>
-      </segment>
-    </unit>
-    <unit id="6763803853838721617">
-      <segment>
-        <source>The last time was <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.lastSeen&quot; [title]=&quot;issue.lastSeen | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ issue.lastSeen | daysAgo }}"/></pc>.</source>
       </segment>
     </unit>
     <unit id="1118130066931623006">
@@ -1451,11 +1176,6 @@
         <source>Backup code</source>
       </segment>
     </unit>
-    <unit id="1190219267773780159">
-      <segment>
-        <source>Add a monitor to get alerted when a site or service goes down.</source>
-      </segment>
-    </unit>
     <unit id="1197151927004451959">
       <segment>
         <source>Your current plan does not support on-demand billing, so the spend cap cannot be changed.</source>
@@ -1486,11 +1206,6 @@
         <source> About <ph id="0" equiv="INTERPOLATION" disp="{{ throttleRate() }}"/>% of new events are being dropped. Turn on on-demand billing to keep collecting events. </source>
       </segment>
     </unit>
-    <unit id="1259270873004577425">
-      <segment>
-        <source>Multiple emails delimited by commas.</source>
-      </segment>
-    </unit>
     <unit id="1259421956660976189">
       <segment>
         <source>Add Account</source>
@@ -1504,11 +1219,6 @@
     <unit id="1263977447326017976">
       <segment>
         <source>Loading monitor checks</source>
-      </segment>
-    </unit>
-    <unit id="127037155895787578">
-      <segment>
-        <source>Transaction groups</source>
       </segment>
     </unit>
     <unit id="1283895920974679461">
@@ -1561,19 +1271,14 @@
         <source>Default Notifications</source>
       </segment>
     </unit>
-    <unit id="14674649579778080">
-      <segment>
-        <source>Heartbeat URL endpoint</source>
-      </segment>
-    </unit>
     <unit id="1480856902951863661">
       <segment>
         <source>Projected</source>
       </segment>
     </unit>
-    <unit id="1481645236299803925">
+    <unit id="6309828574111583895">
       <segment>
-        <source> Change Password </source>
+        <source>Change password</source>
       </segment>
     </unit>
     <unit id="148576619605838509">
@@ -1621,11 +1326,6 @@
         <source>Last 30 Days</source>
       </segment>
     </unit>
-    <unit id="1665408336289253972">
-      <segment>
-        <source>date created</source>
-      </segment>
-    </unit>
     <unit id="1675381835782655174">
       <segment>
         <source>Get priority support for your GlitchTip deployment</source>
@@ -1639,16 +1339,6 @@
     <unit id="1686212905795661329">
       <segment>
         <source> Please enter a valid email address. </source>
-      </segment>
-    </unit>
-    <unit id="1711594638667505824">
-      <segment>
-        <source>No span data available yet</source>
-      </segment>
-    </unit>
-    <unit id="1721731140760414858">
-      <segment>
-        <source>GlitchTip version</source>
       </segment>
     </unit>
     <unit id="1771362405253425568">
@@ -1691,11 +1381,6 @@
         <source>Delete Alert For <ph id="0" equiv="url" disp="url ?? &quot;&quot;"/></source>
       </segment>
     </unit>
-    <unit id="1852327910193425166">
-      <segment>
-        <source>Create a New Uptime Monitor</source>
-      </segment>
-    </unit>
     <unit id="1866402162869099992">
       <segment>
         <source> On track to reach your cap before the cycle ends. </source>
@@ -1704,11 +1389,6 @@
     <unit id="1868960829276031899">
       <segment>
         <source>Microsoft Teams Workflows webhook URL</source>
-      </segment>
-    </unit>
-    <unit id="1871336547835393592">
-      <segment>
-        <source>There are no files associated with this release.</source>
       </segment>
     </unit>
     <unit id="1926241086002311543">
@@ -1746,11 +1426,6 @@
         <source>What counts as an event?</source>
       </segment>
     </unit>
-    <unit id="2044535834632996695">
-      <segment>
-        <source>Add monitor</source>
-      </segment>
-    </unit>
     <unit id="2065682730934100869">
       <segment>
         <source> This may be because the URL is pointing to a transaction group that doesn&apos;t exist or was deleted. </source>
@@ -1761,9 +1436,9 @@
         <source>Raw</source>
       </segment>
     </unit>
-    <unit id="2091819265387325352">
+    <unit id="7862874719281607802">
       <segment>
-        <source>Response Time (ms)</source>
+        <source>Response time (ms)</source>
       </segment>
     </unit>
     <unit id="209311197037296058">
@@ -1826,11 +1501,6 @@
         <source>Enable</source>
       </segment>
     </unit>
-    <unit id="2185826118019934285">
-      <segment>
-        <source>Add Member(s)</source>
-      </segment>
-    </unit>
     <unit id="2187242386126902388">
       <segment>
         <source>Bot API key</source>
@@ -1854,16 +1524,6 @@
     <unit id="2213303907290585549">
       <segment>
         <source>Copied. You can also connect your agent directly via MCP to pull this event, its related logs, and traces live instead of pasting.</source>
-      </segment>
-    </unit>
-    <unit id="2214043942921449831">
-      <segment>
-        <source>Email(s)</source>
-      </segment>
-    </unit>
-    <unit id="2215374638124405279">
-      <segment>
-        <source>Send Reset Password Email</source>
       </segment>
     </unit>
     <unit id="2218082343053095278">
@@ -1896,24 +1556,9 @@
         <source>Leave</source>
       </segment>
     </unit>
-    <unit id="2281481329213880659">
-      <segment>
-        <source>Update Monitor</source>
-      </segment>
-    </unit>
-    <unit id="2288101943814243419">
-      <segment>
-        <source>Basics</source>
-      </segment>
-    </unit>
     <unit id="2330577642930707695">
       <segment>
         <source> Cancel </source>
-      </segment>
-    </unit>
-    <unit id="2356238621860719183">
-      <segment>
-        <source>Submit Comment</source>
       </segment>
     </unit>
     <unit id="2369742814572661392">
@@ -1921,19 +1566,14 @@
         <source>Loading…</source>
       </segment>
     </unit>
-    <unit id="2387128922474445063">
-      <segment>
-        <source>No logs yet</source>
-      </segment>
-    </unit>
     <unit id="2398354803539761750">
       <segment>
         <source> Create a <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;">Generic bot</pc> in your Zulip organization settings under &quot;Bots&quot;. Copy the bot&apos;s email and API key below. </source>
       </segment>
     </unit>
-    <unit id="2489114267038713519">
+    <unit id="4301597531652727075">
       <segment>
-        <source>Create Project</source>
+        <source>Create project</source>
       </segment>
     </unit>
     <unit id="2529401809177776105">
@@ -1949,11 +1589,6 @@
     <unit id="2559496713819894682">
       <segment>
         <source>Try adjusting your search, or clear your filters to see everything.</source>
-      </segment>
-    </unit>
-    <unit id="2559630426089556979">
-      <segment>
-        <source>Invite a member to join this organization via their email address.</source>
       </segment>
     </unit>
     <unit id="2580324909354352143">
@@ -2016,11 +1651,6 @@
         <source>Version</source>
       </segment>
     </unit>
-    <unit id="2737721078026311574">
-      <segment>
-        <source>Search message body...</source>
-      </segment>
-    </unit>
     <unit id="2744811510684419754">
       <segment>
         <source>Loading issues</source>
@@ -2029,11 +1659,6 @@
     <unit id="2750181135987640730">
       <segment>
         <source>Invite Resent</source>
-      </segment>
-    </unit>
-    <unit id="282624574787482024">
-      <segment>
-        <source>{VAR_PLURAL, plural, =0 {events} =1 {1 event} other {<ph id="0" equiv="INTERPOLATION"/> events}}</source>
       </segment>
     </unit>
     <unit id="2849436559874800914">
@@ -2096,11 +1721,6 @@
         <source> Spend cap reached, so about <ph id="0" equiv="INTERPOLATION" disp="{{ throttleRate() }}"/>% of new events are being dropped. Ask an organization owner to raise the cap to keep collecting events. </source>
       </segment>
     </unit>
-    <unit id="3008762316154356763">
-      <segment>
-        <source> Account Owner </source>
-      </segment>
-    </unit>
     <unit id="3029887440722063094">
       <segment>
         <source>End time</source>
@@ -2121,9 +1741,9 @@
         <source>Edit recipient</source>
       </segment>
     </unit>
-    <unit id="3066529007110893482">
+    <unit id="6922839297299632161">
       <segment>
-        <source>Server timezone</source>
+        <source>Server time zone</source>
       </segment>
     </unit>
     <unit id="3070615158467898055">
@@ -2146,11 +1766,6 @@
         <source> for details, or ask an organization owner to raise the spend cap or change your plan and keep collecting events.</source>
       </segment>
     </unit>
-    <unit id="3097284290343622068">
-      <segment>
-        <source>Span data will appear here once child spans are recorded for this transaction group.</source>
-      </segment>
-    </unit>
     <unit id="3097725565524951500">
       <segment>
         <source>Contribute Code</source>
@@ -2166,24 +1781,9 @@
         <source>Info</source>
       </segment>
     </unit>
-    <unit id="3154215924252206494">
-      <segment>
-        <source>Releases appear here once you send release data with your events.</source>
-      </segment>
-    </unit>
     <unit id="3204725360923694745">
       <segment>
         <source>Time Zone</source>
-      </segment>
-    </unit>
-    <unit id="3207604937156175649">
-      <segment>
-        <source>Add Team</source>
-      </segment>
-    </unit>
-    <unit id="3208062810604819243">
-      <segment>
-        <source>Try adjusting or clearing your filters.</source>
       </segment>
     </unit>
     <unit id="3219768698802611146">
@@ -2194,11 +1794,6 @@
     <unit id="3232264192332205443">
       <segment>
         <source>Slowest</source>
-      </segment>
-    </unit>
-    <unit id="3241357959735682038">
-      <segment>
-        <source>Confirm Password</source>
       </segment>
     </unit>
     <unit id="3249513483374643425">
@@ -2251,14 +1846,9 @@
         <source> This email address is already on the list. </source>
       </segment>
     </unit>
-    <unit id="3335368438049125287">
+    <unit id="2918022374617289491">
       <segment>
-        <source> Invite Pending </source>
-      </segment>
-    </unit>
-    <unit id="3339635399692804137">
-      <segment>
-        <source>To view issues for this project, add yourself to the corresponding team.</source>
+        <source>Invite pending</source>
       </segment>
     </unit>
     <unit id="3354075169197003187">
@@ -2341,16 +1931,6 @@
         <source>Authenticator app</source>
       </segment>
     </unit>
-    <unit id="3541923058828207879">
-      <segment>
-        <source>Back to members</source>
-      </segment>
-    </unit>
-    <unit id="3578239557119794125">
-      <segment>
-        <source>See <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;https://glitchtip.com/documentation/install&quot; target=&quot;_blank&quot; &gt;" dispEnd="&lt;/a &gt;">GlitchTip installation and configuration docs</pc>. </source>
-      </segment>
-    </unit>
     <unit id="3617897902871519294">
       <segment>
         <source>Each occurrence of an error or exception reported to GlitchTip</source>
@@ -2384,11 +1964,6 @@
     <unit id="3665489443596053824">
       <segment>
         <source>Delete project?</source>
-      </segment>
-    </unit>
-    <unit id="3701263529457744501">
-      <segment>
-        <source>Update Platform</source>
       </segment>
     </unit>
     <unit id="3706806273134795070">
@@ -2533,11 +2108,6 @@
         <source> On-demand billing is off. Your current plan does not support it. </source>
       </segment>
     </unit>
-    <unit id="3935445601531613483">
-      <segment>
-        <source>organization</source>
-      </segment>
-    </unit>
     <unit id="3971100408152984961">
       <segment>
         <source> Next </source>
@@ -2546,11 +2116,6 @@
     <unit id="4002141153394023384">
       <segment>
         <source>Monthly spend cap (not in effect)</source>
-      </segment>
-    </unit>
-    <unit id="400576290335781665">
-      <segment>
-        <source>View all transaction groups</source>
       </segment>
     </unit>
     <unit id="4021752662928002901">
@@ -2593,11 +2158,6 @@
         <source>Label</source>
       </segment>
     </unit>
-    <unit id="4090842231818610126">
-      <segment>
-        <source> Teams are for managing issue notifications and workflow. </source>
-      </segment>
-    </unit>
     <unit id="4097479593197024186">
       <segment>
         <source>Resets <ph id="0" equiv="INTERPOLATION" disp="{{ reset | date }}"/></source>
@@ -2621,21 +2181,6 @@
     <unit id="4133831347302787235">
       <segment>
         <source> GlitchTip was unable to find a subscription for your account. If you just signed up for a subscription on our payment platform, please contact us at <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;mailto:{{ billingEmail }}&quot;&gt;" dispEnd="&lt;/a &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ billingEmail }}"/></pc>. </source>
-      </segment>
-    </unit>
-    <unit id="4143980839813043576">
-      <segment>
-        <source>GlitchTip instance name</source>
-      </segment>
-    </unit>
-    <unit id="4157071276755070841">
-      <segment>
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Avg Duration</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.avgDuration! | humanizeDuration }}"/>
-          </pc>
-        </source>
       </segment>
     </unit>
     <unit id="4158049716505128655">
@@ -2698,24 +2243,9 @@
         <source> You&apos;re at your event limit on our largest plan, and about <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ eventThrottleRate() }}"/>%</pc> of your incoming events are being dropped. Turn on on-demand billing below to keep collecting events, or get in touch and we&apos;ll help you find a fit. </source>
       </segment>
     </unit>
-    <unit id="4286313840809916278">
-      <segment>
-        <source>Join Team</source>
-      </segment>
-    </unit>
-    <unit id="4295547764764047619">
-      <segment>
-        <source>No monitor checks were found.</source>
-      </segment>
-    </unit>
     <unit id="4319441956121197474">
       <segment>
         <source>Save Changes</source>
-      </segment>
-    </unit>
-    <unit id="432834967329800065">
-      <segment>
-        <source>General Settings</source>
       </segment>
     </unit>
     <unit id="4365749064038199351">
@@ -2738,11 +2268,6 @@
         <source>full data</source>
       </segment>
     </unit>
-    <unit id="4417619564210882782">
-      <segment>
-        <source>Connect a social login to sign in with it.</source>
-      </segment>
-    </unit>
     <unit id="4418983244366202082">
       <segment>
         <source>File storage: <ph id="0" equiv="INTERPOLATION" disp="{{ breakdown.fileSizeMb }}"/> MB</source>
@@ -2751,11 +2276,6 @@
     <unit id="4426024771404048707">
       <segment>
         <source>Delete <ph id="0" equiv="name" disp="name"/></source>
-      </segment>
-    </unit>
-    <unit id="4435324863259316135">
-      <segment>
-        <source>Back to Projects</source>
       </segment>
     </unit>
     <unit id="4487118624061086799">
@@ -2776,11 +2296,6 @@
     <unit id="4541933733847147426">
       <segment>
         <source>Are you sure you want to delete this monitor? You will permanently lose all associated uptime data.</source>
-      </segment>
-    </unit>
-    <unit id="4545186191685636796">
-      <segment>
-        <source>No uptime monitors</source>
       </segment>
     </unit>
     <unit id="4575362171226950330">
@@ -2811,11 +2326,6 @@
     <unit id="8507842320502214175">
       <segment>
         <source> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. There <ph id="2" equiv="ICU" disp="{uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}" subFlows="1561221854942158918"/> set up for this project. Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to <ph id="4" equiv="INTERPOLATION_2" disp="{{ canWriteProject() ? &quot;change&quot; : &quot;see&quot; }}"/> your alerts. </source>
-      </segment>
-    </unit>
-    <unit id="4605882393434832327">
-      <segment>
-        <source> By deleting this organization, you will lose all data including projects and their associated events. </source>
       </segment>
     </unit>
     <unit id="4609559423253296542">
@@ -2878,9 +2388,9 @@
         <source>Status code</source>
       </segment>
     </unit>
-    <unit id="4761957245336071240">
+    <unit id="8877195635897543239">
       <segment>
-        <source>Create Monitor</source>
+        <source>Create monitor</source>
       </segment>
     </unit>
     <unit id="4762525426208239051">
@@ -2908,11 +2418,6 @@
         <source>Update Comment</source>
       </segment>
     </unit>
-    <unit id="4802437878460003316">
-      <segment>
-        <source>No matching logs</source>
-      </segment>
-    </unit>
     <unit id="4804785061014590286">
       <segment>
         <source>Logs</source>
@@ -2933,24 +2438,9 @@
         <source>Security Endpoint</source>
       </segment>
     </unit>
-    <unit id="4865153778652456586">
-      <segment>
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Method</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.method }}"/>
-          </pc>
-        </source>
-      </segment>
-    </unit>
     <unit id="4873149362496451858">
       <segment>
         <source>Last 7 days</source>
-      </segment>
-    </unit>
-    <unit id="4879517228803151475">
-      <segment>
-        <source>Email Address</source>
       </segment>
     </unit>
     <unit id="4901518005136131548">
@@ -2981,11 +2471,6 @@
     <unit id="4948440289765392916">
       <segment>
         <source>Authenticator setup QR code</source>
-      </segment>
-    </unit>
-    <unit id="4948744459319367893">
-      <segment>
-        <source>Register Security Key</source>
       </segment>
     </unit>
     <unit id="4997826423619542924">
@@ -3036,11 +2521,6 @@
         <source>The bot&apos;s API key, shown when the bot is created</source>
       </segment>
     </unit>
-    <unit id="5097410080658371920">
-      <segment>
-        <source>Update Preferences</source>
-      </segment>
-    </unit>
     <unit id="510225673022156846">
       <segment>
         <source>Resend confirmation</source>
@@ -3069,11 +2549,6 @@
     <unit id="339369372228237703">
       <segment>
         <source> Copy for AI </source>
-      </segment>
-    </unit>
-    <unit id="5168224160973980905">
-      <segment>
-        <source>Add Email Address</source>
       </segment>
     </unit>
     <unit id="5206959576487617077">
@@ -3116,9 +2591,9 @@
         <source>Remove member</source>
       </segment>
     </unit>
-    <unit id="5314138898559452100">
+    <unit id="5628164219997802241">
       <segment>
-        <source> Primary </source>
+        <source>Primary</source>
       </segment>
     </unit>
     <unit id="532760154730713972">
@@ -3134,11 +2609,6 @@
     <unit id="5377494958922638201">
       <segment>
         <source> Add your license key in Django admin once subscribed. </source>
-      </segment>
-    </unit>
-    <unit id="5387848024685492875">
-      <segment>
-        <source>View all Releases</source>
       </segment>
     </unit>
     <unit id="5397872675147465130">
@@ -3186,16 +2656,6 @@
         <source>Time range</source>
       </segment>
     </unit>
-    <unit id="5504009211874075446">
-      <segment>
-        <source> There were errors while processing your request </source>
-      </segment>
-    </unit>
-    <unit id="5527977519316114214">
-      <segment>
-        <source>Create a New Project</source>
-      </segment>
-    </unit>
     <unit id="5557936965735860825">
       <segment>
         <source>
@@ -3206,11 +2666,6 @@
     <unit id="5581711712041838743">
       <segment>
         <source>Copy key to clipboard</source>
-      </segment>
-    </unit>
-    <unit id="5589145458945303023">
-      <segment>
-        <source>No transactions</source>
       </segment>
     </unit>
     <unit id="5615185955636860545">
@@ -3246,11 +2701,6 @@
     <unit id="5696506580783597529">
       <segment>
         <source>Most Frequent</source>
-      </segment>
-    </unit>
-    <unit id="5701618810648052610">
-      <segment>
-        <source>Title</source>
       </segment>
     </unit>
     <unit id="5768343853895020811">
@@ -3293,11 +2743,6 @@
         <source>Topic</source>
       </segment>
     </unit>
-    <unit id="5891459482875358861">
-      <segment>
-        <source>Set up a hardware device as a second factor to sign in.</source>
-      </segment>
-    </unit>
     <unit id="5910947217931634219">
       <segment>
         <source>Warn</source>
@@ -3306,11 +2751,6 @@
     <unit id="5916134442795352001">
       <segment>
         <source>Initialize the SDK early in your application&apos;s startup.</source>
-      </segment>
-    </unit>
-    <unit id="5926658517548210439">
-      <segment>
-        <source> Add Member to Organization </source>
       </segment>
     </unit>
     <unit id="5939430732238938397">
@@ -3343,14 +2783,9 @@
         <source>Loading transaction groups</source>
       </segment>
     </unit>
-    <unit id="5977844493953232241">
+    <unit id="9123998424549902878">
       <segment>
-        <source> There was an error processing your request </source>
-      </segment>
-    </unit>
-    <unit id="5981381846274463587">
-      <segment>
-        <source>Average Duration</source>
+        <source>Average duration</source>
       </segment>
     </unit>
     <unit id="5986789075000344504">
@@ -3368,19 +2803,9 @@
         <source> for details.</source>
       </segment>
     </unit>
-    <unit id="6037692836891993429">
+    <unit id="7093928105617239602">
       <segment>
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Operation</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.op }}"/>
-          </pc>
-        </source>
-      </segment>
-    </unit>
-    <unit id="6083399226303311703">
-      <segment>
-        <source>Delete Organization</source>
+        <source>Delete organization</source>
       </segment>
     </unit>
     <unit id="6095052631454715389">
@@ -3398,11 +2823,6 @@
         <source>Billing Cycle: <ph id="0" equiv="INTERPOLATION" disp="{{ subscription.subscriptionCycleStart ?? subscription.currentPeriodStart | date }}"/> to <ph id="1" equiv="INTERPOLATION_1" disp="{{ subscription.subscriptionCycleEnd ?? subscription.currentPeriodEnd | date }}"/> <pc id="2" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (daysRemaining() !== null) {" dispEnd="}"> (<ph id="3" equiv="INTERPOLATION_2" disp="{{ daysRemaining() }}"/> <ph id="4" equiv="INTERPOLATION_3" disp="{{ daysRemaining() === 1 ? &quot;day&quot; : &quot;days&quot; }}"/> remaining) </pc></source>
       </segment>
     </unit>
-    <unit id="6135551083632800789">
-      <segment>
-        <source>Release files for </source>
-      </segment>
-    </unit>
     <unit id="6178565847852899075">
       <segment>
         <source>Endpoint URL</source>
@@ -3416,11 +2836,6 @@
     <unit id="6215186523080321">
       <segment>
         <source>Headers</source>
-      </segment>
-    </unit>
-    <unit id="6234831298944462737">
-      <segment>
-        <source>Back to Teams</source>
       </segment>
     </unit>
     <unit id="6234985323744540610">
@@ -3493,11 +2908,6 @@
         <source>Each health check counts as 1/10 of an event — 10 checks equal 1 event, whether polled by GlitchTip or pushed from your app</source>
       </segment>
     </unit>
-    <unit id="6409746709109864687">
-      <segment>
-        <source>Uptime details for <ph id="0" equiv="monitor" disp="monitor"/></source>
-      </segment>
-    </unit>
     <unit id="6419559875078961819">
       <segment>
         <source>Fastest</source>
@@ -3513,9 +2923,9 @@
         <source>General</source>
       </segment>
     </unit>
-    <unit id="6475969597256383239">
+    <unit id="4765715527929190364">
       <segment>
-        <source>Email Addresses</source>
+        <source>Email addresses</source>
       </segment>
     </unit>
     <unit id="6477814403397758627">
@@ -3543,16 +2953,6 @@
         <source>Select at least one scope</source>
       </segment>
     </unit>
-    <unit id="6522129131388866369">
-      <segment>
-        <source> If you initialize an open-source Sentry SDK with an environment, it will tag events with that environment and GlitchTip will keep a record of them. The environments persist even if the event that reported it is deleted, which is why hiding is an option. </source>
-      </segment>
-    </unit>
-    <unit id="6524067569228558279">
-      <segment>
-        <source>Leave Team</source>
-      </segment>
-    </unit>
     <unit id="655046618668721877">
       <segment>
         <source>this cycle (estimate)</source>
@@ -3576,16 +2976,6 @@
     <unit id="6623196464003506422">
       <segment>
         <source>Add Recipient</source>
-      </segment>
-    </unit>
-    <unit id="662936269308455040">
-      <segment>
-        <source>
-          <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;caption-text&quot;&gt;" dispEnd="&lt;/span&gt;">Transaction Count</pc>
-          <pc id="1" equivStart="START_TAG_SPAN_1" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;body-text-strong&quot;&gt;" dispEnd="&lt;/span&gt;">
-            <ph id="2" equiv="INTERPOLATION" disp="{{ group.count }}"/>
-          </pc>
-        </source>
       </segment>
     </unit>
     <unit id="6637293344403222779">
@@ -3653,9 +3043,9 @@
         <source>Are you sure you want to remove this recipient?</source>
       </segment>
     </unit>
-    <unit id="678589061657776031">
+    <unit id="275122132113901028">
       <segment>
-        <source>{VAR_PLURAL, plural, =1 {1 Transaction} other {<ph id="0" equiv="INTERPOLATION"/> Transactions}}</source>
+        <source>{VAR_PLURAL, plural, =1 {1 transaction} other {<ph id="0" equiv="INTERPOLATION"/> transactions}}</source>
       </segment>
     </unit>
     <unit id="6793423169871086690">
@@ -3663,9 +3053,9 @@
         <source>Hide Projects</source>
       </segment>
     </unit>
-    <unit id="6794398718047270044">
+    <unit id="8129364327738393411">
       <segment>
-        <source>No connected accounts</source>
+        <source>No connected accounts yet.</source>
       </segment>
     </unit>
     <unit id="679502950068478075">
@@ -3718,11 +3108,6 @@
         <source>Project (A-Z)</source>
       </segment>
     </unit>
-    <unit id="6897988037897344822">
-      <segment>
-        <source>If they do not already have an account, they will first be asked to create one.</source>
-      </segment>
-    </unit>
     <unit id="6917659899238781671">
       <segment>
         <source>Test notification sent successfully</source>
@@ -3748,11 +3133,6 @@
         <source>Breadcrumb</source>
       </segment>
     </unit>
-    <unit id="7003790776240394114">
-      <segment>
-        <source>Filename</source>
-      </segment>
-    </unit>
     <unit id="7012761344880530102">
       <segment>
         <source>Event collection is paused</source>
@@ -3763,19 +3143,9 @@
         <source>Add Alert Recipient</source>
       </segment>
     </unit>
-    <unit id="1647770775567131539">
-      <segment>
-        <source>Trend:</source>
-      </segment>
-    </unit>
     <unit id="7103588127254721505">
       <segment>
         <source>Theme</source>
-      </segment>
-    </unit>
-    <unit id="7120781274846803553">
-      <segment>
-        <source>Date Created</source>
       </segment>
     </unit>
     <unit id="7136018875175606726">
@@ -3786,11 +3156,6 @@
     <unit id="7165913391990223528">
       <segment>
         <source>Chat with support</source>
-      </segment>
-    </unit>
-    <unit id="7175145836216322796">
-      <segment>
-        <source>Create a token to use the GlitchTip API.</source>
       </segment>
     </unit>
     <unit id="718317616403991404">
@@ -3893,11 +3258,6 @@
         <source>You&apos;re not on this project&apos;s team. Ask an organization admin to add you.</source>
       </segment>
     </unit>
-    <unit id="7612440083886953496">
-      <segment>
-        <source>Update Member</source>
-      </segment>
-    </unit>
     <unit id="7619773636555096367">
       <segment>
         <source>Get started with GlitchTip</source>
@@ -3926,21 +3286,6 @@
     <unit id="7699622144571229146">
       <segment>
         <source>Sort by</source>
-      </segment>
-    </unit>
-    <unit id="7744292213705278878">
-      <segment>
-        <source>User Profile</source>
-      </segment>
-    </unit>
-    <unit id="7758726334480915397">
-      <segment>
-        <source>View all uptime monitors</source>
-      </segment>
-    </unit>
-    <unit id="7777236975974969865">
-      <segment>
-        <source>Social Auth Accounts</source>
       </segment>
     </unit>
     <unit id="7787181108395830509">
@@ -4033,16 +3378,6 @@
         <source>of cap</source>
       </segment>
     </unit>
-    <unit id="8033508513197634301">
-      <segment>
-        <source>No releases</source>
-      </segment>
-    </unit>
-    <unit id="8043281408144413530">
-      <segment>
-        <source>Configure your SDK to start capturing logs.</source>
-      </segment>
-    </unit>
     <unit id="8066608938393600549">
       <segment>
         <source>Message</source>
@@ -4058,9 +3393,9 @@
         <source> Disable </source>
       </segment>
     </unit>
-    <unit id="8152807564169066325">
+    <unit id="227121252510918433">
       <segment>
-        <source>Transfer Ownership</source>
+        <source>Transfer ownership</source>
       </segment>
     </unit>
     <unit id="815548590681541036">
@@ -4133,11 +3468,6 @@
         <source>Your DSN tells your SDK how to send events to your GlitchTip project. The Security Endpoint is used for browser Content Security Policy (CSP) reporting.</source>
       </segment>
     </unit>
-    <unit id="8435281898584959676">
-      <segment>
-        <source>Create a new team for this project</source>
-      </segment>
-    </unit>
     <unit id="8461609631969932886">
       <segment>
         <source>Hide</source>
@@ -4163,9 +3493,9 @@
         <source>Monitor has been deleted.</source>
       </segment>
     </unit>
-    <unit id="850544545559918850">
+    <unit id="7305408602869665674">
       <segment>
-        <source>{VAR_PLURAL, plural, =1 {1 Member} other {<ph id="0" equiv="INTERPOLATION"/> Members}}</source>
+        <source>{VAR_PLURAL, plural, =1 {1 project} other {<ph id="0" equiv="INTERPOLATION"/> projects}}</source>
       </segment>
     </unit>
     <unit id="8517109745758603034">
@@ -4178,24 +3508,14 @@
         <source>Webhook URL</source>
       </segment>
     </unit>
-    <unit id="858351361293679688">
-      <segment>
-        <source>No tokens</source>
-      </segment>
-    </unit>
     <unit id="8585474066646620696">
       <segment>
-        <source>Default <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span &gt;" dispEnd="&lt;/span &gt;">(<ph id="1" equiv="INTERPOLATION" disp="{{ (subscribeByDefault()) === true ? onText : offText }}"/>)</pc></source>
+        <source>Default <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span &gt;" dispEnd="&lt;/span &gt;">(<ph id="1" equiv="INTERPOLATION" disp="{{ subscribeByDefault() === true ? onText : offText }}"/>)</pc></source>
       </segment>
     </unit>
     <unit id="8605967835704545279">
       <segment>
         <source> Other </source>
-      </segment>
-    </unit>
-    <unit id="8621472262044489748">
-      <segment>
-        <source>View monitor details</source>
       </segment>
     </unit>
     <unit id="8626615484230609084">
@@ -4235,19 +3555,14 @@
         <source>If an <pc id="0" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span i18n-matTooltip class=&quot;tooltip&quot; matTooltip=&quot;An uptime monitor checks a URL on a schedule and triggers when the site stops responding.&quot; &gt;" dispEnd="&lt;/span &gt;">uptime monitor</pc> detects downtime.</source>
       </segment>
     </unit>
-    <unit id="8723088463093015914">
+    <unit id="4163658450493387918">
       <segment>
-        <source> Unverified </source>
+        <source>Unverified</source>
       </segment>
     </unit>
     <unit id="8741674114304193554">
       <segment>
         <source>Send me project alerts</source>
-      </segment>
-    </unit>
-    <unit id="8751977620930715509">
-      <segment>
-        <source>Update Name</source>
       </segment>
     </unit>
     <unit id="8752850584799350495">
@@ -4310,16 +3625,6 @@
         <source>Markdown supported</source>
       </segment>
     </unit>
-    <unit id="8906199686828527073">
-      <segment>
-        <source>Add a team</source>
-      </segment>
-    </unit>
-    <unit id="8913401436752573259">
-      <segment>
-        <source>No Teams</source>
-      </segment>
-    </unit>
     <unit id="8945198047207390803">
       <segment>
         <source>Delete issue?</source>
@@ -4380,11 +3685,6 @@
         <source>Filter platforms</source>
       </segment>
     </unit>
-    <unit id="9097450677105109097">
-      <segment>
-        <source> This is the default setting for project alerts. You can change the setting per project below. </source>
-      </segment>
-    </unit>
     <unit id="9110048041619766424">
       <segment>
         <source> Use <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;https://authy.com/download/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; &gt;" dispEnd="&lt;/a &gt;">Authy</pc>, <pc id="1" equivStart="START_LINK_1" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a href=&quot;https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; &gt;" dispEnd="&lt;/a &gt;">Google Authenticator</pc>, or any TOTP app on your phone. </source>
@@ -4440,24 +3740,14 @@
         <source>All services</source>
       </segment>
     </unit>
-    <unit id="9188868345776929450">
+    <unit id="5385408710926538560">
       <segment>
-        <source>Organization Members</source>
-      </segment>
-    </unit>
-    <unit id="918986430725137551">
-      <segment>
-        <source>Create Token</source>
+        <source>Create token</source>
       </segment>
     </unit>
     <unit id="9191257308058195560">
       <segment>
         <source>{VAR_PLURAL, plural, =1 {minute} other {minutes}}</source>
-      </segment>
-    </unit>
-    <unit id="9200128029436327726">
-      <segment>
-        <source>Only existing GlitchTip users may be invited.</source>
       </segment>
     </unit>
     <unit id="9206334208746012915">
@@ -4480,11 +3770,6 @@
     <unit id="937698653877657021">
       <segment>
         <source> to change your plan and keep collecting events.</source>
-      </segment>
-    </unit>
-    <unit id="953535088200530364">
-      <segment>
-        <source>Performance data appears here once your app sends transactions.</source>
       </segment>
     </unit>
     <unit id="962765493084218985">
@@ -4527,11 +3812,6 @@
         <source>More actions</source>
       </segment>
     </unit>
-    <unit id="1243328179106709524">
-      <segment>
-        <source>Send it to the person who looks after this code.</source>
-      </segment>
-    </unit>
     <unit id="1294134309093147342">
       <segment>
         <source>People affected</source>
@@ -4552,11 +3832,6 @@
         <source>Mark fixed</source>
       </segment>
     </unit>
-    <unit id="164308497633977757">
-      <segment>
-        <source>Ask an organization owner, manager, or admin to create one.</source>
-      </segment>
-    </unit>
     <unit id="1785835479650673585">
       <segment>
         <source>{VAR_PLURAL, plural, =0 {No <ph id="0" equiv="INTERPOLATION"/> issues} =1 {1 <ph id="1" equiv="INTERPOLATION"/> issue} other {<ph id="2" equiv="INTERPOLATION_1"/> <ph id="3" equiv="INTERPOLATION"/> issues}}</source>
@@ -4572,24 +3847,14 @@
         <source>This alert isn&apos;t being sent anywhere.</source>
       </segment>
     </unit>
-    <unit id="2088838495759658460">
+    <unit id="3437865020727336465">
       <segment>
-        <source>What happened</source>
-      </segment>
-    </unit>
-    <unit id="2174738705830273795">
-      <segment>
-        <source>Invite Member</source>
+        <source>Invite member</source>
       </segment>
     </unit>
     <unit id="2206413257232247685">
       <segment>
         <source>Jump to…</source>
-      </segment>
-    </unit>
-    <unit id="2357482879735947487">
-      <segment>
-        <source>Select issues to fix, mute or merge several at once.</source>
       </segment>
     </unit>
     <unit id="2417381612098826106">
@@ -4642,11 +3907,6 @@
         <source> Mute </source>
       </segment>
     </unit>
-    <unit id="3239474234588340491">
-      <segment>
-        <source>Fixed in <ph id="0" equiv="INTERPOLATION" disp="{{ release }}"/></source>
-      </segment>
-    </unit>
     <unit id="3326877877555410533">
       <segment>
         <source>Started</source>
@@ -4662,29 +3922,14 @@
         <source>Happens least</source>
       </segment>
     </unit>
-    <unit id="3755188974614921924">
-      <segment>
-        <source>You aren&apos;t part of any teams. Ask an organization Manager or Owner to add you to one.</source>
-      </segment>
-    </unit>
     <unit id="3815928829326879804">
       <segment>
         <source>Main</source>
       </segment>
     </unit>
-    <unit id="3875928342499212488">
-      <segment>
-        <source>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> since <pc id="2" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="3" equiv="INTERPOLATION_1" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</source>
-      </segment>
-    </unit>
     <unit id="3959826834147169200">
       <segment>
         <source>Muted</source>
-      </segment>
-    </unit>
-    <unit id="3988396843447895249">
-      <segment>
-        <source>You aren&apos;t part of any teams. Join a team below.</source>
       </segment>
     </unit>
     <unit id="4073760267688290583">
@@ -4742,16 +3987,6 @@
         <source>New to catchnet?</source>
       </segment>
     </unit>
-    <unit id="4996058620223747754">
-      <segment>
-        <source>You aren&apos;t part of any teams. Press the &quot;Create Team&quot; button in the upper right, or ask an organization Manager or Owner to add you to one.</source>
-      </segment>
-    </unit>
-    <unit id="5028777105388019087">
-      <segment>
-        <source>Details</source>
-      </segment>
-    </unit>
     <unit id="5175148993209341456">
       <segment>
         <source>Security policy report</source>
@@ -4765,11 +4000,6 @@
     <unit id="5280218112746407598">
       <segment>
         <source>New</source>
-      </segment>
-    </unit>
-    <unit id="5376008226368173506">
-      <segment>
-        <source>{VAR_PLURAL, plural, =1 {once} other {<ph id="0" equiv="INTERPOLATION"/> times}}</source>
       </segment>
     </unit>
     <unit id="5421076199587087589">
@@ -4792,19 +4022,14 @@
         <source>catchnet home</source>
       </segment>
     </unit>
-    <unit id="566779619857361601">
+    <unit id="9140864773379514810">
       <segment>
-        <source>Changing team settings requires the Admin role or above.</source>
+        <source>Changing team settings needs the Admin role or above.</source>
       </segment>
     </unit>
     <unit id="5874794238234631522">
       <segment>
         <source>People</source>
-      </segment>
-    </unit>
-    <unit id="6143795228406387052">
-      <segment>
-        <source> Copy link </source>
       </segment>
     </unit>
     <unit id="6266615344510674845">
@@ -4822,16 +4047,6 @@
         <source>Steps before it</source>
       </segment>
     </unit>
-    <unit id="6398752392522613511">
-      <segment>
-        <source>This time</source>
-      </segment>
-    </unit>
-    <unit id="6501386344990074537">
-      <segment>
-        <source>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> to <pc id="2" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="3" equiv="ICU_1" disp="{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}" subFlows="7747169762350532375"/></pc> since <pc id="4" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="5" equiv="INTERPOLATION_2" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</source>
-      </segment>
-    </unit>
     <unit id="6722197117273372334">
       <segment>
         <source>Reopen</source>
@@ -4847,19 +4062,9 @@
         <source>Merge into one issue</source>
       </segment>
     </unit>
-    <unit id="7015957513839092035">
-      <segment>
-        <source>Ask an organization Manager or Owner to create one.</source>
-      </segment>
-    </unit>
     <unit id="7175334010878043826">
       <segment>
         <source>Nothing matches “<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>”.</source>
-      </segment>
-    </unit>
-    <unit id="7180995564793658999">
-      <segment>
-        <source>Once it is fixed, press <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;">Mark as fixed</pc>. If it happens again, it shows up here as open.</source>
       </segment>
     </unit>
     <unit id="7390421489602989212">
@@ -4880,11 +4085,6 @@
     <unit id="7647042449918022269">
       <segment>
         <source>Issue ID</source>
-      </segment>
-    </unit>
-    <unit id="7658402240953727096">
-      <segment>
-        <source>Name:</source>
       </segment>
     </unit>
     <unit id="771042789151401304">
@@ -4932,11 +4132,6 @@
         <source> There is no project associated with this monitor, so no notifications will be sent for monitor events. <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (canWriteProject()) {" dispEnd="}"> Visit the <pc id="1" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[&apos;./update&apos;]&quot;&gt;" dispEnd="&lt;/a&gt;">monitor settings</pc> page to associate this monitor with a project. </pc></source>
       </segment>
     </unit>
-    <unit id="8234871669027443991">
-      <segment>
-        <source>Ask an organization Admin or above to add one.</source>
-      </segment>
-    </unit>
     <unit id="827200100431249089">
       <segment>
         <source>Expand sidebar</source>
@@ -4952,11 +4147,6 @@
         <source>{VAR_PLURAL, plural, =1 {1 time} other {<ph id="0" equiv="INTERPOLATION"/> times}}</source>
       </segment>
     </unit>
-    <unit id="8904685289655594624">
-      <segment>
-        <source>What to do next</source>
-      </segment>
-    </unit>
     <unit id="892073694820881630">
       <segment>
         <source>Link copied</source>
@@ -4970,6 +4160,866 @@
     <unit id="9164111277354608745">
       <segment>
         <source>Happens most</source>
+      </segment>
+    </unit>
+    <unit id="1020732716418946003">
+      <segment>
+        <source>Setup code</source>
+      </segment>
+    </unit>
+    <unit id="1023747262902181380">
+      <segment>
+        <source>{VAR_PLURAL, plural, =1 {1 monitor is down} other {<ph id="0" equiv="INTERPOLATION"/> monitors are down}}</source>
+      </segment>
+    </unit>
+    <unit id="1074002438441274017">
+      <segment>
+        <source>When it counts as down</source>
+      </segment>
+    </unit>
+    <unit id="110120110137304636">
+      <segment>
+        <source>New alert</source>
+      </segment>
+    </unit>
+    <unit id="1139624927916459217">
+      <segment>
+        <source>This event</source>
+      </segment>
+    </unit>
+    <unit id="1148580104303860524">
+      <segment>
+        <source>New team</source>
+      </segment>
+    </unit>
+    <unit id="1162903517846219476">
+      <segment>
+        <source>{VAR_PLURAL, plural, =0 {No members yet} =1 {1 member} other {<ph id="0" equiv="INTERPOLATION"/> members}}</source>
+      </segment>
+    </unit>
+    <unit id="1203312461457950425">
+      <segment>
+        <source>Security endpoint</source>
+      </segment>
+    </unit>
+    <unit id="1250564359892919675">
+      <segment>
+        <source>Installation and configuration docs</source>
+      </segment>
+    </unit>
+    <unit id="1284060999264704046">
+      <segment>
+        <source>This person is the account owner.</source>
+      </segment>
+    </unit>
+    <unit id="1324359997838665586">
+      <segment>
+        <source>No source files for this release. Upload source maps to see readable stack traces for its errors.</source>
+      </segment>
+    </unit>
+    <unit id="1334206562663359316">
+      <segment>
+        <source>Search log messages</source>
+      </segment>
+    </unit>
+    <unit id="1457803245534039402">
+      <segment>
+        <source>Heartbeat URL</source>
+      </segment>
+    </unit>
+    <unit id="1635166394021927849">
+      <segment>
+        <source>Auth tokens</source>
+      </segment>
+    </unit>
+    <unit id="1651198966226050034">
+      <segment>
+        <source>No logs yet. Turn on logging in your SDK and they stream in here.</source>
+      </segment>
+    </unit>
+    <unit id="1706470228597151674">
+      <segment>
+        <source>Not on any team yet.</source>
+      </segment>
+    </unit>
+    <unit id="1721315171916851231">
+      <segment>
+        <source>Letters, numbers, underscores and hyphens</source>
+      </segment>
+    </unit>
+    <unit id="1721839189566022188">
+      <segment>
+        <source>What your app logged, newest first.</source>
+      </segment>
+    </unit>
+    <unit id="1898058490803978010">
+      <segment>
+        <source>Created <ph id="0" equiv="INTERPOLATION" disp="{{ project.dateCreated | date: &quot;mediumDate&quot; }}"/></source>
+      </segment>
+    </unit>
+    <unit id="1970558220572598781">
+      <segment>
+        <source>Removes every project, issue and event in it. This cannot be undone.</source>
+      </segment>
+    </unit>
+    <unit id="1973757892929418316">
+      <segment>
+        <source>Log in to catchnet</source>
+      </segment>
+    </unit>
+    <unit id="2004609861986596623">
+      <segment>
+        <source>Shown in the sidebar and in emails catchnet sends.</source>
+      </segment>
+    </unit>
+    <unit id="2009532346751172251">
+      <segment>
+        <source>Teams decide which projects people see and who hears about their issues.</source>
+      </segment>
+    </unit>
+    <unit id="2012659005494284050">
+      <segment>
+        <source>Forgot your password?</source>
+      </segment>
+    </unit>
+    <unit id="211513738539049591">
+      <segment>
+        <source>How often</source>
+      </segment>
+    </unit>
+    <unit id="2134457458264375607">
+      <segment>
+        <source>Fixed in</source>
+      </segment>
+    </unit>
+    <unit id="2160978867170969270">
+      <segment>
+        <source>Alerts go to the primary address. You can log in with any verified one.</source>
+      </segment>
+    </unit>
+    <unit id="2174200934060459788">
+      <segment>
+        <source>Installing and configuring the server.</source>
+      </segment>
+    </unit>
+    <unit id="2215272820018380966">
+      <segment>
+        <source>You can change this project&apos;s settings because you are an admin of <ph id="0" equiv="INTERPOLATION" disp="{{ project.organization.name }}"/>. To see its issues, join one of its teams.</source>
+      </segment>
+    </unit>
+    <unit id="2218697712739917757">
+      <segment>
+        <source>Turn alerts on or off for one project, or let it follow the default.</source>
+      </segment>
+    </unit>
+    <unit id="2308975396733519902">
+      <segment>
+        <source>Create an account</source>
+      </segment>
+    </unit>
+    <unit id="2335033852604698379">
+      <segment>
+        <source>No checks yet.</source>
+      </segment>
+    </unit>
+    <unit id="2419006590817891116">
+      <segment>
+        <source>Setup guide for <ph id="0" equiv="INTERPOLATION" disp="{{ getPlatformName(project.platform) }}"/></source>
+      </segment>
+    </unit>
+    <unit id="2432093903373755152">
+      <segment>
+        <source>Source files</source>
+      </segment>
+    </unit>
+    <unit id="2529200880958269600">
+      <segment>
+        <source>How this catchnet server is set up. Change these in the server&apos;s environment, not here.</source>
+      </segment>
+    </unit>
+    <unit id="2611475427610660053">
+      <segment>
+        <source>Transactions</source>
+      </segment>
+    </unit>
+    <unit id="262574579392352983">
+      <segment>
+        <source>Check log</source>
+      </segment>
+    </unit>
+    <unit id="2741553799314718632">
+      <segment>
+        <source>What this person can see and change in the organization.</source>
+      </segment>
+    </unit>
+    <unit id="276186190603399538">
+      <segment>
+        <source>Alerts go to the team assigned to the associated project.</source>
+      </segment>
+    </unit>
+    <unit id="2765507593757945216">
+      <segment>
+        <source>New organization</source>
+      </segment>
+    </unit>
+    <unit id="2813203376157857672">
+      <segment>
+        <source>The team that sees this project&apos;s issues and gets its alerts.</source>
+      </segment>
+    </unit>
+    <unit id="283086264084677206">
+      <segment>
+        <source>Monitor settings</source>
+      </segment>
+    </unit>
+    <unit id="2880471822874502110">
+      <segment>
+        <source>Log in with an account from another service.</source>
+      </segment>
+    </unit>
+    <unit id="3018924331017627562">
+      <segment>
+        <source>catchnet</source>
+      </segment>
+    </unit>
+    <unit id="3034958254400730760">
+      <segment>
+        <source>Add a project</source>
+      </segment>
+    </unit>
+    <unit id="3040925054075759715">
+      <segment>
+        <source>Make <ph id="0" equiv="INTERPOLATION" disp="{{ member.email }}"/> the account owner.</source>
+      </segment>
+    </unit>
+    <unit id="3107905422978085237">
+      <segment>
+        <source>Open notification settings</source>
+      </segment>
+    </unit>
+    <unit id="3120170941966679663">
+      <segment>
+        <source>Join one of this project&apos;s teams to see its issues</source>
+      </segment>
+    </unit>
+    <unit id="313854265968026491">
+      <segment>
+        <source>Transaction</source>
+      </segment>
+    </unit>
+    <unit id="3165072126652953624">
+      <segment>
+        <source>No logs match these filters. Clear them to see every log.</source>
+      </segment>
+    </unit>
+    <unit id="3193976279273491157">
+      <segment>
+        <source>Actions</source>
+      </segment>
+    </unit>
+    <unit id="3194424597072267957">
+      <segment>
+        <source>No transactions yet. Turn on tracing in your SDK and they show up here.</source>
+      </segment>
+    </unit>
+    <unit id="3196693437757658114">
+      <segment>
+        <source>Usually your company or team. Projects, members and alerts live inside it.</source>
+      </segment>
+    </unit>
+    <unit id="327534766307158513">
+      <segment>
+        <source>Remembered it?</source>
+      </segment>
+    </unit>
+    <unit id="3306897466025163304">
+      <segment>
+        <source>Waiting for the first check</source>
+      </segment>
+    </unit>
+    <unit id="334182473010900434">
+      <segment>
+        <source>No projects yet. Create one to get the setup code for your app.</source>
+      </segment>
+    </unit>
+    <unit id="3393133458004181121">
+      <segment>
+        <source>All categories</source>
+      </segment>
+    </unit>
+    <unit id="3417238479788357902">
+      <segment>
+        <source>People can describe what they were doing when an error happened. Turn it on with showReportDialog in the JS SDK.</source>
+      </segment>
+    </unit>
+    <unit id="3433047944194115494">
+      <segment>
+        <source>Two-factor auth</source>
+      </segment>
+    </unit>
+    <unit id="3463797202358605584">
+      <segment>
+        <source>Invite</source>
+      </segment>
+    </unit>
+    <unit id="3551597027565719993">
+      <segment>
+        <source>Added <ph id="0" equiv="INTERPOLATION" disp="{{ member.dateCreated | date }}"/></source>
+      </segment>
+    </unit>
+    <unit id="3553585318727813098">
+      <segment>
+        <source>Change the trend period</source>
+      </segment>
+    </unit>
+    <unit id="3585984106786689241">
+      <segment>
+        <source>View issues</source>
+      </segment>
+    </unit>
+    <unit id="3627684294873608184">
+      <segment>
+        <source>Connected accounts</source>
+      </segment>
+    </unit>
+    <unit id="3679829855154179183">
+      <segment>
+        <source>Your name, the time zone dates are shown in, and the theme.</source>
+      </segment>
+    </unit>
+    <unit id="3768927257183755959">
+      <segment>
+        <source>Save</source>
+      </segment>
+    </unit>
+    <unit id="3818657053994409319">
+      <segment>
+        <source>Every monitor is up.</source>
+      </segment>
+    </unit>
+    <unit id="3905876795549292879">
+      <segment>
+        <source>The account owner manages the organization&apos;s subscription.</source>
+      </segment>
+    </unit>
+    <unit id="400629673766323342">
+      <segment>
+        <source>Its check history goes with it. This can&apos;t be undone.</source>
+      </segment>
+    </unit>
+    <unit id="416345554106398613">
+      <segment>
+        <source>Not a member</source>
+      </segment>
+    </unit>
+    <unit id="418740200823377360">
+      <segment>
+        <source>Whether alert emails reach you. This is the default for every project; you can change it per project.</source>
+      </segment>
+    </unit>
+    <unit id="4207916966377787111">
+      <segment>
+        <source>Created</source>
+      </segment>
+    </unit>
+    <unit id="4216647619829183478">
+      <segment>
+        <source>No monitors yet. Ask an organization admin or above to add one.</source>
+      </segment>
+    </unit>
+    <unit id="4356380398783669401">
+      <segment>
+        <source>No tokens yet. A new token appears here with its scopes.</source>
+      </segment>
+    </unit>
+    <unit id="4371680625121499898">
+      <segment>
+        <source>Reset your password</source>
+      </segment>
+    </unit>
+    <unit id="439421944476106091">
+      <segment>
+        <source>Removes your user and your access to every organization.</source>
+      </segment>
+    </unit>
+    <unit id="4440196256439958466">
+      <segment>
+        <source>Tokens let scripts and tools use the catchnet API as you, limited to the scopes you pick.</source>
+      </segment>
+    </unit>
+    <unit id="4482826498369538608">
+      <segment>
+        <source>Server version</source>
+      </segment>
+    </unit>
+    <unit id="4484617691903089526">
+      <segment>
+        <source><ph id="0" equiv="ICU" disp="{members.length, plural, =1 {1 person} other {{{ members.length }} people}}" subFlows="7747169762350532375"/> in <ph id="1" equiv="INTERPOLATION_1" disp="{{ activeOrganizationDetail()?.name }}"/></source>
+      </segment>
+    </unit>
+    <unit id="4517730664301491853">
+      <segment>
+        <source>No data yet</source>
+      </segment>
+    </unit>
+    <unit id="4648509224758313965">
+      <segment>
+        <source>What to check</source>
+      </segment>
+    </unit>
+    <unit id="4675772062963539336">
+      <segment>
+        <source>The address catchnet checks, and how it checks it.</source>
+      </segment>
+    </unit>
+    <unit id="4713003419468555269">
+      <segment>
+        <source>No feedback yet</source>
+      </segment>
+    </unit>
+    <unit id="4747940509314227461">
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ issues().length }}"/> of <ph id="1" equiv="INTERPOLATION_1" disp="{{ summaryCount() }}"/></source>
+      </segment>
+    </unit>
+    <unit id="4841235382767147744">
+      <segment>
+        <source>Whether you get emails about this project is set in your account.</source>
+      </segment>
+    </unit>
+    <unit id="4852115625162521529">
+      <segment>
+        <source>Open issues</source>
+      </segment>
+    </unit>
+    <unit id="4900524059915832269">
+      <segment>
+        <source>People without an account are asked to create one first.</source>
+      </segment>
+    </unit>
+    <unit id="4976965009176595392">
+      <segment>
+        <source>Send invites</source>
+      </segment>
+    </unit>
+    <unit id="5034473762587110175">
+      <segment>
+        <source>Open navigation</source>
+      </segment>
+    </unit>
+    <unit id="5077171561940262649">
+      <segment>
+        <source>You&apos;re in it</source>
+      </segment>
+    </unit>
+    <unit id="5111842031822965750">
+      <segment>
+        <source>Send reset link</source>
+      </segment>
+    </unit>
+    <unit id="5134745148043977084">
+      <segment>
+        <source>Save preferences</source>
+      </segment>
+    </unit>
+    <unit id="5217524798738013084">
+      <segment>
+        <source>Send an email or a webhook when this project&apos;s errors cross a threshold you set.</source>
+      </segment>
+    </unit>
+    <unit id="5220827832846747610">
+      <segment>
+        <source>Teams this person belongs to.</source>
+      </segment>
+    </unit>
+    <unit id="5227520619702195679">
+      <segment>
+        <source>What they can see and change. You can change it later.</source>
+      </segment>
+    </unit>
+    <unit id="5243233792859835904">
+      <segment>
+        <source>Organization name</source>
+      </segment>
+    </unit>
+    <unit id="5334263805050261653">
+      <segment>
+        <source>How often to check, how long to wait, and what a healthy answer looks like.</source>
+      </segment>
+    </unit>
+    <unit id="5342180019869279870">
+      <segment>
+        <source>Errors are tagged with the environment your SDK reports, such as production or staging. Hide one to leave it out of filters.</source>
+      </segment>
+    </unit>
+    <unit id="5359709553291955255">
+      <segment>
+        <source>Checked every</source>
+      </segment>
+    </unit>
+    <unit id="5361301900908448889">
+      <segment>
+        <source> Delete monitor </source>
+      </segment>
+    </unit>
+    <unit id="5367020503354903001">
+      <segment>
+        <source>The team&apos;s slug, shown after # wherever the team appears.</source>
+      </segment>
+    </unit>
+    <unit id="5382715531175540381">
+      <segment>
+        <source>New token</source>
+      </segment>
+    </unit>
+    <unit id="5448250423159030072">
+      <segment>
+        <source>Account ownership</source>
+      </segment>
+    </unit>
+    <unit id="5474613569599874194">
+      <segment>
+        <source>Deploys</source>
+      </segment>
+    </unit>
+    <unit id="562690777697414490">
+      <segment>
+        <source>The language or framework the project runs on. It picks the setup guide above.</source>
+      </segment>
+    </unit>
+    <unit id="5636875950746599528">
+      <segment>
+        <source>No environments yet. They appear here once an event reports one.</source>
+      </segment>
+    </unit>
+    <unit id="5659640923263690937">
+      <segment>
+        <source>Account sections</source>
+      </segment>
+    </unit>
+    <unit id="5729418620241283277">
+      <segment>
+        <source>Events</source>
+      </segment>
+    </unit>
+    <unit id="5813267492852629411">
+      <segment>
+        <source>Removes the project with all its issues and events. This cannot be undone.</source>
+      </segment>
+    </unit>
+    <unit id="5900236585725902780">
+      <segment>
+        <source>Your notifications</source>
+      </segment>
+    </unit>
+    <unit id="5911214550882917183">
+      <segment>
+        <source>State</source>
+      </segment>
+    </unit>
+    <unit id="5967527020153018537">
+      <segment>
+        <source>Clear platform</source>
+      </segment>
+    </unit>
+    <unit id="597644640015830204">
+      <segment>
+        <source>Every project is already on this team</source>
+      </segment>
+    </unit>
+    <unit id="6035549592328076369">
+      <segment>
+        <source>All levels</source>
+      </segment>
+    </unit>
+    <unit id="6170082236603228916">
+      <segment>
+        <source>Request</source>
+      </segment>
+    </unit>
+    <unit id="6521414370349944484">
+      <segment>
+        <source>No spans yet. They show up here once child spans are recorded for this transaction group.</source>
+      </segment>
+    </unit>
+    <unit id="6561056648798100149">
+      <segment>
+        <source>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ project.name }}"/> and everything it has received.</source>
+      </segment>
+    </unit>
+    <unit id="6712755866980113715">
+      <segment>
+        <source>Usually the app&apos;s name, such as web or billing-api.</source>
+      </segment>
+    </unit>
+    <unit id="6752137416774957872">
+      <segment>
+        <source>Read from the server when the app loaded.</source>
+      </segment>
+    </unit>
+    <unit id="6872828477582079289">
+      <segment>
+        <source>Add an email address</source>
+      </segment>
+    </unit>
+    <unit id="690303224540954504">
+      <segment>
+        <source>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ activeOrg.name }}"/> and everything in it.</source>
+      </segment>
+    </unit>
+    <unit id="6950709550164920678">
+      <segment>
+        <source>Invite members</source>
+      </segment>
+    </unit>
+    <unit id="7000649363168371045">
+      <segment>
+        <source>Save changes</source>
+      </segment>
+    </unit>
+    <unit id="7023385889710331946">
+      <segment>
+        <source>What the app is written in. It picks the setup guide.</source>
+      </segment>
+    </unit>
+    <unit id="7071087015048411049">
+      <segment>
+        <source>Delete <ph id="0" equiv="INTERPOLATION" disp="{{ monitor.name }}"/> and all of its uptime data.</source>
+      </segment>
+    </unit>
+    <unit id="71431750545763103">
+      <segment>
+        <source>Creating organizations is turned off on this server. Ask an administrator to invite you to an existing one.</source>
+      </segment>
+    </unit>
+    <unit id="7334664808246694669">
+      <segment>
+        <source>Only people who already have an account can be invited.</source>
+      </segment>
+    </unit>
+    <unit id="7340635086968864058">
+      <segment>
+        <source>No releases yet. They show up here once your app sends its release name with its events.</source>
+      </segment>
+    </unit>
+    <unit id="7420481936731662034">
+      <segment>
+        <source>Recent checks</source>
+      </segment>
+    </unit>
+    <unit id="7422414345245927066">
+      <segment>
+        <source>Delete this monitor</source>
+      </segment>
+    </unit>
+    <unit id="7515585277609614727">
+      <segment>
+        <source>How long each kind of request or task takes, by transaction group.</source>
+      </segment>
+    </unit>
+    <unit id="7516704169675525177">
+      <segment>
+        <source>Separate several addresses with commas.</source>
+      </segment>
+    </unit>
+    <unit id="7587809611036552587">
+      <segment>
+        <source>No monitors yet. Add one to hear about it when a site or service goes down.</source>
+      </segment>
+    </unit>
+    <unit id="7662015208795302518">
+      <segment>
+        <source>Delete account</source>
+      </segment>
+    </unit>
+    <unit id="7676275705571615947">
+      <segment>
+        <source>Who hears about it</source>
+      </segment>
+    </unit>
+    <unit id="7803099382814958474">
+      <segment>
+        <source>Delete #<ph id="0" equiv="INTERPOLATION" disp="{{ team()?.slug }}"/>.</source>
+      </segment>
+    </unit>
+    <unit id="7879546973853685748">
+      <segment>
+        <source>Released</source>
+      </segment>
+    </unit>
+    <unit id="7903133227524026916">
+      <segment>
+        <source><ph id="0" equiv="PH" disp="total"/> events in the last 14 days</source>
+      </segment>
+    </unit>
+    <unit id="7972980847793988528">
+      <segment>
+        <source>No projects yet. Ask an organization owner, manager or admin to create one.</source>
+      </segment>
+    </unit>
+    <unit id="8011041868490696670">
+      <segment>
+        <source>Add a member</source>
+      </segment>
+    </unit>
+    <unit id="8042861271886887578">
+      <segment>
+        <source>To start catching errors, create an organization first.</source>
+      </segment>
+    </unit>
+    <unit id="8058994642732449354">
+      <segment>
+        <source>Monitor</source>
+      </segment>
+    </unit>
+    <unit id="8190456424078094416">
+      <segment>
+        <source>By project</source>
+      </segment>
+    </unit>
+    <unit id="8191335195814023306">
+      <segment>
+        <source>At least 8 characters. You stay logged in after changing it.</source>
+      </segment>
+    </unit>
+    <unit id="8218359335580289116">
+      <segment>
+        <source>Shown in lists and filters across catchnet.</source>
+      </segment>
+    </unit>
+    <unit id="8238658995714900345">
+      <segment>
+        <source><ph id="0" equiv="ICU" disp="{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}}" subFlows="556381734012115817"/> in <ph id="1" equiv="INTERPOLATION_1" disp="{{ orgs.length }}"/> organizations</source>
+      </segment>
+    </unit>
+    <unit id="8250498880894120269">
+      <segment>
+        <source>catchnet checks the address on a schedule and tells your team when it stops answering.</source>
+      </segment>
+    </unit>
+    <unit id="8282309360961339523">
+      <segment>
+        <source>Set a new password</source>
+      </segment>
+    </unit>
+    <unit id="8307140841776883735">
+      <segment>
+        <source>Join</source>
+      </segment>
+    </unit>
+    <unit id="8374005152080281567">
+      <segment>
+        <source>Optional. Teams decide which projects they see.</source>
+      </segment>
+    </unit>
+    <unit id="8421602876110934393">
+      <segment>
+        <source>Open a project&apos;s settings for its setup code, environments and teams.</source>
+      </segment>
+    </unit>
+    <unit id="8455204924704616723">
+      <segment>
+        <source>File</source>
+      </segment>
+    </unit>
+    <unit id="8470095145612853829">
+      <segment>
+        <source>No teams yet. Ask an organization manager or owner to create one.</source>
+      </segment>
+    </unit>
+    <unit id="8497146370841352640">
+      <segment>
+        <source>A 6-digit code from an app on your phone, asked for at every login.</source>
+      </segment>
+    </unit>
+    <unit id="8512969405910625016">
+      <segment>
+        <source>Notification settings apply per project.</source>
+      </segment>
+    </unit>
+    <unit id="8515666729051918917">
+      <segment>
+        <source><ph id="0" equiv="PH" disp="total"/> events in the last 24 hours</source>
+      </segment>
+    </unit>
+    <unit id="8540729217579212886">
+      <segment>
+        <source>New project</source>
+      </segment>
+    </unit>
+    <unit id="858592354685834555">
+      <segment>
+        <source>Its projects and members stay in the organization. This cannot be undone.</source>
+      </segment>
+    </unit>
+    <unit id="8649946906321476069">
+      <segment>
+        <source>Latest issue</source>
+      </segment>
+    </unit>
+    <unit id="8650499415827640724">
+      <segment>
+        <source>Type</source>
+      </segment>
+    </unit>
+    <unit id="8653223531015406304">
+      <segment>
+        <source>New monitor</source>
+      </segment>
+    </unit>
+    <unit id="8794427930159632234">
+      <segment>
+        <source>No teams yet</source>
+      </segment>
+    </unit>
+    <unit id="8864288285279476751">
+      <segment>
+        <source>Method</source>
+      </segment>
+    </unit>
+    <unit id="8904826282875215662">
+      <segment>
+        <source>No teams yet. Create one to group people around projects.</source>
+      </segment>
+    </unit>
+    <unit id="8948444690892731948">
+      <segment>
+        <source>Instance name</source>
+      </segment>
+    </unit>
+    <unit id="896407838930646903">
+      <segment>
+        <source>Everyone is already on this team</source>
+      </segment>
+    </unit>
+    <unit id="8991319406662170497">
+      <segment>
+        <source>A project collects the errors of one app or service. You get its setup code right after.</source>
+      </segment>
+    </unit>
+    <unit id="9005457553529671208">
+      <segment>
+        <source>Commits</source>
+      </segment>
+    </unit>
+    <unit id="9041314938896860938">
+      <segment>
+        <source>A hardware key or passkey you touch or unlock to log in.</source>
+      </segment>
+    </unit>
+    <unit id="9068466979700526588">
+      <segment>
+        <source>Install an SDK in your app and give it this DSN, so it knows where to send errors.</source>
+      </segment>
+    </unit>
+    <unit id="9112034082545177870">
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ count }}"/> in total, newest first</source>
+      </segment>
+    </unit>
+    <unit id="945085903935422089">
+      <segment>
+        <source>Settings for the <ph id="0" equiv="INTERPOLATION" disp="{{ activeOrg.name }}"/> organization.</source>
       </segment>
     </unit>
   </file>
