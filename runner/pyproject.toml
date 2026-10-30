@@ -1,0 +1,13 @@
+[project]
+name = "catchnet-runner"
+version = "0.1.0"
+description = "Runs catchnet's hotfix agent: error report in, pull request out."
+requires-python = ">=3.12"
+dependencies = ["httpx>=0.27"]
+
+[project.scripts]
+catchnet-runner = "catchnet_runner.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
