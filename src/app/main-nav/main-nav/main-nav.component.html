@@ -152,22 +152,12 @@
       <div class="cn-nav-spacer"></div>
 
       <nav class="cn-nav cn-nav--secondary" i18n-aria-label aria-label="Settings and help">
-        <div
-          routerLinkActive
-          [routerLinkActiveOptions]="{
-            paths: 'subset',
-            queryParams: 'ignored',
-            fragment: 'ignored',
-            matrixParams: 'ignored',
-          }"
-          #orgWrapper="routerLinkActive"
-        >
-          <button
-            type="button"
+        @if (activeOrganization()) {
+          <a
             class="cn-nav__item"
-            [class.is-active]="orgWrapper.isActive"
-            [matMenuTriggerFor]="orgMenu"
-            [disabled]="!activeOrganization()"
+            [routerLink]="getRouteWithOrgSlug(['org_slug', 'settings'])"
+            routerLinkActive="is-active"
+            ariaCurrentWhenActive="page"
             i18n-matTooltip
             matTooltip="Settings"
             [matTooltipDisabled]="!isCollapsed()"
@@ -175,14 +165,8 @@
           >
             <mat-icon aria-hidden="true">settings</mat-icon>
             <span class="nav-text" i18n>Settings</span>
-          </button>
-          @for (item of visibleOrgMenuItems; track item.route) {
-            <a
-              [routerLink]="getRouteWithOrgSlug(item.route)"
-              style="display: none"
-            ></a>
-          }
-        </div>
+          </a>
+        }
 
         <gt-support-menu #supportMenuComponent />
         <button
@@ -228,22 +212,6 @@
           <a [routerLink]="item.route" style="display: none"></a>
         }
       </div>
-
-      <mat-menu #orgMenu="matMenu" class="nav-menu" xPosition="after">
-        @if (activeOrganization()) {
-          @for (item of visibleOrgMenuItems; track item.route) {
-            <button
-              mat-menu-item
-              [routerLink]="getRouteWithOrgSlug(item.route)"
-              routerLinkActive="active-menu-item"
-              [routerLinkActiveOptions]="{ exact: item.exactRoute ?? false }"
-            >
-              <mat-icon>{{ item.icon }}</mat-icon>
-              <span>{{ item.name }}</span>
-            </button>
-          }
-        }
-      </mat-menu>
 
       <mat-menu #profileMenu="matMenu" class="nav-menu" xPosition="after">
         @for (item of profileMenuItems; track item.route) {

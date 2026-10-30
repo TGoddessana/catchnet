@@ -11,37 +11,44 @@ import { TeamProjectsComponent } from "./teams/team-projects/team-projects.compo
 import { TeamDetailsComponent } from "./teams/team-details/team-details.component";
 import { TeamSettingsComponent } from "./teams/team-settings/team-settings.component";
 import { TeamsComponent } from "./teams/teams.component";
+import { SettingsShellComponent } from "./settings-shell/settings-shell.component";
 
 export default [
-  { path: "", component: OrganizationComponent },
-  { path: "projects", component: ProjectsComponent },
-  { path: "projects/new", component: NewProject },
-  { path: "projects/:project-slug", component: ProjectDetailComponent },
   {
-    path: "subscription",
-    loadChildren: () => import("./subscription/routes"),
-  },
-  {
-    path: "teams",
+    path: "",
+    component: SettingsShellComponent,
     children: [
-      { path: "", component: TeamsComponent },
+      { path: "", component: OrganizationComponent },
+      { path: "projects", component: ProjectsComponent },
+      { path: "projects/new", component: NewProject },
+      { path: "projects/:project-slug", component: ProjectDetailComponent },
       {
-        path: ":team-slug",
-        component: TeamDetailsComponent,
+        path: "subscription",
+        loadChildren: () => import("./subscription/routes"),
+      },
+      {
+        path: "teams",
         children: [
-          { path: "members", component: TeamMembersComponent },
-          { path: "projects", component: TeamProjectsComponent },
-          { path: "settings", component: TeamSettingsComponent },
+          { path: "", component: TeamsComponent },
+          {
+            path: ":team-slug",
+            component: TeamDetailsComponent,
+            children: [
+              { path: "members", component: TeamMembersComponent },
+              { path: "projects", component: TeamProjectsComponent },
+              { path: "settings", component: TeamSettingsComponent },
+            ],
+          },
         ],
       },
-    ],
-  },
-  {
-    path: "members",
-    children: [
-      { path: "", component: MembersComponent },
-      { path: "new", component: NewMemberComponent },
-      { path: ":member-id", component: MemberDetailComponent },
+      {
+        path: "members",
+        children: [
+          { path: "", component: MembersComponent },
+          { path: "new", component: NewMemberComponent },
+          { path: ":member-id", component: MemberDetailComponent },
+        ],
+      },
     ],
   },
 ] as Route[];

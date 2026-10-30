@@ -38,10 +38,7 @@ form {
 .tooltip {
   text-decoration: underline;
   text-decoration-style: dotted;
-  text-decoration-color: mat.m2-get-color-from-palette(
-    mat.$m2-gray-palette,
-    500
-  );
+  text-decoration-color: var(--gt-color-text-3);
   cursor: help;
 }
 

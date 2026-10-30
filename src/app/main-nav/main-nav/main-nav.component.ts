@@ -71,15 +71,15 @@ export class MainNavComponent {
       route: ["org_slug", "issues"],
     },
     {
-      name: $localize`Uptime Monitors`,
-      icon: "share_eta",
-      route: ["org_slug", "uptime-monitors"],
-      requiresFeature: "uptime",
-    },
-    {
       name: $localize`Performance`,
       icon: "avg_pace",
       route: ["org_slug", "performance"],
+    },
+    {
+      name: $localize`Uptime`,
+      icon: "share_eta",
+      route: ["org_slug", "uptime-monitors"],
+      requiresFeature: "uptime",
     },
     {
       name: $localize`Logs`,
@@ -88,14 +88,14 @@ export class MainNavComponent {
       requiresFeature: "logs",
     },
     {
-      name: $localize`Projects`,
-      icon: "team_dashboard",
-      route: ["org_slug", "projects"],
-    },
-    {
       name: $localize`Releases`,
       icon: "rocket_launch",
       route: ["org_slug", "releases"],
+    },
+    {
+      name: $localize`Projects`,
+      icon: "team_dashboard",
+      route: ["org_slug", "projects"],
     },
   ];
 

@@ -230,7 +230,19 @@ mat-sidenav-container {
   border: 0;
 }
 
-// Page titles: large, quiet, on the page itself (no app bar).
+// Page titles: large, quiet, on the page itself (no app bar). Upstream page
+// titles use .section-header-text, so it follows the same scale here.
+.section-header-text {
+  font-size: 28px !important;
+  line-height: 36px !important;
+  letter-spacing: -0.02em !important;
+
+  @media screen and (max-width: vars.$medium - 1) {
+    font-size: 22px !important;
+    line-height: 28px !important;
+  }
+}
+
 .cn-page-title {
   display: flex;
   align-items: baseline;

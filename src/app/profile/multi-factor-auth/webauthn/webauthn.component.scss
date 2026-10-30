@@ -36,7 +36,7 @@ mat-card-title {
   display: grid;
   align-items: center;
   grid-template-columns: 1.7fr 1fr 0.3fr;
-  border: 1px solid black;
+  border: 1px solid var(--gt-color-border);
   margin-bottom: -1px;
   padding-left: 7px;
 }

@@ -18,11 +18,10 @@ div {
   }
 
   .down-check {
-    background-color: var(--mat-sys-error);
+    background-color: var(--gt-color-error-dot);
   }
 
   .no-check {
-    background-color: var(--mat-sys-surface-variant);
-    opacity: 0.6;
+    background-color: var(--gt-color-chart-bar);
   }
 }

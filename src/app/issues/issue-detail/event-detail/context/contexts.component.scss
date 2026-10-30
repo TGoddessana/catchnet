@@ -24,7 +24,7 @@ p {
 }
 
 .bold {
-  font-weight: 700;
+  font-weight: var(--gt-weight-strong);
 }
 
 .image {
