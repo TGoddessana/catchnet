@@ -1,0 +1,28 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+.wrapper {
+  padding: 8px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.spacer {
+  margin-left: 8px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.indent {
+  margin-left: 24px;
+  padding-left: 24px;
+  text-indent: -24px;
+}
+
+div {
+  font-family: vars.$font-mono;
+}

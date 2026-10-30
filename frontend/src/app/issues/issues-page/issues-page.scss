@@ -1,0 +1,409 @@
+@use "variables" as vars;
+
+$selectColumnWidth: 48px;
+
+// Layout, top to bottom: the title row (gt-list-app-bar) with its summary,
+// the status tabs on a full-width rule, one toolbar (scope and search on the
+// left, sort on the right), the table on the sheet with no card around it,
+// and the page range with prev/next under the last row.
+
+// Summary sentence under the page title.
+.cn-issues__summary {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gt-color-text-2);
+}
+
+.cn-issues {
+  margin-top: 20px !important;
+}
+
+// Desktop: one row, the scope chips, then search taking the free width, sort
+// at the far right. Tablet: search wraps onto its own full row below them.
+// Phone: search on its own row, the chips (sort included) in one row that
+// scrolls sideways.
+.cn-issues__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-2);
+  margin: var(--gt-space-4) 0 var(--gt-space-2);
+
+  @media screen and (max-width: 1099px) {
+    .cn-search {
+      flex-basis: 100%;
+      max-width: none;
+    }
+  }
+
+  @media screen and (max-width: vars.$small - 1) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.cn-issues__chips {
+  display: contents;
+
+  @media screen and (max-width: vars.$small - 1) {
+    display: flex;
+    order: 2;
+    gap: var(--gt-space-2);
+    margin: 0 -16px;
+    padding: 0 16px 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    > * {
+      flex: none;
+    }
+  }
+}
+
+.cn-issues__sort {
+  order: 3;
+  margin-left: auto;
+
+  @media screen and (max-width: vars.$small - 1) {
+    margin-left: 0;
+  }
+}
+
+// Search: a flat input with a control edge, taking the toolbar's free width.
+.cn-search {
+  order: 2;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--gt-space-2);
+  min-width: 220px;
+  max-width: 420px;
+  height: var(--gt-control-height-sm);
+
+  @media screen and (max-width: vars.$small - 1) {
+    order: 1;
+    max-width: none;
+    height: 40px;
+  }
+  box-sizing: border-box;
+  padding: 0 2px 0 10px;
+  border: 1px solid var(--gt-color-control);
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-color-surface);
+  color: var(--gt-color-text-3);
+
+  &:focus-within {
+    border-color: var(--gt-color-accent);
+  }
+
+  > mat-icon {
+    flex-shrink: 0;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    color: var(--gt-color-text-1);
+
+    &::placeholder {
+      color: var(--gt-color-text-3);
+    }
+  }
+}
+
+.cn-search__help {
+  width: 28px !important;
+  height: 28px !important;
+  padding: 2px !important;
+  color: var(--gt-color-text-3);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// Table
+table {
+  width: 100%;
+
+  &.fixedLayout {
+    table-layout: fixed;
+  }
+}
+
+.cn-issues__table {
+  border-bottom: 1px solid var(--gt-color-rule);
+
+  th.mat-mdc-header-cell {
+    height: 40px;
+    border-bottom-color: var(--gt-color-border);
+    background: var(--gt-color-surface);
+  }
+}
+
+// The trend period is chosen from its own column header.
+.cn-header-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-bulk-row th {
+  background: var(--gt-color-subtle) !important;
+}
+
+.cn-issues__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  padding: var(--gt-space-2) 0 var(--gt-space-6);
+}
+
+.cn-issues__range {
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.action-button-container {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+}
+
+.status-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-2);
+}
+
+.cn-selection-count {
+  margin-right: var(--gt-space-2);
+  font-size: 13px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}
+
+.hideLowerBorder th {
+  border-color: var(--gt-color-subtle);
+}
+
+.bulk-project-select {
+  text-align: center;
+  padding-bottom: var(--gt-space-2);
+  background: var(--gt-color-subtle);
+
+  &__text {
+    margin: 0 var(--gt-space-2);
+    font-size: 13px;
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-1);
+  }
+}
+
+.mat-column-selectAll,
+.mat-column-select {
+  width: $selectColumnWidth;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+// The title column takes the leftover width and truncates; the narrow
+// columns keep their content width.
+.mat-column-title {
+  width: 100%;
+  max-width: 0;
+}
+
+.title-cell {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.cn-issue-row {
+  height: 64px;
+
+  &:hover,
+  &:focus-within {
+    background: var(--gt-color-subtle);
+  }
+
+  &.is-selected {
+    background: var(--gt-color-active);
+  }
+}
+
+// An issue row's main link: headline, then a quieter meta line.
+.cn-issue {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px var(--gt-space-4) 12px 0;
+  color: var(--gt-color-text-1);
+  font-weight: var(--gt-weight-regular);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+
+    .cn-issue__type {
+      text-decoration: underline;
+    }
+  }
+}
+
+.cn-issue__line {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+  min-width: 0;
+}
+
+.cn-issue__type {
+  flex-shrink: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--gt-weight-strong);
+}
+
+.cn-issue__message {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--gt-color-text-2);
+}
+
+.cn-issue__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+  min-width: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.cn-issue__culprit {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--gt-font-code);
+  font-size: 11px;
+}
+
+.cn-issue__small-count {
+  display: none;
+
+  @media screen and (max-width: vars.$medium - 1) {
+    display: inline-flex;
+    gap: var(--gt-space-2);
+  }
+}
+
+.is-closed .cn-issue__type,
+.is-closed .cn-issue__message {
+  color: var(--gt-color-text-3);
+}
+
+.trend-cell {
+  width: 1%;
+}
+
+.stats-cell-content {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.stats-header-label {
+  white-space: nowrap;
+}
+
+.cn-num {
+  width: 1%;
+  padding-left: var(--gt-space-4) !important;
+  text-align: right !important;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--gt-color-text-2);
+
+  &--strong {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-1);
+  }
+}
+
+// Last seen: the time, swapped for the row's own actions on hover or focus.
+.cn-last-seen {
+  position: relative;
+  min-width: 180px;
+  padding-right: var(--gt-space-5) !important;
+}
+
+.cn-row-actions {
+  position: absolute;
+  top: 50%;
+  right: var(--gt-space-4);
+  display: none;
+  gap: 6px;
+  transform: translateY(-50%);
+}
+
+.cn-issue-row:hover,
+.cn-issue-row:focus-within {
+  .cn-row-actions {
+    display: flex;
+  }
+
+  .cn-last-seen__time {
+    visibility: hidden;
+  }
+}
+
+@media (hover: none) {
+  .cn-row-actions {
+    display: none !important;
+  }
+}
+
+.zero-states-cell {
+  padding: 0 24px;
+}

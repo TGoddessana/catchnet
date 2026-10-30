@@ -1,0 +1,333 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "glitchtip-frontend": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        },
+        "@schematics/angular:component": {
+          "style": "scss",
+          "changeDetection": "OnPush"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "gt",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf"
+          },
+          "nb": {
+            "translation": "src/locale/messages.nb.xlf"
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": {
+              "base": "dist/glitchtip-frontend"
+            },
+            "index": "src/index.html",
+            "polyfills": ["@angular/localize/init"],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/favicon.svg",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "static/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/sdk-docs",
+                "output": "static/sdk-docs"
+              },
+              {
+                "glob": "**/*+(.svg|_48x48.png)",
+                "input": "./node_modules/@browser-logos/",
+                "output": "./static/assets/images/browser-svgs"
+              },
+              {
+                "glob": "**/*.png",
+                "input": "./node_modules/@egoistdeveloper/operating-system-logos/src/48x48/",
+                "output": "./static/assets/images/os-logos"
+              }
+            ],
+            "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./src/assets/styles", "", "."]
+            },
+            "scripts": [],
+            "browser": "src/main.ts"
+          },
+          "configurations": {
+            "prod-no-static": {
+              "outputHashing": "all"
+            },
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "3kb",
+                  "maximumError": "6kb"
+                }
+              ],
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": true,
+              "assets": [
+                "src/favicon.ico",
+                "src/favicon.svg",
+                "src/assets",
+                "src/sdk-docs",
+                {
+                  "glob": "**/*+(.svg|_48x48.png)",
+                  "input": "./node_modules/@browser-logos/",
+                  "output": "./assets/images/browser-svgs"
+                },
+                {
+                  "glob": "**/*.png",
+                  "input": "./node_modules/@egoistdeveloper/operating-system-logos/src/48x48/",
+                  "output": "./assets/images/os-logos"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "externalDependencies": ["marked-katex-extension"]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "glitchtip-frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "glitchtip-frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
+          "options": {
+            "format": "xlf2",
+            "outputPath": "src/locale",
+            "targetFiles": [
+              "../locale/messages.fr.xlf",
+              "../locale/messages.nb.xlf"
+            ],
+            "buildTarget": "glitchtip-frontend:build",
+            "prettyNestedTags": true,
+            "sort": "stableAppendNew"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "runner": "vitest"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        }
+      }
+    },
+    "marketing": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/marketing",
+      "sourceRoot": "projects/marketing/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/marketing",
+            "index": "projects/marketing/src/index.html",
+            "browser": "projects/marketing/src/main.ts",
+            "polyfills": ["@angular/localize/init"],
+            "tsConfig": "projects/marketing/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/marketing/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/sdk-docs",
+                "output": "static/sdk-docs"
+              }
+            ],
+            "styles": ["projects/marketing/src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./src/assets/styles", ""]
+            },
+            "server": "projects/marketing/src/main.server.ts",
+            "prerender": {
+              "discoverRoutes": true,
+              "routesFile": "projects/marketing/routes.txt"
+            },
+            "ssr": {
+              "entry": "projects/marketing/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kB",
+                  "maximumError": "10kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "externalDependencies": ["marked-katex-extension"]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "marketing:build:production"
+            },
+            "development": {
+              "buildTarget": "marketing:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "prettyNestedTags": true,
+            "sort": "stableAppendNew"
+          }
+        }
+      }
+    },
+    "component-preview": {
+      "projectType": "application",
+      "root": "projects/component-preview",
+      "sourceRoot": "projects/component-preview/src",
+      "prefix": "preview",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/component-preview",
+            "index": "projects/component-preview/src/index.html",
+            "browser": "projects/component-preview/src/main.ts",
+            "polyfills": ["@angular/localize/init"],
+            "tsConfig": "projects/component-preview/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/favicon.svg",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "static/assets"
+              },
+              {
+                "glob": "**/*+(.svg|_48x48.png)",
+                "input": "./node_modules/@browser-logos/",
+                "output": "./static/assets/images/browser-svgs"
+              },
+              {
+                "glob": "**/*.png",
+                "input": "./node_modules/@egoistdeveloper/operating-system-logos/src/48x48/",
+                "output": "./static/assets/images/os-logos"
+              }
+            ],
+            "styles": [
+              "src/styles.scss",
+              "projects/component-preview/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./src/assets/styles", "", "."]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "component-preview:build:production"
+            },
+            "development": {
+              "buildTarget": "component-preview:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "86390919-7a40-4e23-8811-d61b83438874",
+    "schematicCollections": ["@angular-eslint/schematics"]
+  }
+}

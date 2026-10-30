@@ -1,0 +1,60 @@
+@use "variables" as vars;
+
+.empty-states {
+  padding: 1.5em 0 0.5em;
+}
+
+markdown {
+  display: block;
+  margin-bottom: 40px;
+}
+
+.install-wrapper {
+  display: flex;
+
+  @media (max-width: vars.$medium - 1) {
+    flex-direction: column;
+  }
+}
+
+.install-instructions {
+  width: calc(100% - 300px);
+  flex-shrink: 0;
+
+  @media (max-width: vars.$large - 1) {
+    width: calc(100% - 250px);
+  }
+
+  @media (max-width: vars.$medium - 1) {
+    width: 100%;
+  }
+}
+
+.dsn {
+  width: 300px;
+  padding-left: 30px;
+  flex-shrink: 0;
+
+  @media (max-width: vars.$large - 1) {
+    width: 250px;
+  }
+
+  @media (max-width: vars.$medium - 1) {
+    width: 100%;
+    padding-left: 0;
+    padding-top: 30px;
+  }
+
+  .body-text {
+    margin: 0;
+  }
+
+  .dsn-input {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.dsn-area {
+  padding-top: 1em;
+}

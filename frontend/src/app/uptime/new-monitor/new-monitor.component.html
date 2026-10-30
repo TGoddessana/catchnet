@@ -1,0 +1,21 @@
+<section class="l-body">
+  <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+    <a [routerLink]="['..']" i18n>Uptime</a>
+    <span aria-hidden="true">/</span>
+    <span i18n>New monitor</span>
+  </nav>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>New monitor</h1>
+      <p class="cn-title-row__sub" i18n
+        >catchnet checks the address on a schedule and tells your team when it
+        stops answering.</p
+      >
+    </div>
+  </header>
+  <gt-monitor-form
+    [loading]="loading() === true"
+    [formError]="error()"
+    (formSubmitted)="submit($event)"
+  ></gt-monitor-form>
+</section>

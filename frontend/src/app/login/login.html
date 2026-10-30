@@ -1,0 +1,139 @@
+<div class="auth-form-wrapper">
+  <a
+    class="cn-auth-brand"
+    routerLink="/login"
+    i18n-aria-label
+    aria-label="catchnet"
+  >
+    <img
+      src="static/assets/images/catchnet-mark.svg"
+      alt=""
+      width="28"
+      height="28"
+    />
+    <span>catchnet</span>
+  </a>
+  <mat-card class="auth-form">
+    <mat-card-content>
+      @if (requiresMFA()) {
+        @if (!hasWebAuthn() || preferTOTP()) {
+          <gt-login-totp></gt-login-totp>
+        } @else {
+          <gt-login-webauthn></gt-login-webauthn>
+        }
+      } @else {
+        <mat-card-title>
+          <h3 i18n>Log in to catchnet</h3>
+        </mat-card-title>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <gt-form-error [errors]="formErrors()"></gt-form-error>
+          <label class="cn-field-label" for="login-email" i18n>Email</label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              id="login-email"
+              matInput
+              autofocus
+              type="email"
+              formControlName="email"
+            />
+            @if (email?.errors) {
+              <mat-error>
+                @if (email?.errors?.["required"]) {
+                  <span i18n>Your email is required to log in</span>
+                }
+                @if (email?.errors?.["email"]) {
+                  <span i18n>Enter a valid email address</span>
+                }
+                @if (email?.errors?.["serverError"]) {
+                  <span>{{ email?.errors?.["serverError"] }}</span>
+                }
+              </mat-error>
+            }
+          </mat-form-field>
+          <label class="cn-field-label" for="login-password" i18n
+            >Password</label
+          >
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              id="login-password"
+              matInput
+              type="password"
+              formControlName="password"
+            />
+            @if (password?.errors) {
+              <mat-error>
+                @if (password?.errors?.["minlength"]) {
+                  <span i18n
+                    >Your password should be at least 8 characters long</span
+                  >
+                }
+                @if (password?.errors?.["required"]) {
+                  <span i18n>Your password is required to log in</span>
+                }
+                @if (password?.errors?.["serverError"]) {
+                  <span>{{ password?.errors?.["serverError"] }}</span>
+                }
+              </mat-error>
+            }
+          </mat-form-field>
+          <gt-loading-button
+            class="full-width"
+            i18n-buttonText
+            buttonText="Log in"
+            [fullWidth]="true"
+            [loading]="loading()"
+            id="submit"
+          >
+          </gt-loading-button>
+        </form>
+        @if (socialApps(); as socialApps) {
+          @if (socialApps.length) {
+            <div class="or">
+              <span class="body-text-strong" i18n>or</span>
+            </div>
+          }
+          <div class="o-auth">
+            @for (socialApp of socialApps; track socialApp) {
+              <button
+                mat-stroked-button
+                class="full-width margin"
+                (click)="onSocialApp(socialApp)"
+              >
+                <gt-auth-svg
+                  source="auth"
+                  text="Log in with {{ socialApp.name }}"
+                  i18n-text
+                  [provider]="socialApp.provider"
+                ></gt-auth-svg>
+              </button>
+            }
+          </div>
+        }
+        <div class="sign-up">
+          @if (enableUserRegistration() || enableSocialAppsUserRegistration()) {
+            <p>
+              <ng-container i18n>New to catchnet?</ng-container>
+              <a
+                class="auth-link"
+                routerLink="../register"
+                queryParamsHandling="preserve"
+                i18n
+                >Sign Up</a
+              >
+            </p>
+          }
+          <p>
+            <a class="auth-link" routerLink="/reset-password" i18n
+              >Forgot your password?</a
+            >
+          </p>
+
+          <p class="alternative-instance" markdown>
+            {{ instanceName() }}
+          </p>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
+<div cdkFocusRegionEnd></div>

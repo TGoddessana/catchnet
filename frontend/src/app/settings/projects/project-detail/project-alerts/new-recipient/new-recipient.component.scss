@@ -1,0 +1,74 @@
+@use "variables" as vars;
+
+.dialog-wrapper {
+  width: 500px;
+
+  @media screen and (max-width: vars.$tablet - 1) {
+    width: 100%;
+  }
+
+  h1 {
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+}
+
+.error {
+  color: var(--mat-sys-error);
+  text-align: center;
+
+  span {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
+
+.recipientDetails {
+  margin-top: 8px;
+  margin-bottom: 0;
+
+  mat-form-field:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+
+  .webhook {
+    width: 100%;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      overflow: hidden;
+      vertical-align: -5px;
+      margin: 0 8px;
+    }
+  }
+
+  .email {
+    text-align: center;
+  }
+
+  .default {
+    text-align: center;
+  }
+}
+
+.type {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.zulip-help {
+  margin-top: 0px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+mat-dialog-actions {
+  gap: 16px;
+  justify-content: flex-end;
+}

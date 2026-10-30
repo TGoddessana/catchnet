@@ -1,0 +1,32 @@
+<!--
+  The account area has the same frame as organization settings: the title,
+  then underline tabs that reach every account page from every other, then
+  the page's settings sections.
+-->
+<section class="l-body cn-account">
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Account</h1>
+      @if (user(); as user) {
+        <p class="cn-title-row__sub">{{ user.email }}</p>
+      }
+    </div>
+  </header>
+  <nav
+    class="cn-segmented cn-account__tabs"
+    i18n-aria-label
+    aria-label="Account sections"
+  >
+    @for (section of sections; track section.route) {
+      <a
+        class="cn-segmented__item"
+        [routerLink]="section.route"
+        routerLinkActive="is-selected"
+        ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: section.exact }"
+        >{{ section.label }}</a
+      >
+    }
+  </nav>
+  <router-outlet></router-outlet>
+</section>

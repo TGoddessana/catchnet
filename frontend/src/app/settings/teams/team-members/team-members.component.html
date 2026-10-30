@@ -1,0 +1,72 @@
+<div class="cn-team-toolbar">
+  <p class="cn-team-toolbar__count" i18n
+    >{teamMembers().length, plural, =0 {No members yet} =1 {1 member} other {{{ teamMembers().length }} members}}</p
+  >
+  @if (canModifyTeam()) {
+    <mat-form-field
+      class="cn-scope"
+      appearance="outline"
+      subscriptSizing="dynamic"
+      data-cy="team-member-select"
+    >
+      <mat-select
+        (selectionChange)="addTeamMember()"
+        [formControl]="member"
+        i18n-placeholder
+        placeholder="Add a member"
+        i18n-aria-label
+        aria-label="Add a member"
+      >
+        @if (filteredAddTeamMembers().length) {
+          @for (orgMember of filteredAddTeamMembers(); track orgMember) {
+            <mat-option [value]="orgMember">
+              {{ orgMember.email }}
+            </mat-option>
+          }
+        } @else {
+          <mat-option disabled i18n>Everyone is already on this team</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+</div>
+@if (addMemberError) {
+  <mat-error class="cn-team-error">{{ addMemberError }}</mat-error>
+}
+@if (removeMemberError) {
+  <mat-error class="cn-team-error">{{ removeMemberError }}</mat-error>
+}
+@if (teamMembers().length > 0) {
+  <table class="cn-table" data-test-list>
+    <thead>
+      <tr>
+        <th i18n>Email</th>
+        <th><span class="u-visually-hidden" i18n>Actions</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (teamMember of teamMembers(); track teamMember) {
+        <tr>
+          <td class="cn-table__main">
+            <a
+              [routerLink]="['../', 'members', teamMember.id]"
+              [relativeTo]="$safeNavigationMigration(route.parent?.parent)"
+              >{{ teamMember.email }}</a
+            >
+          </td>
+          <td class="cn-table__actions">
+            @if (canModifyTeam()) {
+              <gt-loading-button i18n-buttonText
+                buttonText="Remove"
+                buttonStyle="stroked"
+                [loading]="selectedTeamMember?.toString() === teamMember.id"
+                (buttonClick)="removeTeamMember(teamMember.id, teamMember.email)"
+                id="remove-team-member"
+              ></gt-loading-button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

@@ -1,0 +1,13 @@
+@use "@angular/material" as mat;
+
+:root {
+  @include mat.sidenav-overrides(
+    (
+      container-shape: 0,
+      // The sidebar is part of the tinted frame, with no rule against the
+      // sheet.
+      container-background-color: var(--gt-color-background),
+      container-divider-color: transparent,
+    )
+  );
+}

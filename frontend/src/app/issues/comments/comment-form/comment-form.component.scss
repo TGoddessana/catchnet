@@ -1,0 +1,19 @@
+form {
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field {
+    margin-bottom: var(--gt-space-2);
+  }
+
+  textarea {
+    min-height: 96px;
+    resize: vertical;
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gt-space-2);
+}

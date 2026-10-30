@@ -1,0 +1,14 @@
+<mat-form-field class="full-width" appearance="outline" subscriptSizing="dynamic">
+  <mat-label>{{ placeholder() }}</mat-label>
+  <input class="background" readonly matInput [value]="value()" data-test-dsn />
+  <button i18n-matTooltip
+    mat-icon-button
+    class="input-icon-button"
+    [cdkCopyToClipboard]="value()"
+    (cdkCopyToClipboardCopied)="copy()"
+    matTooltip="Copy key to clipboard"
+    matSuffix
+  >
+    <mat-icon [class.dsn-copied]="copied()" [svgIcon]="copied() ? 'check_circle' : 'file_copy'"></mat-icon>
+  </button>
+</mat-form-field>

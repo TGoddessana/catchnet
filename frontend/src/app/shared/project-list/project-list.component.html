@@ -1,0 +1,81 @@
+<!--
+  Home (every organization) and Projects (the active one) share this screen:
+  a title row with the one action, then one projects table per organization.
+-->
+<section class="l-body">
+  @let orgs = visibleOrgs();
+  @let single = orgs.length === 1 ? orgs[0] : null;
+
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Projects</h1>
+      @if (projectCount() > 0) {
+        <p class="cn-title-row__sub">
+          @if (single) {
+            <ng-container i18n
+              >{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}} in {{ single.name }}</ng-container
+            >
+          } @else {
+            <ng-container i18n
+              >{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}} in {{ orgs.length }} organizations</ng-container
+            >
+          }
+        </p>
+      }
+    </div>
+    @if (single && (!activeOrgOnly || canWriteProject())) {
+      <div class="cn-title-row__actions">
+        <a
+          mat-flat-button
+          [routerLink]="['/', single.slug, 'settings', 'projects', 'new']"
+        >
+          <mat-icon svgIcon="add"></mat-icon>
+          <ng-container i18n>New project</ng-container>
+        </a>
+      </div>
+    }
+  </header>
+
+  @if (
+    projects().length === 0 &&
+    activeOrganization() === undefined &&
+    orgServiceInitialLoad()
+  ) {
+    <div class="cn-empty">
+      <p class="cn-empty__text" i18n
+        >To start catching errors, create an organization first.</p
+      >
+      <a mat-flat-button [routerLink]="['/organizations', 'new']" i18n
+        >New organization</a
+      >
+    </div>
+  }
+
+  @for (organization of orgs; track organization.id) {
+    <section class="cn-org-projects">
+      @if (!single) {
+        <header class="cn-org-projects__head">
+          <h2 class="cn-org-projects__title">{{ organization.name }}</h2>
+          <a
+            mat-stroked-button
+            [routerLink]="['/', organization.slug, 'settings', 'projects', 'new']"
+            i18n
+            >New project</a
+          >
+        </header>
+      }
+      @if (organization.projects.length === 0) {
+        <gt-empty-projects
+          [activeOrgOnly]="activeOrgOnly"
+          [canCreateProject]="!activeOrgOnly || canWriteProject()"
+          [orgSlug]="organization.slug"
+        ></gt-empty-projects>
+      } @else {
+        <gt-project-table
+          [projects]="organization.projects"
+          [orgSlug]="organization.slug"
+        />
+      }
+    </section>
+  }
+</section>

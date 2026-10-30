@@ -1,0 +1,556 @@
+@use "sass:meta";
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "./assets/styles/tokens";
+@use "./assets/styles/material-overrides";
+@use "./assets/styles/variables" as vars;
+@use "./assets/styles/font-files";
+@use "./assets/styles/catchnet-fonts";
+@use "./assets/styles/catchnet-patterns";
+@use "./assets/styles/resets";
+@use "./scss/auth-forms";
+
+html {
+  color-scheme: light dark;
+  // The palette only seeds roles catchnet does not use (the *-fixed roles).
+  // Every role in use is mapped onto the catchnet tokens right after.
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$violet-palette,
+        theme-type: color-scheme,
+      ),
+      typography: (
+        plain-family: vars.$font-sans-serif,
+        brand-family: vars.$font-sans-serif,
+        regular-weight: 400,
+        medium-weight: 500,
+        bold-weight: 600,
+      ),
+      density: -4,
+    )
+  );
+  @include tokens.material-system-overrides;
+}
+
+:root {
+  // Log severity colours come from the status tokens, so a level reads the
+  // same in logs as on issues.
+  --log-error-color: var(--gt-color-error-text);
+  --log-warn-color: var(--gt-color-warning-text);
+  --log-info-color: var(--gt-color-accent-text);
+  // Debug and trace are the quiet levels: two greys, no hue.
+  --log-debug-color: light-dark(#52525b, #a1a1aa);
+  --log-trace-color: light-dark(#6b6b74, #8b8b94);
+  --log-service-color: var(--gt-color-success-text);
+}
+
+.light {
+  @include meta.load-css("prismjs/themes/prism.css");
+}
+
+.dark {
+  @include meta.load-css("prismjs/themes/prism-tomorrow.css");
+}
+
+.light,
+.dark {
+  @include meta.load-css("prismjs/plugins/line-numbers/prism-line-numbers.css");
+  @include meta.load-css(
+    "prismjs/plugins/line-highlight/prism-line-highlight.css"
+  );
+
+  // Code blocks sit on the subtle tone step in both schemes, in Plex Mono
+  // at 13px. Prism's own themes still colour the tokens.
+  pre[class*="language-"] {
+    border-radius: vars.$shape-radius;
+    border: none;
+    box-shadow: none;
+    background: var(--gt-color-subtle);
+  }
+
+  pre[class*="language-"],
+  code[class*="language-"] {
+    font-family: var(--gt-font-code);
+    font-size: 13px;
+    line-height: 20px;
+    text-shadow: none;
+  }
+}
+
+mat-card-content {
+  font-family: vars.$font-sans-serif;
+}
+
+a {
+  color: var(--mat-sys-on-background);
+  text-decoration: none;
+  font-weight: var(--gt-weight-strong);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+// One focus ring everywhere: the accent, just outside the element.
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--gt-color-accent);
+  outline-offset: 2px;
+}
+
+// Used across auth components
+.auth-link {
+  color: var(--gt-color-accent-text);
+  text-decoration: underline;
+}
+
+// Global rule because link is rendered in markdown
+.alternative-instance {
+  margin-bottom: 0;
+  p {
+    margin-bottom: 0;
+  }
+  a {
+    color: var(--gt-color-accent-text);
+    text-decoration: underline;
+  }
+}
+
+mat-card-title {
+  padding-bottom: 8px;
+}
+
+ul:not(markdown ul) {
+  list-style: none;
+  padding: unset;
+}
+
+markdown ul {
+  list-style: disc outside;
+  padding-left: 20px;
+}
+
+markdown ol {
+  list-style: decimal outside;
+  padding-left: 20px;
+}
+
+body {
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+  font-family: var(--gt-font-ui);
+  letter-spacing: var(--gt-tracking-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Feedback on every control: colour and fill ease in 120ms. Nothing moves.
+a,
+button,
+.mat-mdc-button-base,
+.cn-nav__item,
+.cn-chip,
+.cn-segmented__item {
+  transition:
+    background-color var(--gt-duration-fast) var(--gt-ease),
+    color var(--gt-duration-fast) var(--gt-ease),
+    border-color var(--gt-duration-fast) var(--gt-ease),
+    box-shadow var(--gt-duration-fast) var(--gt-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+.flex-common {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  > * {
+    margin: 0;
+  }
+}
+
+mat-sidenav-content {
+  background-color: var(--gt-color-surface);
+}
+
+mat-sidenav-container {
+  @include mat.list-overrides(
+    (
+      list-item-disabled-state-layer-color: var(
+          --mat-sys-surface-container-high
+        ),
+    )
+  );
+}
+
+// This makes the dropdown menus the full size of the sidenav
+.mat-mdc-menu-panel.nav-menu {
+  max-width: none !important;
+  width: 220px !important;
+}
+
+// Underline on hover signals external links without needing an icon.
+.mat-mdc-menu-panel.support-menu-panel .mat-mdc-menu-item:hover > span {
+  text-decoration: underline;
+}
+
+// Every screen's canvas: fluid inside the sheet with 32px gutters, capped so
+// lines and tables stay readable on very wide windows.
+.l-body {
+  max-width: 1280px;
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-top: 28px;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &--full-width {
+    max-width: 100%;
+  }
+
+  &--flex {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(100vh - vars.$top-app-bar-height);
+    padding-top: var(--gt-space-5);
+    margin-top: 0;
+    margin-bottom: 0;
+
+    @media screen and (max-width: vars.$nav-fold - 1) {
+      height: calc(100vh - vars.$top-app-bar-height - vars.$mobile-nav-height);
+    }
+  }
+
+  @media screen and (max-width: vars.$small - 1) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.u-hidden {
+  display: none;
+}
+
+// Hidden on screen, still read by screen readers.
+.u-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Page titles: large, quiet, on the page itself (no app bar). Upstream page
+// titles use .section-header-text, so it follows the same scale here.
+.section-header-text {
+  font-size: 22px !important;
+  line-height: 28px !important;
+  font-weight: var(--gt-weight-strong) !important;
+  letter-spacing: var(--gt-tracking-display) !important;
+
+  @media screen and (max-width: vars.$medium - 1) {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+}
+
+.cn-page-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gt-space-3);
+  margin: 0;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: var(--gt-weight-strong);
+  letter-spacing: var(--gt-tracking-display);
+
+  @media screen and (max-width: vars.$medium - 1) {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+// The count after a title is the same size in grey, not a badge.
+.cn-page-title__count {
+  font-weight: var(--gt-weight-regular);
+  color: var(--gt-color-text-3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.cn-jump-panel .mat-mdc-dialog-surface {
+  border-radius: var(--gt-radius-card);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.tt-wrapping {
+  overflow-wrap: break-word;
+  height: auto;
+}
+
+// Taken from https://stackoverflow.com/a/57759753
+// TODO: Figure out a way to do this with material overrides
+.small-icon-button {
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  & > *[role="img"],
+  mat-spinner {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 18px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.input-icon-button {
+  @extend .small-icon-button;
+  margin-right: 8px;
+}
+
+// Search-syntax help popover (rendered in the CDK overlay; styles must be global).
+// Wider than a regular menu because rows contain chip groups and short prose.
+.mat-mdc-menu-panel.search-help-menu {
+  max-width: min(420px, calc(100vw - 32px)) !important;
+
+  // Re-enable text selection so users can copy operator tokens.
+  .mat-mdc-menu-content {
+    padding: 0;
+    user-select: text;
+  }
+}
+
+.search-help {
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-help__heading {
+  font: var(--mat-sys-title-small);
+  margin: 0;
+}
+
+.search-help__section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.search-help__section-title {
+  font: var(--mat-sys-label-large);
+  margin: 0;
+}
+
+.search-help__section-note {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+}
+
+.search-help__footer {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 4px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.search-help__chip {
+  cursor: pointer;
+
+  code {
+    font-family: vars.$font-mono;
+    font-size: 0.85em;
+  }
+}
+
+.search-help__samples {
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+
+  code {
+    font-family: vars.$font-mono;
+    font-size: 0.9em;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--mat-sys-surface-container-high);
+  }
+}
+
+.search-help__samples-sep {
+  color: var(--mat-sys-outline);
+}
+
+.medium-icon-button {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0px !important;
+
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  & > *[role="img"] {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+
+.comment-markdown {
+  ul {
+    list-style: disc outside;
+    padding-left: 20px;
+  }
+
+  pre {
+    margin-bottom: 20px;
+  }
+
+  blockquote {
+    margin: 0 0 20px 0;
+    padding: 20px 20px 20px 20px;
+    border-left: 3px solid var(--gt-color-control);
+    background-color: var(--mat-sys-surface-container-highest);
+
+    p:first-child {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    blockquote:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.system-info-instance-name {
+  p {
+    margin: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .ng-charts {
+    text {
+      fill: var(--mat-sys-on-background) !important;
+    }
+  }
+}
+// Overrides for ngx-mat-select-search
+.project-multiselect__search-field.mdc-list-item--disabled {
+  mat-checkbox {
+    padding-left: 10px;
+  }
+
+  .mdc-checkbox {
+    opacity: 1 !important;
+  }
+
+  .mat-select-search-input::placeholder {
+    opacity: 0.5;
+  }
+
+  .mat-select-search-clear {
+    position: relative;
+  }
+}
+
+//Override for routerLinkActiveOptions in the side-nav
+.mat-mdc-list-item.mdc-list-item--activated {
+  background-color: var(--gt-color-active) !important;
+
+  .mdc-list-item__primary-text {
+    color: var(--gt-color-text-1) !important;
+  }
+
+  mat-icon {
+    color: var(--gt-color-text-1) !important;
+  }
+}
+
+gt-pagination-buttons {
+  @include mat.icon-button-density(-5);
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--gt-color-text-2),
+    )
+  );
+}
+
+.table-container {
+  @include mat.checkbox-density(-5);
+  @include mat.table-density(-3);
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 24px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-card);
+  background-color: var(--gt-color-surface);
+}
+
+.table-header {
+  background-color: var(--gt-color-surface) !important;
+}
+
+.table-header__actions {
+  height: fit-content;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.table-group-label {
+  font-weight: 600;
+}
+
+.table-empty-states {
+  padding: 1.5em 24px 0.5em;
+}
+

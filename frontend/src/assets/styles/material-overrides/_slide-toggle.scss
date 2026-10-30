@@ -1,0 +1,42 @@
+@use "@angular/material" as mat;
+
+// Switches: a 36 x 20 track with a 16px white knob and no icon in it. On is
+// the status green, off is the control grey.
+:root {
+  @include mat.slide-toggle-overrides(
+    (
+      track-width: 36px,
+      track-height: 20px,
+      track-outline-width: 0,
+      selected-track-outline-width: 0,
+      handle-width: 16px,
+      handle-height: 16px,
+      selected-handle-size: 16px,
+      unselected-handle-size: 16px,
+      pressed-handle-size: 16px,
+      with-icon-handle-size: 16px,
+      selected-handle-horizontal-margin: 0 2px,
+      unselected-handle-horizontal-margin: 0 2px,
+      selected-pressed-handle-horizontal-margin: 0 2px,
+      unselected-pressed-handle-horizontal-margin: 0 2px,
+      selected-track-color: var(--gt-color-success-dot),
+      selected-hover-track-color: var(--gt-color-success-dot),
+      selected-focus-track-color: var(--gt-color-success-dot),
+      selected-pressed-track-color: var(--gt-color-success-dot),
+      unselected-track-color: var(--gt-color-control),
+      unselected-hover-track-color: var(--gt-color-control),
+      unselected-focus-track-color: var(--gt-color-control),
+      unselected-pressed-track-color: var(--gt-color-control),
+      selected-handle-color: #ffffff,
+      selected-hover-handle-color: #ffffff,
+      selected-focus-handle-color: #ffffff,
+      selected-pressed-handle-color: #ffffff,
+      unselected-handle-color: #ffffff,
+      unselected-hover-handle-color: #ffffff,
+      unselected-focus-handle-color: #ffffff,
+      unselected-pressed-handle-color: #ffffff,
+      handle-elevation-shadow: 0 1px 2px rgba(0, 0, 0, 0.2),
+      state-layer-size: 28px,
+    )
+  );
+}

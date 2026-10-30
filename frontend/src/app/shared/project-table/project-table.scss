@@ -1,0 +1,111 @@
+@use "variables" as vars;
+
+// Rules and alignment: grey 12px headers with no band, 1px row rules, the
+// name in ink taking the free width, figures right-aligned in tabular
+// numbers, one text action at the far right.
+// A short table does not span the whole canvas: past about 960px the name
+// drifts too far from its figures.
+.cn-projects {
+  width: 100%;
+  max-width: 960px;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th {
+    height: 40px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-border);
+    text-align: left;
+    font-size: 12px;
+    font-weight: var(--gt-weight-regular);
+    color: var(--gt-color-text-3);
+    white-space: nowrap;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  td {
+    height: 52px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-rule);
+    color: var(--gt-color-text-2);
+    white-space: nowrap;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  tr:hover td {
+    background: var(--gt-color-subtle);
+  }
+}
+
+.cn-num {
+  width: 1%;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.cn-projects__name {
+  width: 100%;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1) !important;
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-projects__note {
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: var(--gt-weight-regular);
+  color: var(--gt-color-text-3);
+}
+
+.cn-projects__platform {
+  min-width: 120px;
+}
+
+.cn-projects td.cn-num span:not(.cn-projects__none, .cn-projects__zero) {
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}
+
+.cn-projects__zero,
+.cn-projects__none {
+  color: var(--gt-color-text-3);
+}
+
+.cn-projects__action {
+  width: 1%;
+  padding-right: 0 !important;
+  text-align: right;
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-2);
+
+    &:hover {
+      color: var(--gt-color-text-1);
+    }
+  }
+}
+
+// Phone: the platform and created columns move out; name, count, latest and
+// the action stay.
+@media screen and (max-width: vars.$small - 1) {
+  .cn-projects__platform,
+  .cn-projects__created {
+    display: none;
+  }
+
+  .cn-projects th,
+  .cn-projects td {
+    padding: 0 8px;
+  }
+}

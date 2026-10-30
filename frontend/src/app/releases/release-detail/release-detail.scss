@@ -1,0 +1,20 @@
+@use "variables" as vars;
+@use "../releases";
+
+.cn-release {
+  display: flex;
+  flex-direction: column;
+}
+
+.cn-release__title {
+  overflow-wrap: anywhere;
+}
+
+.cn-table__mono {
+  font-family: var(--gt-font-code);
+  font-size: 13px;
+}
+
+.cn-strip {
+  margin-bottom: var(--gt-space-6);
+}

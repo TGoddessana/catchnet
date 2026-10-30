@@ -1,0 +1,124 @@
+@use "variables" as vars;
+
+.cn-tokens__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gt-space-4);
+  margin-bottom: var(--gt-space-4);
+}
+
+.cn-tokens__title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--gt-weight-strong);
+}
+
+.cn-tokens__text {
+  max-width: 560px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gt-color-text-2);
+}
+
+// Same rules as the projects table: grey 12px headers, 1px row rules, the
+// label in ink, one quiet action at the far right.
+.cn-tokens {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th {
+    height: 40px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-border);
+    text-align: left;
+    font-size: 12px;
+    font-weight: var(--gt-weight-regular);
+    color: var(--gt-color-text-3);
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--gt-color-rule);
+    vertical-align: middle;
+    color: var(--gt-color-text-2);
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.cn-tokens__label {
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1) !important;
+  white-space: nowrap;
+}
+
+.cn-tokens__token {
+  width: 40%;
+  min-width: 260px;
+
+  ::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    input {
+      font-family: var(--gt-font-code);
+      font-size: 13px;
+    }
+  }
+}
+
+.cn-tokens__scopes {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.cn-tokens__action {
+  width: 1%;
+  padding-right: 0 !important;
+  text-align: right;
+}
+
+// Phone: label and token on top, scopes under them, the action beside.
+@media screen and (max-width: vars.$small - 1) {
+  .cn-tokens thead {
+    display: none;
+  }
+
+  .cn-tokens tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px var(--gt-space-2);
+    padding: var(--gt-space-3) 0;
+    border-bottom: 1px solid var(--gt-color-rule);
+  }
+
+  .cn-tokens td {
+    padding: 0;
+    border: none;
+  }
+
+  .cn-tokens__token {
+    grid-column: 1 / -1;
+    width: auto;
+    min-width: 0;
+  }
+
+  .cn-tokens__scopes {
+    max-width: none;
+  }
+}

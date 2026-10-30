@@ -1,0 +1,238 @@
+@if (initialLoadComplete() && issue() === null) {
+  <section class="l-body l-body--full-width">
+    @if (organization(); as organization) {
+      <mat-card class="auth-form issue-404">
+        <mat-card-content>
+          <h1 class="section-header-text" i18n>Issue not found</h1>
+          <p class="body-text" i18n
+            >This may be because the URL is pointing to an issue that doesn't
+            exist or was deleted.</p
+          >
+          <p class="body-text" i18n
+            >It's also possible that this issue was reported to a project that
+            you are not able to access.</p
+          >
+          <a
+            mat-stroked-button
+            class="project-issues-link"
+            i18n
+            [routerLink]="['..']"
+            >View all issues in {{ organization.name }}</a
+          >
+        </mat-card-content>
+      </mat-card>
+    }
+  </section>
+}
+@if (issue(); as issue) {
+  <!--
+    Reading order: where it is (breadcrumb), what it is (title, message,
+    culprit) with the actions beside it, how big it is (the summary strip),
+    then the evidence (tabs over the event). The aside opens with the issue's
+    status, the slot where an automatic fix will report its pull request.
+  -->
+  <section class="l-body cn-detail">
+    <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+      <a [routerLink]="['..']" [queryParams]="generateBackLink(issue.project.id)" i18n
+        >Issues</a
+      >
+      <span aria-hidden="true">/</span>
+      <span>{{ issue.project.name }}</span>
+      <span aria-hidden="true">/</span>
+      <span class="cn-detail__short-id">{{ issue.shortId }}</span>
+    </nav>
+
+    <header class="cn-detail__header">
+      <div class="cn-detail__heading">
+        <h1 class="cn-detail__title">
+          <span
+            class="cn-dot cn-dot--{{ levelTone() }}"
+            [title]="issue.level"
+            aria-hidden="true"
+          ></span>
+          <span class="u-visually-hidden">{{ issue.level }}:</span>
+          {{ issueTitle()[0] }}
+        </h1>
+        @if (issueSubtitle()) {
+          <p class="cn-detail__message">{{ issueSubtitle() }}</p>
+        }
+        @if (issueTitle()[1]; as culprit) {
+          <p class="cn-detail__culprit">{{ culprit }}</p>
+        }
+      </div>
+      <div class="cn-detail__actions">
+        @if (issue.status === "unresolved") {
+          <button mat-stroked-button (click)="updateIssueStatus('ignored')" i18n>
+            Mute
+          </button>
+          <button mat-flat-button (click)="updateIssueStatus('resolved')">
+            <mat-icon svgIcon="check"></mat-icon>
+            <ng-container i18n>Mark as fixed</ng-container>
+          </button>
+        } @else {
+          <button mat-stroked-button (click)="updateIssueStatus('unresolved')" i18n>
+            Reopen
+          </button>
+        }
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="moreMenu"
+          i18n-aria-label
+          aria-label="More actions"
+        >
+          <mat-icon svgIcon="more_horiz"></mat-icon>
+        </button>
+        <mat-menu #moreMenu="matMenu" xPosition="before">
+          @if (issue.status !== "resolved") {
+            <button mat-menu-item (click)="resolveInNextRelease()">
+              <mat-icon svgIcon="rocket_launch"></mat-icon>
+              <span i18n>Mark as fixed in the next release</span>
+            </button>
+          }
+          <button mat-menu-item (click)="copyLink()">
+            <mat-icon svgIcon="content_copy"></mat-icon>
+            <span i18n>Copy link</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="deleteIssue()">
+            <mat-icon svgIcon="delete_outline"></mat-icon>
+            <span i18n>Delete issue</span>
+          </button>
+        </mat-menu>
+      </div>
+    </header>
+
+    <dl class="cn-strip" i18n-aria-label aria-label="How often">
+      <div class="cn-strip__cell">
+        <dt i18n>Events</dt>
+        <dd>{{ issue.count }}</dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>People affected</dt>
+        <dd>
+          @if (issue.userCount) {
+            {{ issue.userCount }}
+          } @else {
+            <span class="cn-strip__none">—</span>
+          }
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>First seen</dt>
+        <dd>
+          <time [dateTime]="issue.firstSeen" [title]="issue.firstSeen | date: 'medium'">{{
+            issue.firstSeen | daysAgo
+          }}</time>
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Last seen</dt>
+        <dd>
+          <time [dateTime]="issue.lastSeen" [title]="issue.lastSeen | date: 'medium'">{{
+            issue.lastSeen | daysAgo
+          }}</time>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="cn-detail__grid">
+      <div class="cn-detail__main">
+        <nav
+          class="cn-segmented cn-detail__tabs"
+          mat-tab-nav-bar
+          mat-stretch-tabs="false"
+          [tabPanel]="tabPanel"
+          i18n-aria-label
+          aria-label="Issue sections"
+        >
+          <a
+            mat-tab-link
+            [routerLink]="['./']"
+            routerLinkActive
+            [active]="details.isActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+            #details="routerLinkActive"
+            i18n
+            >Technical details</a
+          >
+          <a
+            mat-tab-link
+            [routerLink]="['user-reports']"
+            routerLinkActive
+            [active]="reports.isActive"
+            #reports="routerLinkActive"
+          >
+            <ng-container i18n>Feedback</ng-container>
+            @if (issue.userReportCount > 0) {
+              <span class="cn-count">{{
+                issue.userReportCount < 100 ? issue.userReportCount : "99+"
+              }}</span>
+            }
+          </a>
+          <a
+            mat-tab-link
+            [routerLink]="['comments']"
+            routerLinkActive
+            [active]="comments.isActive"
+            #comments="routerLinkActive"
+          >
+            <ng-container i18n>Comments</ng-container>
+            @if (issue.numComments > 0) {
+              <span class="cn-count">{{
+                issue.numComments < 100 ? issue.numComments : "99+"
+              }}</span>
+            }
+          </a>
+          <a
+            mat-tab-link
+            [routerLink]="['merged']"
+            routerLinkActive
+            [active]="merged.isActive"
+            #merged="routerLinkActive"
+            i18n
+            >Merged</a
+          >
+        </nav>
+        <mat-tab-nav-panel #tabPanel class="cn-detail__tab-panel">
+          <router-outlet></router-outlet>
+        </mat-tab-nav-panel>
+      </div>
+
+      <aside class="cn-detail__aside">
+        <section class="cn-panel" i18n-aria-label aria-label="Status">
+          <h2 class="cn-panel__title" i18n>Status</h2>
+          <dl class="cn-facts">
+            <div>
+              <dt i18n>State</dt>
+              <dd>
+                <span class="cn-badge" [class]="'cn-badge--' + statusTone()">
+                  <mat-icon aria-hidden="true" [svgIcon]="statusIcon()"></mat-icon>
+                  {{ statusLabel() }}
+                </span>
+              </dd>
+            </div>
+            @if (resolvedInRelease(); as release) {
+              <div>
+                <dt i18n>Fixed in</dt>
+                <dd>{{ release }}</dd>
+              </div>
+            }
+            <div>
+              <dt i18n>Level</dt>
+              <dd>{{ issue.level | titlecase }}</dd>
+            </div>
+            <div>
+              <dt i18n>Project</dt>
+              <dd>{{ issue.project.name }}</dd>
+            </div>
+            <div>
+              <dt i18n>Issue ID</dt>
+              <dd class="cn-facts__mono">{{ issue.shortId }}</dd>
+            </div>
+          </dl>
+        </section>
+        <gt-issue-detail-tags [issueID]="issueID()"></gt-issue-detail-tags>
+      </aside>
+    </div>
+  </section>
+}

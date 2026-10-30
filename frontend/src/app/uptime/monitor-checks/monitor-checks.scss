@@ -1,0 +1,64 @@
+@use "variables" as vars;
+
+.cn-checks__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  margin-bottom: var(--gt-space-2);
+}
+
+.cn-checks__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--gt-weight-strong);
+}
+
+table {
+  width: 100%;
+
+  th.mat-mdc-header-cell:first-child,
+  td.mat-mdc-cell:first-child {
+    padding-left: 0;
+  }
+
+  th.mat-mdc-header-cell:last-child,
+  td.mat-mdc-cell:last-child {
+    padding-right: 0;
+  }
+}
+
+.cn-checks__status {
+  white-space: nowrap;
+
+  .cn-dot {
+    margin-right: 6px;
+  }
+}
+
+.cn-num {
+  text-align: right !important;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.mat-column-responseTime {
+  @media screen and (max-width: (vars.$small - 1)) {
+    display: none;
+  }
+}
+
+.cn-checks__empty {
+  margin: 0;
+  padding: var(--gt-space-4) 0;
+  font-size: 14px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-checks__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--gt-space-2);
+}

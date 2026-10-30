@@ -1,0 +1,162 @@
+@use "variables" as vars;
+
+.issue-404 {
+  h1 {
+    text-align: left;
+  }
+
+  p {
+    margin: 16px 0;
+  }
+}
+
+// catchnet issue detail: breadcrumb, a title row with the actions on its
+// right, one summary strip, then the evidence column beside a 320px aside.
+.cn-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-5);
+}
+
+.cn-detail__short-id {
+  font-family: var(--gt-font-code);
+  font-size: 12px;
+}
+
+.cn-detail__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gt-space-4);
+  margin-top: calc(var(--gt-space-2) * -1);
+}
+
+.cn-detail__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-1);
+  min-width: 0;
+  flex: 1 1 480px;
+}
+
+.cn-detail__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: var(--gt-weight-strong);
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+
+  .cn-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.cn-detail__message {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--gt-color-text-2);
+  overflow-wrap: anywhere;
+}
+
+.cn-detail__culprit {
+  margin: 0;
+  padding-left: 20px;
+  font-family: var(--gt-font-code);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--gt-color-text-3);
+  overflow-wrap: anywhere;
+}
+
+.cn-detail__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+}
+
+.cn-detail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 32px;
+  align-items: start;
+
+  @media screen and (max-width: vars.$large - 1) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.cn-detail__main,
+.cn-detail__aside {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cn-detail__aside {
+  gap: var(--gt-space-4);
+
+  @media screen and (min-width: vars.$large) {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.cn-detail__tabs {
+  margin-bottom: var(--gt-space-5);
+}
+
+.cn-count {
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: var(--gt-radius-badge);
+  background: var(--gt-color-subtle);
+  font-size: 12px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-2);
+}
+
+// The event sits straight on the sheet; its sections bring their own
+// headings and rules.
+.cn-detail__tab-panel {
+  display: block;
+  padding-bottom: var(--gt-space-7);
+}
+
+.cn-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  font-size: 14px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gt-space-3);
+  }
+
+  dt {
+    color: var(--gt-color-text-3);
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+    font-weight: var(--gt-weight-medium);
+    overflow-wrap: anywhere;
+  }
+}
+
+.cn-facts__mono {
+  font-family: var(--gt-font-code);
+  font-size: 13px;
+}

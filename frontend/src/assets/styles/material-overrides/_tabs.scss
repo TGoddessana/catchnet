@@ -1,0 +1,52 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// Tabs are underline tabs: grey labels on a full-width 1px rule, the
+// selected one in ink with a 2px ink indicator as wide as its label.
+:root {
+  @include mat.tabs-overrides(
+    (
+      container-height: 40px,
+      divider-color: var(--gt-color-border),
+      divider-height: 1px,
+      active-indicator-color: var(--gt-color-text-1),
+      active-focus-indicator-color: var(--gt-color-text-1),
+      active-hover-indicator-color: var(--gt-color-text-1),
+      active-indicator-height: 2px,
+      active-indicator-shape: 0,
+      label-text-size: 14px,
+      label-text-weight: var(--gt-weight-medium),
+      active-label-text-color: var(--gt-color-text-1),
+      active-focus-label-text-color: var(--gt-color-text-1),
+      active-hover-label-text-color: var(--gt-color-text-1),
+      inactive-label-text-color: var(--gt-color-text-3),
+      inactive-hover-label-text-color: var(--gt-color-text-1),
+      inactive-focus-label-text-color: var(--gt-color-text-1),
+    )
+  );
+}
+
+.mat-mdc-tab,
+.mat-mdc-tab-link {
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin-right: 24px;
+  flex-grow: 0 !important;
+
+  .mdc-tab__ripple,
+  .mat-ripple {
+    display: none;
+  }
+}
+
+// Tabs that do not fit scroll sideways in their own row instead of showing
+// Material's paging arrows.
+.mat-mdc-tab-header-pagination {
+  display: none !important;
+}
+
+.mat-mdc-tab-label-container,
+.mat-mdc-tab-link-container {
+  overflow-x: auto !important;
+  scrollbar-width: none;
+}

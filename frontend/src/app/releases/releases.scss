@@ -1,0 +1,101 @@
+@use "variables" as vars;
+
+// Rules and alignment: grey 12px headers with no band, 1px row rules, the
+// version in ink taking the free width, figures right-aligned in tabular
+// numbers, dates on one line as yyyy-MM-dd.
+.cn-table {
+  width: 100%;
+  max-width: 960px;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th {
+    height: 40px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-border);
+    text-align: left;
+    font-size: 12px;
+    font-weight: var(--gt-weight-regular);
+    color: var(--gt-color-text-3);
+    white-space: nowrap;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  td {
+    height: 48px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-rule);
+    color: var(--gt-color-text-2);
+    white-space: nowrap;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  tr:hover td {
+    background: var(--gt-color-subtle);
+  }
+}
+
+.cn-num {
+  width: 1%;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.cn-table__identity {
+  width: 100%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-table__muted {
+  color: var(--gt-color-text-2);
+}
+
+.cn-table__none {
+  color: var(--gt-color-text-3);
+}
+
+.cn-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 960px;
+  padding: var(--gt-space-2) 0 var(--gt-space-6);
+}
+
+.cn-table-footer__range {
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.cn-empty--error {
+  margin-bottom: var(--gt-space-4);
+  border-color: var(--gt-color-error-dot);
+}
+
+@media screen and (max-width: vars.$small - 1) {
+  .cn-table__hide-sm {
+    display: none;
+  }
+}

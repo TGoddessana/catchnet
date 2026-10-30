@@ -1,0 +1,42 @@
+$font-path: "../fonts";
+
+// IBM Plex families. The app now uses catchnet's fonts (see _tokens.scss), but
+// the marketing site still loads Plex through _font-files.scss.
+$font-plex-sans: "Plex Sans";
+$font-plex-mono: "Plex Mono";
+
+// Font stacks resolve through custom properties that only the app defines
+// (--gt-font-ui, --gt-font-code in _tokens.scss). Anything that does not
+// define them, like the marketing site, falls back to Plex.
+$font-sans-serif: var(--gt-font-ui, $font-plex-sans);
+$font-mono: var(--gt-font-code, $font-plex-mono);
+
+// Corner radius for controls (buttons, inputs, menu items). The full scale
+// lives in _tokens.scss as --gt-radius-*.
+$shape-radius: 8px;
+$radius-badge: 6px;
+$radius-control: 8px;
+$radius-card: 10px;
+$radius-sheet: 14px;
+$radius-pill: 999px;
+
+// Control heights. Everything clickable is one of these two.
+$control-height: 36px;
+$control-height-sm: 32px;
+
+$side-nav-width: 228px;
+// Below this width the sidebar folds into the 48px top bar and the frame
+// goes away (MainNavService.foldWidth matches it).
+$nav-fold: 1024px;
+$top-app-bar-height: 65px;
+$mobile-nav-height: 48px;
+
+// These are the min width breakpoints used in the Angular CDK
+$Xsmall: 0px;
+$small: 600px;
+$medium: 960px;
+$large: 1280px;
+$Xlarge: 1920px;
+
+// Come up with a better name, I dare you
+$tablet: 768px;

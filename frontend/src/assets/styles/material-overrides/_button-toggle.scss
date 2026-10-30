@@ -1,0 +1,66 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// Button toggle groups read as a segmented control: a grey track with the
+// selected segment in the sheet's white behind a 1px control edge.
+:root {
+  @include mat.button-toggle-overrides(
+    (
+      shape: vars.$radius-control,
+      height: vars.$control-height-sm,
+      background-color: transparent,
+      divider-color: transparent,
+      text-color: var(--gt-color-text-2),
+      selected-state-background-color: transparent,
+      selected-state-text-color: var(--gt-color-text-1),
+      label-text-weight: var(--gt-weight-medium),
+      disabled-state-text-color: var(--gt-color-text-disabled),
+      disabled-state-background-color: transparent,
+    )
+  );
+}
+
+.mat-button-toggle-group-appearance-standard {
+  height: vars.$control-height-sm;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: none;
+  background-color: var(--gt-color-subtle);
+
+  .mat-button-toggle + .mat-button-toggle {
+    border-left: none;
+  }
+
+  .mat-button-toggle {
+    height: 28px;
+    border-radius: vars.$radius-badge;
+  }
+
+  .mat-button-toggle-button,
+  .mat-button-toggle-label-content {
+    height: 28px;
+    line-height: 28px;
+  }
+
+  .mat-button-toggle-checked:not(.mat-button-toggle-disabled) {
+    background: var(--gt-raised-surface);
+    box-shadow: var(--gt-raised-shadow);
+  }
+
+  // The checkmark repeats what the raised segment already says.
+  .mat-button-toggle-checkbox-wrapper {
+    display: none;
+  }
+
+  .mat-button-toggle-checked
+    .mat-button-toggle-button:has(.mat-button-toggle-checkbox-wrapper) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mat-button-toggle .mat-button-toggle-label-content {
+    padding: 0 12px;
+  }
+}

@@ -1,0 +1,8 @@
+@if (title) {
+  <h1 class="section-header-text cn-page-title" data-cy="list-title">
+    {{ title }}
+    @if (searchHits) {
+      <span class="cn-page-title__count">{{ searchHits }}</span>
+    }
+  </h1>
+}

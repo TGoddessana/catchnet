@@ -1,0 +1,166 @@
+@if (sortForm) {
+  <div class="data-filter-bar-container cn-scope">
+    <!-- Changes position based on screen size -->
+    <ng-template #searchFormTemplate>
+      @if (searchForm) {
+        <form
+          [formGroup]="searchForm"
+          (ngSubmit)="searchSubmit.emit()"
+          class="search-form"
+          data-cy="list-search-form"
+        >
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <input
+              matInput
+              type="search"
+              i18n-placeholder
+              placeholder="Search"
+              i18n-aria-label
+              aria-label="Search"
+              formControlName="query"
+              data-cy="list-search-field"
+            />
+            @if (searchHelp()) {
+              <button
+                matSuffix
+                type="button"
+                mat-icon-button
+                class="input-icon-button"
+                [matMenuTriggerFor]="searchHelpMenu"
+                aria-label="Search syntax help"
+                i18n-aria-label
+                data-cy="list-search-help"
+              >
+                <mat-icon svgIcon="help_outline"></mat-icon>
+              </button>
+            }
+          </mat-form-field>
+          <mat-menu
+            #searchHelpMenu="matMenu"
+            class="search-help-menu"
+            xPosition="before"
+          >
+            @if (searchHelp(); as help) {
+              <div class="search-help" (click)="$event.stopPropagation()">
+                <h3 class="search-help__heading">{{ help.heading }}</h3>
+                @for (section of help.sections; track section.title) {
+                  <div class="search-help__section">
+                    <p class="search-help__section-title">
+                      {{ section.title }}
+                    </p>
+                    @if (section.examples?.length) {
+                      <mat-chip-set>
+                        @for (example of section.examples; track example) {
+                          <mat-chip
+                            class="search-help__chip"
+                            [highlighted]="isTokenActive(example)"
+                            (click)="
+                              toggleSearchToken(
+                                example,
+                                !!section.mutuallyExclusive
+                              )
+                            "
+                          >
+                            <code>{{ example }}</code>
+                          </mat-chip>
+                        }
+                      </mat-chip-set>
+                    }
+                    @if (section.samples?.length) {
+                      <p class="search-help__samples">
+                        @for (
+                          sample of section.samples;
+                          track sample;
+                          let last = $last
+                        ) {
+                          <code>{{ sample }}</code>
+                          @if (!last) {
+                            <span class="search-help__samples-sep">·</span>
+                          }
+                        }
+                      </p>
+                    }
+                    @if (section.note) {
+                      <p class="search-help__section-note">
+                        {{ section.note }}
+                      </p>
+                    }
+                  </div>
+                }
+                @if (help.footer) {
+                  <p class="search-help__footer">{{ help.footer }}</p>
+                }
+              </div>
+            }
+          </mat-menu>
+        </form>
+      }
+    </ng-template>
+    <div class="left-block">
+      @if (environmentForm) {
+        <form [formGroup]="environmentForm" class="environment-form">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-select
+              i18n-placeholder
+              placeholder="All environments"
+              i18n-aria-label
+              aria-label="Environment"
+              (selectionChange)="filterByEnvironment.emit($event)"
+              formControlName="environment"
+            >
+              <mat-option i18n [value]="null">All Environments</mat-option>
+              @for (
+                environment of organizationEnvironments();
+                track environment
+              ) {
+                <mat-option [value]="environment">
+                  {{ environment }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </form>
+      }
+      @if (isLargeScreen()) {
+        <ng-container *ngTemplateOutlet="searchFormTemplate"></ng-container>
+      }
+    </div>
+    <div class="right-block">
+      @if (isLargeScreen()) {
+        @if (currentStatsPeriod(); as statsPeriod) {
+          <mat-button-toggle-group
+            matTooltipPosition="above"
+            matTooltip="Set trend charts period"
+            [matTooltipShowDelay]="500"
+            i18n-matTooltip
+            [value]="statsPeriod"
+            [disabled]="statsPeriodToggleDisabled()"
+            (change)="emitOnStatsPeriodToggle($event)"
+          >
+            <mat-button-toggle value="24h">24h</mat-button-toggle>
+            <mat-button-toggle value="14d">14d</mat-button-toggle>
+          </mat-button-toggle-group>
+        }
+      }
+      <form [formGroup]="sortForm" class="sort-form">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-select
+            i18n-aria-label
+            aria-label="Sort by"
+            (selectionChange)="sortByChanged.emit($event)"
+            formControlName="sort"
+          >
+            @for (sort of sorts(); track sort.param) {
+              <mat-option [value]="sort.param">
+                {{ sort.display }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </form>
+      @if (!isLargeScreen()) {
+        <ng-container *ngTemplateOutlet="searchFormTemplate"></ng-container>
+      }
+    </div>
+  </div>
+}

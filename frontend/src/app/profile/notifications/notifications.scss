@@ -1,0 +1,71 @@
+.default-settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+}
+
+.default-settings__label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.button-and-loading {
+  display: flex;
+  align-items: center;
+
+  mat-spinner {
+    margin-right: var(--gt-space-3);
+  }
+}
+
+mat-error {
+  padding-top: 4px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+.org-name {
+  margin: var(--gt-space-4) 0 var(--gt-space-1);
+  font-size: 13px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-3);
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+// One row per project: the name, then its On / Off / Default switch.
+.project-list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-2);
+  min-height: 48px;
+  border-top: 1px solid var(--gt-color-rule);
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.project a {
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}
+
+// The selected option is shown by the segmented control itself.
+.underline ::ng-deep .mat-button-toggle-label-content {
+  text-decoration: none;
+}

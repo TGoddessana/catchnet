@@ -1,0 +1,26 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// Dialogs: the sheet's white with soft corners and the overlay shadow, a
+// 18px title, 14px body text, and actions at the bottom right.
+:root {
+  @include mat.dialog-overrides(
+    (
+      container-color: var(--gt-color-surface),
+      container-shape: vars.$radius-sheet,
+      container-elevation-shadow: var(--gt-overlay-shadow),
+      subhead-color: var(--gt-color-text-1),
+      subhead-font: var(--gt-font-ui),
+      subhead-size: 18px,
+      subhead-line-height: 26px,
+      subhead-weight: var(--gt-weight-strong),
+      subhead-tracking: -0.01em,
+      supporting-text-color: var(--gt-color-text-2),
+      supporting-text-font: var(--gt-font-ui),
+      supporting-text-size: 14px,
+      supporting-text-line-height: 22px,
+      supporting-text-tracking: 0,
+      actions-alignment: flex-end,
+    )
+  );
+}

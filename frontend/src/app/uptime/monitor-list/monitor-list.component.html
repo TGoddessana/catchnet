@@ -1,0 +1,127 @@
+<!--
+  Uptime: a title row with the one action (New monitor), the sort, then the
+  monitors as rows on the sheet: name and URL, the last checks as a strip,
+  and the current state with how long it has held.
+-->
+<section class="l-body cn-uptime">
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Uptime</h1>
+      @if (monitors()?.length) {
+        <p class="cn-title-row__sub">
+          @if (downCount() > 0) {
+            <ng-container i18n
+              >{downCount(), plural, =1 {1 monitor is down} other {{{ downCount() }} monitors are down}}</ng-container
+            >
+          } @else {
+            <ng-container i18n>Every monitor is up.</ng-container>
+          }
+        </p>
+      }
+    </div>
+    @if (canWriteProject()) {
+      <div class="cn-title-row__actions">
+        <a id="add-monitor" mat-flat-button [routerLink]="['new']">
+          <mat-icon svgIcon="add"></mat-icon>
+          <ng-container i18n>New monitor</ng-container>
+        </a>
+      </div>
+    }
+  </header>
+
+  @if (monitors(); as monitors) {
+    @if (monitors.length > 0) {
+      <gt-data-filter-bar
+        [sortForm]="sortForm"
+        [sorts]="sorts"
+        (sortByChanged)="sortByChanged($event)"
+      />
+    }
+    <gt-loading-overlay i18n-label [loading]="loading()" label="Loading monitors">
+      @if (monitors.length > 0) {
+        <table class="cn-monitors">
+          <thead>
+            <tr>
+              <th i18n>Monitor</th>
+              <th class="cn-monitors__checks-col" i18n>Recent checks</th>
+              <th class="cn-monitors__state-col" i18n>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (monitor of monitors; track monitor.id) {
+              <tr>
+                <td class="cn-monitors__name">
+                  <a class="cn-monitors__title" [routerLink]="[monitor.id]">{{
+                    monitor.name
+                  }}</a>
+                  <span class="cn-monitors__meta">
+                    <a [href]="monitor.url" target="_blank" rel="noopener">{{
+                      monitor.url
+                    }}</a>
+                    @if (monitor.projectName) {
+                      <span aria-hidden="true">·</span>
+                      <span>{{ monitor.projectName }}</span>
+                    }
+                  </span>
+                </td>
+                <td class="cn-monitors__checks-col">
+                  <gt-monitor-chart [data]="monitor.checks"></gt-monitor-chart>
+                </td>
+                <td class="cn-monitors__state-col">
+                  <span class="cn-monitors__state">
+                    @if (monitor.isUp) {
+                      <span class="cn-dot cn-dot--success" aria-hidden="true"></span>
+                      <span i18n>Up</span>
+                    } @else if (monitor.isUp === false) {
+                      <span class="cn-dot cn-dot--error" aria-hidden="true"></span>
+                      <span i18n>Down</span>
+                    } @else {
+                      <span class="cn-dot" aria-hidden="true"></span>
+                      <span i18n>Waiting for the first check</span>
+                    }
+                  </span>
+                  @if (monitor.lastChange) {
+                    <span class="cn-monitors__since">{{
+                      monitor.lastChange | timeFor
+                    }}</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <footer class="cn-table-footer">
+          <span class="cn-table-footer__range" i18n
+            >{{ monitors.length }} of {{ paginator()?.count ?? monitors.length }}</span
+          >
+          <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
+          <gt-pagination-buttons
+            [paginator]="paginator()"
+            [settled]="initialLoadComplete()"
+          />
+        </footer>
+      } @else if (hasError()) {
+        <div class="cn-empty" role="alert">
+          @for (error of errors(); track $index) {
+            <p class="cn-empty__text">{{ error.msg || error }}</p>
+          }
+        </div>
+      } @else if (!loading()) {
+        <div class="cn-empty">
+          @if (canWriteProject()) {
+            <p class="cn-empty__text" i18n
+              >No monitors yet. Add one to hear about it when a site or service
+              goes down.</p
+            >
+            <a mat-flat-button [routerLink]="['new']" i18n>New monitor</a>
+          } @else {
+            <p class="cn-empty__text" i18n
+              >No monitors yet. Ask an organization admin or above to add
+              one.</p
+            >
+          }
+        </div>
+      }
+    </gt-loading-overlay>
+  }
+</section>

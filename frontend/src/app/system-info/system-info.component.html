@@ -1,0 +1,93 @@
+<section class="l-body">
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>System info</h1>
+      <p class="cn-title-row__sub" i18n
+        >How this catchnet server is set up. Change these in the server's
+        environment, not here.</p
+      >
+    </div>
+  </header>
+
+  <div class="cn-settings">
+    <section
+      class="cn-settings-section"
+      i18n-aria-label
+      aria-label="Backend configuration"
+    >
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Backend configuration</h2>
+        <p class="cn-settings-section__text" i18n
+          >Read from the server when the app loaded.</p
+        >
+      </div>
+      <div class="cn-settings-section__body">
+        <dl class="cn-kv">
+          <div>
+            <dt i18n>Server time zone</dt>
+            <dd>{{ serverTimeZone() || "—" }}</dd>
+          </div>
+          <div>
+            <dt i18n>Organization creation</dt>
+            <dd>
+              @if (enableOrganizationCreate()) {
+                <ng-container i18n>Enabled</ng-container>
+              } @else {
+                <ng-container i18n>Disabled</ng-container>
+              }
+            </dd>
+          </div>
+          <div>
+            <dt i18n>User registration</dt>
+            <dd>
+              @if (enableUserRegistration()) {
+                <ng-container i18n>Enabled</ng-container>
+              } @else {
+                <ng-container i18n>Disabled</ng-container>
+              }
+            </dd>
+          </div>
+          <div>
+            <dt i18n>Server version</dt>
+            <dd class="cn-system__mono">{{ version() || "—" }}</dd>
+          </div>
+          <div>
+            <dt i18n>Instance name</dt>
+            <dd>
+              @if (instanceName()) {
+                <markdown class="system-info-instance-name">
+                  {{ instanceName() }}
+                </markdown>
+              } @else {
+                —
+              }
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section
+      class="cn-settings-section"
+      i18n-aria-label
+      aria-label="Documentation"
+    >
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Documentation</h2>
+        <p class="cn-settings-section__text" i18n
+          >Installing and configuring the server.</p
+        >
+      </div>
+      <div class="cn-settings-section__body">
+        <a
+          class="cn-system__link"
+          href="https://glitchtip.com/documentation/install"
+          target="_blank"
+          rel="noopener noreferrer"
+          i18n
+          >Installation and configuration docs</a
+        >
+      </div>
+    </section>
+  </div>
+</section>

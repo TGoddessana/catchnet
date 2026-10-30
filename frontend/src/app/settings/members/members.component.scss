@@ -1,0 +1,14 @@
+.cn-member {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-2);
+}
+
+.role {
+  white-space: nowrap;
+}
+
+.cn-table__actions gt-loading-button {
+  display: inline-block;
+}

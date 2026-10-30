@@ -1,0 +1,168 @@
+@if (initialLoadComplete() && event() === null) {
+  <section class="mat-typography">
+    <h2 i18n>Event not found</h2>
+    <p i18n class="body-text">
+      This may be because the URL is pointing to an event that doesn't exist or
+      was deleted.
+    </p>
+  </section>
+}
+
+@if (event(); as event) {
+  <section class="mat-typography">
+    <section class="header">
+      <div>
+        <h2 i18n>This event</h2>
+        <p>
+          <a>{{ event?.id }}</a>
+        </p>
+        <p>
+          @if (event?.dateCreated) {
+            <span class="space">{{
+              $safeNavigationMigration(event?.dateCreated) | date: "long"
+            }}</span>
+          }
+          <ng-container i18n><a
+            target="_blank"
+            [href]="
+              '/organizations/' +
+              orgSlug() +
+              '/issues/' +
+              event.groupID +
+              '/events/' +
+              $safeNavigationMigration(event?.id) +
+              '/json/'
+            "
+            >Raw data</a
+          >
+          <span class="action-separator" aria-hidden="true">·</span></ng-container>
+          <button
+            type="button"
+            class="link-button"
+            [cdkCopyToClipboard]="aiPayload()"
+            (cdkCopyToClipboardCopied)="onCopiedForAI()"
+            i18n
+          >
+            Copy for AI
+          </button>
+        </p>
+      </div>
+      <nav class="navigation-buttons">
+        <button
+          mat-button
+          [routerLink]="previousEventUrl() || ''"
+          [disabled]="previousEvent() === false"
+        >
+          <mat-icon svgIcon="keyboard_arrow_left"></mat-icon> <ng-container i18n>Older</ng-container>
+        </button>
+        <button
+          mat-button
+          [routerLink]="nextEventUrl() || ''"
+          [disabled]="nextEvent() === false"
+        >
+          <ng-container i18n>Newer</ng-container> <mat-icon iconPositionEnd svgIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+      </nav>
+    </section>
+    @if (event?.contexts || event?.user) {
+      <mat-divider></mat-divider>
+    }
+    <gt-contexts></gt-contexts>
+    <mat-divider></mat-divider>
+    @if (event?.tags && event.tags.length > 0) {
+      <section class="tags">
+        <h2 i18n>Tags</h2>
+        <ul class="pseudo-chip-list">
+          @for (tag of event.tags; track tag.key) {
+            <li class="pseudo-chip">
+              <a
+                [routerLink]="['/', orgSlug(), 'issues']"
+                [queryParams]="generateQuery(tag)"
+                queryParamsHandling="merge"
+                class="pseudo-chip-link"
+              >
+                <span class="pseudo-chip-key">{{ tag.key }}</span>
+                <span class="pseudo-chip-value">
+                  {{ tag.value }}
+                </span>
+              </a>
+              @if (isValidUrl(tag.value)) {
+                <span class="pseudo-chip-divider"></span>
+                <a
+                  [href]="tag.value"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="pseudo-chip-external-link"
+                >
+                  <mat-icon svgIcon="open_in_new"></mat-icon>
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+    <gt-entry-message></gt-entry-message>
+    <gt-entry-exception
+      [eventTitle]="$safeNavigationMigration(event?.title)"
+      [eventPlatform]="$safeNavigationMigration(event?.platform)!"
+    ></gt-entry-exception>
+    <gt-entry-csp></gt-entry-csp>
+    <gt-entry-breadcrumbs></gt-entry-breadcrumbs>
+    <gt-entry-request></gt-entry-request>
+    @for (context of contexts() | keyvalue; track context) {
+      <section>
+        <mat-divider></mat-divider>
+        <h3>
+          {{ context.value!.type! }}
+          @if (context.value!.type!) {
+            ({{ context.key }})
+          } @else {
+            {{ context.key }}
+          }
+        </h3>
+        <dl>
+          @for (
+            context_entry of context.value | keyvalue;
+            track context_entry
+          ) {
+            @if (context_entry.key !== "type") {
+              <gt-entry-data
+                [key]="context_entry.key"
+                [value]="context_entry.value"
+              ></gt-entry-data>
+            }
+          }
+        </dl>
+      </section>
+    }
+    @if (event.context) {
+      <section>
+        <mat-divider></mat-divider>
+        <h3 i18n>Additional Data</h3>
+        <dl>
+          @for (context of event.context | keyvalue; track context) {
+            <gt-entry-data [key]="context.key" [value]="context.value">
+            </gt-entry-data>
+          }
+        </dl>
+      </section>
+    }
+    @if (event?.sdk) {
+      <section>
+        <mat-divider></mat-divider>
+        <h3>SDK</h3>
+        <dl>
+          <gt-entry-data
+            key="name"
+            [value]="$safeNavigationMigration(event?.sdk?.name)"
+          ></gt-entry-data>
+          <gt-entry-data
+            key="version"
+            [value]="$safeNavigationMigration(event?.sdk?.version)"
+          ></gt-entry-data>
+        </dl>
+      </section>
+    }
+  </section>
+}

@@ -1,0 +1,159 @@
+<gt-list-app-bar i18n-listTitle
+  listTitle="Logs"
+  [searchHits]="hitCount()"
+  [queriedProjects]="projects()"
+  [includeTimeRangeSelect]="true"
+  [queriedTimeRangeStart]="start()"
+  [queriedTimeRangeEnd]="end()"
+>
+  <p slot="summary" class="cn-logs__summary" i18n
+    >What your app logged, newest first.</p
+  >
+</gt-list-app-bar>
+
+<!--
+  Logs: the title row with its project and time scope, one toolbar (search,
+  level, service), then the stream itself in mono on a subtle well. Only
+  errors and warnings carry colour.
+-->
+<section class="l-body cn-logs">
+  <div class="filter-bar cn-scope">
+    <form
+      [formGroup]="searchForm"
+      (ngSubmit)="searchSubmit()"
+      class="search-form"
+    >
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+        <input i18n-placeholder
+          matInput
+          formControlName="query"
+          placeholder="Search log messages"
+          i18n-aria-label
+          aria-label="Search logs"
+        />
+        <button i18n-aria-label
+          mat-icon-button
+          matSuffix
+          type="submit"
+          class="input-icon-button"
+          aria-label="Search"
+        >
+          <mat-icon svgIcon="search"></mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+
+    <mat-form-field appearance="outline" class="filter-field" subscriptSizing="dynamic">
+      <mat-select
+        i18n-placeholder
+        placeholder="All levels"
+        i18n-aria-label
+        aria-label="Level"
+        [formControl]="levelForm.controls.level"
+        multiple
+        (selectionChange)="onLevelChange($event)"
+      >
+        @for (opt of levelOptions; track opt.value) {
+          <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field" subscriptSizing="dynamic">
+      <mat-select
+        i18n-placeholder
+        placeholder="All services"
+        i18n-aria-label
+        aria-label="Service"
+        [formControl]="serviceForm.controls.service"
+        (selectionChange)="onServiceChange($event)"
+      >
+        <mat-option i18n value="">All services</mat-option>
+        @for (opt of serviceOptions(); track opt.value) {
+          <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (query() || level().length || service_() || start() || end()) {
+      <button mat-button (click)="clearFilters()" class="clear-btn">
+        <mat-icon svgIcon="clear"></mat-icon>
+        <span i18n>Clear filters</span>
+      </button>
+    }
+  </div>
+
+  <!-- Log output (terminal style) -->
+  <div class="log-container">
+    <gt-loading-overlay i18n-label [loading]="isLoading()" label="Loading logs" fullHeight>
+      <div class="log-output">
+        @if (errors()?.length) {
+          <div class="log-empty">
+            <div class="log-error">
+              @for (error of errors(); track $index) {
+                <span>{{ error.msg || error }}</span>
+              }
+            </div>
+          </div>
+        } @else if (logs(); as logs) {
+          @if (logs.length > 0) {
+            @for (log of logs; track log.id) {
+              <div
+                class="log-line"
+                [class]="'log-line--' + log.level?.toLowerCase()"
+              >
+                <span class="log-timestamp">{{
+                  log.timestamp | date: "yyyy-MM-dd HH:mm:ss.SSS"
+                }}</span>
+                <span
+                  [class]="'log-level log-level--' + log.level?.toLowerCase()"
+                  >{{ log.level | uppercase }}</span
+                >
+                @if (log.service) {
+                  <span class="log-service">[{{ log.service }}]</span>
+                }
+                <span
+                  class="log-body"
+                  [matTooltip]="log.body"
+                  matTooltipPosition="above"
+                  >{{ log.body }}</span
+                >
+              </div>
+            }
+          } @else if (initialLoadComplete() && !isLoading()) {
+            @if (query() || level().length || service_()) {
+              <p class="log-empty" i18n
+                >No logs match these filters. Clear them to see every log.</p
+              >
+            } @else {
+              <p class="log-empty" i18n
+                >No logs yet. Turn on logging in your SDK and they stream in
+                here.</p
+              >
+            }
+          }
+        }
+      </div>
+    </gt-loading-overlay>
+
+    @if (hasNextPage() || isLoadingMore()) {
+      <div class="log-footer">
+        <button
+          mat-stroked-button
+          (click)="loadMore()"
+          [disabled]="isLoadingMore()"
+          class="load-more-btn"
+        >
+          @if (isLoadingMore()) {
+            <span i18n>Loading...</span>
+          } @else {
+            <div class="load-more-icon-text">
+              <mat-icon matButtonIcon svgIcon="expand_more"></mat-icon>
+              <span i18n>Load more</span>
+            </div>
+          }
+        </button>
+      </div>
+    }
+  </div>
+</section>

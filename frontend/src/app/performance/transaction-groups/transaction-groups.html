@@ -1,0 +1,126 @@
+<!--
+  Performance: the title row with its project and time scope, one toolbar
+  (environment, sort), then the transaction groups as rows on the sheet with
+  their average duration right-aligned.
+-->
+<gt-list-app-bar i18n-listTitle
+  listTitle="Performance"
+  [searchHits]="$safeNavigationMigration(paginator()?.count)"
+  [queriedProjects]="projects()"
+  [displayAddProject]="true"
+  [queriedTimeRangeStart]="start()"
+  [queriedTimeRangeEnd]="end()"
+  [includeTimeRangeSelect]="true"
+>
+  <p slot="summary" class="cn-perf__summary" i18n
+    >How long each kind of request or task takes, by transaction group.</p
+  >
+</gt-list-app-bar>
+<section class="l-body cn-perf">
+  @if (environmentNames(); as environments) {
+    <gt-data-filter-bar
+      [environmentForm]="environmentForm"
+      [sortForm]="sortForm"
+      [sorts]="sorts"
+      (sortByChanged)="sortByChanged($event)"
+      [organizationEnvironments]="environments"
+      (filterByEnvironment)="filterByEnvironment($event)"
+    ></gt-data-filter-bar>
+  }
+  @if (errors()?.length) {
+    <div class="cn-empty cn-perf__error" role="alert">
+      @for (error of errors(); track $index) {
+        <p class="cn-empty__text">{{ error.msg || error }}</p>
+      }
+    </div>
+  }
+  @if (transactionGroupsDisplay(); as transactionGroups) {
+    <gt-loading-overlay i18n-label
+      [loading]="loading()"
+      label="Loading transaction groups"
+    >
+      @if (transactionGroups.length > 0) {
+        <table class="cn-perf__table">
+          <thead>
+            <tr>
+              <th i18n>Transaction</th>
+              <th class="cn-num" i18n>Average duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (group of transactionGroups; track group.id) {
+              <tr>
+                <td class="cn-perf__name">
+                  <div class="name-and-project">
+                    <div
+                      class="group-title"
+                      (mouseover)="checkIfTooltipIsNecessary($event)"
+                    >
+                      <span
+                        matTooltipPosition="above"
+                        [matTooltip]="setTitleTooltip($any(group))"
+                        [matTooltipDisabled]="tooltipDisabled"
+                      >
+                        <a
+                          [routerLink]="[group.id]"
+                          class="table-group-label"
+                          queryParamsHandling="merge"
+                        >
+                          @if (group.method) {
+                            <span>{{ group.method }}&nbsp;</span>
+                          }
+                          {{ group.transaction }}
+                          @if (!group.method) {
+                            <span>;</span>
+                          }
+                        </a>
+                        @if (!group.method) {
+                          <span>&nbsp;{{ group.op }}</span>
+                        }
+                      </span>
+                    </div>
+                    <div class="cn-perf__meta">
+                      @if (appliedProjectCount() !== 1) {
+                        <span> {{ group.projectSlug }} </span>
+                      }
+                      <span>
+                        @if (appliedProjectCount() !== 1) {
+                          &mdash;
+                        }
+                        <ng-container i18n>{group.count, plural, =1 {1 transaction} other {{{ group.count }} transactions}}</ng-container>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td class="cn-num">
+                  {{ group.avgDuration | humanizeDuration }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <footer class="cn-table-footer">
+          <span class="cn-table-footer__range" i18n
+            >{{ transactionGroups.length }} of {{ paginator()?.count ?? transactionGroups.length }}</span
+          >
+          <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
+          <gt-pagination-buttons
+            [paginator]="paginator()"
+            [settled]="initialLoadComplete()"
+          />
+        </footer>
+      } @else if (
+        initialLoadComplete() === true &&
+        loading() === false &&
+        !errors()?.length
+      ) {
+        <div class="cn-empty">
+          <p class="cn-empty__text" i18n
+            >No transactions yet. Turn on tracing in your SDK and they show up
+            here.</p
+          >
+        </div>
+      }
+    </gt-loading-overlay>
+  }
+</section>

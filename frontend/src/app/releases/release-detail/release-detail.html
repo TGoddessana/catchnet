@@ -1,0 +1,120 @@
+<!--
+  One release: where it is (breadcrumb), what it is (the version as the h1),
+  its facts in one divided strip, then its uploaded source files.
+-->
+<section class="l-body cn-release">
+  <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+    <a [routerLink]="['..']" i18n>Releases</a>
+    <span aria-hidden="true">/</span>
+    <span>{{ version() }}</span>
+  </nav>
+
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title cn-release__title">{{ version() }}</h1>
+      @if (release(); as release) {
+        <p class="cn-title-row__sub">
+          @for (project of release.projects; track project.slug; let last = $last) {
+            {{ project.name }}@if (!last) {, }
+          }
+        </p>
+      }
+    </div>
+  </header>
+
+  @if (release(); as release) {
+    <dl class="cn-strip">
+      <div class="cn-strip__cell">
+        <dt i18n>Created</dt>
+        <dd>
+          <time
+            [dateTime]="release.dateCreated"
+            [title]="release.dateCreated | date: 'medium'"
+            >{{ release.dateCreated | date: "yyyy-MM-dd" }}</time
+          >
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Released</dt>
+        <dd>
+          @if (release.dateReleased) {
+            <time
+              [dateTime]="release.dateReleased"
+              [title]="release.dateReleased | date: 'medium'"
+              >{{ release.dateReleased | date: "yyyy-MM-dd" }}</time
+            >
+          } @else {
+            <span class="cn-strip__none">—</span>
+          }
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Commits</dt>
+        <dd>{{ release.commitCount }}</dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Deploys</dt>
+        <dd>{{ release.deployCount }}</dd>
+      </div>
+    </dl>
+  }
+
+  <section class="cn-release__files">
+    <h2 class="cn-section-title">
+      <ng-container i18n>Source files</ng-container>
+      @if (paginator()?.count; as count) {
+        <span class="cn-section-title__count">{{ count }}</span>
+      }
+    </h2>
+
+    @if (fileListErrors()?.length) {
+      <div class="cn-empty cn-empty--error" role="alert">
+        @for (error of fileListErrors(); track $index) {
+          <p class="cn-empty__text">{{ error.msg || error }}</p>
+        }
+      </div>
+    }
+
+    <gt-loading-overlay i18n-label [loading]="loading()" label="Loading release files">
+      @if (releaseFiles().length > 0) {
+        <table class="cn-table">
+          <thead>
+            <tr>
+              <th i18n>File</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (file of releaseFiles(); track file.name) {
+              <tr>
+                <td class="cn-table__identity cn-table__mono" [title]="file.name">
+                  {{ file.name }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <footer class="cn-table-footer">
+          <span class="cn-table-footer__range" i18n
+            >{{ releaseFiles().length }} of {{ paginator()?.count ?? releaseFiles().length }}</span
+          >
+          <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
+          <gt-pagination-buttons
+            [paginator]="paginator()"
+            [settled]="initialLoadComplete()"
+          />
+        </footer>
+      } @else if (
+        initialLoadComplete() === true &&
+        loading() === false &&
+        !fileListErrors()?.length
+      ) {
+        <div class="cn-empty">
+          <p class="cn-empty__text" i18n
+            >No source files for this release. Upload source maps to see
+            readable stack traces for its errors.</p
+          >
+        </div>
+      }
+    </gt-loading-overlay>
+  </section>
+</section>

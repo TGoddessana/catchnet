@@ -1,0 +1,16 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+mat-nav-list {
+  @include mat.list-overrides(
+    (
+      active-indicator-shape: vars.$radius-control,
+      active-indicator-color: var(--gt-color-active),
+      list-item-container-shape: vars.$radius-control,
+      list-item-label-text-weight: var(--gt-weight-medium),
+      list-item-label-text-color: var(--gt-color-text-2),
+      list-item-leading-icon-color: var(--gt-color-text-2),
+    )
+  );
+  @include mat.list-density(-1)
+}

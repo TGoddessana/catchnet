@@ -1,0 +1,15 @@
+.server-error {
+  display: block;
+  margin-bottom: var(--gt-space-4);
+}
+
+.cn-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-left: -10px;
+}
+
+.cn-role-description {
+  margin-top: var(--gt-space-3) !important;
+}

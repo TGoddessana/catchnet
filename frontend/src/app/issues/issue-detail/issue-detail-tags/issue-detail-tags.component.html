@@ -1,0 +1,34 @@
+@if (tags()?.length) {
+  <section class="cn-panel" i18n-aria-label aria-label="Most common">
+    <h2 class="cn-panel__title" i18n>Most common</h2>
+    @for (tag of tags(); track tag.key) {
+      <div class="cn-tag">
+        <div class="cn-tag__row">
+          <span class="cn-tag__key">{{ tag.key }}</span>
+          <span class="cn-tag__value">
+            {{ tag.topValues[0].value }}
+            <span class="cn-tag__pct">{{ tag.topValues[0].percentRounded }}%</span>
+          </span>
+        </div>
+        <div class="cn-tag__bars">
+          @for (topValue of tag.topValues; track topValue.name; let first = $first) {
+            <span
+              class="cn-tag__bar"
+              [class.is-top]="first"
+              [ngStyle]="{ 'width.%': topValue.percentRounded }"
+              matTooltip="{{ topValue.value }} · {{ topValue.percentRounded }}%"
+              matTooltipPosition="left"
+            ></span>
+          }
+          <span
+            class="cn-tag__bar"
+            [ngStyle]="{ 'width.%': tag.other }"
+            i18n-matTooltip
+            matTooltip="Other · {{ tag.other }}%"
+            matTooltipPosition="left"
+          ></span>
+        </div>
+      </div>
+    }
+  </section>
+}

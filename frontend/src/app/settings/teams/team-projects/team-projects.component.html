@@ -1,0 +1,68 @@
+@if (orgSlug(); as orgSlug) {
+  <div class="cn-team-toolbar">
+    <p class="cn-team-toolbar__count" i18n
+      >{projectsOnTeam().length, plural, =0 {No projects yet} =1 {1 project} other {{{ projectsOnTeam().length }} projects}}</p
+    >
+    @if (canWriteOrg()) {
+      <mat-form-field class="cn-scope" appearance="outline" subscriptSizing="dynamic">
+        <mat-select
+          (selectionChange)="addProject()"
+          [formControl]="project"
+          i18n-placeholder
+          placeholder="Add a project"
+          i18n-aria-label
+          aria-label="Add a project"
+        >
+          @for (project of projectsNotOnTeam(); track project) {
+            <mat-option [value]="project.slug">
+              {{ project.name }}
+            </mat-option>
+          } @empty {
+            <mat-option disabled i18n>Every project is already on this team</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </div>
+  @if (errors().addProjectToTeam) {
+    <mat-error class="cn-team-error">{{ errors().addProjectToTeam }}</mat-error>
+  }
+  @if (errors().removeProjectFromTeam) {
+    <mat-error class="cn-team-error">{{ errors().removeProjectFromTeam }}</mat-error>
+  }
+  @if (projectsOnTeam().length > 0) {
+    <table class="cn-table">
+      <thead>
+        <tr>
+          <th i18n>Project</th>
+          <th><span class="u-visually-hidden" i18n>Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (project of projectsOnTeam(); track project) {
+          <tr>
+            <td class="cn-table__main">
+              <a
+                class="team-name"
+                [routerLink]="['/', orgSlug, 'issues']"
+                [queryParams]="{ project: project.id }"
+                >{{ project.name }}</a
+              >
+            </td>
+            <td class="cn-table__actions">
+              @if (canWriteOrg()) {
+                <gt-loading-button i18n-buttonText
+                  buttonText="Remove"
+                  buttonStyle="stroked"
+                  [loading]="project.slug === loading().removeProjectFromTeam"
+                  (buttonClick)="removeProject(project.slug!)"
+                  id="remove-team-project"
+                ></gt-loading-button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+}

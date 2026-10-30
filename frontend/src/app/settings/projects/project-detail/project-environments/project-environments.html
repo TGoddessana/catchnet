@@ -1,0 +1,45 @@
+<section class="cn-settings-section">
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Environments</h2>
+    <p class="cn-settings-section__text" i18n
+      >Errors are tagged with the environment your SDK reports, such as
+      production or staging. Hide one to leave it out of filters.</p
+    >
+  </div>
+  <div class="cn-settings-section__body">
+    @if (initialLoad() === false) {
+      <div class="loading"></div>
+    } @else {
+      @if (sortedEnvironments(); as sortedEnvironments) {
+        @for (
+          sortedEnvironment of sortedEnvironments;
+          track sortedEnvironment.heading
+        ) {
+          <h3 class="cn-env__heading">{{ sortedEnvironment.heading }}</h3>
+          <ul class="cn-env__list">
+            @for (
+              environment of sortedEnvironment.environments;
+              track environment.id
+            ) {
+              <li class="cn-env__row">
+                <span>{{ environment.name }}</span>
+                @if (canWriteProject()) {
+                  <gt-loading-button
+                    (buttonClick)="toggleHidden(environment)"
+                    [loading]="environment.id === toggleHiddenloading()"
+                    [buttonText]="environment.isHidden ? showText : hideText"
+                    buttonStyle="stroked"
+                  ></gt-loading-button>
+                }
+              </li>
+            }
+          </ul>
+        }
+      } @else {
+        <p class="cn-settings-section__text" i18n
+          >No environments yet. They appear here once an event reports one.</p
+        >
+      }
+    }
+  </div>
+</section>

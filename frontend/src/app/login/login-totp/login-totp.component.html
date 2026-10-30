@@ -1,0 +1,43 @@
+<div class="margin-set">
+  <h1 class="header-left" i18n>Log in with authenticator app</h1>
+  <div class="instructions" i18n
+    >Enter the code from the authenticator app on your mobile device. If you’ve
+    lost your device, you may enter one of your recovery codes.</div
+  >
+  <form class="contents-left" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label class="cn-field-label" for="totp-code" i18n>Verification Code</label>
+    <mat-form-field class="full-width" appearance="outline">
+      <input id="totp-code" #input matInput formControlName="code" />
+      @if (code?.invalid) {
+        <mat-error>
+          @if (code?.errors?.required) {
+            <span i18n>Required</span>
+          }
+          @if (code?.errors?.minlength || code?.errors?.maxlength) {
+            <span i18n>Code must be of length 6, 8, or 16</span>
+          }
+          @for (serverError of code?.errors?.serverError; track serverError) {
+            <span>{{ serverError }}</span>
+          }
+        </mat-error>
+      }
+    </mat-form-field>
+    <button id="submit" class="full-width" mat-flat-button i18n>Log in</button>
+    <!-- <mat-checkbox class="caption-text" formControlName="remember">Don't prompt again on this device</mat-checkbox> -->
+  </form>
+
+  <div class="sign-up">
+    @if (hasWebAuthn!()) {
+      <div>
+        <a [routerLink]="[]" (click)="switchMethod()" i18n
+          >Log in with security key instead</a
+        >
+      </div>
+    }
+    <div>
+      <a [routerLink]="[]" (click)="restartLogin()" i18n
+        >Return to initial login page</a
+      >
+    </div>
+  </div>
+</div>

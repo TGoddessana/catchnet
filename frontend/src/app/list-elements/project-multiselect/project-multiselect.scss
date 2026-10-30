@@ -1,0 +1,10 @@
+@use '@angular/material' as mat;
+@use "variables" as vars;
+
+:host {
+  width: 168px;
+}
+
+.project-multiselect-formfield {
+  width: 100%;
+}

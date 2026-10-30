@@ -1,0 +1,46 @@
+<div class="cn-settings">
+  <gt-preferences></gt-preferences>
+  <gt-change-password></gt-change-password>
+  <gt-manage-emails></gt-manage-emails>
+  <gt-social-auth></gt-social-auth>
+
+  <section
+    class="cn-settings-section cn-settings-section--danger"
+    i18n-aria-label
+    aria-label="Delete account"
+  >
+    <div>
+      <h2 class="cn-settings-section__title" i18n>Delete account</h2>
+      <p class="cn-settings-section__text" i18n
+        >Removes your user and your access to every organization.</p
+      >
+    </div>
+    <div class="cn-settings-section__body">
+      <p class="cn-account__danger-text" i18n
+        >By deleting your user account, you will permanently lose all data,
+        including access to organization projects and their associated
+        events.</p
+      >
+      <p class="cn-account__danger-text" i18n
+        >Make sure to delete or transfer ownership of any organizations before
+        deleting your account. Owners of paid organization subscriptions are not
+        able to delete their account.</p
+      >
+      @if (userDeleteError(); as error) {
+        <mat-error>{{ error }}</mat-error>
+      }
+      <div class="cn-settings-section__footer">
+        <button
+          mat-stroked-button
+          class="cn-danger-button"
+          id="delete-user"
+          data-test
+          [disabled]="userDeleteLoading() === true"
+          (click)="deleteUser()"
+          i18n
+          >Delete account</button
+        >
+      </div>
+    </div>
+  </section>
+</div>

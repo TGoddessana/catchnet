@@ -1,0 +1,169 @@
+@if (member(); as member) {
+  <section class="l-body">
+    <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+      <a routerLink="../" i18n>Members</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ member.email }}</span>
+    </nav>
+    <header class="cn-title-row">
+      <div class="cn-title-row__text">
+        <h1 class="cn-page-title">{{ member.email }}</h1>
+        <p class="cn-title-row__sub">
+          @switch (member.role) {
+            @case ("owner") {<ng-container i18n>Owner</ng-container>}
+            @case ("manager") {<ng-container i18n>Manager</ng-container>}
+            @case ("admin") {<ng-container i18n>Admin</ng-container>}
+            @case ("member") {<ng-container i18n>Member</ng-container>}
+            @default {{{ member.roleName }}}
+          }
+          ·
+          <ng-container i18n>Added {{ member.dateCreated | date }}</ng-container>
+          @if (member.isOwner) {
+            · <ng-container i18n>Account owner</ng-container>
+          }
+        </p>
+      </div>
+    </header>
+
+    <div class="cn-settings">
+      <section class="cn-settings-section">
+        <div>
+          <h2 class="cn-settings-section__title" i18n>Role</h2>
+          <p class="cn-settings-section__text" i18n
+            >What this person can see and change in the organization.</p
+          >
+        </div>
+        <div class="cn-settings-section__body">
+          @if (canWriteMember()) {
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              @if (updateMemberError(); as error) {
+                <mat-error>{{ error }}</mat-error>
+              }
+              <mat-radio-group class="cn-roles" formControlName="role">
+                <mat-radio-button i18n value="member">Member</mat-radio-button>
+                <mat-radio-button i18n value="admin">Admin</mat-radio-button>
+                <mat-radio-button i18n value="manager">Manager</mat-radio-button>
+                <mat-radio-button i18n value="owner">Owner</mat-radio-button>
+              </mat-radio-group>
+              <p class="cn-settings-section__text cn-role-description">
+                @if (formRole.value === "member") {
+                  <span i18n
+                    >Members can view and act on events, as well as view most
+                    other data within the organization.</span
+                  >
+                }
+                @if (formRole.value === "admin") {
+                  <span i18n
+                    >Admin privileges on any teams of which user is a member.
+                    They can create new teams and projects, as well as delete
+                    teams and projects they are already members of.
+                    Additionally, they can manage memberships of teams that
+                    they are members of.</span
+                  >
+                }
+                @if (formRole.value === "manager") {
+                  <span i18n
+                    >Gains admin access on all teams as well as the ability to
+                    add and remove members.</span
+                  >
+                }
+                @if (formRole.value === "owner") {
+                  <span i18n
+                    >Unrestricted access to the organization, its data, and its
+                    settings. Can add, modify, and delete projects and
+                    members.</span
+                  >
+                }
+              </p>
+              @if (selectedRoleScopes(); as scopes) {
+                <p class="cn-role-scopes">{{ scopes }}</p>
+              }
+              <div class="cn-settings-section__footer">
+                <gt-loading-button i18n-buttonText
+                  [disabled]="member.role === formRole.value"
+                  [loading]="updateMemberLoading() === true"
+                  buttonText="Save"
+                ></gt-loading-button>
+              </div>
+            </form>
+          } @else {
+            <dl class="cn-kv">
+              <div>
+                <dt i18n>Role</dt>
+                <dd>{{ member.roleName }}</dd>
+              </div>
+            </dl>
+          }
+        </div>
+      </section>
+
+      @if (memberTeams(); as memberTeams) {
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Teams</h2>
+            <p class="cn-settings-section__text" i18n
+              >Teams this person belongs to.</p
+            >
+          </div>
+          <div class="cn-settings-section__body">
+            @if (memberTeams.length === 0) {
+              <p class="cn-settings-section__text" i18n
+                >Not on any team yet.</p
+              >
+            } @else {
+              <ul class="cn-member-teams">
+                @for (team of memberTeams; track team) {
+                  <li>
+                    <a
+                      [routerLink]="['teams', team, 'members']"
+                      [relativeTo]="
+                        $safeNavigationMigration(this.route.parent?.parent)
+                      "
+                      >#{{ team }}</a
+                    >
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </section>
+      }
+
+      <section class="cn-settings-section">
+        <div>
+          <h2 class="cn-settings-section__title" i18n>Account ownership</h2>
+          <p class="cn-settings-section__text" i18n
+            >The account owner manages the organization's subscription.</p
+          >
+        </div>
+        <div class="cn-settings-section__body">
+          @if (!member.isOwner && canAdminOrg()) {
+            @if (transferOrgOwnershipError(); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+            <div class="cn-settings-section__row">
+              <p class="cn-settings-section__text" i18n
+                >Make {{ member.email }} the account owner.</p
+              >
+              <gt-loading-button i18n-buttonText
+                buttonText="Transfer ownership"
+                buttonStyle="stroked"
+                [loading]="transferOrgOwnershipLoading() === true"
+                (buttonClick)="transferOrgOwnership()"
+              >
+              </gt-loading-button>
+            </div>
+          } @else if (!member.isOwner) {
+            <p class="cn-settings-section__text" i18n
+              >Only organization owners can transfer account ownership.</p
+            >
+          } @else {
+            <p class="cn-settings-section__text" i18n
+              >This person is the account owner.</p
+            >
+          }
+        </div>
+      </section>
+    </div>
+  </section>
+}

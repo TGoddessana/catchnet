@@ -1,0 +1,245 @@
+@if (activeProject(); as project) {
+  <!--
+    One settings section per topic, most needed first: the setup code a new
+    project is opened for, then name and platform, environments, alerts and
+    personal notifications. Deleting the project comes last.
+  -->
+  <section class="l-body">
+    <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+      <a [routerLink]="['..']" i18n>Projects</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ project.name }}</span>
+    </nav>
+    <header class="cn-title-row">
+      <div class="cn-title-row__text">
+        <h1 class="cn-page-title">{{ project.name }}</h1>
+        <p class="cn-title-row__sub">
+          @if (project.platform) {
+            {{ getPlatformName(project.platform) }} ·
+          }
+          <ng-container i18n
+            >Created {{ project.dateCreated | date: "mediumDate" }}</ng-container
+          >
+        </p>
+      </div>
+      @if (project.isMember) {
+        <div class="cn-title-row__actions">
+          <a
+            mat-stroked-button
+            [routerLink]="['/', orgSlug(), 'issues']"
+            [queryParams]="{ project: project.id }"
+            i18n
+            >View issues</a
+          >
+        </div>
+      }
+    </header>
+
+    @if (project.isMember === false) {
+      <p class="cn-notice" i18n
+        >You can change this project's settings because you are an admin of
+        {{ project.organization.name }}. To see its issues, join one of its
+        teams.</p
+      >
+    }
+
+    <div class="cn-settings">
+      @for (projectKey of projectKeys() || []; track projectKey) {
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Setup code</h2>
+            <p class="cn-settings-section__text" i18n
+              >Install an SDK in your app and give it this DSN, so it knows
+              where to send errors.</p
+            >
+            @if (project.platform) {
+              <a
+                class="cn-settings-link"
+                href="https://glitchtip.com/sdkdocs/{{ project.platform }}"
+                target="_blank"
+                rel="noopener"
+                i18n
+                >Setup guide for {{ getPlatformName(project.platform) }}</a
+              >
+            }
+          </div>
+          <div class="cn-settings-section__body">
+            <gt-copy-input
+              [value]="projectKey.dsn.public"
+              placeholder="DSN"
+            ></gt-copy-input>
+            <gt-copy-input i18n-placeholder
+              [value]="projectKey.dsn.security"
+              placeholder="Security endpoint"
+            ></gt-copy-input>
+          </div>
+        </section>
+      }
+
+      @if (canWriteProject()) {
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Name</h2>
+            <p class="cn-settings-section__text" i18n
+              >Shown in lists and filters across catchnet.</p
+            >
+          </div>
+          <form
+            class="cn-settings-section__body"
+            [formGroup]="nameForm"
+            (ngSubmit)="updateName()"
+          >
+            @if (updateNameError()) {
+              <mat-error class="server-error">{{ updateNameError() }}</mat-error>
+            }
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label i18n>Name</mat-label>
+              <input matInput formControlName="name" [value]="project.name" />
+              <mat-error>
+                @if (name?.errors?.required) {
+                  <span i18n data-cy="project-name-error-required"
+                    >Enter a project name</span
+                  >
+                }
+                @if (name?.errors?.maxlength) {
+                  <span i18n data-cy="project-name-error-length"
+                    >Name must be 64 characters or less</span
+                  >
+                }
+              </mat-error>
+            </mat-form-field>
+            <div class="cn-settings-section__footer">
+              <gt-loading-button i18n-buttonText
+                [disabled]="name?.value === project.name"
+                buttonText="Save"
+                id="update-project-name"
+              >
+              </gt-loading-button>
+            </div>
+          </form>
+        </section>
+
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Platform</h2>
+            <p class="cn-settings-section__text" i18n
+              >The language or framework the project runs on. It picks the
+              setup guide above.</p
+            >
+          </div>
+          <form
+            class="cn-settings-section__body"
+            [formGroup]="platformForm"
+            (ngSubmit)="updatePlatform(project.name)"
+          >
+            @if (updatePlatformError()) {
+              <mat-error class="server-error">
+                {{ updatePlatformError() }}
+              </mat-error>
+            }
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label i18n>Platform</mat-label>
+              <input
+                data-cy="platform-input"
+                type="text"
+                matInput
+                formControlName="platform"
+                [matAutocomplete]="auto"
+              />
+              <button
+                class="input-icon-button"
+                [class.invalid]="platformCtrl.invalid"
+                [disabled]="platformCtrl.value === ''"
+                mat-icon-button
+                matSuffix
+                type="button"
+                i18n-aria-label
+                aria-label="Clear platform"
+                (click)="clearFilter()"
+              >
+                <mat-icon svgIcon="close"></mat-icon>
+              </button>
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                [displayWith]="getPlatformName.bind(this)"
+              >
+                @for (platform of filteredPlatforms(); track platform.id) {
+                  <mat-option data-cy="platform-option" [value]="platform.id">
+                    {{ platform.name }}
+                  </mat-option>
+                }
+              </mat-autocomplete>
+              @if (platformCtrl.errors?.invalidAutocompleteString) {
+                <mat-error i18n>Select a valid platform</mat-error>
+              }
+            </mat-form-field>
+            <div class="cn-settings-section__footer">
+              <gt-loading-button i18n-buttonText
+                [disabled]="
+                  platformCtrl.value === project.platform ||
+                  platformCtrl.invalid
+                "
+                buttonText="Save"
+                id="update-project-platform"
+              >
+              </gt-loading-button>
+            </div>
+          </form>
+        </section>
+      }
+
+      <gt-project-environments
+        [orgSlug]="orgSlug()"
+        [projectSlug]="projectSlug()"
+      ></gt-project-environments>
+      <gt-project-alerts
+        [orgSlug]="orgSlug()"
+        [projectSlug]="projectSlug()"
+      ></gt-project-alerts>
+
+      <section class="cn-settings-section">
+        <div>
+          <h2 class="cn-settings-section__title" i18n>Your notifications</h2>
+          <p class="cn-settings-section__text" i18n
+            >Whether you get emails about this project is set in your
+            account.</p
+          >
+        </div>
+        <div class="cn-settings-section__body cn-settings-section__row">
+          <p class="cn-settings-section__text" i18n
+            >Notification settings apply per project.</p
+          >
+          <a mat-stroked-button routerLink="/profile/notifications" i18n
+            >Open notification settings</a
+          >
+        </div>
+      </section>
+
+      @if (canAdminProject()) {
+        <section class="cn-settings-section cn-settings-section--danger">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Delete project</h2>
+            <p class="cn-settings-section__text" i18n
+              >Removes the project with all its issues and events. This cannot
+              be undone.</p
+            >
+          </div>
+          <div class="cn-settings-section__body cn-settings-section__row">
+            <p class="cn-settings-section__text" i18n
+              >Delete {{ project.name }} and everything it has received.</p
+            >
+            <gt-loading-button i18n-buttonText
+              buttonText="Delete project"
+              buttonStyle="stroked"
+              class="cn-danger-button"
+              [loading]="deleteLoading()"
+              (buttonClick)="deleteProject()"
+              id="delete-project"
+            >
+            </gt-loading-button>
+          </div>
+        </section>
+      }
+    </div>
+  </section>
+}

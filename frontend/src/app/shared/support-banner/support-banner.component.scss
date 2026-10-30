@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.support-banner {
+  // A plain notice: the subtle tone step and a 1px edge. No pattern, no
+  // gradient.
+  --mat-card-container-color: var(--gt-color-subtle);
+  --mat-card-outlined-outline-color: var(--gt-color-border);
+  background-color: var(--gt-color-subtle);
+  box-shadow: none;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+  padding: 4px 4px;
+}
+
+.banner-headline {
+  margin: 0 0 8px;
+  font-size: 1.75em;
+  font-style: italic;
+  color: var(--mat-sys-primary);
+  display: inline-block;
+}
+
+.banner-description {
+  margin: 0 0 8px;
+  color: var(--mat-sys-on-surface-variant);
+
+  &:last-of-type {
+    margin-bottom: 16px;
+  }
+}
+
+.banner-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}

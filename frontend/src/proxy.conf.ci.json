@@ -1,0 +1,22 @@
+{
+  "/api": {
+    "target": "http://backend:8000",
+    "secure": false
+  },
+  "/accounts": {
+    "target": "http://backend:8000",
+    "secure": false
+  },
+  "/_allauth": {
+    "target": "http://backend:8000",
+    "secure": false
+  },
+  "/oauth": {
+    "target": "http://backend:8000",
+    "secure": false
+  },
+  "/admin": {
+    "target": "http://backend:8000",
+    "secure": false
+  }
+}

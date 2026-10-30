@@ -1,0 +1,66 @@
+@use "variables" as vars;
+
+// Fields stack in their panel; a field with a note puts the note beside it
+// at desktop width and under it on a phone.
+.cn-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-2);
+}
+
+.wide-field {
+  width: 100%;
+}
+
+.cn-field-row,
+.cn-field-with-help {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--gt-space-4);
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  @media screen and (max-width: vars.$small - 1) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+.cn-help {
+  padding-top: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--gt-color-text-3);
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-2);
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: vars.$small - 1) {
+    padding: 0 0 var(--gt-space-2);
+  }
+}
+
+.cn-form-error {
+  margin: 0 0 var(--gt-space-4);
+  padding: 10px 14px;
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-color-error-soft);
+  font-size: 14px;
+  color: var(--gt-color-error-text);
+}
+
+// One submit for the whole form, under the panels' column, Cancel first and
+// the primary last.
+.cn-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gt-space-2);
+  max-width: calc(280px + 32px + 720px);
+  padding: var(--gt-space-2) 0 var(--gt-space-7);
+}

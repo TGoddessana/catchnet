@@ -1,0 +1,31 @@
+.server-error:not(:empty) {
+  display: block;
+  margin-bottom: var(--gt-space-4);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.select-all {
+  display: block;
+  margin-bottom: var(--gt-space-2);
+  padding-bottom: var(--gt-space-2);
+  border-bottom: 1px solid var(--gt-color-rule);
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0 var(--gt-space-4);
+  margin: 0;
+  padding-left: 0;
+
+  li {
+    list-style-type: none;
+  }
+}
+
+.checkbox-error {
+  font-size: 12px;
+}

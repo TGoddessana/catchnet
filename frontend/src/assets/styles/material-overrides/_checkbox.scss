@@ -1,0 +1,16 @@
+@use "@angular/material" as mat;
+
+// Checkboxes: a control-grey edge at rest, near-black when checked.
+:root {
+  @include mat.checkbox-overrides(
+    (
+      unselected-icon-color: var(--gt-color-control),
+      unselected-hover-icon-color: var(--gt-color-text-3),
+      unselected-focus-icon-color: var(--gt-color-text-3),
+      selected-icon-color: var(--gt-color-primary),
+      selected-hover-icon-color: var(--gt-color-primary),
+      selected-focus-icon-color: var(--gt-color-primary),
+      selected-checkmark-color: var(--gt-color-on-primary),
+    )
+  );
+}

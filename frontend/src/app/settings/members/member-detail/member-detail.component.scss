@@ -1,0 +1,34 @@
+.cn-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-left: -10px;
+}
+
+.cn-role-description {
+  margin-top: var(--gt-space-3) !important;
+}
+
+.cn-role-scopes {
+  margin: var(--gt-space-2) 0 0;
+  font-family: var(--gt-font-code);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-member-teams {
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 8px 0;
+    border-top: 1px solid var(--gt-color-rule);
+    font-size: 14px;
+
+    &:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+}

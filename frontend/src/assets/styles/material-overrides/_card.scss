@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// Cards are flat: the sheet's white and a 1px border, no shadow. The border is
+// drawn as a ring so it never shifts layout.
+$_card-edge: 0 0 0 1px var(--gt-color-border);
+
+:root {
+  @include mat.card-overrides(
+    (
+      elevated-container-shape: vars.$radius-card,
+      elevated-container-color: var(--gt-color-surface),
+      elevated-container-elevation: $_card-edge,
+      outlined-container-shape: vars.$radius-card,
+      outlined-container-color: var(--gt-color-surface),
+      outlined-outline-color: var(--gt-color-border),
+      outlined-container-elevation: none,
+      filled-container-shape: vars.$radius-card,
+      filled-container-color: var(--gt-color-subtle),
+      title-text-size: 16px,
+      title-text-weight: var(--gt-weight-strong),
+      subtitle-text-color: var(--gt-color-text-2),
+    )
+  );
+}

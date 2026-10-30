@@ -1,0 +1,127 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+.breadcrumbs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0;
+  margin-bottom: 12px;
+  h3 {
+    margin: 0;
+  }
+  mat-form-field {
+    width: 180px;
+  }
+}
+
+.wrapper {
+  position: relative;
+  margin-bottom: 24px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-card);
+  overflow: hidden;
+}
+
+// One rule between steps, with no section spacing of its own.
+li mat-divider {
+  margin: 0 !important;
+  border-top-color: var(--gt-color-rule) !important;
+}
+
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  li {
+    list-style: none;
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+.expand-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: left;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: var(--gt-color-surface);
+  border-top: 1px solid var(--gt-color-border);
+  z-index: 1;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.bread-box {
+  height: 1250px;
+  overflow: hidden;
+
+  &--expanded {
+    height: 100%;
+  }
+}
+
+.table-wrapper {
+  padding: 2px 12px;
+}
+
+.category {
+  font-weight: var(--gt-weight-medium);
+}
+
+.error {
+  background-color: var(--gt-color-error-soft);
+}
+
+table {
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  .column-one {
+    width: 24px;
+    padding-right: 8px;
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    .error {
+      color: var(--gt-color-error-text);
+    }
+
+    .ui,
+    .xhr {
+      color: var(--gt-color-text-3);
+    }
+  }
+
+  .column-two {
+    width: 15%;
+  }
+
+  .column-three {
+    width: 60%;
+    font-family: vars.$font-mono;
+    word-break: break-all;
+  }
+
+  .column-four {
+    width: 20%;
+    text-align: right;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}

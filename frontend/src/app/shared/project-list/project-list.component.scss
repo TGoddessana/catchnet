@@ -1,0 +1,20 @@
+@use "variables" as vars;
+
+.cn-org-projects + .cn-org-projects {
+  margin-top: var(--gt-space-7);
+}
+
+.cn-org-projects__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  margin-bottom: var(--gt-space-2);
+}
+
+.cn-org-projects__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--gt-weight-strong);
+}

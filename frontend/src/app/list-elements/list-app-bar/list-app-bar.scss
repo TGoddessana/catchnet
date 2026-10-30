@@ -1,0 +1,104 @@
+@use "variables" as vars;
+
+// Ensure that layout stays aligned between this component
+// and top-app-bar, on which it is based
+
+// catchnet page header: a large title on the page itself, filters on the
+// right, no bar or hairlines.
+// The title row every list screen opens with: the title and a one-line
+// summary on the left, the screen's own action on the right. It shares the
+// canvas edges of .l-body.
+.list-app-bar {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.list-app-bar-primary-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gt-space-4);
+  align-items: flex-start;
+  padding: 28px 32px 0;
+}
+
+.left-section,
+.right-section {
+  display: flex;
+  align-items: center;
+}
+
+.left-section {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.right-section {
+  gap: var(--gt-space-3);
+}
+
+.add-project-button {
+  width: 150px;
+}
+
+.project-multiselect-container {
+  padding: 0 10px 0 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+@media screen and (min-width: vars.$medium) {
+  .time-range-select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: vars.$small) {
+  @media screen and (max-width: vars.$medium - 1) {
+    .list-app-bar-expanded-content {
+      display: flex;
+      align-items: center;
+      height: 80px;
+      padding: 0 24px;
+    }
+
+    .project-multiselect-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .time-range-select-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100%;
+      flex: 1;
+    }
+  }
+}
+
+@media screen and (max-width: vars.$small - 1) {
+  // Slightly inconsistent with top-app-bar because
+  // vertical space is at a premium
+  .list-app-bar-primary-content {
+    padding: 20px 16px 0;
+  }
+
+  .project-multiselect-container {
+    padding: 0 15px;
+    margin: 10px 0;
+  }
+
+  .time-range-select-container {
+    padding: 0 15px;
+    margin-bottom: 10px;
+  }
+}

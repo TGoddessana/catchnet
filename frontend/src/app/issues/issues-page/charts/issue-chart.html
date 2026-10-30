@@ -1,0 +1,19 @@
+<!--
+  One bar per hour (last 24 hours) or per day (last 14 days), on one zero
+  line. Empty periods stay on the line; the busiest period is in teal.
+-->
+<div
+  class="cn-trend"
+  role="img"
+  [attr.aria-label]="summary()"
+  [class.is-loading]="loading()"
+>
+  @for (bar of bars(); track bar.name) {
+    <span
+      class="cn-trend__bar"
+      [class.is-peak]="bar.peak"
+      [style.height.%]="bar.height"
+      [title]="bar.label"
+    ></span>
+  }
+</div>

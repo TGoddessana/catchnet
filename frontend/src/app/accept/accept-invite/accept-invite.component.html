@@ -1,0 +1,61 @@
+<div class="auth-form-wrapper">
+  <a class="cn-auth-brand" routerLink="/" i18n-aria-label aria-label="catchnet">
+    <img
+      src="static/assets/images/catchnet-mark.svg"
+      alt=""
+      width="28"
+      height="28"
+    />
+    <span>catchnet</span>
+  </a>
+  <mat-card class="auth-form">
+    @if (acceptInfo(); as acceptInfo) {
+      <mat-card-content>
+        <h3 i18n>Organization invite</h3>
+        <p i18n
+          >You have been invited to join<strong>
+            {{ acceptInfo.orgUser.organization.name }}
+          </strong>
+          so you can keep track of errors.</p
+        >
+        @if (alreadyInOrg()) {
+          <p i18n
+            >The account you're logged into is already a part of this
+            organization. You might want to
+            <a (click)="logout()" href="javascript:void(0)">log out</a>, then
+            create an account for or log into the account that this invite link
+            was intended for.</p
+          >
+        }
+        @if (isLoggedIn()) {
+          @if (alreadyInOrg() === false) {
+            <button mat-flat-button class="full-width" (click)="onSubmit()" i18n
+              >Accept invitation</button
+            >
+          }
+        } @else {
+          <p i18n
+            >To continue, you must either log in to your existing account, or
+            create a new one.</p
+          >
+          <div class="button-container">
+            <a
+              mat-flat-button
+              [routerLink]="['/register']"
+              [queryParams]="{ next: nextUrl() }"
+              i18n
+              >Create new account</a
+            >
+            <a
+              mat-stroked-button
+              [routerLink]="['/login']"
+              [queryParams]="{ next: nextUrl() }"
+              i18n
+              >Log in with existing account</a
+            >
+          </div>
+        }
+      </mat-card-content>
+    }
+  </mat-card>
+</div>

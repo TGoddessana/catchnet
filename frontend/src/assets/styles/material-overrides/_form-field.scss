@@ -1,0 +1,138 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// Inputs are plain boxes: white, a 1px control edge that darkens on hover,
+// and on focus a teal edge with a soft teal ring. The label sits above the
+// box in small text, never inside its border (Material's notched outline):
+// MAT_FORM_FIELD_DEFAULT_OPTIONS in main.ts makes every label float, and the
+// rules below move the floated label out of the notch and close the notch.
+:root {
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: vars.$radius-control,
+      outlined-outline-color: var(--gt-color-control),
+      outlined-hover-outline-color: var(--gt-color-text-3),
+      outlined-focus-outline-color: var(--gt-color-accent),
+      outlined-focus-outline-width: 1px,
+      outlined-label-text-color: var(--gt-color-text-2),
+      outlined-hover-label-text-color: var(--gt-color-text-2),
+      outlined-focus-label-text-color: var(--gt-color-text-1),
+      outlined-label-text-populated-size: 13px,
+      outlined-label-text-weight: var(--gt-weight-medium),
+      outlined-input-text-placeholder-color: var(--gt-color-text-3),
+      outlined-disabled-outline-color: var(--gt-color-border),
+      filled-container-color: var(--gt-color-subtle),
+      filled-container-shape: vars.$radius-control,
+    )
+  );
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+  border-radius: vars.$radius-control;
+  background-color: var(--gt-color-surface);
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined.mdc-text-field--disabled {
+  border-radius: vars.$radius-control;
+  background-color: var(--gt-color-subtle);
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined.mdc-text-field--focused {
+  box-shadow: 0 0 0 3px var(--gt-color-accent-soft);
+}
+
+// Label above the box.
+$_label-gap: 6px;
+$_label-line: 18px;
+
+.mat-form-field-appearance-outline {
+  &:has(.mdc-floating-label) {
+    margin-top: $_label-line + $_label-gap;
+  }
+
+  .mdc-notched-outline--notched .mdc-notched-outline__notch {
+    border-top-style: solid !important;
+    border-top-width: 1px !important;
+  }
+
+  // The label now sits outside the notch, so neither may clip it (Material
+  // clips the notch's left side with a clip-path).
+  .mdc-notched-outline__notch {
+    overflow: visible;
+    clip-path: none !important;
+  }
+
+  .mdc-notched-outline .mdc-floating-label.mdc-floating-label--float-above {
+    overflow: visible;
+    max-width: none !important;
+  }
+
+  // The floated label sits at the box's vertical middle (top: 50% of the
+  // container); it moves up by half the box, its own line and the gap, keeps
+  // its full size, and shifts left past the notch's leading piece (12px) and
+  // its own 4px inset to line up with the box's edge. Material's
+  // own selector is more specific, hence the !important.
+  .mdc-notched-outline .mdc-floating-label.mdc-floating-label--float-above {
+    transform: translateY(
+        calc(
+          (
+              var(--mat-form-field-container-height, 40px) / 2 +
+                #{$_label-line} + #{$_label-gap}
+            ) *
+            -1
+        )
+      )
+      translateX(-16px) scale(1) !important;
+    font-size: 13px !important;
+    line-height: $_label-line;
+  }
+
+  // The required star is not shown; a missing value says so when it matters.
+  .mat-mdc-form-field-required-marker {
+    display: none;
+  }
+}
+
+// Scope pickers and toolbar selects carry no visible label.
+.cn-scope .mat-form-field-appearance-outline:has(.mdc-floating-label),
+.list-app-bar .mat-form-field-appearance-outline:has(.mdc-floating-label) {
+  margin-top: 0;
+}
+
+// Select arrow: a thin chevron instead of Material's solid triangle.
+.mat-mdc-select-arrow {
+  width: 16px !important;
+  height: 16px !important;
+
+  svg {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+}
+
+.mat-mdc-select-arrow-wrapper {
+  color: var(--gt-color-text-3);
+}
+
+// Hints and errors line up with the box's edge, in 12px text.
+.mat-mdc-form-field-hint-wrapper,
+.mat-mdc-form-field-error-wrapper {
+  padding: 4px 0 0 !important;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.mat-mdc-form-field-hint {
+  color: var(--gt-color-text-3);
+}

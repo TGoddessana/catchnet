@@ -1,0 +1,29 @@
+// The last checks as a strip of thin bars, newest on the right: green for
+// up, the error colour for down, grey where there has been no check yet.
+div {
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  justify-content: flex-end;
+  gap: 2px;
+  height: 20px;
+  overflow: hidden;
+
+  div {
+    flex: none;
+    width: 4px;
+    height: 20px;
+    border-radius: 1px;
+  }
+
+  .up-check {
+    background-color: var(--gt-color-success-dot);
+  }
+
+  .down-check {
+    background-color: var(--gt-color-error-dot);
+  }
+
+  .no-check {
+    background-color: var(--gt-color-chart-bar);
+  }
+}

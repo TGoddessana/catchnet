@@ -1,0 +1,346 @@
+@use "variables";
+
+// This make the app cover the whole screen at all times
+mat-sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--gt-color-background);
+}
+
+// The app is one tinted frame: the sidebar sits on it with no rule, and the
+// page is a white sheet inset 8px from the window's top, right and bottom
+// edges, with a 1px edge, soft corners and no shadow. Below $nav-fold the
+// frame goes away and the sheet is the screen.
+mat-sidenav {
+  width: variables.$side-nav-width;
+  border-right: none;
+  box-shadow: none;
+
+  ::ng-deep .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gt-space-1);
+    padding: var(--gt-space-4) var(--gt-space-3);
+    box-sizing: border-box;
+  }
+}
+
+.cn-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 var(--gt-space-3) var(--gt-space-2);
+}
+
+.cn-brand__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gt-color-text-1);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.cn-brand__mark {
+  display: block;
+  flex-shrink: 0;
+}
+
+.cn-wordmark {
+  font-size: 18px;
+  font-weight: var(--gt-weight-strong);
+  letter-spacing: var(--gt-wordmark-tracking);
+}
+
+.collapse-toggle {
+  color: var(--gt-color-text-3);
+
+  @media screen and (max-width: variables.$small) {
+    display: none;
+  }
+}
+
+mat-sidenav-content {
+  box-sizing: border-box;
+  height: calc(100% - 16px);
+  margin: 8px 8px 8px 0;
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-sheet);
+  background: var(--gt-color-surface);
+
+  @media screen and (max-width: variables.$nav-fold - 1) {
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+.cn-avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--gt-radius-pill);
+  background: var(--gt-color-subtle);
+  color: var(--gt-color-text-2);
+  font-size: 12px;
+  font-weight: var(--gt-weight-strong);
+  line-height: 1;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+
+  &--accent {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--gt-radius-control);
+    background: var(--gt-color-active);
+    color: var(--gt-color-text-1);
+  }
+
+  &--sm {
+    width: 22px;
+    height: 22px;
+    margin-right: var(--gt-space-3);
+    font-size: 11px;
+  }
+}
+
+.cn-org {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 44px;
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: transparent;
+  font: inherit;
+  color: var(--gt-color-text-1);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--gt-color-active);
+  }
+}
+
+.cn-org__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.cn-org__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+}
+
+.cn-org__meta {
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-org__chevron {
+  color: var(--gt-color-text-3);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.cn-menu-check {
+  margin-left: auto;
+  margin-right: 0 !important;
+}
+
+.cn-jump {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+  height: var(--gt-control-height);
+  margin: var(--gt-space-2) 0 var(--gt-space-3);
+  padding: 0 var(--gt-space-2) 0 10px;
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-color-surface);
+  box-shadow: inset 0 0 0 1px var(--gt-color-border);
+  font: inherit;
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+  text-align: left;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: var(--gt-color-text-2);
+    box-shadow: inset 0 0 0 1px var(--gt-color-control);
+  }
+}
+
+.cn-jump__label {
+  flex: 1;
+}
+
+.cn-kbd {
+  padding: 1px 6px;
+  border-radius: var(--gt-radius-badge);
+  background: var(--gt-color-subtle);
+  font-family: var(--gt-font-ui);
+  font-size: 11px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cn-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-2);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+
+  mat-icon {
+    flex-shrink: 0;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--gt-color-text-3);
+  }
+
+  &:hover:not(.is-disabled, :disabled) {
+    background: var(--gt-color-active);
+    color: var(--gt-color-text-1);
+    text-decoration: none;
+  }
+
+  // The selected screen: a neutral grey pill, the label and icon in ink.
+  &.is-active {
+    background: var(--gt-color-active);
+    color: var(--gt-color-text-1);
+
+    mat-icon {
+      color: var(--gt-color-text-1);
+    }
+  }
+
+  &.is-disabled,
+  &:disabled {
+    color: var(--gt-color-text-disabled);
+    cursor: default;
+  }
+}
+
+.cn-nav-spacer {
+  flex: 1;
+  min-height: var(--gt-space-5);
+}
+
+.cn-user {
+  margin-top: var(--gt-space-2);
+}
+
+.cn-user__button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 40px;
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: transparent;
+  font: inherit;
+  color: var(--gt-color-text-2);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover,
+  &.is-active {
+    background: var(--gt-color-active);
+  }
+}
+
+.cn-user__email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.org-create-button-container {
+  width: 100%;
+}
+
+.org-create-button {
+  width: 100%;
+}
+
+.active-menu-item {
+  background-color: var(--gt-color-active);
+}
+
+.cn-version {
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}
+
+// Collapsed: icons only, centered.
+mat-sidenav.collapsed {
+  width: 72px;
+
+  .nav-text,
+  .cn-kbd {
+    display: none;
+  }
+
+  .cn-brand {
+    flex-direction: column;
+    gap: var(--gt-space-2);
+    padding-left: 0;
+  }
+
+  .cn-org,
+  .cn-jump,
+  .cn-nav__item,
+  .cn-user__button {
+    justify-content: center;
+    padding: 0;
+  }
+}

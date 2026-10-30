@@ -1,0 +1,83 @@
+<section class="l-body">
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Members</h1>
+      @if (members(); as members) {
+        <p class="cn-title-row__sub" i18n
+          >{members.length, plural, =1 {1 person} other {{{ members.length }} people}} in {{ activeOrganizationDetail()?.name }}</p
+        >
+      }
+    </div>
+    @if (canWriteMember()) {
+      <div class="cn-title-row__actions">
+        <a mat-flat-button [routerLink]="['new']">
+          <mat-icon svgIcon="add"></mat-icon>
+          <ng-container i18n>Invite member</ng-container>
+        </a>
+      </div>
+    }
+  </header>
+
+  <table class="cn-table">
+    <thead>
+      <tr>
+        <th i18n>Email</th>
+        <th i18n>Role</th>
+        <th><span class="u-visually-hidden" i18n>Actions</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (member of members(); track member) {
+        <tr>
+          <td class="cn-table__main">
+            <span class="cn-member">
+              <a class="email" [routerLink]="[member.id]">{{ member.email }}</a>
+              @if (member.isOwner) {
+                <span class="cn-badge" i18n>Account owner</span>
+              }
+              @if (member.pending) {
+                <span class="cn-badge cn-badge--warning" i18n>Invite pending</span>
+              }
+            </span>
+          </td>
+          <td class="role">
+            @switch (member.role) {
+              @case ("owner") {<ng-container i18n>Owner</ng-container>}
+              @case ("manager") {<ng-container i18n>Manager</ng-container>}
+              @case ("admin") {<ng-container i18n>Admin</ng-container>}
+              @case ("member") {<ng-container i18n>Member</ng-container>}
+              @default {{{ member.roleName }}}
+            }
+          </td>
+          <td class="cn-table__actions">
+            @if (member.pending && !member.loadingResendInvite && canWriteMember()) {
+              <gt-loading-button
+                class="resend-invite"
+                [loading]="member.loadingResendInvite"
+                [buttonText]="
+                  member.sentResendInvite ? inviteResentText : resendInviteText
+                "
+                [disabled]="member.sentResendInvite"
+                (buttonClick)="resendInvite(member)"
+                buttonStyle="basic"
+              >
+              </gt-loading-button>
+            }
+            @if (member.isMe || canAdminMember()) {
+              <gt-loading-button
+                i18n-matTooltip
+                class="remove-button"
+                matTooltip="Account ownership must be transferred."
+                [matTooltipDisabled]="!member.isOwner"
+                [disabled]="member.isOwner"
+                (buttonClick)="removeMember(member)"
+                [buttonText]="member.isMe ? leaveText : removeText"
+                buttonStyle="stroked"
+              ></gt-loading-button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

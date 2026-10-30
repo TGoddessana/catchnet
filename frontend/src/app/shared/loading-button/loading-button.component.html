@@ -1,0 +1,44 @@
+@if (buttonStyle() === "flat") {
+  <button
+    [class.full-width]="fullWidth()"
+    (click)="buttonClick.emit()"
+    mat-flat-button
+    [color]="color()"
+    [disabled]="loading() || disabled()"
+  >
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      {{ buttonText() }}
+    }
+  </button>
+}
+@if (buttonStyle() === "basic") {
+  <button
+    [class.full-width]="fullWidth()"
+    (click)="buttonClick.emit()"
+    mat-button
+    [color]="color()"
+    [disabled]="loading() || disabled()"
+  >
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      {{ buttonText() }}
+    }
+  </button>
+}
+@if (buttonStyle() === "stroked") {
+  <button
+    (click)="buttonClick.emit()"
+    mat-stroked-button
+    [color]="color()"
+    [disabled]="loading() || disabled()"
+  >
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      {{ buttonText() }}
+    }
+  </button>
+}

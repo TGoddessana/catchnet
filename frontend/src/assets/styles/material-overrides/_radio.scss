@@ -1,0 +1,17 @@
+@use "@angular/material" as mat;
+
+// Radio buttons: a control-grey ring at rest, near-black when chosen.
+:root {
+  @include mat.radio-overrides(
+    (
+      unselected-icon-color: var(--gt-color-control),
+      unselected-hover-icon-color: var(--gt-color-text-3),
+      unselected-focus-icon-color: var(--gt-color-text-3),
+      unselected-pressed-icon-color: var(--gt-color-text-3),
+      selected-icon-color: var(--gt-color-primary),
+      selected-hover-icon-color: var(--gt-color-primary),
+      selected-focus-icon-color: var(--gt-color-primary),
+      selected-pressed-icon-color: var(--gt-color-primary),
+    )
+  );
+}

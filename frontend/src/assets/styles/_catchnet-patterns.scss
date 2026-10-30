@@ -1,0 +1,604 @@
+@use "variables" as vars;
+
+// Small shared UI patterns built on the catchnet tokens. Screens compose these
+// instead of restyling Material per page.
+
+// View switcher for a list's states or a screen's sections ("Open, Fixed,
+// Muted", "General, Projects, Members"): underline tabs on a full-width 1px
+// rule, the selected one in ink over a 2px ink indicator. The class keeps its
+// old name so every screen picks it up.
+.cn-segmented {
+  display: flex;
+  gap: 0 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  box-shadow: inset 0 -1px 0 var(--gt-color-border);
+
+  > * {
+    flex: none;
+  }
+}
+
+.cn-segmented__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-3);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--gt-color-text-1);
+    text-decoration: none;
+  }
+
+  &.is-selected {
+    color: var(--gt-color-text-1);
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--gt-color-text-1);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gt-color-accent);
+    outline-offset: 2px;
+  }
+}
+
+// Filter chip: a small flat button with a control edge, "Label: value ▾".
+.cn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: vars.$control-height-sm;
+  padding: 0 6px 0 10px;
+  border: none;
+  border-radius: vars.$radius-control;
+  background: var(--gt-color-surface);
+  box-shadow: inset 0 0 0 1px var(--gt-color-control);
+  font: inherit;
+  font-size: 13px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-2);
+  white-space: nowrap;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--gt-color-text-3);
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--gt-color-subtle);
+  }
+
+  &--plain {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--gt-color-border);
+    color: var(--gt-color-text-disabled);
+    cursor: default;
+
+    .cn-chip__value,
+    mat-icon {
+      color: inherit;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gt-color-accent);
+    outline-offset: 2px;
+  }
+}
+
+.cn-chip__value {
+  color: var(--gt-color-text-1);
+}
+
+// Badge: a 4px-radius label. Always carries a word, never color alone.
+.cn-badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: vars.$radius-badge;
+  background: var(--gt-color-subtle);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-2);
+  white-space: nowrap;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+
+  &--accent {
+    background: var(--gt-color-accent-soft);
+    color: var(--gt-color-accent-text);
+  }
+
+  &--error {
+    background: var(--gt-color-error-soft);
+    color: var(--gt-color-error-text);
+  }
+
+  &--warning {
+    background: var(--gt-color-warning-soft);
+    color: var(--gt-color-warning-text);
+  }
+
+  &--success {
+    background: var(--gt-color-success-soft);
+    color: var(--gt-color-success-text);
+  }
+}
+
+// Status dot. Pair it with a word (visible or visually hidden).
+.cn-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: vars.$radius-pill;
+  background: var(--gt-color-text-disabled);
+
+  &--error {
+    background: var(--gt-color-error-dot);
+  }
+
+  &--warning {
+    background: var(--gt-color-warning-dot);
+  }
+
+  &--success {
+    background: var(--gt-color-success-dot);
+  }
+
+  &--accent {
+    background: var(--gt-color-accent);
+  }
+}
+
+// Panel: a flat card on the sheet, 1px border, no shadow.
+.cn-panel {
+  padding: 20px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: vars.$radius-card;
+  background: var(--gt-color-surface);
+}
+
+.cn-panel__title {
+  margin: 0 0 var(--gt-space-3);
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: var(--gt-weight-strong);
+  color: var(--gt-color-text-1);
+}
+
+.cn-eyebrow {
+  font-size: 12px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-3);
+}
+
+// Scope pickers that are Material form fields (project, time range) render
+// as compact 32px controls, in the title row or a screen's own toolbar.
+.list-app-bar .mat-mdc-form-field,
+.cn-scope .mat-mdc-form-field {
+  --mat-form-field-container-height: #{vars.$control-height-sm};
+  --mat-form-field-container-vertical-padding: 4px;
+  --mat-form-field-container-text-size: 13px;
+  --mat-select-trigger-text-size: 13px;
+  --mat-select-trigger-text-weight: var(--gt-weight-medium);
+  --mat-select-arrow-transform: none;
+  --mat-form-field-container-text-weight: var(--gt-weight-medium);
+
+  --mat-form-field-outlined-outline-color: var(--gt-color-control);
+  --mat-form-field-outlined-hover-outline-color: var(--gt-color-text-3);
+
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+    border-radius: vars.$radius-control;
+    background: var(--gt-color-surface);
+  }
+
+  .mdc-notched-outline__leading {
+    min-width: 10px;
+  }
+
+  .mdc-floating-label {
+    display: none;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: vars.$control-height-sm;
+  }
+}
+
+// Title row for screens that do not use gt-list-app-bar: the h1 and a
+// one-line summary on the left, the screen's actions on the right.
+.cn-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gt-space-4);
+  margin-bottom: var(--gt-space-5);
+}
+
+.cn-title-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cn-title-row__sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gt-color-text-2);
+}
+
+.cn-title-row__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+}
+
+// Empty block: keeps the block's frame and says one sentence, with the next
+// action beside it.
+.cn-empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  padding: var(--gt-space-4) 20px;
+  border: 1px dashed var(--gt-color-control);
+  border-radius: vars.$radius-card;
+}
+
+.cn-empty__text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--gt-color-text-2);
+}
+
+// Settings section: one row per topic. A label column (title and a sentence
+// on what the setting does) beside a flat panel holding the controls. The
+// panel's own Save sits at its bottom right. Sections are split by a 1px rule.
+// A destructive section comes last, with --danger. On a phone the label
+// column stacks above its panel.
+.cn-settings {
+  display: flex;
+  flex-direction: column;
+
+  // A section may sit in a child component's host; hosts are blocks, and
+  // the rule is drawn between any two children that render something (a
+  // host whose @if is false is :empty and skipped).
+  > :not(.cn-settings-section) {
+    display: block;
+  }
+
+  > :not(:empty) ~ :not(:empty) {
+    border-top: 1px solid var(--gt-color-border);
+  }
+
+  > .cn-settings-section:first-child,
+  > :first-child > .cn-settings-section:first-child {
+    padding-top: 0;
+  }
+}
+
+.cn-settings-section {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 720px);
+  gap: var(--gt-space-6);
+  padding: var(--gt-space-6) 0;
+
+  @media screen and (max-width: vars.$medium - 1) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gt-space-4);
+  }
+}
+
+.cn-settings-section__title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--gt-weight-strong);
+  color: var(--gt-color-text-1);
+}
+
+.cn-settings-section__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gt-color-text-2);
+}
+
+.cn-settings-section__body {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: vars.$radius-card;
+  background: var(--gt-color-surface);
+
+  // Forms inside: fields at full panel width, 16px apart.
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.cn-settings-section__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gt-space-2);
+  margin-top: var(--gt-space-4);
+}
+
+.cn-settings-section--danger .cn-settings-section__body {
+  border-color: light-dark(#f2d3ce, #4a2a26);
+}
+
+// Destructive action: an outlined button in the error colour. It always
+// opens a confirmation that names the object.
+.cn-danger-button.mat-mdc-outlined-button:not(:disabled),
+.cn-danger-button .mat-mdc-outlined-button:not(:disabled) {
+  --mat-button-outlined-label-text-color: var(--gt-color-error-text);
+  --mat-button-outlined-outline-color: light-dark(#e8b4ac, #6b3a34);
+}
+
+// Key-value rows inside a panel (a plan's limits, a member's details).
+.cn-kv {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gt-space-3);
+    padding: 10px 0;
+    border-top: 1px solid var(--gt-color-rule);
+    font-size: 14px;
+
+    &:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+
+  dt {
+    color: var(--gt-color-text-3);
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+    font-weight: var(--gt-weight-medium);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// A panel whose only content is one sentence and one button.
+.cn-settings-section__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+}
+
+.cn-settings-link {
+  display: inline-block;
+  margin-top: var(--gt-space-3);
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-accent-text);
+}
+
+// A quiet notice above the content: a tone step, no colour.
+.cn-notice {
+  margin: 0 0 var(--gt-space-5);
+  padding: 12px 16px;
+  border-radius: vars.$radius-card;
+  background: var(--gt-color-subtle);
+  font-size: 14px;
+  color: var(--gt-color-text-2);
+}
+
+// Breadcrumb above a detail screen's title: where it sits, the last part
+// in place of a back button.
+.cn-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-2);
+  margin-bottom: var(--gt-space-2);
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-2);
+
+    &:hover {
+      color: var(--gt-color-text-1);
+    }
+  }
+}
+
+// Plain data table for lists that are not Material tables: 12px grey
+// headers with no band, 1px row rules, the identity column taking the free
+// width, figures right-aligned (.cn-table__num), actions at the far right
+// (.cn-table__actions). Capped at 960px so short rows stay together.
+.cn-table {
+  width: 100%;
+  max-width: 960px;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th {
+    height: 40px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-border);
+    text-align: left;
+    font-size: 12px;
+    font-weight: var(--gt-weight-regular);
+    color: var(--gt-color-text-3);
+    white-space: nowrap;
+  }
+
+  td {
+    height: 52px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-rule);
+    color: var(--gt-color-text-2);
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 0;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 0;
+  }
+}
+
+.cn-table__main {
+  width: 100%;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1) !important;
+
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-table__num {
+  width: 1%;
+  text-align: right !important;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cn-table__actions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right !important;
+
+  > * + * {
+    margin-left: var(--gt-space-2);
+  }
+}
+
+// Facts strip: the few numbers that size an object (an issue's events, a
+// release's commits, a monitor's state), one container split by 1px
+// dividers, label over value, no tiles. Four cells; two per row on a phone.
+.cn-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-card);
+
+  @media screen and (max-width: vars.$small - 1) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cn-strip__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 20px;
+
+  & + & {
+    border-left: 1px solid var(--gt-color-border);
+  }
+
+  @media screen and (max-width: vars.$small - 1) {
+    padding: 12px 16px;
+
+    &:nth-child(3) {
+      border-left: none;
+    }
+
+    &:nth-child(n + 3) {
+      border-top: 1px solid var(--gt-color-border);
+    }
+  }
+
+  dt {
+    font-size: 13px;
+    color: var(--gt-color-text-3);
+  }
+
+  dd {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: var(--gt-weight-regular);
+    font-variant-numeric: tabular-nums;
+    color: var(--gt-color-text-1);
+  }
+}
+
+.cn-strip__none {
+  font-size: 14px;
+  color: var(--gt-color-text-3);
+}
+
+// A unit after a strip value ("300 s", "42 ms").
+.cn-strip__unit {
+  font-size: 14px;
+  color: var(--gt-color-text-3);
+}
+
+// Heading of a ruled section inside a detail screen, with an optional count.
+.cn-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gt-space-2);
+  margin: 0 0 var(--gt-space-3);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--gt-weight-strong);
+}
+
+.cn-section-title__count {
+  font-weight: var(--gt-weight-regular);
+  color: var(--gt-color-text-3);
+  font-variant-numeric: tabular-nums;
+}

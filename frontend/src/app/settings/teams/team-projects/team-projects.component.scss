@@ -1,0 +1,24 @@
+.cn-team-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  max-width: 960px;
+  margin-bottom: var(--gt-space-2);
+
+  mat-form-field {
+    width: 240px;
+  }
+}
+
+.cn-team-toolbar__count {
+  margin: 0;
+  font-size: 14px;
+  color: var(--gt-color-text-2);
+}
+
+.cn-team-error {
+  display: block;
+  margin-bottom: var(--gt-space-3);
+}

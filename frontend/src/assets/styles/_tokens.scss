@@ -1,0 +1,209 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// catchnet design tokens.
+//
+// One source of truth for color, shape, size, type and material. Light is the
+// default; dark follows the `color-scheme` on <html> (the OS setting, or the
+// user's theme preference via setTheme()). Every color is written with
+// light-dark() so both schemes live side by side and nothing depends on a
+// media query.
+//
+// Components should read these --gt-* properties, or the Material --mat-sys-*
+// roles mapped from them at the bottom of this file. Never a raw hex.
+
+:root {
+  // Color: surfaces. The app is a tinted frame (sidebar and page edge) with
+  // the work on a white sheet inset from it. `background` is the frame,
+  // `surface` the sheet and every card on it, `subtle` a tone step inside a
+  // card (a well, a track), `active` the selected nav row.
+  --gt-color-background: light-dark(#f4f4f5, #09090b);
+  --gt-color-surface: light-dark(#ffffff, #111113);
+  --gt-color-subtle: light-dark(#f7f7f8, #18181b);
+  --gt-color-active: light-dark(#ececee, #232326);
+
+  // Lines in three steps: card and sheet edges, row rules one step lighter,
+  // control edges one step darker.
+  --gt-color-border: light-dark(#e7e7ea, #232326);
+  --gt-color-rule: light-dark(#f0f0f2, #1c1c1f);
+  --gt-color-control: light-dark(#d4d4d8, #3f3f46);
+
+  // Color: text. text-3 is the faintest text that still meets 4.5:1 on every
+  // surface above. Disabled text is exempt from contrast and must only be
+  // used on controls that cannot be pressed.
+  --gt-color-text-1: light-dark(#09090b, #fafafa);
+  --gt-color-text-2: light-dark(#52525b, #a1a1aa);
+  --gt-color-text-3: light-dark(#6b6b74, #8b8b94);
+  --gt-color-text-disabled: light-dark(#a1a1aa, #52525b);
+
+  // Color: primary action. Near-black in light, inverted in dark. One per
+  // screen.
+  --gt-color-primary: light-dark(#18181b, #fafafa);
+  --gt-color-on-primary: light-dark(#ffffff, #09090b);
+  --gt-color-primary-hover: light-dark(#3f3f46, #e4e4e7);
+
+  // Color: accent. catchnet's cyan-teal: the logo, the selected tab underline,
+  // focus rings, links in running text and the main series of a chart.
+  // Never on chrome fills.
+  --gt-color-accent: light-dark(#0e7490, #3fb8d0);
+  --gt-color-on-accent: light-dark(#ffffff, #09090b);
+  --gt-color-accent-text: light-dark(#0e7490, #67d4e8);
+  --gt-color-accent-soft: light-dark(#ecfafd, #0b2a31);
+
+  // Color: status. Each status has a dot, a text color and a pale pill fill
+  // with dark text of the same hue. Red is for errors only. Never show a
+  // status by color alone: pair it with a word or an icon.
+  --gt-color-error-dot: light-dark(#e5604f, #f07a6c);
+  --gt-color-error-text: light-dark(#b42318, #f29b90);
+  --gt-color-error-soft: light-dark(#fef3f2, #2d1714);
+  --gt-color-warning-dot: light-dark(#e0a020, #e8b44a);
+  --gt-color-warning-text: light-dark(#92400e, #f2c66d);
+  --gt-color-warning-soft: light-dark(#fffbeb, #2b2210);
+  --gt-color-success-dot: light-dark(#12a77a, #34c795);
+  --gt-color-success-text: light-dark(#047857, #5fd4a8);
+  --gt-color-success-soft: light-dark(#ecfdf5, #0f2a1f);
+
+  // Color: charts. Quiet grey bars; the accent marks the period that matters.
+  --gt-color-chart-bar: light-dark(#d4d4d8, #3f3f46);
+
+  // Shape: badge 6, control 8, card 10, the sheet 14. Nested corners step
+  // down from the outside in.
+  --gt-radius-badge: #{vars.$radius-badge};
+  --gt-radius-control: #{vars.$radius-control};
+  --gt-radius-card: #{vars.$radius-card};
+  --gt-radius-sheet: #{vars.$radius-sheet};
+  --gt-radius-pill: #{vars.$radius-pill};
+
+  // Size: two control heights only.
+  --gt-control-height: #{vars.$control-height};
+  --gt-control-height-sm: #{vars.$control-height-sm};
+
+  // Spacing: multiples of 4.
+  --gt-space-0: 0;
+  --gt-space-1: 4px;
+  --gt-space-2: 8px;
+  --gt-space-3: 12px;
+  --gt-space-4: 16px;
+  --gt-space-5: 24px;
+  --gt-space-6: 32px;
+  --gt-space-7: 48px;
+
+  // Type: Pretendard for all UI text, Latin and Hangul alike; Geist Mono for
+  // IDs, keys and code. Three weights only; 700 is never used. Display sizes
+  // (20px and up) take the tighter tracking.
+  --gt-font-ui: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+    "Segoe UI", sans-serif;
+  --gt-font-code: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+  --gt-weight-regular: 400;
+  --gt-weight-medium: 500;
+  --gt-weight-strong: 600;
+  --gt-wordmark-tracking: -0.03em;
+  --gt-tracking-display: -0.02em;
+  --gt-tracking-text: -0.005em;
+
+  // Material: everything is flat. Surfaces are told apart by one tone step or
+  // a 1px line, never by a shadow. Only what floats above the page (menus,
+  // selects, dialogs, tooltips) casts one.
+  --gt-primary-highlight: none;
+  --gt-primary-shadow: none;
+  // Secondary button, filter chip: the sheet's white with a control edge.
+  --gt-raised-surface: var(--gt-color-surface);
+  --gt-raised-shadow: inset 0 0 0 1px var(--gt-color-control);
+  --gt-card-shadow: none;
+  --gt-overlay-shadow: 0 0 0 1px var(--gt-color-border),
+    0 12px 32px -8px light-dark(rgba(9, 9, 11, 0.16), rgba(0, 0, 0, 0.6)),
+    0 2px 6px light-dark(rgba(9, 9, 11, 0.04), rgba(0, 0, 0, 0.3));
+
+  // Motion: hover and press feedback only, never entrances.
+  --gt-ease: cubic-bezier(0.2, 0, 0, 1);
+  --gt-duration-fast: 120ms;
+  --gt-input-shadow: none;
+
+  // Legacy extended roles, kept so existing components pick up the palette.
+  --warning-color: var(--gt-color-warning-dot);
+  --warning-container: var(--gt-color-warning-soft);
+  --on-warning: var(--gt-color-warning-text);
+
+  --info-color: var(--gt-color-accent);
+  --info-container: var(--gt-color-accent-soft);
+  --on-info: var(--gt-color-accent-text);
+
+  --success-color: var(--gt-color-success-dot);
+  --success-container: var(--gt-color-success-soft);
+  --on-success: var(--gt-color-success-text);
+
+  // Product series colors for usage charts: teal, green and amber, never
+  // more than three on one chart.
+  --issues-color: var(--gt-color-accent);
+  --uptime-color: var(--gt-color-success-dot);
+  --logs-color: light-dark(#a86f0c, #d6a458);
+}
+
+// Material 3 system roles mapped onto the tokens above. Included inside the
+// `mat.theme` block in styles.scss.
+@mixin material-system-overrides {
+  @include mat.theme-overrides(
+    (
+      primary: var(--gt-color-primary),
+      on-primary: var(--gt-color-on-primary),
+      primary-container: var(--gt-color-accent-soft),
+      on-primary-container: var(--gt-color-accent-text),
+      inverse-primary: light-dark(#3fb8d0, #0e7490),
+      surface-tint: var(--gt-color-accent),
+
+      secondary: var(--gt-color-text-2),
+      on-secondary: var(--gt-color-surface),
+      // Selected list items, nav items and chips use the neutral active fill.
+      secondary-container: var(--gt-color-active),
+      on-secondary-container: var(--gt-color-text-1),
+
+      tertiary: var(--gt-color-success-text),
+      on-tertiary: var(--gt-color-surface),
+      tertiary-container: var(--gt-color-success-soft),
+      on-tertiary-container: var(--gt-color-success-text),
+
+      error: var(--gt-color-error-text),
+      on-error: light-dark(#ffffff, #141412),
+      error-container: var(--gt-color-error-soft),
+      on-error-container: var(--gt-color-error-text),
+
+      background: var(--gt-color-background),
+      on-background: var(--gt-color-text-1),
+      surface: var(--gt-color-surface),
+      on-surface: var(--gt-color-text-1),
+      surface-variant: var(--gt-color-subtle),
+      on-surface-variant: var(--gt-color-text-2),
+      surface-dim: var(--gt-color-subtle),
+      surface-bright: var(--gt-color-surface),
+      surface-container-lowest: var(--gt-color-surface),
+      surface-container-low: var(--gt-color-background),
+      surface-container: var(--gt-color-surface),
+      surface-container-high: var(--gt-color-subtle),
+      surface-container-highest: var(--gt-color-subtle),
+      inverse-surface: var(--gt-color-text-1),
+      inverse-on-surface: var(--gt-color-background),
+
+      // Material uses `outline` for meaningful icons and control edges, so it
+      // must reach 3:1. text-3 does on every surface.
+      outline: var(--gt-color-text-3),
+      outline-variant: var(--gt-color-border),
+      shadow: light-dark(#1f1f1d, #000000),
+      scrim: #000000,
+
+      // Material's corner scale collapsed onto the four catchnet radii.
+      corner-none: 0,
+      corner-extra-small: var(--gt-radius-badge),
+      corner-extra-small-top: var(--gt-radius-badge) var(--gt-radius-badge) 0 0,
+      corner-small: var(--gt-radius-control),
+      corner-medium: var(--gt-radius-card),
+      corner-large: var(--gt-radius-sheet),
+      corner-large-end: 0 var(--gt-radius-card) var(--gt-radius-card) 0,
+      corner-large-start: var(--gt-radius-card) 0 0 var(--gt-radius-card),
+      corner-large-top: var(--gt-radius-card) var(--gt-radius-card) 0 0,
+      corner-extra-large: var(--gt-radius-sheet),
+      corner-extra-large-top: var(--gt-radius-sheet) var(--gt-radius-sheet) 0 0,
+      corner-full: var(--gt-radius-pill),
+    )
+  );
+}

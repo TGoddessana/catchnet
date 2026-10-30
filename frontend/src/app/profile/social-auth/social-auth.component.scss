@@ -1,0 +1,28 @@
+@use "variables" as vars;
+
+mat-form-field {
+  width: 100%;
+}
+
+.cn-social__none {
+  margin: 0;
+  font-size: 14px;
+  color: var(--gt-color-text-3);
+}
+
+.socialaccount-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-3);
+  padding: var(--gt-space-2) 0;
+
+  .email {
+    font-size: 14px;
+    color: var(--gt-color-text-2);
+  }
+}
+
+.socialaccount-list-wrapper mat-divider {
+  border-top-color: var(--gt-color-rule);
+}

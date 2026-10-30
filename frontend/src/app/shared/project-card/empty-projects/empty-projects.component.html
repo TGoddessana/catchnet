@@ -1,0 +1,18 @@
+<div class="cn-empty">
+  @if (canCreateProject()) {
+    <p class="cn-empty__text" i18n
+      >No projects yet. Create one to get the setup code for your app.</p
+    >
+    <a
+      mat-flat-button
+      [routerLink]="['/', orgSlug(), 'settings', 'projects', 'new']"
+      i18n
+      >New project</a
+    >
+  } @else {
+    <p class="cn-empty__text" i18n
+      >No projects yet. Ask an organization owner, manager or admin to create
+      one.</p
+    >
+  }
+</div>

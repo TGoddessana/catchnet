@@ -1,0 +1,35 @@
+@use "variables" as vars;
+
+mat-toolbar {
+  display: none;
+  height: 48px;
+  gap: var(--gt-space-2);
+  padding: 0 var(--gt-space-2);
+  border-bottom: 1px solid var(--gt-color-border);
+  cursor: pointer;
+
+  @media (max-width: vars.$nav-fold - 1) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.sidenav-toggle {
+  color: var(--gt-color-text-2);
+}
+
+.cn-mobile-bar__mark {
+  flex: none;
+  border-radius: 6px;
+}
+
+.cn-mobile-bar__org {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: var(--gt-weight-strong);
+  color: var(--gt-color-text-1);
+}

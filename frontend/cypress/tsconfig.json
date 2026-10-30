@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "../node_modules",
+    "ignoreDeprecations": "6.0",
+    "target": "es6",
+    "module": "es6",
+    "lib": ["es6", "dom"],
+    "types": ["cypress", "cypress-localstorage-commands"]
+  },
+  "include": ["**/*.ts"]
+}

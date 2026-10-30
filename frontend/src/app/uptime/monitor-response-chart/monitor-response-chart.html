@@ -1,0 +1,27 @@
+@if (chartData().length > 0 && scale()) {
+<div #containerRef class="chart-container">
+  <ng-charts-area-chart
+    [showXAxisLabel]="false"
+    [showYAxisLabel]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="false"
+    [animations]="false"
+    [view]="view()"
+    [customColors]="customColors"
+    [xScaleMin]="scale()!.xScaleMin.getTime()"
+    [yScaleMin]="scale()!.yScaleMin"
+    [yScaleMax]="scale()!.yScaleMax"
+    [results]="chartData()"
+  >
+    <ng-template i18n #tooltipTemplate let-model="model">
+      {{ model.name | date: "short" }}<br />
+      {{ model.value }}ms
+    </ng-template>
+    <ng-template i18n #seriesTooltipTemplate let-model="model">
+      {{ model[0].name | date: "short" }}<br />
+      {{ model[0].value }}ms
+    </ng-template>
+  </ng-charts-area-chart>
+</div>
+}

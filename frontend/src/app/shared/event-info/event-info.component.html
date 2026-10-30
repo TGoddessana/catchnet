@@ -1,0 +1,51 @@
+<div [class.dialog-content]="dialog">
+  <h2 class="event-info-title" i18n>What counts as an event?</h2>
+  <p class="event-info-description" i18n
+    >Events are the unit of measure for tracking GlitchTip usage. Your
+    plan's monthly limit is shared across all features.</p
+  >
+  <dl class="event-definitions">
+    <div class="event-def">
+      <dt>
+        <mat-icon color="primary" svgIcon="breaking_news"></mat-icon>
+        <span i18n>Issues</span>
+      </dt>
+      <dd i18n>Each occurrence of an error or exception reported to GlitchTip</dd>
+    </div>
+    <div class="event-def">
+      <dt>
+        <mat-icon color="primary" svgIcon="share_eta"></mat-icon>
+        <span i18n>Uptime</span>
+      </dt>
+      <dd i18n>Each health check counts as 1/10 of an event &mdash; 10 checks equal 1 event, whether polled by GlitchTip or pushed from your app</dd>
+    </div>
+    <div class="event-def">
+      <dt>
+        <mat-icon color="primary" svgIcon="avg_pace"></mat-icon>
+        <span i18n>Performance</span>
+      </dt>
+      <dd i18n>Each transaction report for a tracked activity on your app</dd>
+    </div>
+    <div class="event-def">
+      <dt>
+        <mat-icon color="primary" svgIcon="text_snippet"></mat-icon>
+        <span i18n>Logs</span>
+      </dt>
+      <dd i18n>Each log entry counts as 1/10 of an event &mdash; 10 log entries equal 1 event</dd>
+    </div>
+    <div class="event-def">
+      <dt>
+        <mat-icon color="primary" svgIcon="rocket_launch"></mat-icon>
+        <span i18n>Releases</span>
+      </dt>
+      <dd i18n>Each megabyte of file storage is counted as an event</dd>
+    </div>
+  </dl>
+  @if (dialog) {
+    <div class="dialog-actions">
+      <button mat-button (click)="closeDialog()" i18n
+        >Close</button
+      >
+    </div>
+  }
+</div>

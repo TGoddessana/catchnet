@@ -1,0 +1,14 @@
+.server-error {
+  display: block;
+  margin-bottom: var(--gt-space-3);
+}
+
+.invalid {
+  color: var(--gt-color-error-text);
+}
+
+// The copy fields in the setup code panel stack 12px apart.
+gt-copy-input + gt-copy-input {
+  display: block;
+  margin-top: var(--gt-space-3);
+}

@@ -1,0 +1,57 @@
+:host {
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+  &.auth {
+    width: 220px;
+    transform: translateX(-4px);
+
+    .text {
+      width: 144px;
+    }
+  }
+
+  &.dropdown {
+    svg {
+      margin-left: 0;
+    }
+  }
+
+  &.disconnect {
+    svg {
+      margin-left: 0;
+    }
+  }
+}
+
+mat-spinner {
+  display: inline-block;
+  vertical-align: -7.5px;
+}
+
+svg {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin: 0 24px; // Google requirements are 24dp against an 18px icon size
+  vertical-align: -5px;
+}
+
+.text {
+  display: inline-block;
+  text-align: left;
+}
+
+.margin {
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.disabled {
+  fill: rgba(0, 0, 0, 0.26);
+}

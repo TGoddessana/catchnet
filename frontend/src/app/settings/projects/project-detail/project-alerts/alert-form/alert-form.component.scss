@@ -1,0 +1,97 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 8px;
+
+  .mat-form-field {
+    width: 88px;
+  }
+  gt-loading-button {
+    margin-bottom: 8px;
+  }
+}
+
+// Label above the trigger conditions.
+.alert-form__group-label {
+  margin: 0 0 8px;
+}
+
+.trigger {
+  width: 100%;
+}
+
+// The event condition is an inline sentence (checkbox label, two number fields,
+// text); center everything vertically and use column-gap for the field spacing.
+.trigger__line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 8px;
+}
+
+// Move to global styles if we decide to implement in other places in app
+.tooltip {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--gt-color-text-3);
+  cursor: help;
+}
+
+mat-form-field {
+  width: 120px;
+
+  &::ng-deep .mat-mdc-form-field-error-wrapper {
+    padding: 0;
+  }
+}
+
+.underline {
+  &::ng-deep .mat-button-toggle-label-content {
+    text-decoration: underline;
+  }
+}
+
+// Both conditions are independent triggers (enable either or both); equal 24px
+// spacing keeps them level rather than primary/secondary. 24px = --gt-space-5.
+.uptime-option {
+  margin-top: 24px;
+}
+
+// Environment scope narrows both conditions, so it sits at their level rather
+// than nested under one of them. The mat-form-field width above is sized for
+// the Quantity and Timespan number inputs; a select of environment names needs
+// far more room.
+.environment-scope {
+  width: 100%;
+  margin-top: 24px;
+
+  mat-form-field {
+    width: 320px;
+    max-width: 100%;
+  }
+}
+
+.error {
+  color: var(--mat-sys-error);
+  text-align: center;
+  margin-top: -15px;
+  margin-bottom: 5px;
+
+  @media screen and (max-width: vars.$medium - 1) {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+// Action row: a hairline sets it off from the conditions above.
+.update {
+  width: 100%;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}

@@ -1,0 +1,105 @@
+<section
+  class="cn-settings-section"
+  i18n-aria-label
+  aria-label="Email addresses"
+>
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Email addresses</h2>
+    <p class="cn-settings-section__text" i18n
+      >Alerts go to the primary address. You can log in with any verified
+      one.</p
+    >
+  </div>
+  <div class="cn-settings-section__body">
+    <ul class="cn-emails">
+      @for (email of emailAddresses(); track email) {
+        <li class="email-list-item">
+          <div class="email-info">
+            <span>{{ email.email }}</span>
+            @if (email.isPrimary) {
+              <span class="cn-badge" i18n>Primary</span>
+            }
+            @if (!email.isVerified) {
+              <span class="cn-badge cn-badge--warning" i18n>Unverified</span>
+            }
+          </div>
+          <div class="email-actions">
+            @if (!email.isVerified) {
+              <gt-loading-button
+                i18n-buttonText
+                buttonText="Resend confirmation"
+                [loading]="loadingStates()?.resendConfirmation === email.email"
+                (buttonClick)="resendConfirmation(email.email)"
+                buttonStyle="stroked"
+              ></gt-loading-button>
+            }
+            @if (!email.isPrimary && email.isVerified) {
+              <gt-loading-button
+                i18n-buttonText
+                buttonText="Make primary"
+                [loading]="loadingStates()?.makePrimary === email.email"
+                (buttonClick)="makePrimary(email.email)"
+                buttonStyle="stroked"
+              ></gt-loading-button>
+            }
+            @if (loadingStates()?.delete === email.email) {
+              <div class="delete-spinner-container">
+                <mat-progress-spinner
+                  [diameter]="24"
+                  color="primary"
+                  mode="indeterminate"
+                ></mat-progress-spinner>
+              </div>
+            }
+            @if (!email.isPrimary && loadingStates()?.delete !== email.email) {
+              <button
+                i18n-aria-label
+                data-cy="delete-button"
+                mat-icon-button
+                aria-label="Remove email address"
+                (click)="deleteEmail(email.email)"
+              >
+                <mat-icon svgIcon="delete_outline"></mat-icon>
+              </button>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      id="add-email-form"
+      class="add-email-form"
+    >
+      <div class="add-email-form-ui">
+        <mat-form-field appearance="outline">
+          <mat-label i18n>Add an email address</mat-label>
+          <input matInput type="email" formControlName="email_address" />
+          <mat-error>
+            @if (
+              email_address?.errors?.required || email_address?.errors?.email
+            ) {
+              <span i18n> Please enter a valid email address. </span>
+            }
+            @if (email_address?.errors?.matchesExistingValidator) {
+              <span i18n> This email address is already on the list. </span>
+            }
+            @if (email_address?.errors?.serverError) {
+              <span> {{ email_address?.errors?.serverError }} </span>
+            }
+          </mat-error>
+        </mat-form-field>
+        <gt-loading-button
+          i18n-buttonText
+          buttonStyle="stroked"
+          buttonText="Add"
+          [loading]="$safeNavigationMigration(loadingStates()?.add)"
+        ></gt-loading-button>
+      </div>
+      @if (addEmailError() !== "") {
+        <mat-error class="server-error"> {{ addEmailError() }} </mat-error>
+      }
+    </form>
+  </div>
+</section>

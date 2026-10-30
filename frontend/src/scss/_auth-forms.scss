@@ -1,0 +1,154 @@
+@use "variables" as vars;
+
+// Logged-out screens (login, register, password reset, invite): one 400px
+// column centred on the frame ground. The catchnet mark and wordmark sit
+// above a white card with a 1px edge and no shadow. Labels sit above their
+// fields, the one primary button is near-black and full width, and the
+// secondary links follow under the form.
+
+.auth-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gt-space-5);
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 72px 16px 48px;
+  background-color: var(--gt-color-background);
+
+  @media screen and (max-width: vars.$small - 1) {
+    padding-top: 40px;
+  }
+}
+
+.cn-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gt-color-text-1);
+  text-decoration: none;
+
+  img {
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+
+  span {
+    font-size: 20px;
+    font-weight: var(--gt-weight-strong);
+    letter-spacing: var(--gt-wordmark-tracking);
+  }
+}
+
+.auth-form {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 400px;
+
+  &.mat-mdc-card {
+    padding: 28px 28px 24px;
+  }
+
+  mat-card-header,
+  .mat-mdc-card-header,
+  mat-card-content,
+  .mat-mdc-card-content {
+    padding: 0;
+  }
+
+  mat-card-title,
+  .mat-mdc-card-title {
+    margin: 0;
+  }
+
+  h3,
+  h1 {
+    margin: 0 0 var(--gt-space-5);
+    text-align: left;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: var(--gt-weight-strong);
+    letter-spacing: -0.01em;
+  }
+
+  form {
+    text-align: left;
+  }
+
+  .server-error {
+    min-height: 0;
+  }
+
+  mat-form-field {
+    margin-bottom: var(--gt-space-1);
+  }
+
+  mat-error span {
+    padding-right: var(--gt-space-4);
+  }
+
+  // Secondary links under the form.
+  .sign-up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gt-space-1);
+    margin-top: var(--gt-space-5);
+    padding: var(--gt-space-4) 0 0;
+    border-top: 1px solid var(--gt-color-rule);
+    text-align: center;
+    font-size: 14px;
+    color: var(--gt-color-text-2);
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      margin-left: 4px;
+      font-weight: var(--gt-weight-medium);
+      color: var(--gt-color-text-1);
+    }
+  }
+
+  // "or" between the password form and the social logins.
+  .or {
+    display: flex;
+    align-items: center;
+    gap: var(--gt-space-3);
+    margin: var(--gt-space-4) 0;
+    font-size: 13px;
+    color: var(--gt-color-text-3);
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--gt-color-border);
+    }
+
+    span {
+      font-weight: var(--gt-weight-regular);
+    }
+  }
+
+  .auth-link {
+    color: var(--gt-color-text-1);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// A label above its field: 14px, medium weight, 6px above the box.
+.cn-field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}

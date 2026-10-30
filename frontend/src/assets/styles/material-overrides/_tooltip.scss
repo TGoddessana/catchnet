@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+
+// Tooltips: a small near-black label, 12px text, 6px corners.
+:root {
+  @include mat.tooltip-overrides(
+    (
+      container-color: var(--gt-color-primary),
+      container-shape: 6px,
+      supporting-text-color: var(--gt-color-on-primary),
+      supporting-text-font: var(--gt-font-ui),
+      supporting-text-size: 12px,
+      supporting-text-weight: var(--gt-weight-medium),
+    )
+  );
+}

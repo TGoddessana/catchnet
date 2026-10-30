@@ -1,0 +1,33 @@
+.cn-env__heading {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: var(--gt-weight-regular);
+  color: var(--gt-color-text-3);
+
+  &:not(:first-child) {
+    margin-top: var(--gt-space-4);
+  }
+}
+
+.cn-env__list {
+  margin: 0;
+  padding: 0;
+}
+
+.cn-env__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  min-height: 44px;
+  border-top: 1px solid var(--gt-color-rule);
+  font-size: 14px;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.loading {
+  height: 88px;
+}

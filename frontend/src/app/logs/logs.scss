@@ -1,0 +1,234 @@
+// Log stream on the catchnet tokens: a mono stream in a subtle well, the
+// toolbar above it in the same 32px controls as every other list.
+
+.cn-logs {
+  margin-top: 20px !important;
+}
+
+.cn-logs__summary {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gt-color-text-2);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-2);
+  margin-bottom: var(--gt-space-3);
+}
+
+.search-form {
+  flex: 1;
+  min-width: 220px;
+  max-width: 420px;
+}
+
+.search-field {
+  width: 100%;
+}
+
+.filter-field {
+  width: 160px;
+}
+
+.clear-btn {
+  white-space: nowrap;
+}
+
+// Log container
+.log-container {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 260px);
+  margin-bottom: var(--gt-space-6);
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-card);
+  background: var(--gt-color-subtle);
+  overflow: hidden;
+}
+
+.log-output {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 12px 16px;
+  font-family: var(--gt-font-code);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.log-line {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+  padding-left: 8px;
+  margin-left: -8px;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: var(--gt-color-active);
+  }
+
+  // Level-based left border colors
+  &.log-line--error,
+  &.log-line--fatal {
+    border-left-color: var(--log-error-color);
+  }
+
+  &.log-line--warn,
+  &.log-line--warning {
+    border-left-color: var(--log-warn-color);
+  }
+
+  &.log-line--info {
+    border-left-color: var(--log-info-color);
+  }
+
+  &.log-line--debug {
+    border-left-color: var(--log-debug-color);
+  }
+
+  &.log-line--trace {
+    border-left-color: var(--log-trace-color);
+  }
+}
+
+.log-timestamp {
+  color: var(--gt-color-text-3);
+  flex-shrink: 0;
+}
+
+.log-level {
+  font-weight: 600;
+  flex-shrink: 0;
+  min-width: 50px;
+
+  &.log-level--error,
+  &.log-level--fatal {
+    color: var(--log-error-color);
+  }
+
+  &.log-level--warn,
+  &.log-level--warning {
+    color: var(--log-warn-color);
+  }
+
+  &.log-level--info {
+    color: var(--log-info-color);
+  }
+
+  &.log-level--debug {
+    color: var(--log-debug-color);
+  }
+
+  &.log-level--trace {
+    color: var(--log-trace-color);
+  }
+}
+
+.log-service {
+  color: var(--gt-color-text-2);
+  flex-shrink: 0;
+}
+
+.log-body {
+  color: var(--gt-color-text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.log-empty {
+  margin: 0;
+  padding: var(--gt-space-2) 0;
+  font-family: var(--gt-font-ui);
+  font-size: 14px;
+  color: var(--gt-color-text-2);
+}
+
+.log-error {
+  color: var(--gt-color-error-text);
+
+  ul {
+    margin-top: 8px;
+    padding-left: 20px;
+    text-align: left;
+  }
+}
+
+.log-footer {
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--gt-color-border);
+}
+
+.load-more-btn {
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
+.load-more-icon-text {
+  display: flex;
+  align-items: center;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .search-form {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .log-output {
+    font-size: 12px;
+  }
+
+  .log-timestamp {
+    display: none;
+  }
+}
+
+// Only errors and warnings carry colour; the quieter levels are greys, so a
+// stream of info lines doesn't read as a rainbow.
+.log-line--info,
+.log-line--debug,
+.log-line--trace {
+  border-left-color: transparent !important;
+}
+
+.log-level--info {
+  color: var(--gt-color-text-2) !important;
+}
+
+.log-level--debug,
+.log-level--trace {
+  color: var(--gt-color-text-3) !important;
+}
+
+.log-level--error,
+.log-level--fatal {
+  color: var(--gt-color-error-text) !important;
+}
+
+.log-level--warn,
+.log-level--warning {
+  color: var(--gt-color-warning-text) !important;
+}
+
+.log-line--error,
+.log-line--fatal {
+  border-left-color: var(--gt-color-error-dot) !important;
+}
+
+.log-line--warn,
+.log-line--warning {
+  border-left-color: var(--gt-color-warning-dot) !important;
+}

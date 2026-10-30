@@ -1,0 +1,22 @@
+@use "variables" as vars;
+
+mat-form-field {
+  margin-bottom: var(--gt-space-2);
+}
+
+.invalid {
+  color: var(--gt-color-error-text);
+}
+
+.theme-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  margin-top: var(--gt-space-2);
+}
+
+.theme-label {
+  font-size: 14px;
+  color: var(--gt-color-text-2);
+}

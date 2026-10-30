@@ -1,0 +1,46 @@
+<section class="l-body">
+  <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+    <a [routerLink]="['../..']" i18n>Uptime</a>
+    <span aria-hidden="true">/</span>
+    <a [routerLink]="['..']">{{ monitor()?.name }}</a>
+    <span aria-hidden="true">/</span>
+    <span i18n>Settings</span>
+  </nav>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Monitor settings</h1>
+    </div>
+  </header>
+  @if (monitor(); as monitor) {
+    <gt-monitor-form
+      [monitorSettings]="monitor"
+      [loading]="loading() === true"
+      [formError]="error()"
+      (formSubmitted)="submit($event)"
+    ></gt-monitor-form>
+
+    <div class="cn-settings">
+      <section class="cn-settings-section cn-settings-section--danger">
+        <div>
+          <h2 class="cn-settings-section__title" i18n>Delete this monitor</h2>
+          <p class="cn-settings-section__text" i18n
+            >Its check history goes with it. This can't be undone.</p
+          >
+        </div>
+        <div class="cn-settings-section__body cn-danger-row">
+          <p i18n>Delete {{ monitor.name }} and all of its uptime data.</p>
+          <button
+            mat-stroked-button
+            class="cn-danger-button"
+            id="delete-monitor"
+            [disabled]="deleteLoading()"
+            (click)="delete()"
+            i18n
+          >
+            Delete monitor
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+</section>

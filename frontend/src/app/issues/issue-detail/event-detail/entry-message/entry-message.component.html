@@ -1,0 +1,22 @@
+@if (eventEntryMessage(); as message) {
+  <section class="mat-typography">
+    <div>
+      <mat-divider></mat-divider>
+      <h3 i18n>Message</h3>
+      <pre class="formatted-message">{{
+        message?.formatted ?? message?.message
+      }}</pre>
+      @if (message?.params) {
+        <dl>
+          @for (
+            param of $safeNavigationMigration(message?.params) | keyvalue;
+            track param
+          ) {
+            <gt-entry-data [key]="param.key" [value]="param.value">
+            </gt-entry-data>
+          }
+        </dl>
+      }
+    </div>
+  </section>
+}
