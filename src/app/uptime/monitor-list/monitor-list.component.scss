@@ -1,111 +1,126 @@
 @use "variables" as vars;
 
-table {
+// Monitors as rows on the sheet: grey 12px headers with no band, 1px rules,
+// two-line identity (name, then URL and project in grey), the check strip,
+// and the state with a status dot and how long it has held.
+.cn-monitors {
   width: 100%;
-}
+  border-collapse: collapse;
+  font-size: 14px;
 
-.pagination-container {
-  width: 100%;
-  display: flex;
-  justify-content: right;
-}
+  th {
+    height: 40px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-border);
+    text-align: left;
+    font-size: 12px;
+    font-weight: var(--gt-weight-regular);
+    color: var(--gt-color-text-3);
+    white-space: nowrap;
 
-.mat-mdc-cell {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
+    &:first-child {
+      padding-left: 0;
+    }
 
-.mat-column-name {
-  max-width: 400px;
-
-  @media screen and (max-width: vars.$large - 1) {
-    max-width: 300px;
+    &:last-child {
+      padding-right: 0;
+    }
   }
-  @media screen and (max-width: vars.$medium - 1) {
-    max-width: 200px;
+
+  td {
+    height: 64px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--gt-color-rule);
+    vertical-align: middle;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  tr:hover td {
+    background: var(--gt-color-subtle);
   }
 }
 
-.name-and-url-container {
+.cn-monitors__name {
   width: 100%;
+  max-width: 0;
+}
+
+.cn-monitors__title,
+.cn-monitors__meta {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cn-monitors__title {
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
+}
+
+.cn-monitors__meta {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--gt-color-text-3);
 
   a {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: block;
-    max-width: fit-content;
+    font-weight: var(--gt-weight-regular);
+    color: inherit;
   }
 
-  .monitor-link {
-    text-decoration: underline;
-  }
-
-  div {
-    width: inherit;
-
-    .caption-text {
-      color: inherit;
-    }
+  span {
+    margin-left: 6px;
   }
 }
 
-.project-name {
+.cn-monitors__checks-col {
+  width: 1%;
+}
+
+.cn-monitors__state-col {
+  width: 1%;
+  min-width: 160px;
+  text-align: right !important;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
-.mat-column-checkChart {
-  width: 40%;
-  min-width: 300px;
+.cn-monitors__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-1);
 }
 
-.chart-container {
-  .monitor-chart {
-    margin-left: 10px;
-  }
+.cn-monitors__since {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--gt-color-text-3);
 }
 
-.mat-column-status {
-  width: 150px;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  @media screen and (max-width: vars.$small - 1) {
-    padding-left: 40px;
-  }
+.cn-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gt-space-2) 0 var(--gt-space-6);
 }
 
-.add-monitor-button {
-  @media screen and (max-width: vars.$small - 1) {
-    mat-icon {
-      display: none;
-    }
-  }
+.cn-table-footer__range {
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+  font-variant-numeric: tabular-nums;
 }
 
-.add-monitor-text-short {
-  @media screen and (min-width: vars.$small) {
+@media screen and (max-width: vars.$medium - 1) {
+  .cn-monitors__checks-col {
     display: none;
-  }
-}
-
-.add-monitor-text-long {
-  @media screen and (max-width: vars.$small - 1) {
-    display: none;
-  }
-}
-
-.status-color {
-  &--true {
-    border-left: 3px solid var(--success-color);
-  }
-
-  &--false {
-    border-left: 3px solid var(--gt-color-error-dot);
-  }
-
-  &-- {
-    border-left: 3px solid var(--mat-sys-surface-variant);
   }
 }

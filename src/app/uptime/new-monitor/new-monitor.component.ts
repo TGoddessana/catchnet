@@ -5,26 +5,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { MonitorFormComponent } from "../monitor-form/monitor-form.component";
 import { MonitorInput } from "../uptime.interfaces";
 import { MonitorService } from "../monitor.service";
-import { DetailHeaderComponent } from "src/app/shared/detail/header/header.component";
-import { BackLinkComponent } from "src/app/shared/detail/back-link/back-link.component";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 
 @Component({
   selector: "gt-new-monitor",
   templateUrl: "./new-monitor.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterModule,
-    MonitorFormComponent,
-    MatButtonModule,
-    MatIconModule,
-    DetailHeaderComponent,
-    TopAppBar,
-    BackLinkComponent,
-  ],
+  imports: [RouterModule, MonitorFormComponent, MatButtonModule, MatIconModule],
 })
 export class NewMonitorComponent {
-  createMonitorTitle = $localize`Create a New Uptime Monitor`;
   private monitorService = inject(MonitorService);
 
   error = this.monitorService.error;

@@ -5,22 +5,31 @@
   [includeTimeRangeSelect]="true"
   [queriedTimeRangeStart]="start()"
   [queriedTimeRangeEnd]="end()"
-></gt-list-app-bar>
+>
+  <p slot="summary" class="cn-logs__summary" i18n
+    >What your app logged, newest first.</p
+  >
+</gt-list-app-bar>
 
-<section class="l-body l-body--full-width l-body--flex mat-elevation-z0">
-  <!-- Filter bar -->
-  <div class="filter-bar">
+<!--
+  Logs: the title row with its project and time scope, one toolbar (search,
+  level, service), then the stream itself in mono on a subtle well. Only
+  errors and warnings carry colour.
+-->
+<section class="l-body cn-logs">
+  <div class="filter-bar cn-scope">
     <form
       [formGroup]="searchForm"
       (ngSubmit)="searchSubmit()"
       class="search-form"
     >
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label i18n>Search logs</mat-label>
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
         <input i18n-placeholder
           matInput
           formControlName="query"
-          placeholder="Search message body..."
+          placeholder="Search log messages"
+          i18n-aria-label
+          aria-label="Search logs"
         />
         <button i18n-aria-label
           mat-icon-button
@@ -34,9 +43,12 @@
       </mat-form-field>
     </form>
 
-    <mat-form-field appearance="outline" class="filter-field">
-      <mat-label i18n>Level</mat-label>
+    <mat-form-field appearance="outline" class="filter-field" subscriptSizing="dynamic">
       <mat-select
+        i18n-placeholder
+        placeholder="All levels"
+        i18n-aria-label
+        aria-label="Level"
         [formControl]="levelForm.controls.level"
         multiple
         (selectionChange)="onLevelChange($event)"
@@ -47,9 +59,12 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="filter-field">
-      <mat-label i18n>Service</mat-label>
+    <mat-form-field appearance="outline" class="filter-field" subscriptSizing="dynamic">
       <mat-select
+        i18n-placeholder
+        placeholder="All services"
+        i18n-aria-label
+        aria-label="Service"
         [formControl]="serviceForm.controls.service"
         (selectionChange)="onServiceChange($event)"
       >
@@ -107,21 +122,14 @@
             }
           } @else if (initialLoadComplete() && !isLoading()) {
             @if (query() || level().length || service_()) {
-              <gt-empty-state
-                icon="search"
-                i18n-title
-                title="No matching logs"
-                i18n-message
-                message="Try adjusting or clearing your filters."
-              />
+              <p class="log-empty" i18n
+                >No logs match these filters. Clear them to see every log.</p
+              >
             } @else {
-              <gt-empty-state
-                icon="text_snippet"
-                i18n-title
-                title="No logs yet"
-                i18n-message
-                message="Configure your SDK to start capturing logs."
-              />
+              <p class="log-empty" i18n
+                >No logs yet. Turn on logging in your SDK and they stream in
+                here.</p
+              >
             }
           }
         }

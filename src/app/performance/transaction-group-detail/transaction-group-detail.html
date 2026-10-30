@@ -1,8 +1,3 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <gt-back-link i18n-backLinkText backLinkText="View all transaction groups" />
-  </ng-container>
-</gt-top-app-bar>
 @if ((initialLoadComplete()) && (transactionGroup()) === null) {
 <section class="l-body l-body--full-width">
   @if (organization(); as organization) {
@@ -29,47 +24,57 @@
   }
 </section>
 } @if (transactionGroup(); as group) {
-<section class="l-body l-body--full-width">
-  <div class="page-header">
-    <gt-detail-header
-      [title]="[group.transaction, null]"
-    />
-    <mat-card class="stats-card">
-      <mat-card-content class="stats-row">
-        <div i18n class="stat-item">
-          <span class="caption-text">Avg Duration</span>
-          <span class="body-text-strong">{{ group.avgDuration! | humanizeDuration }}</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div i18n class="stat-item">
-          <span class="caption-text">Transaction Count</span>
-          <span class="body-text-strong">{{ group.count }}</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div i18n class="stat-item">
-          <span class="caption-text">Operation</span>
-          <span class="body-text-strong">{{ group.op }}</span>
-        </div>
+<section class="l-body">
+  <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+    <a [routerLink]="['..']" queryParamsHandling="merge" i18n>Performance</a>
+    <span aria-hidden="true">/</span>
+    <span>{{ group.op }}</span>
+  </nav>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title cn-txn__title">
         @if (group.method) {
-          <div class="stat-divider"></div>
-          <div i18n class="stat-item">
-            <span class="caption-text">Method</span>
-            <span class="body-text-strong">{{ group.method }}</span>
-          </div>
+          <span class="cn-txn__method">{{ group.method }}</span>
         }
-      </mat-card-content>
-    </mat-card>
-  </div>
+        {{ group.transaction }}
+      </h1>
+    </div>
+  </header>
 
-  <mat-card>
-    <mat-card-content>
-      <h2 i18n class="section-header-text span-breakdown-title">Span breakdown</h2>
+  <dl class="cn-strip">
+    <div class="cn-strip__cell">
+      <dt i18n>Average duration</dt>
+      <dd>{{ group.avgDuration! | humanizeDuration }}</dd>
+    </div>
+    <div class="cn-strip__cell">
+      <dt i18n>Transactions</dt>
+      <dd>{{ group.count }}</dd>
+    </div>
+    <div class="cn-strip__cell">
+      <dt i18n>Operation</dt>
+      <dd>{{ group.op }}</dd>
+    </div>
+    <div class="cn-strip__cell">
+      <dt i18n>Method</dt>
+      <dd>
+        @if (group.method) {
+          {{ group.method }}
+        } @else {
+          <span class="cn-strip__none">—</span>
+        }
+      </dd>
+    </div>
+  </dl>
+
+  <section class="cn-txn__section">
+      <h2 i18n class="cn-section-title">Span breakdown</h2>
       @if (sortedSpans(); as spans) {
         @if (spans.length === 0) {
-          <div class="span-breakdown-empty">
-            <mat-icon class="span-breakdown-empty__icon">bar_chart_4_bars</mat-icon>
-            <p i18n class="body-text">No span data available yet</p>
-            <p i18n class="caption-text span-breakdown-empty__hint">Span data will appear here once child spans are recorded for this transaction group.</p>
+          <div class="cn-empty">
+            <p i18n class="cn-empty__text"
+              >No spans yet. They show up here once child spans are recorded
+              for this transaction group.</p
+            >
           </div>
         } @else {
           <!-- By operation -->
@@ -155,7 +160,6 @@
       } @else if (spansLoading()) {
         <p i18n class="body-text span-breakdown-empty">Loading…</p>
       }
-    </mat-card-content>
-  </mat-card>
+  </section>
 </section>
 }

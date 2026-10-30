@@ -1,67 +1,66 @@
 @use "variables" as vars;
 
-mat-form-field {
-  margin-bottom: 4px;
-  @media screen and (max-width: vars.$medium - 1) {
-    margin-bottom: 12px;
-  }
-}
-
-form {
-  padding-bottom: 8px;
-  padding-right: 8px;
-  .mat-form-field {
-    display: block;
-  }
-  gt-loading-button {
-    margin-bottom: 8px;
-  }
-}
-
-.form-center {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+// Fields stack in their panel; a field with a note puts the note beside it
+// at desktop width and under it on a phone.
+.cn-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gt-space-2);
 }
 
 .wide-field {
   width: 100%;
 }
 
-.url-spacing {
-  margin-top: 10px;
-}
-
-.short-field-container {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  width: 700px;
-  margin-top: 10px;
-
-  @media screen and (max-width: vars.$medium - 1) {
-    width: auto;
-  }
+.cn-field-row,
+.cn-field-with-help {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--gt-space-4);
 
   mat-form-field {
-    margin-right: 16px;
+    width: 100%;
+  }
+
+  @media screen and (max-width: vars.$small - 1) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 }
 
-.help-text {
-  width: 370px;
-  margin-bottom: 0;
+.cn-help {
+  padding-top: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--gt-color-text-3);
 
-  @media screen and (max-width: vars.$tablet - 1) {
-    width: 200px;
-    margin-bottom: 5px;
+  a {
+    font-weight: var(--gt-weight-medium);
+    color: var(--gt-color-text-2);
+    text-decoration: underline;
+  }
 
-    p {
-      margin-top: 0;
-    }
+  @media screen and (max-width: vars.$small - 1) {
+    padding: 0 0 var(--gt-space-2);
   }
 }
 
-.submit {
-  margin-top: 20px;
+.cn-form-error {
+  margin: 0 0 var(--gt-space-4);
+  padding: 10px 14px;
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-color-error-soft);
+  font-size: 14px;
+  color: var(--gt-color-error-text);
+}
+
+// One submit for the whole form, under the panels' column, Cancel first and
+// the primary last.
+.cn-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gt-space-2);
+  max-width: calc(280px + 32px + 720px);
+  padding: var(--gt-space-2) 0 var(--gt-space-7);
 }

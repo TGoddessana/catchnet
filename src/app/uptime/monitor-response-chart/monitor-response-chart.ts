@@ -16,10 +16,25 @@ import { DatePipe } from "@angular/common";
   selector: "gt-monitor-response-chart",
   templateUrl: "./monitor-response-chart.html",
   styles: `
+    :host {
+      display: block;
+    }
     .chart-container {
       height: 250px;
       width: 100%;
-      float: right;
+    }
+    /* A 2px line over a faint fill, each series in its own status colour.
+       The fill attribute ngx-charts writes is the only hook per series. */
+    :host ::ng-deep path.area {
+      fill-opacity: 0.14;
+      stroke-width: 2px;
+      stroke-linejoin: round;
+    }
+    :host ::ng-deep path.area[fill="#12a77a"] {
+      stroke: #12a77a;
+    }
+    :host ::ng-deep path.area[fill="#e5604f"] {
+      stroke: #e5604f;
     }
   `,
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -60,9 +75,12 @@ export class MonitorResponseChart implements OnDestroy {
   });
 
   view = signal<[number, number]>([0, 250]);
+  // The status dot colours (--gt-color-success-dot, --gt-color-error-dot).
+  // ngx-charts writes these into SVG fill attributes, which cannot read CSS
+  // custom properties, so they are repeated here as hex.
   customColors = [
-    { name: "Up", value: "#54a65a" },
-    { name: "Down", value: "#e22a46" },
+    { name: "Up", value: "#12a77a" },
+    { name: "Down", value: "#e5604f" },
   ];
 
   // ViewChild setter handles the ResizeObserver setup.

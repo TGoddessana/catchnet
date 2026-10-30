@@ -1,0 +1,13 @@
+.cn-danger-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--gt-color-text-2);
+  }
+}

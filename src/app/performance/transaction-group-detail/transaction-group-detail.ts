@@ -14,12 +14,9 @@ import { MatCardModule } from "@angular/material/card";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule, Sort } from "@angular/material/sort";
 
-import { DetailHeaderComponent } from "src/app/shared/detail/header/header.component";
 import { TransactionGroupDetailService } from "./transaction-group-detail-state";
 import { HumanizeDurationPipe } from "../../shared/seconds-or-ms.pipe";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import { BackLinkComponent } from "src/app/shared/detail/back-link/back-link.component";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 
 type SpanSortKey = "totalTime" | "avgDuration" | "p95Duration" | "count";
 
@@ -34,10 +31,7 @@ type SpanSortKey = "totalTime" | "avgDuration" | "p95Duration" | "count";
     RouterLink,
     MatIconModule,
     PercentPipe,
-    TopAppBar,
-    BackLinkComponent,
     HumanizeDurationPipe,
-    DetailHeaderComponent,
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [TransactionGroupDetailService],

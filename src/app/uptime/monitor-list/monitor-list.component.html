@@ -1,151 +1,127 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <gt-list-title i18n-title
-      title="Uptime Monitors"
-      [searchHits]="$safeNavigationMigration(paginator()?.count)"
-    ></gt-list-title>
-  </ng-container>
-
-  <ng-container slot="right">
-    @if (canWriteProject()) {
-      <a
-        id="add-monitor"
-        class="add-monitor-button"
-        mat-flat-button
-        color="primary"
-        [routerLink]="['new']"
-      >
-        <mat-icon>add</mat-icon>
-        <span class="add-monitor-text-long" i18n>Add monitor</span>
-        <span class="add-monitor-text-short" i18n>Add</span>
-      </a>
-    }
-  </ng-container>
-</gt-top-app-bar>
-<section class="l-body l-body--full-width l-body--flex mat-elevation-z0">
-  <gt-data-filter-bar
-    [sortForm]="sortForm"
-    [sorts]="sorts"
-    (sortByChanged)="sortByChanged($event)"
-  />
-  @if (monitors(); as monitors) {
-    <div class="table-container">
-      <gt-loading-overlay i18n-label [loading]="loading()" label="Loading monitors">
-        <table mat-table [dataSource]="monitors" class="mat-elevation-z2">
-          <ng-container matColumnDef="pagination">
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-              [attr.colspan]="displayedColumns().length"
-              class="table-header__actions"
+<!--
+  Uptime: a title row with the one action (New monitor), the sort, then the
+  monitors as rows on the sheet: name and URL, the last checks as a strip,
+  and the current state with how long it has held.
+-->
+<section class="l-body cn-uptime">
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Uptime</h1>
+      @if (monitors()?.length) {
+        <p class="cn-title-row__sub">
+          @if (downCount() > 0) {
+            <ng-container i18n
+              >{downCount(), plural, =1 {1 monitor is down} other {{{ downCount() }} monitors are down}}</ng-container
             >
-              <div class="pagination-container">
-                <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
-                <gt-pagination-buttons
-                  [paginator]="paginator()"
-                  [settled]="initialLoadComplete()"
-                />
-              </div>
-            </th>
-          </ng-container>
-          <ng-container matColumnDef="name">
-            <td
-              mat-cell
-              class="status-color--{{ monitor.isUp }}"
-              *matCellDef="let monitor"
-            >
-              <div class="name-and-url-container">
-                <div (mouseover)="checkIfTooltipIsNecessary($event)">
-                  <a
-                    [matTooltip]="monitor.name"
-                    class="table-group-label"
-                    matTooltipPosition="above"
-                    [matTooltipDisabled]="tooltipDisabled"
-                    [routerLink]="[monitor.id]"
-                    >{{ monitor.name }}</a
-                  >
-                </div>
-                <div (mouseover)="checkIfTooltipIsNecessary($event)">
-                  <a
-                    href="{{ monitor.url }}"
-                    target="_blank"
-                    class="caption-text monitor-link"
-                    [matTooltip]="monitor.url"
-                    matTooltipPosition="above"
-                    [matTooltipDisabled]="tooltipDisabled"
-                    >{{ monitor.url }}
-                  </a>
-                </div>
-                @if (monitor.projectName) {
-                  <div class="caption-text project-name">
-                    {{ monitor.projectName }}
-                  </div>
-                }
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="checkChart">
-            <td mat-cell *matCellDef="let monitor" class="chart-container">
-              <div class="monitor-chart">
-                <gt-monitor-chart [data]="monitor.checks"></gt-monitor-chart>
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="status">
-            <td mat-cell *matCellDef="let monitor">
-              @if (monitor.isUp) {
-                <span i18n>Up</span>
-              }
-              @if (monitor.isUp === false) {
-                <span i18n>Down</span>
-              }
-              @if (monitor.lastChange) {
-                {{ monitor.lastChange | timeFor }}
-              }
-            </td>
-          </ng-container>
-          <tr
-            mat-header-row
-            *matHeaderRowDef="['pagination']; sticky: true"
-            class="table-header"
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns()"
-            class="monitor-row"
-          ></tr>
-          <tr class="mat-row" *matNoDataRow>
-            <td
-              class="zero-states-cell"
-              [attr.colspan]="displayedColumns().length"
-            >
-              @if (hasError()) {
-                @for (error of errors(); track $index) {
-                  <div class="body-text-strong">{{ error.msg || error }}</div>
-                }
-              } @else if (!loading()) {
-                @if (canWriteProject()) {
-                  <gt-empty-state
-                    icon="share_eta"
-                    i18n-title
-                    title="No uptime monitors"
-                    i18n-message
-                    message="Add a monitor to get alerted when a site or service goes down."
-                  />
-                } @else {
-                  <gt-empty-state
-                    icon="share_eta"
-                    i18n-title
-                    title="No uptime monitors"
-                    i18n-message
-                    message="Ask an organization Admin or above to add one."
-                  />
-                }
-              }
-            </td>
-          </tr>
-        </table>
-      </gt-loading-overlay>
+          } @else {
+            <ng-container i18n>Every monitor is up.</ng-container>
+          }
+        </p>
+      }
     </div>
+    @if (canWriteProject()) {
+      <div class="cn-title-row__actions">
+        <a id="add-monitor" mat-flat-button [routerLink]="['new']">
+          <mat-icon>add</mat-icon>
+          <ng-container i18n>New monitor</ng-container>
+        </a>
+      </div>
+    }
+  </header>
+
+  @if (monitors(); as monitors) {
+    @if (monitors.length > 0) {
+      <gt-data-filter-bar
+        [sortForm]="sortForm"
+        [sorts]="sorts"
+        (sortByChanged)="sortByChanged($event)"
+      />
+    }
+    <gt-loading-overlay i18n-label [loading]="loading()" label="Loading monitors">
+      @if (monitors.length > 0) {
+        <table class="cn-monitors">
+          <thead>
+            <tr>
+              <th i18n>Monitor</th>
+              <th class="cn-monitors__checks-col" i18n>Recent checks</th>
+              <th class="cn-monitors__state-col" i18n>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (monitor of monitors; track monitor.id) {
+              <tr>
+                <td class="cn-monitors__name">
+                  <a class="cn-monitors__title" [routerLink]="[monitor.id]">{{
+                    monitor.name
+                  }}</a>
+                  <span class="cn-monitors__meta">
+                    <a [href]="monitor.url" target="_blank" rel="noopener">{{
+                      monitor.url
+                    }}</a>
+                    @if (monitor.projectName) {
+                      <span aria-hidden="true">·</span>
+                      <span>{{ monitor.projectName }}</span>
+                    }
+                  </span>
+                </td>
+                <td class="cn-monitors__checks-col">
+                  <gt-monitor-chart [data]="monitor.checks"></gt-monitor-chart>
+                </td>
+                <td class="cn-monitors__state-col">
+                  <span class="cn-monitors__state">
+                    @if (monitor.isUp) {
+                      <span class="cn-dot cn-dot--success" aria-hidden="true"></span>
+                      <span i18n>Up</span>
+                    } @else if (monitor.isUp === false) {
+                      <span class="cn-dot cn-dot--error" aria-hidden="true"></span>
+                      <span i18n>Down</span>
+                    } @else {
+                      <span class="cn-dot" aria-hidden="true"></span>
+                      <span i18n>Waiting for the first check</span>
+                    }
+                  </span>
+                  @if (monitor.lastChange) {
+                    <span class="cn-monitors__since">{{
+                      monitor.lastChange | timeFor
+                    }}</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <footer class="cn-table-footer">
+          <span class="cn-table-footer__range" i18n
+            >{{ monitors.length }} of {{ paginator()?.count ?? monitors.length }}</span
+          >
+          <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
+          <gt-pagination-buttons
+            [paginator]="paginator()"
+            [settled]="initialLoadComplete()"
+          />
+        </footer>
+      } @else if (hasError()) {
+        <div class="cn-empty" role="alert">
+          @for (error of errors(); track $index) {
+            <p class="cn-empty__text">{{ error.msg || error }}</p>
+          }
+        </div>
+      } @else if (!loading()) {
+        <div class="cn-empty">
+          @if (canWriteProject()) {
+            <p class="cn-empty__text" i18n
+              >No monitors yet. Add one to hear about it when a site or service
+              goes down.</p
+            >
+            <a mat-flat-button [routerLink]="['new']" i18n>New monitor</a>
+          } @else {
+            <p class="cn-empty__text" i18n
+              >No monitors yet. Ask an organization admin or above to add
+              one.</p
+            >
+          }
+        </div>
+      }
+    </gt-loading-overlay>
   }
 </section>

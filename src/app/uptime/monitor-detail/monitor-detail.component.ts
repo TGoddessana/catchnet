@@ -12,8 +12,6 @@ import {
 import { MonitorState, MonitorService } from "../monitor.service";
 import { RouterModule } from "@angular/router";
 import { CopyInputComponent } from "src/app/shared/copy-input/copy-input.component";
-import { MatCardModule } from "@angular/material/card";
-import { MatDividerModule } from "@angular/material/divider";
 import { MonitorChecks } from "../monitor-checks/monitor-checks";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MonitorResponseChart } from "../monitor-response-chart/monitor-response-chart";
@@ -21,11 +19,8 @@ import { MonitorChartComponent } from "../monitor-chart/monitor-chart.component"
 import { TimeForPipe } from "src/app/shared/days-ago.pipe";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { DetailHeaderComponent } from "src/app/shared/detail/header/header.component";
 import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.component";
 import { DecimalPipe } from "@angular/common";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
-import { BackLinkComponent } from "src/app/shared/detail/back-link/back-link.component";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { MatDialog } from "@angular/material/dialog";
@@ -50,22 +45,14 @@ function booleanDefaultTrueAttribute(value: unknown): boolean {
     DecimalPipe,
     MatButtonModule,
     MonitorChartComponent,
-    MatCardModule,
-    MatDividerModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    DetailHeaderComponent,
-    TopAppBar,
-    BackLinkComponent,
   ],
 })
 export class MonitorDetailComponent
   extends StatefulComponent<MonitorState, MonitorService>
   implements OnInit
 {
-  uptimeMonitorsText = $localize`Uptime Monitors`;
-  viewAllMonitorsText = $localize`View all uptime monitors`;
-  uptimeDetailsFor = (monitor: string) => $localize`Uptime details for ${monitor}:monitor:`;
   protected service: MonitorService;
   private breakpointObserver = inject(BreakpointObserver);
   private dialog = inject(MatDialog);

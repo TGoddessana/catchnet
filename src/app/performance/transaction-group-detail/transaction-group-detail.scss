@@ -4,38 +4,21 @@
   text-align: left;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 24px;
+.cn-txn__title {
+  overflow-wrap: anywhere;
 }
 
-.stats-card {
-  flex-shrink: 1;
-  min-width: 0;
+.cn-txn__method {
+  font-family: var(--gt-font-code);
+  font-size: 0.8em;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-3);
 }
 
-.stats-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 20px;
-  background-color: var(--mat-sys-outline-variant);
+// The group's facts: one container split by 1px dividers.
+.cn-txn__section {
+  padding-top: var(--gt-space-5);
+  border-top: 1px solid var(--gt-color-border);
 }
 
 .span-breakdown-title {
@@ -188,3 +171,6 @@
   }
 }
 
+.cn-strip {
+  margin-bottom: var(--gt-space-6);
+}

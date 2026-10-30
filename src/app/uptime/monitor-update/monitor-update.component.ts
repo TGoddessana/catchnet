@@ -6,33 +6,21 @@ import {
   ChangeDetectionStrategy,
 } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { MatCardModule } from "@angular/material/card";
-import { MatDividerModule } from "@angular/material/divider";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MonitorFormComponent } from "../monitor-form/monitor-form.component";
 import { MonitorInput } from "../uptime.interfaces";
 import { MonitorService, MonitorState } from "../monitor.service";
 import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.component";
-import { BackLinkComponent } from "src/app/shared/detail/back-link/back-link.component";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "gt-monitor-update",
   templateUrl: "./monitor-update.component.html",
+  styleUrl: "./monitor-update.component.scss",
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [
-    RouterModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDividerModule,
-    MatIconModule,
-    MonitorFormComponent,
-    BackLinkComponent,
-    TopAppBar,
-  ],
+  imports: [RouterModule, MatButtonModule, MatIconModule, MonitorFormComponent],
 })
 export class MonitorUpdateComponent
   extends StatefulComponent<MonitorState, MonitorService>

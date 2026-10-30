@@ -1,46 +1,51 @@
-mat-card {
-  margin-top: 20px;
-  margin-bottom: 20px;
+@use "variables" as vars;
 
-  mat-card-content {
-    padding-top: 16px;
+.cn-monitor__title {
+  align-items: center;
+  overflow-wrap: anywhere;
 
-    div {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-
-      button {
-        margin-top: 10px;
-        width: fit-content;
-      }
-    }
+  .cn-dot {
+    width: 10px;
+    height: 10px;
   }
 }
 
-.interval {
-  margin: 5px 0;
+.cn-monitor__url a {
+  font-weight: var(--gt-weight-regular);
+  color: var(--gt-color-text-2);
+  overflow-wrap: anywhere;
 }
 
-.reduced-padding {
-  padding-top: 4px !important;
+// Sections sit on the sheet, split by one rule, each with a 16px heading.
+.cn-monitor__section {
+  padding: var(--gt-space-5) 0;
+  border-top: 1px solid var(--gt-color-border);
+}
+
+.cn-monitor__text p {
+  max-width: 720px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--gt-color-text-2);
+
+  a {
+    color: var(--gt-color-text-1);
+    text-decoration: underline;
+  }
 }
 
 mat-progress-spinner {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
 }
 
-.url-display {
-  a {
-    display: inline-block;
-    text-overflow: wrap;
-    overflow-wrap: break-word;
-  }
+// ngx-charts draws its x labels below its own box; keep the next section
+// clear of them.
+gt-monitor-response-chart {
+  display: block;
+  padding-bottom: var(--gt-space-5);
 }
 
-.top-bar-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.cn-strip {
+  margin-bottom: var(--gt-space-6);
 }

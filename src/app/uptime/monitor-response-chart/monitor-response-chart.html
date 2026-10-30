@@ -1,14 +1,13 @@
 @if (chartData().length > 0 && scale()) {
 <div #containerRef class="chart-container">
-  <ng-charts-area-chart i18n-yAxisLabel
+  <ng-charts-area-chart
     [showXAxisLabel]="false"
-    [showYAxisLabel]="true"
+    [showYAxisLabel]="false"
     [xAxis]="true"
     [yAxis]="true"
-    [gradient]="true"
+    [gradient]="false"
     [animations]="false"
     [view]="view()"
-    yAxisLabel="Response Time (ms)"
     [customColors]="customColors"
     [xScaleMin]="scale()!.xScaleMin.getTime()"
     [yScaleMin]="scale()!.yScaleMin"

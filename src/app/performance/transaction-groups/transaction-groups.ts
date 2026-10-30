@@ -11,7 +11,6 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MatSelectChange } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatTableModule } from "@angular/material/table";
 import { PerformanceService } from "./transaction-groups-state";
 import {
   stringArrAttribute,
@@ -21,19 +20,15 @@ import { HumanizeDurationPipe } from "../../shared/seconds-or-ms.pipe";
 import { DataFilterBarComponent } from "../../list-elements/data-filter-bar/data-filter-bar.component";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { EnvironmentsService } from "src/app/api/environments.service";
-import { MatCardModule } from "@angular/material/card";
 import { ListAppBar } from "src/app/list-elements/list-app-bar/list-app-bar";
 import { PaginationButtons } from "src/app/list-elements/pagination-buttons/pagination-buttons";
 import { LoadingOverlayComponent } from "src/app/shared/loading-overlay/loading-overlay.component";
-import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.component";
 
 @Component({
   selector: "gt-transaction-groups",
   templateUrl: "./transaction-groups.html",
   styleUrls: ["./transaction-groups.scss"],
   imports: [
-    MatTableModule,
-    MatCardModule,
     DataFilterBarComponent,
     MatTooltipModule,
     RouterLink,
@@ -41,7 +36,6 @@ import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.comp
     ListAppBar,
     PaginationButtons,
     LoadingOverlayComponent,
-    EmptyStateComponent,
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [PerformanceService],

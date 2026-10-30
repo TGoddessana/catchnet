@@ -20,7 +20,6 @@ import {
 } from "@angular/forms";
 import { DecimalPipe, NgTemplateOutlet } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { MatCardModule } from "@angular/material/card";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatInputModule } from "@angular/material/input";
@@ -78,7 +77,6 @@ const portUrlValidators = [
     RouterModule,
     LoadingButtonComponent,
     MatButtonModule,
-    MatCardModule,
     MatDialogModule,
     MatOptionModule,
     MatIconModule,
@@ -88,8 +86,8 @@ const portUrlValidators = [
   ],
 })
 export class MonitorFormComponent implements OnInit {
-  updateMonitorText = $localize`Update Monitor`;
-  createMonitorText = $localize`Create Monitor`;
+  updateMonitorText = $localize`Save changes`;
+  createMonitorText = $localize`Create monitor`;
   private organizationsService = inject(OrganizationsService);
   private environmentsService = inject(EnvironmentsService);
   private subscriptionService = inject(SubscriptionService);

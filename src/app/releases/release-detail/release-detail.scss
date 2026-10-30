@@ -1,23 +1,20 @@
-table {
-  width: 100%;
-  margin-bottom: 40px;
-}
+@use "variables" as vars;
+@use "../releases";
 
-.pagination-buttons-container {
-  width: 100%;
+.cn-release {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
 }
 
-.name {
-  width: 100%;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+.cn-release__title {
+  overflow-wrap: anywhere;
 }
 
-.releases-list-link {
-  margin: 0 0 20px;
+.cn-table__mono {
+  font-family: var(--gt-font-code);
+  font-size: 13px;
+}
+
+.cn-strip {
+  margin-bottom: var(--gt-space-6);
 }

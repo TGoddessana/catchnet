@@ -5,6 +5,7 @@ import type {} from "@angular/localize/init";
 import { beforeEach, describe, it, expect, vi } from "vitest";
 import { signal } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
 import { MonitorFormComponent } from "./monitor-form.component";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { EnvironmentsService } from "src/app/api/environments.service";
@@ -68,6 +69,8 @@ describe("MonitorFormComponent environment scoping", () => {
     await TestBed.configureTestingModule({
       imports: [MonitorFormComponent],
       providers: [
+        // The form's Cancel is a router link.
+        provideRouter([]),
         {
           provide: OrganizationsService,
           useValue: {

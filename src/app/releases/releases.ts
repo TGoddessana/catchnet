@@ -7,30 +7,14 @@ import {
 } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { DatePipe } from "@angular/common";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatTableModule } from "@angular/material/table";
-import { checkForOverflow } from "src/app/shared/shared.utils";
-import { ListTitleComponent } from "../list-elements/list-title/list-title.component";
 import { ReleasesService } from "./releases-state";
-import { TopAppBar } from "../shared/top-app-bar/top-app-bar";
 import { PaginationButtons } from "../list-elements/pagination-buttons/pagination-buttons";
 import { LoadingOverlayComponent } from "../shared/loading-overlay/loading-overlay.component";
-import { EmptyStateComponent } from "../shared/empty-state/empty-state.component";
 
 @Component({
   templateUrl: "./releases.html",
   styleUrls: ["./releases.scss"],
-  imports: [
-    DatePipe,
-    ListTitleComponent,
-    MatTableModule,
-    RouterLink,
-    MatTooltipModule,
-    TopAppBar,
-    PaginationButtons,
-    LoadingOverlayComponent,
-    EmptyStateComponent,
-  ],
+  imports: [DatePipe, RouterLink, PaginationButtons, LoadingOverlayComponent],
   providers: [ReleasesService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -40,8 +24,6 @@ export class Releases {
   orgSlug = input.required<string>({ alias: "org-slug" });
   cursor = input<string | undefined>();
   paginator = this.service.paginator;
-  tooltipDisabled = false;
-  displayedColumns = ["version", "created"];
   releases = this.service.releases;
   errors = this.service.errors;
   isLoading = this.service.isLoading;
@@ -54,9 +36,5 @@ export class Releases {
         cursor: this.cursor(),
       }),
     );
-  }
-
-  checkIfTooltipIsNecessary($event: Event) {
-    this.tooltipDisabled = checkForOverflow($event);
   }
 }

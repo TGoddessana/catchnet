@@ -1,47 +1,33 @@
-<div class="table-container">
+<header class="cn-checks__head">
+  <h2 class="cn-checks__title" i18n>Check log</h2>
+  <mat-button-toggle-group [value]="isChange()" (change)="toggleIsChange()">
+    <mat-button-toggle i18n [value]="false">All checks</mat-button-toggle>
+    <mat-button-toggle i18n [value]="true">Incidents</mat-button-toggle>
+  </mat-button-toggle-group>
+</header>
+<div class="cn-checks">
   <gt-loading-overlay i18n-label [loading]="loading()" label="Loading monitor checks">
-    <table mat-table [dataSource]="monitorChecks()" class="mat-elevation-z2">
-      <ng-container matColumnDef="actions">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          [attr.colspan]="displayedColumns.length"
-          class="table-header__actions"
-        >
-          <div class="pagination-buttons-container">
-            <mat-button-toggle-group
-              [value]="isChange()"
-              (change)="toggleIsChange()"
-            >
-              <mat-button-toggle i18n [value]="false">All checks</mat-button-toggle>
-              <mat-button-toggle i18n [value]="true">Incidents</mat-button-toggle>
-            </mat-button-toggle-group>
-            <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
-            <gt-pagination-buttons
-              [paginator]="paginator()"
-              [settled]="initialLoadComplete()"
-            />
-          </div>
-        </th>
-      </ng-container>
+    <table mat-table [dataSource]="monitorChecks()">
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef i18n>Status</th>
         <td
           mat-cell
           *matCellDef="let monitorCheck"
-          class="status-color status-color--{{ monitorCheck.isUp }} mat-body-1"
+          class="cn-checks__status"
         >
           @if (monitorCheck.isUp) {
+            <span class="cn-dot cn-dot--success" aria-hidden="true"></span>
             <span i18n="Uptime check reports up">Up</span>
           }
           @if (monitorCheck.isUp === false) {
+            <span class="cn-dot cn-dot--error" aria-hidden="true"></span>
             <span i18n="Uptime check reports down">Down</span>
           }
         </td>
       </ng-container>
       <ng-container matColumnDef="reason">
         <th mat-header-cell *matHeaderCellDef i18n>Reason</th>
-        <td mat-cell *matCellDef="let monitorCheck" class="mat-body-1">
+        <td mat-cell *matCellDef="let monitorCheck" >
           @if (monitorCheck.isUp) {
             <span i18n>OK</span>
           } @else {
@@ -57,8 +43,8 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="responseTime">
-        <th mat-header-cell *matHeaderCellDef i18n>Response time</th>
-        <td mat-cell *matCellDef="let monitorCheck" class="mat-body-1">
+        <th mat-header-cell *matHeaderCellDef i18n class="cn-num">Response time</th>
+        <td mat-cell *matCellDef="let monitorCheck" class="cn-num">
           @if (
             monitor().monitorType === "Heartbeat" || !monitorCheck.responseTime
           ) {
@@ -69,16 +55,11 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="startCheck">
-        <th i18n mat-header-cell *matHeaderCellDef>Time</th>
-        <td mat-cell *matCellDef="let monitorCheck" class="mat-body-1">
-          <span>{{ monitorCheck.startCheck | date: "short" }}</span>
+        <th i18n mat-header-cell *matHeaderCellDef class="cn-num">Time</th>
+        <td mat-cell *matCellDef="let monitorCheck" class="cn-num">
+          <span>{{ monitorCheck.startCheck | date: "yyyy-MM-dd HH:mm:ss" }}</span>
         </td>
       </ng-container>
-      <tr
-        mat-header-row
-        *matHeaderRowDef="['actions']; sticky: true"
-        class="table-header"
-      ></tr>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
@@ -87,19 +68,22 @@
       ></tr>
       <tr *matNoDataRow>
         <td [attr.colspan]="displayedColumns.length">
-          <div class="table-empty-states">
-            @if (hasError()) {
-              @for (error of errors(); track $index) {
-                <div class="body-text-strong">{{ error.msg || error }}</div>
-              }
-            } @else if (initialLoadComplete() === true && loading() === false) {
-              <div i18n class="body-text-strong"
-                >No monitor checks were found.</div
-              >
+          @if (hasError()) {
+            @for (error of errors(); track $index) {
+              <p class="cn-checks__empty">{{ error.msg || error }}</p>
             }
-          </div>
+          } @else if (initialLoadComplete() === true && loading() === false) {
+            <p class="cn-checks__empty" i18n>No checks yet.</p>
+          }
         </td>
       </tr>
     </table>
   </gt-loading-overlay>
+  <footer class="cn-checks__footer">
+    <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
+    <gt-pagination-buttons
+      [paginator]="paginator()"
+      [settled]="initialLoadComplete()"
+    />
+  </footer>
 </div>

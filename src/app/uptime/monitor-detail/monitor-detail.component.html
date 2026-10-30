@@ -1,129 +1,139 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <gt-back-link
-      [backLinkText]="
-        isMobile() ? uptimeMonitorsText : viewAllMonitorsText
-      "
-    />
-  </ng-container>
+<!--
+  One monitor: breadcrumb, the name with its state, the one action
+  (Settings, where it can also be deleted), its facts in one strip, then the
+  evidence: recent checks, response time, who gets alerted, and the check log.
+-->
+<section class="l-body cn-monitor">
+  <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+    <a [routerLink]="['..']" i18n>Uptime</a>
+    <span aria-hidden="true">/</span>
+    <span>{{ monitor()?.name }}</span>
+  </nav>
 
-  <ng-container slot="right">
-    @if (canWriteProject()) {
-      <div class="top-bar-actions">
-        <button
-          id="monitor-settings"
-          mat-stroked-button
-          [disabled]="false"
-          color="primary"
-          [routerLink]="['./update']"
-          i18n
-        >
-          Settings
-        </button>
-        <button mat-icon-button class="medium-icon-button" (click)="delete()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    }
-  </ng-container>
-</gt-top-app-bar>
-
-<section class="l-body">
   @if (monitor(); as monitor) {
-    <gt-detail-header [title]="[uptimeDetailsFor(monitor.name), null]" />
-    <mat-card appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>
+    <header class="cn-title-row">
+      <div class="cn-title-row__text">
+        <h1 class="cn-page-title cn-monitor__title">
+          @if (monitor.isUp) {
+            <span class="cn-dot cn-dot--success" aria-hidden="true"></span>
+          } @else if (monitor.isUp === false) {
+            <span class="cn-dot cn-dot--error" aria-hidden="true"></span>
+          } @else {
+            <span class="cn-dot" aria-hidden="true"></span>
+          }
+          {{ monitor.name }}
+        </h1>
+        @if (monitor.url) {
+          <p class="cn-title-row__sub cn-monitor__url">
+            <a [href]="monitor.url" target="_blank" rel="noopener">{{
+              monitor.url
+            }}</a>
+          </p>
+        }
+      </div>
+      @if (canWriteProject()) {
+        <div class="cn-title-row__actions">
+          <a
+            id="monitor-settings"
+            mat-stroked-button
+            [routerLink]="['./update']"
+            i18n
+            >Settings</a
+          >
+        </div>
+      }
+    </header>
+
+    <dl class="cn-strip">
+      <div class="cn-strip__cell">
+        <dt i18n>State</dt>
+        <dd>
           @if (monitor.isUp) {
             <span i18n="Uptime check reports up">Up</span>
-          }
-          @if (monitor.isUp === false) {
+          } @else if (monitor.isUp === false) {
             <span i18n="Uptime check reports down">Down</span>
-          }
-          @if (monitor.isUp === null) {
-            <span i18n>No data</span>
+          } @else {
+            <span class="cn-strip__none" i18n>No data yet</span>
           }
           @if (monitor.lastChange) {
-            {{ monitor.lastChange | timeFor }}
+            <span class="cn-strip__unit"> {{ monitor.lastChange | timeFor }}</span>
           }
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="reduced-padding">
-        <gt-monitor-chart [data]="monitor.checks"></gt-monitor-chart>
-        <div class="caption-text interval" i18n>
-          Uptime check interval:
-          {{ monitor.interval | number }} seconds
-        </div>
-        <div>
-          <div class="url-display">
-            <a href="{{ monitor.url }}" target="_blank">{{ monitor.url }}</a>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Project</dt>
+        <dd>
+          @if (monitor.projectName) {
+            {{ monitor.projectName }}
+          } @else {
+            <span class="cn-strip__none">—</span>
+          }
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Checked every</dt>
+        <dd>{{ monitor.interval | number }}<span class="cn-strip__unit"> s</span></dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Type</dt>
+        <dd>{{ monitor.monitorType }}</dd>
+      </div>
+    </dl>
+
+    <section class="cn-monitor__section">
+      <h2 class="cn-section-title" i18n>Recent checks</h2>
+      <gt-monitor-chart [data]="monitor.checks"></gt-monitor-chart>
+    </section>
+
     @if (monitor.monitorType !== "Heartbeat") {
       @if (activeMonitorRecentChecksSeries(); as data) {
         @if (responseChartScale(); as scale) {
-          <mat-card appearance="outlined">
-            <mat-card-header>
-              <mat-card-title i18n>Response Time</mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content>
-              <div>
-                <gt-monitor-response-chart
-                  [data]="data"
-                  [scale]="scale"
-                ></gt-monitor-response-chart>
-              </div>
-            </mat-card-content>
-          </mat-card>
+          <section class="cn-monitor__section">
+            <h2 class="cn-section-title" i18n>Response time (ms)</h2>
+            <gt-monitor-response-chart
+              [data]="data"
+              [scale]="scale"
+            ></gt-monitor-response-chart>
+          </section>
         }
       }
     }
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n>Alerts</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        @if (monitor.projectName) {
-          @if (alertCountLoading()) {
-            <mat-progress-spinner
-              [diameter]="20"
-              color="primary"
-              mode="indeterminate"
-            ></mat-progress-spinner>
-          } @else {
-            @if (uptimeAlertCount() === 0) {
-              @if (associatedProjectSlug(); as associatedProjectSlug) {
-                <p i18n>
-                  This monitor is associated with the
-                  <b>{{ monitor.projectName }}</b> project. This project has no
-                  uptime alerts configured, so no notifications will be sent for
-                  monitor events.
-                  @if (canWriteProject()) {
-                    Visit the
-                    <a
-                      [routerLink]="[
-                        '../../settings/projects/',
-                        associatedProjectSlug,
-                      ]"
-                      >project settings</a
-                    >
-                    page to configure alerts.
-                  } @else {
-                    Ask an organization Admin or above to set them up.
-                  }
-                </p>
-              }
-            } @else {
-              @if (associatedProjectSlug(); as associatedProjectSlug) {
-                <p i18n>
-                  This monitor is associated with the
-                  <b>{{ monitor.projectName }}</b> project. There
-                  {uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}
-                  set up for this project. Visit the
+
+    @if (monitor.monitorType === "Heartbeat" && monitor.heartbeatEndpoint) {
+      <section id="heartbeat-endpoint" class="cn-monitor__section">
+        <h2 class="cn-section-title" i18n>Heartbeat URL</h2>
+        <p class="cn-monitor__text" i18n>
+          Configure your project to send a POST request with no content to the
+          following URL at your specified interval. If GlitchTip does not
+          receive this request within the interval, your site status will be
+          marked as down.
+        </p>
+        <gt-copy-input i18n-placeholder
+          [value]="monitor.heartbeatEndpoint"
+          placeholder="Endpoint URL"
+        ></gt-copy-input>
+      </section>
+    }
+
+    <section class="cn-monitor__section cn-monitor__text">
+      <h2 class="cn-section-title" i18n>Alerts</h2>
+      @if (monitor.projectName) {
+        @if (alertCountLoading()) {
+          <mat-progress-spinner
+            [diameter]="20"
+            color="primary"
+            mode="indeterminate"
+          ></mat-progress-spinner>
+        } @else {
+          @if (uptimeAlertCount() === 0) {
+            @if (associatedProjectSlug(); as associatedProjectSlug) {
+              <p i18n>
+                This monitor is associated with the
+                <b>{{ monitor.projectName }}</b> project. This project has no
+                uptime alerts configured, so no notifications will be sent for
+                monitor events.
+                @if (canWriteProject()) {
+                  Visit the
                   <a
                     [routerLink]="[
                       '../../settings/projects/',
@@ -131,53 +141,53 @@
                     ]"
                     >project settings</a
                   >
-                  page to {{ canWriteProject() ? "change" : "see" }} your
-                  alerts.
-                </p>
-              }
+                  page to configure alerts.
+                } @else {
+                  Ask an organization Admin or above to set them up.
+                }
+              </p>
+            }
+          } @else {
+            @if (associatedProjectSlug(); as associatedProjectSlug) {
+              <p i18n>
+                This monitor is associated with the
+                <b>{{ monitor.projectName }}</b> project. There
+                {uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}
+                set up for this project. Visit the
+                <a
+                  [routerLink]="[
+                    '../../settings/projects/',
+                    associatedProjectSlug,
+                  ]"
+                  >project settings</a
+                >
+                page to {{ canWriteProject() ? "change" : "see" }} your
+                alerts.
+              </p>
             }
           }
-        } @else {
-          <p i18n>
-            There is no project associated with this monitor, so no
-            notifications will be sent for monitor events.
-            @if (canWriteProject()) {
-              Visit the
-              <a [routerLink]="['./update']">monitor settings</a> page to
-              associate this monitor with a project.
-            }
-          </p>
         }
-      </mat-card-content>
-    </mat-card>
+      } @else {
+        <p i18n>
+          There is no project associated with this monitor, so no
+          notifications will be sent for monitor events.
+          @if (canWriteProject()) {
+            Visit the
+            <a [routerLink]="['./update']">monitor settings</a> page to
+            associate this monitor with a project.
+          }
+        </p>
+      }
+    </section>
 
-    <gt-monitor-checks
-      [monitor]="monitor"
-      [orgSlug]="orgSlug()"
-      [monitorID]="monitorID()"
-      [isChange]="isChange()"
-      [cursor]="cursor()"
-    ></gt-monitor-checks>
-
-    @if (monitor.monitorType === "Heartbeat" && monitor.heartbeatEndpoint) {
-      <mat-card id="heartbeat-endpoint" class="heartbeat-card">
-        <mat-card-header>
-          <mat-card-title i18n>Heartbeat URL endpoint</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          <p i18n>
-            Configure your project to send a POST request with no content to the
-            following URL at your specified interval. If GlitchTip does not
-            receive this request within the interval, your site status will be
-            marked as down.
-          </p>
-          <gt-copy-input i18n-placeholder
-            [value]="monitor.heartbeatEndpoint"
-            placeholder="Endpoint URL"
-          ></gt-copy-input>
-        </mat-card-content>
-      </mat-card>
-    }
+    <section class="cn-monitor__section">
+      <gt-monitor-checks
+        [monitor]="monitor"
+        [orgSlug]="orgSlug()"
+        [monitorID]="monitorID()"
+        [isChange]="isChange()"
+        [cursor]="cursor()"
+      ></gt-monitor-checks>
+    </section>
   }
 </section>
