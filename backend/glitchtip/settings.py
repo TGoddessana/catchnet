@@ -651,6 +651,10 @@ AIOHTTP_CONFIG = {
 ENABLE_ADMIN = env.bool("ENABLE_ADMIN", True)
 ENABLE_OPENAPI = env.bool("ENABLE_OPENAPI", True)
 
+# catchnet autofix: shared secret the fix runner presents. Empty disables the
+# runner endpoints.
+CATCHNET_RUNNER_TOKEN = env.str("CATCHNET_RUNNER_TOKEN", "")
+
 INSTALLED_APPS = [
     *(["django.contrib.admin"] if ENABLE_ADMIN else []),
     "django.contrib.messages",
@@ -705,6 +709,7 @@ INSTALLED_APPS += [
     "apps.logs",
     "apps.event_ingest",
     "apps.mcp",
+    "apps.autofix",
     "apps.oauth",
     "import_export",  # Contains import management command, keep under apps.importer
 ]
@@ -1145,6 +1150,10 @@ VTASKS_SCHEDULE = {
     "perform-maintenance": {
         "task": "glitchtip.tasks.perform_maintenance",
         "schedule": crontab(hour=5, minute=0),
+    },
+    "autofix-queue-auto-fixes": {
+        "task": "apps.autofix.tasks.queue_auto_fixes",
+        "schedule": 60,
     },
 }
 

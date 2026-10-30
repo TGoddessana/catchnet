@@ -13,6 +13,8 @@ from apps.alerts.api import router as alerts_router
 from apps.api_tokens.api import router as api_tokens_router
 from apps.api_tokens.models import APIToken
 from apps.api_tokens.schema import APITokenSchema
+from apps.autofix.api import router as autofix_router
+from apps.autofix.runner_api import router as autofix_runner_router
 from apps.difs.api import router as difs_router
 from apps.environments.api import router as environments_router
 from apps.event_ingest.api import router as event_ingest_router
@@ -71,6 +73,8 @@ api.add_router("0", projects_router)
 api.add_router("0", stats_router)
 api.add_router("0/stripe", stripe_router)
 api.add_router("0", sourcecode_router)
+api.add_router("0", autofix_router)
+api.add_router("0", autofix_runner_router)
 api.add_router("0", teams_router)
 
 if settings.GLITCHTIP_ENABLE_UPTIME:
