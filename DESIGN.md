@@ -110,7 +110,7 @@ Two control heights: `--gt-control-height` (40px) by default, `--gt-control-heig
 
 | Surface | Look | Tokens |
 | --- | --- | --- |
-| Primary button | Accent fill, soft top highlight, drop shadow tinted with the accent | `--gt-primary-highlight`, `--gt-primary-shadow` |
+| Primary button | Accent fill, soft top highlight that fades out within the top 10px (above the label, so white text keeps 4.7:1), drop shadow tinted with the accent | `--gt-primary-highlight`, `--gt-primary-shadow` |
 | Secondary button, filter chip, selected tab or toggle | Light gradient paper, no border: a 1px shadow ring draws the edge | `--gt-raised-surface`, `--gt-raised-shadow` |
 | Card, table, panel | Flat surface, 1px border, at most a whisper of shadow | `--gt-card-shadow` |
 | Menu, select, autocomplete panel | Surface, border ring, soft float shadow | `--gt-overlay-shadow` |
