@@ -85,11 +85,11 @@
 .section-header-text {
   font: var(--mat-sys-headline-small);
   letter-spacing: var(--mat-sys-headline-small-tracking);
-  font-weight: 600;
+  font-weight: var(--gt-weight-strong, 700);
 
   @media screen and (max-width: vars.$medium - 1) {
     font: var(--mat-sys-title-large);
-    font-weight: 600;
+    font-weight: var(--gt-weight-strong, 700);
     letter-spacing: var(--mat-sys-title-large-tracking);
   }
 }
