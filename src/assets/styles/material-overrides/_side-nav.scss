@@ -4,8 +4,10 @@
   @include mat.sidenav-overrides(
     (
       container-shape: 0,
-      container-background-color: var(--gt-color-surface),
-      container-divider-color: var(--gt-color-border),
+      // The sidebar is part of the tinted frame, with no rule against the
+      // sheet.
+      container-background-color: var(--gt-color-background),
+      container-divider-color: transparent,
     )
   );
 }

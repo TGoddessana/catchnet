@@ -3,7 +3,7 @@
 :root {
   @include mat.toolbar-overrides(
     (
-      container-background-color: var(--gt-color-surface),
+      container-background-color: var(--gt-color-background),
     )
   );
 }

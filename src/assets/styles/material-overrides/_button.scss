@@ -1,12 +1,11 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-// Buttons are the only raised things in catchnet.
-//   mat-flat-button     primary: accent fill, top highlight, soft drop shadow
-//   mat-stroked-button  secondary: raised paper, no border (a shadow ring
-//                       draws the edge)
-//   mat-button          text: flat, accent text
-// A disabled button drops the raised look so it reads as "not now".
+// Buttons are flat. One filled primary per screen.
+//   mat-flat-button     primary: near-black fill, white label
+//   mat-stroked-button  secondary: the sheet's white with a 1px control edge
+//   mat-button          text: ink label, a grey fill on hover
+// A disabled button keeps its shape and a readable label.
 :root {
   @include mat.button-overrides(
     (
@@ -32,39 +31,37 @@
       protected-label-text-weight: var(--gt-weight-medium),
       text-label-text-weight: var(--gt-weight-medium),
 
-      filled-container-color: var(--gt-color-accent),
-      filled-label-text-color: var(--gt-color-on-accent),
+      filled-container-color: var(--gt-color-primary),
+      filled-label-text-color: var(--gt-color-on-primary),
       filled-disabled-container-color: var(--gt-color-subtle),
       filled-disabled-label-text-color: var(--gt-color-text-disabled),
 
       outlined-label-text-color: var(--gt-color-text-1),
-      outlined-outline-width: 0,
+      outlined-outline-color: var(--gt-color-control),
+      outlined-outline-width: 1px,
+      outlined-disabled-outline-color: var(--gt-color-border),
       outlined-disabled-label-text-color: var(--gt-color-text-disabled),
 
       protected-container-color: var(--gt-color-surface),
       protected-label-text-color: var(--gt-color-text-1),
 
-      text-label-text-color: var(--gt-color-accent-text),
+      text-label-text-color: var(--gt-color-text-1),
       text-disabled-label-text-color: var(--gt-color-text-disabled),
     )
   );
 }
 
-.mat-mdc-unelevated-button:not(:disabled, .mat-mdc-button-disabled) {
-  background-image: var(--gt-primary-highlight);
-  box-shadow: var(--gt-primary-shadow);
+.mat-mdc-unelevated-button:not(:disabled, .mat-mdc-button-disabled):hover {
+  background-color: var(--gt-color-primary-hover);
 }
 
 .mat-mdc-outlined-button:not(:disabled, .mat-mdc-button-disabled),
 .mat-mdc-raised-button:not(:disabled, .mat-mdc-button-disabled) {
-  background: var(--gt-raised-surface);
-  box-shadow: var(--gt-raised-shadow);
+  background: var(--gt-color-surface);
 }
 
-// Disabled secondary buttons stay flat with a plain border so their shape is
-// still visible.
-.mat-mdc-outlined-button:is(:disabled, .mat-mdc-button-disabled) {
-  box-shadow: inset 0 0 0 1px var(--gt-color-border);
+.mat-mdc-raised-button:not(:disabled, .mat-mdc-button-disabled) {
+  box-shadow: var(--gt-raised-shadow);
 }
 
 // Buttons inside lists and tables use the small height.

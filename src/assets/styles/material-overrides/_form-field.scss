@@ -1,14 +1,14 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-// Inputs are flat and slightly sunken: surface fill, 1px border, an inset
-// shadow. The border darkens on hover and turns accent on focus.
+// Inputs are flat: white, a 1px control edge that darkens on hover and turns
+// teal on focus.
 :root {
   @include mat.form-field-overrides(
     (
       outlined-container-shape: vars.$radius-control,
-      outlined-outline-color: var(--gt-color-border),
-      outlined-hover-outline-color: var(--gt-color-text-disabled),
+      outlined-outline-color: var(--gt-color-control),
+      outlined-hover-outline-color: var(--gt-color-text-3),
       outlined-focus-outline-color: var(--gt-color-accent),
       outlined-label-text-color: var(--gt-color-text-3),
       outlined-input-text-placeholder-color: var(--gt-color-text-3),
@@ -22,7 +22,6 @@
 .mat-mdc-form-field .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
   border-radius: vars.$radius-control;
   background-color: var(--gt-color-surface);
-  box-shadow: var(--gt-input-shadow);
 }
 
 .mat-mdc-form-field .mdc-text-field--outlined.mdc-text-field--disabled {

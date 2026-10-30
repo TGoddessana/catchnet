@@ -34,13 +34,15 @@ html {
 }
 
 :root {
-  // Log severity palette: AA-compliant per mode (darker on light, bright on dark)
-  --log-error-color: light-dark(#c62828, #ef4444);
-  --log-warn-color: light-dark(#a16207, #f59e0b);
-  --log-info-color: light-dark(#1d4ed8, #3b82f6);
-  --log-debug-color: light-dark(#6d28d9, #a78bfa);
-  --log-trace-color: light-dark(#4b5563, #9ca3af);
-  --log-service-color: light-dark(#047857, #10b981);
+  // Log severity colours come from the status tokens, so a level reads the
+  // same in logs as on issues.
+  --log-error-color: var(--gt-color-error-text);
+  --log-warn-color: var(--gt-color-warning-text);
+  --log-info-color: var(--gt-color-accent-text);
+  // Debug and trace are the quiet levels: two greys, no hue.
+  --log-debug-color: light-dark(#52525b, #a1a1aa);
+  --log-trace-color: light-dark(#6b6b74, #8b8b94);
+  --log-service-color: var(--gt-color-success-text);
 }
 
 .light {
@@ -58,10 +60,21 @@ html {
     "prismjs/plugins/line-highlight/prism-line-highlight.css"
   );
 
+  // Code blocks sit on the subtle tone step in both schemes, in Plex Mono
+  // at 13px. Prism's own themes still colour the tokens.
   pre[class*="language-"] {
     border-radius: vars.$shape-radius;
     border: none;
     box-shadow: none;
+    background: var(--gt-color-subtle);
+  }
+
+  pre[class*="language-"],
+  code[class*="language-"] {
+    font-family: var(--gt-font-code);
+    font-size: 13px;
+    line-height: 20px;
+    text-shadow: none;
   }
 }
 
@@ -128,6 +141,29 @@ body {
   background-color: var(--mat-sys-background);
   color: var(--mat-sys-on-background);
   font-family: var(--gt-font-ui);
+  letter-spacing: var(--gt-tracking-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Feedback on every control: colour and fill ease in 120ms. Nothing moves.
+a,
+button,
+.mat-mdc-button-base,
+.cn-nav__item,
+.cn-chip,
+.cn-segmented__item {
+  transition:
+    background-color var(--gt-duration-fast) var(--gt-ease),
+    color var(--gt-duration-fast) var(--gt-ease),
+    border-color var(--gt-duration-fast) var(--gt-ease),
+    box-shadow var(--gt-duration-fast) var(--gt-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
 
 .flex-common {
@@ -137,14 +173,7 @@ body {
   flex-wrap: wrap;
 }
 
-.project-card-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax((290px), 1fr));
-  grid-gap: 24px;
-}
-
-header.page-header,
-header.projects-section-header {
+header.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -156,7 +185,7 @@ header.projects-section-header {
 }
 
 mat-sidenav-content {
-  background-color: var(--mat-sys-surface-container-low);
+  background-color: var(--gt-color-surface);
 }
 
 mat-sidenav-container {
@@ -180,11 +209,13 @@ mat-sidenav-container {
   text-decoration: underline;
 }
 
+// Every screen's canvas: fluid inside the sheet with 32px gutters, capped so
+// lines and tables stay readable on very wide windows.
 .l-body {
-  max-width: 1100px;
-  padding-left: 36px;
-  padding-right: 36px;
-  margin-top: var(--gt-space-5);
+  max-width: 1280px;
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-top: 28px;
   margin-bottom: 16px;
   margin-left: auto;
   margin-right: auto;
@@ -202,14 +233,14 @@ mat-sidenav-container {
     margin-top: 0;
     margin-bottom: 0;
 
-    @media screen and (max-width: vars.$small - 1) {
+    @media screen and (max-width: vars.$nav-fold - 1) {
       height: calc(100vh - vars.$top-app-bar-height - vars.$mobile-nav-height);
     }
   }
 
   @media screen and (max-width: vars.$small - 1) {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
@@ -233,13 +264,14 @@ mat-sidenav-container {
 // Page titles: large, quiet, on the page itself (no app bar). Upstream page
 // titles use .section-header-text, so it follows the same scale here.
 .section-header-text {
-  font-size: 28px !important;
-  line-height: 36px !important;
-  letter-spacing: -0.02em !important;
+  font-size: 22px !important;
+  line-height: 28px !important;
+  font-weight: var(--gt-weight-strong) !important;
+  letter-spacing: var(--gt-tracking-display) !important;
 
   @media screen and (max-width: vars.$medium - 1) {
-    font-size: 22px !important;
-    line-height: 28px !important;
+    font-size: 20px !important;
+    line-height: 26px !important;
   }
 }
 
@@ -248,25 +280,22 @@ mat-sidenav-container {
   align-items: baseline;
   gap: var(--gt-space-3);
   margin: 0;
-  font-size: 28px;
-  line-height: 36px;
+  font-size: 22px;
+  line-height: 28px;
   font-weight: var(--gt-weight-strong);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--gt-tracking-display);
 
   @media screen and (max-width: vars.$medium - 1) {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 20px;
+    line-height: 26px;
   }
 }
 
+// The count after a title is the same size in grey, not a badge.
 .cn-page-title__count {
-  padding: 1px 10px;
-  border-radius: var(--gt-radius-pill);
-  background: var(--gt-color-subtle);
-  font-size: 14px;
-  line-height: 22px;
-  font-weight: var(--gt-weight-medium);
-  color: var(--gt-color-text-2);
+  font-weight: var(--gt-weight-regular);
+  color: var(--gt-color-text-3);
+  font-variant-numeric: tabular-nums;
   letter-spacing: 0;
 }
 
@@ -411,14 +440,6 @@ mat-sidenav-container {
   }
 }
 
-gt-issue-chart {
-  .ng-charts {
-    // Hide tick labels
-    .tick text {
-      display: none !important;
-    }
-  }
-}
 
 .comment-markdown {
   ul {
@@ -433,7 +454,7 @@ gt-issue-chart {
   blockquote {
     margin: 0 0 20px 0;
     padding: 20px 20px 20px 20px;
-    border-left: 5px solid var(--mat-sys-primary);
+    border-left: 3px solid var(--gt-color-control);
     background-color: var(--mat-sys-surface-container-highest);
 
     p:first-child {
@@ -484,14 +505,14 @@ gt-issue-chart {
 
 //Override for routerLinkActiveOptions in the side-nav
 .mat-mdc-list-item.mdc-list-item--activated {
-  background-color: var(--gt-color-accent-soft) !important;
+  background-color: var(--gt-color-active) !important;
 
   .mdc-list-item__primary-text {
-    color: var(--gt-color-accent-text) !important;
+    color: var(--gt-color-text-1) !important;
   }
 
   mat-icon {
-    color: var(--gt-color-accent-text) !important;
+    color: var(--gt-color-text-1) !important;
   }
 }
 
@@ -499,7 +520,7 @@ gt-pagination-buttons {
   @include mat.icon-button-density(-5);
   @include mat.icon-button-overrides(
     (
-      icon-color: var(--mat-sys-primary),
+      icon-color: var(--gt-color-text-2),
     )
   );
 }
@@ -513,7 +534,6 @@ gt-pagination-buttons {
   border: 1px solid var(--gt-color-border);
   border-radius: var(--gt-radius-card);
   background-color: var(--gt-color-surface);
-  box-shadow: var(--gt-card-shadow);
 }
 
 .table-header {

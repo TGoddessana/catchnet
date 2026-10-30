@@ -1,12 +1,12 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-// Button toggle groups read as a segmented control: a flat subtle track with
-// the selected segment raised, like the selected tab.
+// Button toggle groups read as a segmented control: a grey track with the
+// selected segment in the sheet's white behind a 1px control edge.
 :root {
   @include mat.button-toggle-overrides(
     (
-      shape: vars.$radius-pill,
+      shape: vars.$radius-control,
       height: vars.$control-height-sm,
       background-color: transparent,
       divider-color: transparent,
@@ -21,10 +21,11 @@
 }
 
 .mat-button-toggle-group-appearance-standard {
-  height: vars.$control-height;
+  height: vars.$control-height-sm;
+  box-sizing: border-box;
   align-items: center;
-  gap: 4px;
-  padding: 4px;
+  gap: 2px;
+  padding: 2px;
   border: none;
   background-color: var(--gt-color-subtle);
 
@@ -33,7 +34,14 @@
   }
 
   .mat-button-toggle {
-    border-radius: vars.$radius-pill;
+    height: 28px;
+    border-radius: vars.$radius-badge;
+  }
+
+  .mat-button-toggle-button,
+  .mat-button-toggle-label-content {
+    height: 28px;
+    line-height: 28px;
   }
 
   .mat-button-toggle-checked:not(.mat-button-toggle-disabled) {
@@ -53,6 +61,6 @@
   }
 
   .mat-button-toggle .mat-button-toggle-label-content {
-    padding: 0 14px;
+    padding: 0 12px;
   }
 }
