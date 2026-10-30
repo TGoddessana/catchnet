@@ -1,8 +1,58 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-@include mat.button-toggle-overrides(
-  (
-    shape: vars.$shape-radius,
-  )
-);
+// Button toggle groups read as a segmented control: a flat subtle track with
+// the selected segment raised, like the selected tab.
+:root {
+  @include mat.button-toggle-overrides(
+    (
+      shape: vars.$radius-pill,
+      height: vars.$control-height-sm,
+      background-color: transparent,
+      divider-color: transparent,
+      text-color: var(--gt-color-text-2),
+      selected-state-background-color: transparent,
+      selected-state-text-color: var(--gt-color-text-1),
+      label-text-weight: var(--gt-weight-medium),
+      disabled-state-text-color: var(--gt-color-text-disabled),
+      disabled-state-background-color: transparent,
+    )
+  );
+}
+
+.mat-button-toggle-group-appearance-standard {
+  height: vars.$control-height;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: none;
+  background-color: var(--gt-color-subtle);
+
+  .mat-button-toggle + .mat-button-toggle {
+    border-left: none;
+  }
+
+  .mat-button-toggle {
+    border-radius: vars.$radius-pill;
+  }
+
+  .mat-button-toggle-checked:not(.mat-button-toggle-disabled) {
+    background: var(--gt-raised-surface);
+    box-shadow: var(--gt-raised-shadow);
+  }
+
+  // The checkmark repeats what the raised segment already says.
+  .mat-button-toggle-checkbox-wrapper {
+    display: none;
+  }
+
+  .mat-button-toggle-checked
+    .mat-button-toggle-button:has(.mat-button-toggle-checkbox-wrapper) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mat-button-toggle .mat-button-toggle-label-content {
+    padding: 0 14px;
+  }
+}

@@ -1,8 +1,51 @@
 @use "@angular/material" as mat;
+@use "variables" as vars;
 
-@include mat.menu-overrides(
-  (
-    item-leading-spacing: 14px,
-    item-trailing-spacing: 14px,
-  )
-);
+// Menus and select panels are panels (16px); their items are controls (10px)
+// inset from the panel edge.
+:root {
+  @include mat.menu-overrides(
+    (
+      container-shape: vars.$radius-card,
+      container-color: var(--gt-color-surface),
+      container-elevation-shadow: var(--gt-overlay-shadow),
+      item-leading-spacing: 12px,
+      item-trailing-spacing: 12px,
+    )
+  );
+}
+
+:root {
+  @include mat.select-overrides(
+    (
+      panel-background-color: var(--gt-color-surface),
+      container-elevation-shadow: var(--gt-overlay-shadow),
+    )
+  );
+}
+
+:root {
+  @include mat.autocomplete-overrides(
+    (
+      background-color: var(--gt-color-surface),
+      container-shape: vars.$radius-card,
+      container-elevation-shadow: var(--gt-overlay-shadow),
+    )
+  );
+}
+
+.mat-mdc-menu-content,
+.mat-mdc-select-panel,
+.mat-mdc-autocomplete-panel {
+  padding: 4px !important;
+}
+
+.mat-mdc-menu-item,
+.mat-mdc-select-panel .mat-mdc-option,
+.mat-mdc-autocomplete-panel .mat-mdc-option {
+  border-radius: vars.$radius-control;
+}
+
+div.mat-mdc-select-panel {
+  border-radius: vars.$radius-card;
+}

@@ -1,3 +1,49 @@
 @use "@angular/material" as mat;
+@use "variables" as vars;
 
-@include mat.tabs-density(-1)
+// Tabs read as a segmented control: a flat subtle pill track, the selected
+// tab raised inside it. No underline indicator.
+:root {
+  @include mat.tabs-overrides(
+    (
+      container-height: vars.$control-height-sm,
+      divider-height: 0,
+      active-indicator-height: 0,
+      label-text-weight: var(--gt-weight-medium),
+      active-label-text-color: var(--gt-color-text-1),
+      active-focus-label-text-color: var(--gt-color-text-1),
+      active-hover-label-text-color: var(--gt-color-text-1),
+      inactive-label-text-color: var(--gt-color-text-2),
+      inactive-hover-label-text-color: var(--gt-color-text-1),
+      inactive-focus-label-text-color: var(--gt-color-text-1),
+    )
+  );
+}
+
+.mat-mdc-tab-header .mat-mdc-tab-labels,
+.mat-mdc-tab-nav-bar .mat-mdc-tab-links {
+  gap: 4px;
+  padding: 4px;
+  border-radius: vars.$radius-pill;
+  background-color: var(--gt-color-subtle);
+  width: fit-content;
+}
+
+.mat-mdc-tab,
+.mat-mdc-tab-link {
+  border-radius: vars.$radius-pill;
+  min-width: 0 !important;
+  padding: 0 14px !important;
+  flex-grow: 0 !important;
+
+  .mdc-tab__ripple::before,
+  .mat-ripple {
+    border-radius: vars.$radius-pill;
+  }
+
+  &.mdc-tab--active {
+    background: var(--gt-raised-surface);
+    box-shadow: var(--gt-raised-shadow);
+    font-weight: var(--gt-weight-strong);
+  }
+}

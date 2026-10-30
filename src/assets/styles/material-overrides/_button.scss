@@ -1,12 +1,84 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-@include mat.button-overrides(
-  (
-    filled-container-shape: vars.$shape-radius,
-    outlined-container-shape: vars.$shape-radius,
-    protected-container-shape: vars.$shape-radius,
-    text-container-shape: vars.$shape-radius,
-    filled-horizontal-padding: 12px,
-  )
-);
+// Buttons are the only raised things in catchnet.
+//   mat-flat-button     primary: accent fill, top highlight, soft drop shadow
+//   mat-stroked-button  secondary: raised paper, no border (a shadow ring
+//                       draws the edge)
+//   mat-button          text: flat, accent text
+// A disabled button drops the raised look so it reads as "not now".
+:root {
+  @include mat.button-overrides(
+    (
+      filled-container-shape: vars.$radius-control,
+      outlined-container-shape: vars.$radius-control,
+      protected-container-shape: vars.$radius-control,
+      text-container-shape: vars.$radius-control,
+      tonal-container-shape: vars.$radius-control,
+
+      filled-container-height: vars.$control-height,
+      outlined-container-height: vars.$control-height,
+      protected-container-height: vars.$control-height,
+      text-container-height: vars.$control-height,
+      tonal-container-height: vars.$control-height,
+
+      filled-horizontal-padding: 16px,
+      outlined-horizontal-padding: 16px,
+      protected-horizontal-padding: 16px,
+      text-horizontal-padding: 12px,
+
+      filled-label-text-weight: var(--gt-weight-medium),
+      outlined-label-text-weight: var(--gt-weight-medium),
+      protected-label-text-weight: var(--gt-weight-medium),
+      text-label-text-weight: var(--gt-weight-medium),
+
+      filled-container-color: var(--gt-color-accent),
+      filled-label-text-color: var(--gt-color-on-accent),
+      filled-disabled-container-color: var(--gt-color-subtle),
+      filled-disabled-label-text-color: var(--gt-color-text-disabled),
+
+      outlined-label-text-color: var(--gt-color-text-1),
+      outlined-outline-width: 0,
+      outlined-disabled-label-text-color: var(--gt-color-text-disabled),
+
+      protected-container-color: var(--gt-color-surface),
+      protected-label-text-color: var(--gt-color-text-1),
+
+      text-label-text-color: var(--gt-color-accent-text),
+      text-disabled-label-text-color: var(--gt-color-text-disabled),
+    )
+  );
+}
+
+.mat-mdc-unelevated-button:not(:disabled, .mat-mdc-button-disabled) {
+  background-image: var(--gt-primary-highlight);
+  box-shadow: var(--gt-primary-shadow);
+}
+
+.mat-mdc-outlined-button:not(:disabled, .mat-mdc-button-disabled),
+.mat-mdc-raised-button:not(:disabled, .mat-mdc-button-disabled) {
+  background: var(--gt-raised-surface);
+  box-shadow: var(--gt-raised-shadow);
+}
+
+// Disabled secondary buttons stay flat with a plain border so their shape is
+// still visible.
+.mat-mdc-outlined-button:is(:disabled, .mat-mdc-button-disabled) {
+  box-shadow: inset 0 0 0 1px var(--gt-color-border);
+}
+
+// Buttons inside lists and tables use the small height.
+.mat-mdc-table,
+.mat-mdc-list-base,
+.table-container {
+  @include mat.button-overrides(
+    (
+      filled-container-height: vars.$control-height-sm,
+      outlined-container-height: vars.$control-height-sm,
+      protected-container-height: vars.$control-height-sm,
+      text-container-height: vars.$control-height-sm,
+      filled-horizontal-padding: 12px,
+      outlined-horizontal-padding: 12px,
+    )
+  );
+}

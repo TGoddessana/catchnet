@@ -1,7 +1,12 @@
+// Each partial wraps its token overrides in `:root`. mat.theme in styles.scss
+// emits density tokens on `html` later in the cascade; `:root` is more
+// specific, so the catchnet sizes win.
 @use "button";
 @use "button-toggle";
 @use "card";
+@use "chips";
 @use "dialog";
+@use "form-field";
 @use "menu";
 @use "nav-list";
 @use "side-nav";

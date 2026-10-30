@@ -35,16 +35,16 @@ mat-nav-list {
 }
 
 .active-section {
-  background-color: var(--mat-sys-primary);
+  background-color: var(--mat-sys-secondary-container);
 
   .mdc-list-item__primary-text,
   span[matListItemTitle],
   mat-icon {
-    color: var(--mat-sys-on-primary);
+    color: var(--mat-sys-on-secondary-container);
   }
 
   .arrow-icon {
-    color: var(--mat-sys-on-primary);
+    color: var(--mat-sys-on-secondary-container);
   }
 }
 
@@ -137,7 +137,7 @@ mat-sidenav {
   text-align: center;
 
   a {
-    color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 700);
+    color: var(--mat-sys-on-surface-variant);
     font-weight: 300;
     font-size: small;
     text-decoration: none;

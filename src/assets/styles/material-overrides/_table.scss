@@ -1,8 +1,17 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-@include mat.table-overrides(
-  (
-    background-color: transparent,
-  )
-);
+// Tables sit flat inside a card (see .table-container in styles.scss): quiet
+// 12px header labels and subtle row dividers.
+:root {
+  @include mat.table-overrides(
+    (
+      background-color: transparent,
+      header-headline-color: var(--gt-color-text-3),
+      header-headline-size: 12px,
+      header-headline-weight: var(--gt-weight-medium),
+      row-item-outline-color: var(--gt-color-subtle),
+      row-item-label-text-color: var(--gt-color-text-1),
+    )
+  );
+}

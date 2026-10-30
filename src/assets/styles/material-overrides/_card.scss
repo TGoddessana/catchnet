@@ -1,12 +1,25 @@
 @use "@angular/material" as mat;
 @use "variables" as vars;
 
-@include mat.card-overrides(
-  (
-    elevated-container-shape: vars.$shape-radius,
-    elevated-container-color: var(--mat-sys-surface-container-high),
-    outlined-container-shape: vars.$shape-radius,
-    title-text-size: 18px,
-    title-text-weight: 500
-  )
-);
+// Cards are flat paper: surface fill, a 1px border and at most a whisper of
+// shadow. The border is drawn as a shadow ring so it never shifts layout.
+$_card-edge: 0 0 0 1px var(--gt-color-border), var(--gt-card-shadow);
+
+:root {
+  @include mat.card-overrides(
+    (
+      elevated-container-shape: vars.$radius-card,
+      elevated-container-color: var(--gt-color-surface),
+      elevated-container-elevation: $_card-edge,
+      outlined-container-shape: vars.$radius-card,
+      outlined-container-color: var(--gt-color-surface),
+      outlined-outline-color: var(--gt-color-border),
+      outlined-container-elevation: var(--gt-card-shadow),
+      filled-container-shape: vars.$radius-card,
+      filled-container-color: var(--gt-color-subtle),
+      title-text-size: 18px,
+      title-text-weight: var(--gt-weight-strong),
+      subtitle-text-color: var(--gt-color-text-2),
+    )
+  );
+}
