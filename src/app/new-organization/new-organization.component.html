@@ -1,44 +1,62 @@
-<div class="l-body">
+<section class="l-body">
   @if (contextLoaded()) {
-    <mat-card>
-      <mat-card-content>
-        <ng-container>
-          @if (canCreateOrg()) {
-            <mat-card-title i18n>Create a New Organization</mat-card-title>
-            @if (organizationCount() === 0) {
-              <p i18n>This is the first step to get started with GlitchTip.</p>
+    <header class="cn-title-row">
+      <div class="cn-title-row__text">
+        <h1 class="cn-page-title" i18n>New organization</h1>
+        @if (canCreateOrg() && organizationCount() === 0) {
+          <p class="cn-title-row__sub" i18n
+            >This is the first step to get started with catchnet.</p
+          >
+        }
+      </div>
+    </header>
+
+    @if (canCreateOrg()) {
+      <form
+        class="cn-settings"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        data-cy="create-organization-form"
+      >
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Name</h2>
+            <p class="cn-settings-section__text" i18n
+              >Usually your company or team. Projects, members and alerts live
+              inside it.</p
+            >
+          </div>
+          <div class="cn-settings-section__body">
+            @if (error(); as error) {
+              <mat-error class="cn-new-org__error">{{ error }}</mat-error>
             }
-            <form
-              [formGroup]="form"
-              (ngSubmit)="onSubmit()"
-              data-cy="create-organization-form"
-            >
-              @if (error(); as error) {
-                <mat-error>{{ error }}</mat-error>
+            <mat-form-field appearance="outline">
+              <mat-label i18n>Organization name</mat-label>
+              <input
+                matInput
+                gtAutofocus
+                formControlName="name"
+                data-cy="create-organization-input"
+              />
+            </mat-form-field>
+            <div class="cn-settings-section__footer">
+              @if (organizationCount() > 0) {
+                <a mat-button routerLink="/" i18n>Cancel</a>
               }
-              <mat-form-field appearance="outline">
-                <mat-label i18n>Name</mat-label>
-                <input
-                  matInput
-                  gtAutofocus
-                  formControlName="name"
-                  i18n-placeholder
-                  data-cy="create-organization-input"
-                />
-              </mat-form-field>
-              <button id="submit" mat-flat-button color="primary" i18n
-                >Create Organization</button
+              <button id="submit" mat-flat-button i18n
+                >Create organization</button
               >
-            </form>
-          } @else {
-            <ng-container i18n
-              >Organization creation has been disabled on this instance of
-              GlitchTip. Contact an administrator to be invited into an existing
-              organization.</ng-container
-            >
-          }
-        </ng-container>
-      </mat-card-content>
-    </mat-card>
+            </div>
+          </div>
+        </section>
+      </form>
+    } @else {
+      <div class="cn-empty">
+        <p class="cn-empty__text" i18n
+          >Creating organizations is turned off on this server. Ask an
+          administrator to invite you to an existing one.</p
+        >
+      </div>
+    }
   }
-</div>
+</section>

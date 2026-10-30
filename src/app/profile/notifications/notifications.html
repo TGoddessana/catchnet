@@ -1,39 +1,43 @@
-<section class="l-body">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n>Notifications</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
+<div class="cn-settings">
+  <section
+    class="cn-settings-section"
+    i18n-aria-label
+    aria-label="Project alerts"
+  >
+    <div>
+      <h2 class="cn-settings-section__title" i18n>Project alerts</h2>
+      <p class="cn-settings-section__text" i18n
+        >Whether alert emails reach you. This is the default for every project;
+        you can change it per project.</p
+      >
+    </div>
+    <div class="cn-settings-section__body">
       <div class="default-settings">
-        <div class="default-alerts">
-          <p i18n class="body-text-strong">Send me project alerts</p>
-          <p i18n class="body-text">
-            This is the default setting for project alerts. You can change the
-            setting per project below.
-          </p>
-        </div>
+        <p i18n class="default-settings__label">Send me project alerts</p>
         <div class="button-group">
           <div class="button-and-loading">
-            @if ((subscribeByDefaultLoading()) === true) {
+            @if (subscribeByDefaultLoading() === true) {
               <mat-spinner diameter="24"></mat-spinner>
             }
-            <mat-button-toggle-group i18n-aria-label
+            <mat-button-toggle-group
+              i18n-aria-label
               name="defaultNotifications"
               aria-label="Default Notifications"
             >
-              <mat-button-toggle i18n
+              <mat-button-toggle
+                i18n
                 value="onDefault"
                 (change)="toggleDefaultNotifications(true)"
-                [class.underline]="(subscribeByDefault()) === true"
-                [checked]="(subscribeByDefault()) === true"
+                [class.underline]="subscribeByDefault() === true"
+                [checked]="subscribeByDefault() === true"
                 >On</mat-button-toggle
               >
-              <mat-button-toggle i18n
+              <mat-button-toggle
+                i18n
                 value="offDefault"
                 (change)="toggleDefaultNotifications(false)"
-                [class.underline]="(subscribeByDefault()) === false"
-                [checked]="(subscribeByDefault()) === false"
+                [class.underline]="subscribeByDefault() === false"
+                [checked]="subscribeByDefault() === false"
                 >Off</mat-button-toggle
               >
             </mat-button-toggle-group>
@@ -43,20 +47,32 @@
           }
         </div>
       </div>
-      @if ((projectViewExpanded()) === false) {
+    </div>
+  </section>
+
+  <section class="cn-settings-section" i18n-aria-label aria-label="By project">
+    <div>
+      <h2 class="cn-settings-section__title" i18n>By project</h2>
+      <p class="cn-settings-section__text" i18n
+        >Turn alerts on or off for one project, or let it follow the default.</p
+      >
+    </div>
+    <div class="cn-settings-section__body">
+      @if (projectViewExpanded() === false) {
         <button
           mat-stroked-button
           class="expand-button"
           (click)="toggleProjectView()"
         >
-          <span i18n>Edit By Project</span><mat-icon>keyboard_arrow_down</mat-icon>
+          <span i18n>Edit By Project</span
+          ><mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
         </button>
       }
 
       @if (projectViewExpanded()) {
         @for (projects of groupedProjects() | keyvalue; track projects) {
           <div>
-            <div class="org-name mat-h3 body-text-strong">
+            <div class="org-name">
               {{ projects.value[0].organization.name }}
             </div>
             <div class="border">
@@ -76,42 +92,43 @@
                   </div>
                   <div class="button-group">
                     <div class="button-and-loading">
-                      @if ((projectAlertLoading()) === project.id) {
+                      @if (projectAlertLoading() === project.id) {
                         <mat-spinner diameter="24"></mat-spinner>
                       }
                       <mat-button-toggle-group
                         aria-label="`Notifications for ${project}`"
                       >
-                        <mat-button-toggle i18n
+                        <mat-button-toggle
+                          i18n
                           (change)="updateUserAlertSettings(project.id, 1)"
                           [class.underline]="project.alertStatus === 1"
                           [checked]="project.alertStatus === 1"
                           >On</mat-button-toggle
                         >
-                        <mat-button-toggle i18n
+                        <mat-button-toggle
+                          i18n
                           (change)="updateUserAlertSettings(project.id, 0)"
                           [class.underline]="project.alertStatus === 0"
                           [checked]="project.alertStatus === 0"
                           >Off</mat-button-toggle
                         >
-                        <mat-button-toggle i18n
+                        <mat-button-toggle
+                          i18n
                           (change)="updateUserAlertSettings(project.id, -1)"
                           [class.underline]="project.alertStatus === -1"
                           [checked]="project.alertStatus === -1"
                           >Default
                           <span
                             >({{
-                              (subscribeByDefault()) === true
-                                ? onText
-                                : offText
+                              subscribeByDefault() === true ? onText : offText
                             }})</span
                           ></mat-button-toggle
                         >
                       </mat-button-toggle-group>
                     </div>
-                    @if ((projectAlertsError())?.id === project.id) {
+                    @if (projectAlertsError()?.id === project.id) {
                       <mat-error class="caption-text">{{
-                        (projectAlertsError())?.error
+                        projectAlertsError()?.error
                       }}</mat-error>
                     }
                   </div>
@@ -122,15 +139,18 @@
         }
       }
 
-      @if ((projectViewExpanded()) === true) {
-        <button
-          mat-stroked-button
-          class="expand-button"
-          (click)="toggleProjectView()"
-        >
-          <span i18n>Hide Projects</span><mat-icon>keyboard_arrow_up</mat-icon>
-        </button>
+      @if (projectViewExpanded() === true) {
+        <div class="cn-settings-section__footer">
+          <button
+            mat-button
+            class="expand-button"
+            (click)="toggleProjectView()"
+          >
+            <span i18n>Hide Projects</span
+            ><mat-icon iconPositionEnd>keyboard_arrow_up</mat-icon>
+          </button>
+        </div>
       }
-    </mat-card-content>
-  </mat-card>
-</section>
+    </div>
+  </section>
+</div>

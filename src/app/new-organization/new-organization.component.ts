@@ -16,9 +16,8 @@ import { UserService } from "../api/user/user.service";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCardModule } from "@angular/material/card";
 import { OrganizationsService } from "../api/organizations.service";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { Autofocus } from "../shared/autofocus";
 
 @Component({
@@ -27,7 +26,7 @@ import { Autofocus } from "../shared/autofocus";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Autofocus,
-    MatCardModule,
+    RouterLink,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

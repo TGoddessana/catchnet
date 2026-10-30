@@ -1,44 +1,38 @@
-mat-card {
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  mat-card-content {
-    padding-top: 16px;
-  }
-}
-
-mat-card-title {
-  margin-bottom: 8px;
+p {
+  margin: 0 0 var(--gt-space-3);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gt-color-text-2);
 }
 
 .activation-error {
-  margin-bottom: 5px;
+  margin-bottom: var(--gt-space-1);
 }
 
 .register-button {
-  margin-left: 10px;
+  margin-left: var(--gt-space-2);
 }
 
-.key_list_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+// Registered keys: a small table, grey header, row rules.
+.key_headings,
+.key_row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) 40px;
+  align-items: center;
 }
 
 .key_headings {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr 0.3fr;
-  background-color: var(--mat-sys-surface-container);
-  padding-left: 7px;
+  height: 36px;
+  margin-top: var(--gt-space-4);
+  border-bottom: 1px solid var(--gt-color-border);
+  font-size: 12px;
+  color: var(--gt-color-text-3);
 }
 
 .key_row {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1.7fr 1fr 0.3fr;
-  border: 1px solid var(--gt-color-border);
-  margin-bottom: -1px;
-  padding-left: 7px;
+  min-height: 44px;
+  border-bottom: 1px solid var(--gt-color-rule);
+  font-size: 14px;
 }
 
 .cell {
@@ -46,20 +40,15 @@ mat-card-title {
   max-width: 100%;
 
   span {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
     display: block;
     max-width: fit-content;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
 .trash {
-  justify-self: right;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.negative-margin {
-  margin-top: -12px;
+  justify-self: end;
+  color: var(--gt-color-text-3);
 }

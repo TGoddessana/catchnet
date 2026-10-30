@@ -1,11 +1,10 @@
-.documentation-card {
-  margin-top: 20px;
+.cn-system__mono {
+  font-family: var(--gt-font-code);
+  font-size: 13px;
 }
 
-dd {
-  margin-left: 0;
-}
-
-dd + dt {
-  margin-top: 10px;
+.cn-system__link {
+  font-size: 14px;
+  color: var(--gt-color-accent-text);
+  text-decoration: underline;
 }

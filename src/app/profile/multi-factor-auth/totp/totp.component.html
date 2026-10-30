@@ -1,12 +1,23 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title i18n>Authenticator app</mat-card-title>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <mat-card-content>
+<section
+  class="cn-settings-section"
+  i18n-aria-label
+  aria-label="Authenticator app"
+>
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Authenticator app</h2>
+    <p class="cn-settings-section__text" i18n
+      >A 6-digit code from an app on your phone, asked for at every login.</p
+    >
+  </div>
+  <div class="cn-settings-section__body">
     @if (TOTPAuthenticator()) {
       <p i18n>An authenticator app is protecting your account.</p>
-      <button mat-stroked-button color="warn" (click)="deactivateTOTP()" i18n>
+      <button
+        mat-stroked-button
+        class="cn-danger-button"
+        (click)="deactivateTOTP()"
+        i18n
+      >
         Disable
       </button>
       <gt-backup-codes></gt-backup-codes>
@@ -108,5 +119,5 @@
         </mat-step>
       </mat-stepper>
     }
-  </mat-card-content>
-</mat-card>
+  </div>
+</section>

@@ -13,11 +13,8 @@ import {
   FormControl,
   ReactiveFormsModule,
 } from "@angular/forms";
-import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { PasswordService, PasswordState } from "./password.service";
 import { UserService } from "src/app/api/user/user.service";
@@ -33,14 +30,11 @@ import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.
   styleUrls: ["./change-password.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCardModule,
-    MatDividerModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     InputMatcherDirective,
     LoadingButtonComponent,
-    MatIconModule,
     FormErrorComponent,
   ],
 })

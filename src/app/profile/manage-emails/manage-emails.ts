@@ -18,9 +18,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { LoadingButtonComponent } from "../../shared/loading-button/loading-button.component";
-import { MatChipsModule } from "@angular/material/chips";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { EmailsService } from "src/app/api/emails/emails.service";
 
 @Component({
@@ -29,9 +26,6 @@ import { EmailsService } from "src/app/api/emails/emails.service";
   styleUrls: ["./manage-emails.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
-    MatDividerModule,
-    MatChipsModule,
     LoadingButtonComponent,
     MatProgressSpinnerModule,
     MatButtonModule,

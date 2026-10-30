@@ -1,22 +1,6 @@
-mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 12px;
-
-  &::ng-deep .mat-card-header-text {
-    margin-left: 0;
-  }
-
-  mat-card-title {
-    margin-bottom: 0;
-    margin-right: 8px;
-  }
-}
-
-.server-error {
-  padding-top: 16px;
-  text-align: center;
+.server-error:not(:empty) {
+  display: block;
+  margin-bottom: var(--gt-space-4);
 }
 
 mat-form-field {
@@ -24,15 +8,17 @@ mat-form-field {
 }
 
 .select-all {
-  margin-bottom: 8px;
+  display: block;
+  margin-bottom: var(--gt-space-2);
+  padding-bottom: var(--gt-space-2);
+  border-bottom: 1px solid var(--gt-color-rule);
 }
 
 ul {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax((150px), 1fr));
-  grid-gap: 8px 16px;
-  margin-top: 0;
-  margin-bottom: 0;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0 var(--gt-space-4);
+  margin: 0;
   padding-left: 0;
 
   li {
@@ -41,9 +27,5 @@ ul {
 }
 
 .checkbox-error {
-  font-size: 75%;
-}
-
-gt-loading-button {
-  margin-top: 40px;
+  font-size: 12px;
 }

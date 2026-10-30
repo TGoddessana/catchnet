@@ -1,3 +1,5 @@
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import {
   Component,
   computed,
@@ -9,13 +11,10 @@ import { AuthTokensService, AuthTokensState } from "./auth-tokens.service";
 import { LoadingButtonComponent } from "../../shared/loading-button/loading-button.component";
 import { CopyInputComponent } from "../../shared/copy-input/copy-input.component";
 import { MatDialog } from "@angular/material/dialog";
-import { MatDividerModule } from "@angular/material/divider";
 import { RouterLink } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
 import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.component";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
-import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.component";
 
 @Component({
   selector: "gt-auth-tokens",
@@ -23,13 +22,12 @@ import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.comp
   styleUrls: ["./auth-tokens.component.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
+    MatIconModule,
+    MatTooltipModule,
     MatButtonModule,
     RouterLink,
-    MatDividerModule,
     CopyInputComponent,
     LoadingButtonComponent,
-    EmptyStateComponent,
   ],
 })
 export class AuthTokensComponent

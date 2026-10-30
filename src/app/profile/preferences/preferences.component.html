@@ -1,12 +1,14 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title i18n>Preferences</mat-card-title>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <mat-card-content>
+<section class="cn-settings-section" i18n-aria-label aria-label="Preferences">
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Preferences</h2>
+    <p class="cn-settings-section__text" i18n
+      >Your name, the time zone dates are shown in, and the theme.</p
+    >
+  </div>
+  <div class="cn-settings-section__body">
     @if (userDetails()) {
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field class="full-width first-field" appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label i18n>Name</mat-label>
           <input matInput formControlName="name" maxlength="255" />
         </mat-form-field>
@@ -40,11 +42,17 @@
               <span i18n>Select a valid time zone</span>
             }
           </mat-error>
-          <mat-hint i18n>Your system time zone is {{ currentTimeZone }}</mat-hint>
+          <mat-hint i18n
+            >Your system time zone is {{ currentTimeZone }}</mat-hint
+          >
         </mat-form-field>
         <div class="theme-field">
           <label class="theme-label" i18n>Theme</label>
-          <mat-button-toggle-group i18n-aria-label formControlName="theme" aria-label="Theme">
+          <mat-button-toggle-group
+            i18n-aria-label
+            formControlName="theme"
+            aria-label="Theme"
+          >
             <mat-button-toggle i18n-title value="system" title="System">
               <mat-icon>brightness_medium</mat-icon>
             </mat-button-toggle>
@@ -56,8 +64,13 @@
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
-        <gt-loading-button i18n-buttonText buttonText="Update Preferences"></gt-loading-button>
+        <div class="cn-settings-section__footer">
+          <gt-loading-button
+            i18n-buttonText
+            buttonText="Save preferences"
+          ></gt-loading-button>
+        </div>
       </form>
     }
-  </mat-card-content>
-</mat-card>
+  </div>
+</section>

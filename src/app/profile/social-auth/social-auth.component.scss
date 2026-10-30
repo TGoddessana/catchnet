@@ -1,42 +1,28 @@
 @use "variables" as vars;
 
-mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-
-  &::ng-deep .mat-card-header-text {
-    margin-left: 0;
-  }
-
-  mat-form-field {
-    margin-top: -5px;
-
-    @media (max-width: vars.$small - 1) {
-      width: 100%;
-    }
-  }
+mat-form-field {
+  width: 100%;
 }
 
-.socialaccount-list-wrapper {
-  mat-divider {
-    margin-top: 12px;
-  }
+.cn-social__none {
+  margin: 0;
+  font-size: 14px;
+  color: var(--gt-color-text-3);
 }
 
 .socialaccount-wrapper {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-
-  button {
-    width: fit-content;
-    margin: 12px 16px 0 0;
-  }
+  align-items: center;
+  gap: var(--gt-space-3);
+  padding: var(--gt-space-2) 0;
 
   .email {
-    margin-top: 12px;
-    height: fit-content;
+    font-size: 14px;
+    color: var(--gt-color-text-2);
   }
+}
+
+.socialaccount-list-wrapper mat-divider {
+  border-top-color: var(--gt-color-rule);
 }

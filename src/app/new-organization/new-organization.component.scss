@@ -1,31 +1,4 @@
-@use "variables" as vars;
-
-mat-form-field,
-button {
-  width: 100%;
-}
-
-mat-card {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media screen and (min-width: vars.$tablet) {
-    min-width: 480px;
-  }
-
-  @media screen and (max-width: vars.$tablet - 1) {
-    width: 100%;
-    max-width: 480px;
-  }
-}
-
-form {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-button {
-  margin-top: 10px;
+.cn-new-org__error {
+  display: block;
+  margin-bottom: var(--gt-space-3);
 }

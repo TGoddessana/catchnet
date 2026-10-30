@@ -19,11 +19,8 @@ import { AuthTokensService, AuthTokensState } from "../auth-tokens.service";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
 import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.component";
 import { mapFormErrors } from "src/app/shared/forms/form.utils";
 
@@ -33,11 +30,8 @@ import { mapFormErrors } from "src/app/shared/forms/form.utils";
   styleUrls: ["./new-token.component.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
     MatButtonModule,
     RouterLink,
-    MatIconModule,
-    MatDividerModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,

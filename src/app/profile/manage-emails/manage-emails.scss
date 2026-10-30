@@ -1,48 +1,40 @@
 @use "variables" as vars;
 
+// One row per address: the address and its badges on the left, its actions
+// on the right, rows split by row rules.
+.cn-emails {
+  margin: 0 0 var(--gt-space-4);
+  padding: 0;
+}
+
 .email-list-item {
-  height: auto;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  width: 100%;
-  padding-top: 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-2);
+  min-height: 48px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--gt-color-rule);
+  list-style: none;
 }
 
 .email-info {
-  padding-top: 8px;
-  margin-bottom: 4px;
-
-  span {
-    margin-right: 16px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gt-space-2);
+  min-width: 0;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  overflow-wrap: anywhere;
 }
 
 .email-actions {
   display: flex;
   align-items: center;
-  margin-top: 4px;
-  padding-bottom: 8px;
-
-  gt-loading-button {
-    margin-right: 5px;
-  }
-}
-
-mat-chip-set {
-  display: inline-block;
-  margin-right: 15px;
-  pointer-events: none;
-  user-select: none;
-}
-
-mat-chip {
-  font-size: 0.8em;
-  font-weight: 500;
-  padding: 0;
-  height: 24px;
+  gap: var(--gt-space-1);
+  color: var(--gt-color-text-3);
 }
 
 .delete-spinner-container {
@@ -51,33 +43,24 @@ mat-chip {
   height: 40px;
   align-items: center;
   justify-content: center;
-  vertical-align: middle;
 }
 
+// Add an address: the field and its button on one line.
 .add-email-form-ui {
   display: flex;
-  justify-content: space-between;
-  padding-top: 7px;
+  align-items: flex-start;
+  gap: var(--gt-space-2);
 
-  @media (max-width: vars.$large - 1) {
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: vars.$medium - 1) {
+  @media (max-width: vars.$small - 1) {
     flex-direction: column;
+    align-items: stretch;
   }
 
   mat-form-field {
     flex: 1;
-    max-width: 400px;
-    margin-right: 15px;
   }
 
   gt-loading-button {
-    margin-top: 12px;
-
-    @media (max-width: vars.$medium - 1) {
-      margin-top: 8px;
-    }
+    padding-top: 0;
   }
 }

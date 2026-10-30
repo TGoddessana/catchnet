@@ -1,9 +1,20 @@
 <div class="auth-form-wrapper">
+  <a
+    class="cn-auth-brand"
+    routerLink="/login"
+    i18n-aria-label
+    aria-label="catchnet"
+  >
+    <img
+      src="static/assets/images/catchnet-mark.svg"
+      alt=""
+      width="28"
+      height="28"
+    />
+    <span>catchnet</span>
+  </a>
   <mat-card class="auth-form">
     <mat-card-content>
-      <div class="logo-container">
-        <img src="static/assets/images/catchnet-logo.svg" alt="catchnet" />
-      </div>
       @if (requiresMFA()) {
         @if (!hasWebAuthn() || preferTOTP()) {
           <gt-login-totp></gt-login-totp>
@@ -12,42 +23,55 @@
         }
       } @else {
         <mat-card-title>
-          <h3 i18n>Login</h3>
+          <h3 i18n>Log in to catchnet</h3>
         </mat-card-title>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <gt-form-error [errors]="formErrors()"></gt-form-error>
+          <label class="cn-field-label" for="login-email" i18n>Email</label>
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label i18n>Email</mat-label>
-            <input matInput autofocus type="email" formControlName="email" />
+            <input
+              id="login-email"
+              matInput
+              autofocus
+              type="email"
+              formControlName="email"
+            />
             @if (email?.errors) {
               <mat-error>
-                @if (email?.errors?.['required']) {
+                @if (email?.errors?.["required"]) {
                   <span i18n>Your email is required to log in</span>
                 }
-                @if (email?.errors?.['email']) {
+                @if (email?.errors?.["email"]) {
                   <span i18n>Enter a valid email address</span>
                 }
-                @if (email?.errors?.['serverError']) {
-                  <span>{{ email?.errors?.['serverError'] }}</span>
+                @if (email?.errors?.["serverError"]) {
+                  <span>{{ email?.errors?.["serverError"] }}</span>
                 }
               </mat-error>
             }
           </mat-form-field>
+          <label class="cn-field-label" for="login-password" i18n
+            >Password</label
+          >
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label i18n>Password</mat-label>
-            <input matInput type="password" formControlName="password" />
+            <input
+              id="login-password"
+              matInput
+              type="password"
+              formControlName="password"
+            />
             @if (password?.errors) {
               <mat-error>
-                @if (password?.errors?.['minlength']) {
+                @if (password?.errors?.["minlength"]) {
                   <span i18n
                     >Your password should be at least 8 characters long</span
                   >
                 }
-                @if (password?.errors?.['required']) {
+                @if (password?.errors?.["required"]) {
                   <span i18n>Your password is required to log in</span>
                 }
-                @if (password?.errors?.['serverError']) {
-                  <span>{{ password?.errors?.['serverError'] }}</span>
+                @if (password?.errors?.["serverError"]) {
+                  <span>{{ password?.errors?.["serverError"] }}</span>
                 }
               </mat-error>
             }
@@ -87,7 +111,7 @@
         }
         <div class="sign-up">
           @if (enableUserRegistration() || enableSocialAppsUserRegistration()) {
-            <p class="body-text">
+            <p>
               <ng-container i18n>New to catchnet?</ng-container>
               <a
                 class="auth-link"
@@ -98,8 +122,10 @@
               >
             </p>
           }
-          <p class="body-text">
-            <a class="auth-link" routerLink="/reset-password" i18n>Reset Password</a>
+          <p>
+            <a class="auth-link" routerLink="/reset-password" i18n
+              >Forgot your password?</a
+            >
           </p>
 
           <p class="alternative-instance" markdown>

@@ -1,17 +1,37 @@
 <div class="auth-form-wrapper">
+  <a
+    class="cn-auth-brand"
+    routerLink="/login"
+    i18n-aria-label
+    aria-label="catchnet"
+  >
+    <img
+      src="static/assets/images/catchnet-mark.svg"
+      alt=""
+      width="28"
+      height="28"
+    />
+    <span>catchnet</span>
+  </a>
   <mat-card class="auth-form">
     <mat-card-header>
       <mat-card-title>
-        <h3 i18n>Register</h3>
+        <h3 i18n>Create an account</h3>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       @if (enableUserRegistration()) {
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <gt-form-error [errors]="formErrors()"></gt-form-error>
+          <label class="cn-field-label" for="register-email" i18n>Email</label>
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label i18n>Email</mat-label>
-            <input matInput autofocus type="email" formControlName="email" />
+            <input
+              id="register-email"
+              matInput
+              autofocus
+              type="email"
+              formControlName="email"
+            />
             <mat-error>
               @if (email?.errors?.required) {
                 <span i18n>Your email is required to sign up</span>
@@ -24,12 +44,21 @@
               }
             </mat-error>
           </mat-form-field>
+          <label class="cn-field-label" for="register-password" i18n
+            >Password</label
+          >
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label i18n>Password</mat-label>
-            <input matInput type="password" formControlName="password" />
+            <input
+              id="register-password"
+              matInput
+              type="password"
+              formControlName="password"
+            />
             <mat-error>
               @if (password?.errors?.minlength) {
-                <span i18n>Your password should be at least 8 characters long</span>
+                <span i18n
+                  >Your password should be at least 8 characters long</span
+                >
               }
               @if (password?.errors?.required) {
                 <span i18n>A password is required to sign up</span>
@@ -39,12 +68,14 @@
               }
             </mat-error>
           </mat-form-field>
+          <label class="cn-field-label" for="register-password2" i18n
+            >Confirm password</label
+          >
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label i18n>Confirm password</mat-label>
-            <input i18n-placeholder
+            <input
+              id="register-password2"
               matInput
               type="password"
-              placeholder="Confirm Password"
               formControlName="password2"
               gtInputMatcher="password"
             />
@@ -127,13 +158,13 @@
           >.
         </p>
       }
-      <p class="body-text sign-up">
-        <ng-container i18n>Already have an account?</ng-container>
-        <br />
-        <a class="auth-link" routerLink="../login" i18n>Log In</a>
-        <br />
+      <div class="sign-up">
+        <p>
+          <ng-container i18n>Already have an account?</ng-container>
+          <a class="auth-link" routerLink="../login" i18n>Log In</a>
+        </p>
         <span class="alternative-instance" markdown>{{ instanceName() }}</span>
-      </p>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

@@ -1,8 +1,17 @@
 @if (socialApps().length || user().identities.length) {
   @if (user(); as user) {
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n>Social Auth Accounts</mat-card-title>
+    <section
+      class="cn-settings-section"
+      i18n-aria-label
+      aria-label="Connected accounts"
+    >
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Connected accounts</h2>
+        <p class="cn-settings-section__text" i18n
+          >Log in with an account from another service.</p
+        >
+      </div>
+      <div class="cn-settings-section__body">
         @if (socialApps().length) {
           @if (socialApps(); as socialApps) {
             <mat-form-field appearance="outline">
@@ -24,17 +33,8 @@
             </mat-form-field>
           }
         }
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
         @if (user.identities!.length === 0) {
-          <gt-empty-state
-            icon="account_circle"
-            i18n-title
-            title="No connected accounts"
-            i18n-message
-            message="Connect a social login to sign in with it."
-          />
+          <p class="cn-social__none" i18n>No connected accounts yet.</p>
         } @else {
           <div class="socialaccount-list-wrapper">
             @for (
@@ -71,7 +71,7 @@
             }
           </div>
         }
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </section>
   }
 }

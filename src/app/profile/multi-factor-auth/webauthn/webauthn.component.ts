@@ -10,8 +10,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
 import { FormErrorComponent } from "../../../shared/forms/form-error/form-error.component";
@@ -25,8 +23,6 @@ import { checkForOverflow } from "src/app/shared/shared.utils";
   styleUrls: ["./webauthn.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCardModule,
-    MatDividerModule,
     FormErrorComponent,
     LoadingButtonComponent,
     ReactiveFormsModule,

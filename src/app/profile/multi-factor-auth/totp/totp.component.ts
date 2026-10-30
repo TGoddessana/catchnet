@@ -20,8 +20,6 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { EmailsService } from "src/app/api/emails/emails.service";
 import { MultiFactorAuthService } from "../multi-factor-auth.service";
 import { FormErrorComponent } from "../../../shared/forms/form-error/form-error.component";
@@ -35,8 +33,6 @@ import { mapFormErrors } from "src/app/shared/forms/form.utils";
   styleUrls: ["./totp.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCardModule,
-    MatDividerModule,
     MatButtonModule,
     MatStepperModule,
     MatDialogModule,

@@ -5,9 +5,9 @@
     lost your device, you may enter one of your recovery codes.</div
   >
   <form class="contents-left" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label class="cn-field-label" for="totp-code" i18n>Verification Code</label>
     <mat-form-field class="full-width" appearance="outline">
-      <mat-label i18n>Verification Code</mat-label>
-      <input #input matInput formControlName="code" />
+      <input id="totp-code" #input matInput formControlName="code" />
       @if (code?.invalid) {
         <mat-error>
           @if (code?.errors?.required) {
@@ -22,20 +22,22 @@
         </mat-error>
       }
     </mat-form-field>
-    <button id="submit" mat-flat-button color="primary" i18n>Login</button>
+    <button id="submit" class="full-width" mat-flat-button i18n>Log in</button>
     <!-- <mat-checkbox class="caption-text" formControlName="remember">Don't prompt again on this device</mat-checkbox> -->
   </form>
 
-  @if (hasWebAuthn!()) {
+  <div class="sign-up">
+    @if (hasWebAuthn!()) {
+      <div>
+        <a [routerLink]="[]" (click)="switchMethod()" i18n
+          >Log in with security key instead</a
+        >
+      </div>
+    }
     <div>
-      <a [routerLink]="[]" (click)="switchMethod()" i18n
-        >Log in with security key instead</a
+      <a [routerLink]="[]" (click)="restartLogin()" i18n
+        >Return to initial login page</a
       >
     </div>
-  }
-  <div>
-    <a [routerLink]="[]" (click)="restartLogin()" i18n
-      >Return to initial login page</a
-    >
   </div>
 </div>

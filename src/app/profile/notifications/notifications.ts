@@ -13,16 +13,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { KeyValuePipe } from "@angular/common";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 
 @Component({
   templateUrl: "./notifications.html",
   styleUrls: ["./notifications.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCardModule,
-    MatDividerModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatFormFieldModule,

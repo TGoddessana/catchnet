@@ -1,76 +1,69 @@
 @if (initialLoad() === true) {
-  <ng-container class="l-body">
-    <mat-card>
-      <mat-card-header class="flex-space-between">
-        <mat-card-title i18n>Auth Tokens</mat-card-title>
-        <a
-          mat-flat-button
-          [routerLink]="['/profile', 'auth-tokens', 'new']"
-          color="primary"
-          i18n
-          >Create New Token</a
-        >
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content class="content">
-        <p i18n
-          >Authentication tokens give you access to the GlitchTip API. You can
-          create these tokens as authentication to gain specific access around
-          the app.</p
-        >
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n>Your Tokens</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        @if (authTokens()?.length) {
-          @for (authToken of authTokens(); track authToken; let i = $index) {
-            <div class="content-wrapper">
-              <h3 class="label">{{ authToken.label }}</h3>
-              <div class="loading-wrapper">
-                <gt-copy-input i18n-placeholder
-                  class="token"
-                  placeholder="Token"
-                  [value]="authToken.token!"
-                ></gt-copy-input>
-                <gt-loading-button i18n-buttonText
-                  (buttonClick)="deleteAuthToken(authToken.id!)"
-                  [loading]="authToken.isLoading"
-                  buttonText="Delete"
-                  buttonStyle="stroked"
-                >
-                </gt-loading-button>
-              </div>
-              <p class="scopes">
-                <span i18n class="body-text-strong">Scopes</span>
-                <span class="scopes__list-wrapper">
-                  @for (
-                    scope of authToken.scopes;
-                    track scope;
-                    let i = $index
-                  ) {
-                    <span>{{ scope }}</span>
-                  }
-                </span>
-              </p>
-              @if (authTokens()?.length !== i + 1) {
-                <mat-divider></mat-divider>
-              }
-            </div>
-          }
-        } @else {
-          <gt-empty-state
-            icon="vpn_key"
-            i18n-title
-            title="No tokens"
-            i18n-message
-            message="Create a token to use the GlitchTip API."
-          />
+  <header class="cn-tokens__head">
+    <div>
+      <h2 class="cn-tokens__title" i18n>Auth tokens</h2>
+      <p class="cn-tokens__text" i18n
+        >Tokens let scripts and tools use the catchnet API as you, limited to
+        the scopes you pick.</p
+      >
+    </div>
+    <a mat-flat-button [routerLink]="['/profile', 'auth-tokens', 'new']">
+      <mat-icon>add</mat-icon>
+      <ng-container i18n>New token</ng-container>
+    </a>
+  </header>
+
+  @if (authTokens()?.length) {
+    <table class="cn-tokens">
+      <thead>
+        <tr>
+          <th i18n>Label</th>
+          <th i18n>Token</th>
+          <th i18n>Scopes</th>
+          <th><span class="u-visually-hidden" i18n>Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (authToken of authTokens(); track authToken) {
+          <tr>
+            <td class="cn-tokens__label">{{ authToken.label }}</td>
+            <td class="cn-tokens__token">
+              <gt-copy-input
+                i18n-placeholder
+                placeholder="Token"
+                [value]="authToken.token!"
+              ></gt-copy-input>
+            </td>
+            <td class="cn-tokens__scopes">
+              <span [matTooltip]="authToken.scopes.join(', ')">
+                @for (
+                  scope of authToken.scopes;
+                  track scope;
+                  let last = $last
+                ) {
+                  {{ scope }}{{ last ? "" : ", " }}
+                }
+              </span>
+            </td>
+            <td class="cn-tokens__action">
+              <gt-loading-button
+                i18n-buttonText
+                (buttonClick)="deleteAuthToken(authToken.id!)"
+                [loading]="authToken.isLoading"
+                buttonText="Delete"
+                buttonStyle="basic"
+              >
+              </gt-loading-button>
+            </td>
+          </tr>
         }
-      </mat-card-content>
-    </mat-card>
-  </ng-container>
+      </tbody>
+    </table>
+  } @else {
+    <div class="cn-empty">
+      <p class="cn-empty__text" i18n
+        >No tokens yet. A new token appears here with its scopes.</p
+      >
+    </div>
+  }
 }

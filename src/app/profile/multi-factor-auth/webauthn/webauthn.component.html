@@ -1,10 +1,11 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title i18n>Register Security Key</mat-card-title>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <p i18n>Set up a hardware device as a second factor to sign in.</p>
+<section class="cn-settings-section" i18n-aria-label aria-label="Security keys">
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Security keys</h2>
+    <p class="cn-settings-section__text" i18n
+      >A hardware key or passkey you touch or unlock to log in.</p
+    >
+  </div>
+  <div class="cn-settings-section__body">
     @if (stage() === 1) {
       @if (hasTOTP()) {
         <p i18n>
@@ -23,11 +24,13 @@
           <gt-form-error [errors]="error ? [error] : []"></gt-form-error>
         </div>
       }
-      <span i18n-matTooltip
+      <span
+        i18n-matTooltip
         matTooltip="Verify your email to continue"
         [matTooltipDisabled]="emailsService.isVerified() !== false"
       >
-        <gt-loading-button i18n-buttonText
+        <gt-loading-button
+          i18n-buttonText
           buttonText="Set up new device"
           [loading]="false"
           (buttonClick)="activateWebAuthn()"
@@ -52,7 +55,8 @@
             </mat-error>
           }
         </mat-form-field>
-        <button i18n
+        <button
+          i18n
           class="register-button"
           mat-flat-button
           color="primary"
@@ -63,14 +67,9 @@
       </form>
     }
     @if (authenticators().length > 0) {
-      <p i18n class="body-text-strong">Security keys</p>
-      <div class="negative-margin">
-        <div class="body-text-strong">
-          <div class="key_headings">
-            <div i18n>Name</div>
-            <div i18n>Last used</div>
-          </div>
-        </div>
+      <div class="key_headings">
+        <div i18n>Name</div>
+        <div i18n>Last used</div>
       </div>
       @for (key of authenticators(); track key) {
         <div class="key_row">
@@ -96,10 +95,10 @@
             [attr.aria-label]="deleteKeyLabel(key.name)"
             (click)="deleteWebAuthn(key.id)"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon>delete_outline</mat-icon>
           </button>
         </div>
       }
     }
-  </mat-card-content>
-</mat-card>
+  </div>
+</section>

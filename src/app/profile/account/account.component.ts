@@ -6,9 +6,7 @@ import {
 } from "@angular/core";
 import { UserService } from "src/app/api/user/user.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
-import { LoadingButtonComponent } from "../../shared/loading-button/loading-button.component";
+import { MatButtonModule } from "@angular/material/button";
 import { ManageEmails } from "../manage-emails/manage-emails";
 import { SocialAuthComponent } from "../social-auth/social-auth.component";
 import { ChangePasswordComponent } from "../change-password/change-password.component";
@@ -27,10 +25,8 @@ import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-di
     ChangePasswordComponent,
     SocialAuthComponent,
     ManageEmails,
-    MatCardModule,
-    MatDividerModule,
+    MatButtonModule,
     MatFormFieldModule,
-    LoadingButtonComponent,
   ],
 })
 export class AccountComponent implements OnDestroy {

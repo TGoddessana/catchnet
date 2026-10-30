@@ -10,14 +10,12 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCardModule } from "@angular/material/card";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserService } from "src/app/api/user/user.service";
 import { AuthenticationService } from "src/app/api/allauth/authentication.service";
 import { AuthSvgComponent } from "../../shared/auth-svg/auth-svg.component";
 import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.component";
 import { SocialAuthService, SocialAuthState } from "./social-auth.service";
-import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.component";
 
 @Component({
   selector: "gt-social-auth",
@@ -25,7 +23,6 @@ import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.comp
   styleUrls: ["./social-auth.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
@@ -33,7 +30,6 @@ import { EmptyStateComponent } from "src/app/shared/empty-state/empty-state.comp
     AuthSvgComponent,
     MatDividerModule,
     MatButtonModule,
-    EmptyStateComponent,
   ],
 })
 export class SocialAuthComponent
