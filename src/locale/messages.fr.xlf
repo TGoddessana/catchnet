@@ -85,12 +85,6 @@
         <target>Pour continuer, vous devez soit vous connecter avec votre compte existant, soit en créer un nouveau.</target>
       </segment>
     </unit>
-    <unit id="1095247315180807956">
-      <segment state="translated">
-        <source>New to GlitchTip?</source>
-        <target>Vous êtes nouveau sur GlitchTip ?</target>
-      </segment>
-    </unit>
     <unit id="1176990449799757498">
       <segment state="translated">
         <source>Issues</source>
@@ -239,12 +233,6 @@
       <segment state="translated">
         <source>Reset Password</source>
         <target>Réinitialiser le mot de passe</target>
-      </segment>
-    </unit>
-    <unit id="4679371106199891013">
-      <segment state="initial">
-        <source>Ignored</source>
-        <target>Ignorer</target>
       </segment>
     </unit>
     <unit id="7045123878111147511">
@@ -590,12 +578,6 @@
       <segment state="initial">
         <source>By deleting your project, you will lose all associated data. This cannot be undone.</source>
         <target>By deleting your project, you will lose all associated data. This cannot be undone.</target>
-      </segment>
-    </unit>
-    <unit id="5729418620241283277">
-      <segment state="initial">
-        <source>Events</source>
-        <target>Events</target>
       </segment>
     </unit>
     <unit id="7819314041543176992">
@@ -1030,12 +1012,6 @@
         <target>View all issues in <ph id="0" equiv="INTERPOLATION" disp="{{ organization.name }}"/></target>
       </segment>
     </unit>
-    <unit id="8916408973006340984">
-      <segment state="initial">
-        <source>GlitchTip <ph id="0" equiv="INTERPOLATION" disp="{{ version() }}"/></source>
-        <target>GlitchTip <ph id="0" equiv="INTERPOLATION" disp="{{ version() }}"/></target>
-      </segment>
-    </unit>
     <unit id="6582573664846559511">
       <segment state="initial">
         <source>Change Password</source>
@@ -1310,18 +1286,6 @@
         <target>The name of your organization has been updated to <ph id="0" equiv="PH" disp="data.name"/></target>
       </segment>
     </unit>
-    <unit id="6566431624195050143">
-      <segment state="initial">
-        <source>Only users with a role of manager or above can update organizations.</source>
-        <target>Only users with a role of manager or above can update organizations.</target>
-      </segment>
-    </unit>
-    <unit id="7131676118619088880">
-      <segment state="initial">
-        <source>Only users with a role of manager or above can delete organizations.</source>
-        <target>Only users with a role of manager or above can delete organizations.</target>
-      </segment>
-    </unit>
     <unit id="5974237347502898380">
       <segment state="initial">
         <source>Email invites have been sent to the addresses you provided.</source>
@@ -1380,24 +1344,6 @@
       <segment state="initial">
         <source>There was an error deleting this comment. Please try again.</source>
         <target>There was an error deleting this comment. Please try again.</target>
-      </segment>
-    </unit>
-    <unit id="1655069838040430737">
-      <segment state="initial">
-        <source>Event Details</source>
-        <target>Event Details</target>
-      </segment>
-    </unit>
-    <unit id="689538422335046890">
-      <segment state="initial">
-        <source>User Reports</source>
-        <target>User Reports</target>
-      </segment>
-    </unit>
-    <unit id="855933412451231239">
-      <segment state="initial">
-        <source>Comments </source>
-        <target>Comments </target>
       </segment>
     </unit>
     <unit id="3807699453257291879">
@@ -1778,10 +1724,10 @@
         <target>Are you sure you want to delete this comment?</target>
       </segment>
     </unit>
-    <unit id="6970095445233536269">
-      <segment state="initial">
-        <source>Breadcrumbs</source>
-        <target>Breadcrumbs</target>
+    <unit id="7172610509240246759">
+      <segment state="translated">
+        <source>Breadcrumb</source>
+        <target>Fil d&apos;Ariane</target>
       </segment>
     </unit>
     <unit id="2930207646035431824">
@@ -1794,12 +1740,6 @@
       <segment state="initial">
         <source>Show All <ph id="0" equiv="INTERPOLATION" disp="{{ breadcrumbs?.values?.length }}"/> Breadcrumbs</source>
         <target>Show All <ph id="0" equiv="INTERPOLATION" disp="{{ breadcrumbs?.values?.length }}"/> Breadcrumbs</target>
-      </segment>
-    </unit>
-    <unit id="2424384363013905805">
-      <segment state="initial">
-        <source>CSP Report</source>
-        <target>CSP Report</target>
       </segment>
     </unit>
     <unit id="6835811099795223678">
@@ -1824,12 +1764,6 @@
       <segment state="initial">
         <source> Raw </source>
         <target> Raw </target>
-      </segment>
-    </unit>
-    <unit id="2577580671804304014">
-      <segment state="initial">
-        <source>Exception</source>
-        <target>Exception</target>
       </segment>
     </unit>
     <unit id="36348256224695936">
@@ -1952,28 +1886,22 @@
         <target> This may be because the URL is pointing to an event that doesn&apos;t exist or was deleted. </target>
       </segment>
     </unit>
-    <unit id="3304972143698843178">
-      <segment state="initial">
-        <source>Event</source>
-        <target>Event</target>
-      </segment>
-    </unit>
-    <unit id="501903640172656596">
+    <unit id="6493717139927730686">
       <segment state="initial">
         <source>
-          <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a target=&quot;_blank&quot; [href]=&quot; &apos;/organizations/&apos; + orgSlug() + &apos;/issues/&apos; + event.groupID + &apos;/events/&apos; + $safeNavigationMigration(event?.id) + &apos;/json/&apos; &quot; &gt;" dispEnd="&lt;/a &gt;">raw JSON</pc>
+          <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a target=&quot;_blank&quot; [href]=&quot; &apos;/organizations/&apos; + orgSlug() + &apos;/issues/&apos; + event.groupID + &apos;/events/&apos; + $safeNavigationMigration(event?.id) + &apos;/json/&apos; &quot; &gt;" dispEnd="&lt;/a &gt;">Raw data</pc>
           <pc id="1" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;action-separator&quot; aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/span&gt;">·</pc>
         </source>
         <target>
-          <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a target=&quot;_blank&quot; [href]=&quot; &apos;/organizations/&apos; + orgSlug() + &apos;/issues/&apos; + event.groupID + &apos;/events/&apos; + $safeNavigationMigration(event?.id) + &apos;/json/&apos; &quot; &gt;" dispEnd="&lt;/a &gt;">raw JSON</pc>
+          <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a target=&quot;_blank&quot; [href]=&quot; &apos;/organizations/&apos; + orgSlug() + &apos;/issues/&apos; + event.groupID + &apos;/events/&apos; + $safeNavigationMigration(event?.id) + &apos;/json/&apos; &quot; &gt;" dispEnd="&lt;/a &gt;">Raw data</pc>
           <pc id="1" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span class=&quot;action-separator&quot; aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/span&gt;">·</pc>
         </target>
       </segment>
     </unit>
-    <unit id="5148439736793042731">
-      <segment state="initial">
-        <source> copy for AI </source>
-        <target> copy for AI </target>
+    <unit id="339369372228237703">
+      <segment state="translated">
+        <source> Copy for AI </source>
+        <target> Copier pour l&apos;IA </target>
       </segment>
     </unit>
     <unit id="7473676707373218484">
@@ -2018,16 +1946,10 @@
         <target>Copied for AI</target>
       </segment>
     </unit>
-    <unit id="3414723056792696723">
+    <unit id="6329039520429536466">
       <segment state="initial">
-        <source> Other - <ph id="0" equiv="INTERPOLATION" disp="{{ tag.other }}"/>% </source>
-        <target> Other - <ph id="0" equiv="INTERPOLATION" disp="{{ tag.other }}"/>% </target>
-      </segment>
-    </unit>
-    <unit id="5738316044190537396">
-      <segment state="initial">
-        <source>Issue #</source>
-        <target>Issue #</target>
+        <source>Other · <ph id="0" equiv="INTERPOLATION" disp="{{ tag.other }}"/>%</source>
+        <target>Other · <ph id="0" equiv="INTERPOLATION" disp="{{ tag.other }}"/>%</target>
       </segment>
     </unit>
     <unit id="3733215288982610673">
@@ -2036,40 +1958,16 @@
         <target>Level</target>
       </segment>
     </unit>
-    <unit id="2669293632677878810">
-      <segment state="initial">
-        <source>Resolved in</source>
-        <target>Resolved in</target>
+    <unit id="29233944778737411">
+      <segment state="translated">
+        <source>First seen</source>
+        <target>Vu pour la première fois</target>
       </segment>
     </unit>
-    <unit id="8299215096475112763">
-      <segment state="initial">
-        <source>First Seen</source>
-        <target>First Seen</target>
-      </segment>
-    </unit>
-    <unit id="3856193213296741054">
-      <segment state="initial">
-        <source>Last Seen</source>
-        <target>Last Seen</target>
-      </segment>
-    </unit>
-    <unit id="5370838177584249385">
-      <segment state="initial">
-        <source>Resolved</source>
-        <target>Resolved</target>
-      </segment>
-    </unit>
-    <unit id="2974118934038476769">
-      <segment state="initial">
-        <source>Unresolved</source>
-        <target>Unresolved</target>
-      </segment>
-    </unit>
-    <unit id="5775443604282913568">
-      <segment state="initial">
-        <source>All issues for <ph id="0" equiv="project" disp="project"/></source>
-        <target>All issues for <ph id="0" equiv="project" disp="project"/></target>
+    <unit id="1931645773996973842">
+      <segment state="translated">
+        <source>Last seen</source>
+        <target>Vu pour la dernière fois</target>
       </segment>
     </unit>
     <unit id="8945198047207390803">
@@ -2288,64 +2186,34 @@
         <target>Loading issues</target>
       </segment>
     </unit>
-    <unit id="3486318045815416322">
-      <segment state="initial">
-        <source>Mark resolved</source>
-        <target>Mark resolved</target>
+    <unit id="5833626790712999947">
+      <segment state="translated">
+        <source>Issue</source>
+        <target>Problème</target>
       </segment>
     </unit>
-    <unit id="4201099783002228618">
+    <unit id="3920418123723030214">
       <segment state="initial">
-        <source>Mark unresolved</source>
-        <target>Mark unresolved</target>
+        <source>{VAR_PLURAL, plural, =1 {1 selected} other {<ph id="0" equiv="INTERPOLATION"/> selected}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 selected} other {<ph id="0" equiv="INTERPOLATION"/> selected}}</target>
       </segment>
     </unit>
-    <unit id="326607852595106445">
+    <unit id="6763803853838721617">
       <segment state="initial">
-        <source>Mark ignored</source>
-        <target>Mark ignored</target>
+        <source>The last time was <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.lastSeen&quot; [title]=&quot;issue.lastSeen | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ issue.lastSeen | daysAgo }}"/></pc>.</source>
+        <target>The last time was <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.lastSeen&quot; [title]=&quot;issue.lastSeen | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ issue.lastSeen | daysAgo }}"/></pc>.</target>
       </segment>
     </unit>
-    <unit id="407181208257535080">
+    <unit id="4641277617053474967">
       <segment state="initial">
-        <source> Issue </source>
-        <target> Issue </target>
+        <source>All <ph id="0" equiv="INTERPOLATION" disp="{{ numberOfSelectedIssues() }}"/> issues on this page are selected.</source>
+        <target>All <ph id="0" equiv="INTERPOLATION" disp="{{ numberOfSelectedIssues() }}"/> issues on this page are selected.</target>
       </segment>
     </unit>
-    <unit id="7505192479854511779">
+    <unit id="2461685266401851704">
       <segment state="initial">
-        <source>{VAR_PLURAL, plural, =1 {1 event} other {<ph id="0" equiv="INTERPOLATION"/> events}}</source>
-        <target>{VAR_PLURAL, plural, =1 {1 event} other {<ph id="0" equiv="INTERPOLATION"/> events}}</target>
-      </segment>
-    </unit>
-    <unit id="1116423295236729375">
-      <segment state="initial">
-        <source>, seen <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;element.lastSeen&quot; [title]=&quot;element.lastSeen | date: &apos;medium&apos;&quot; &gt;" dispEnd="&lt;/time&gt;"> <ph id="1" equiv="INTERPOLATION" disp="{{ element.lastSeen | daysAgo }}"/> </pc></source>
-        <target>, seen <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;element.lastSeen&quot; [title]=&quot;element.lastSeen | date: &apos;medium&apos;&quot; &gt;" dispEnd="&lt;/time&gt;"> <ph id="1" equiv="INTERPOLATION" disp="{{ element.lastSeen | daysAgo }}"/> </pc></target>
-      </segment>
-    </unit>
-    <unit id="6266469192756738485">
-      <segment state="initial">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ element.type }}"/> report</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ element.type }}"/> report</target>
-      </segment>
-    </unit>
-    <unit id="2936485393439559280">
-      <segment state="initial">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ numberOfSelectedIssues() }}"/> issues on this page selected.</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ numberOfSelectedIssues() }}"/> issues on this page selected.</target>
-      </segment>
-    </unit>
-    <unit id="3304088671620535703">
-      <segment state="initial">
-        <source>Select all <ph id="0" equiv="INTERPOLATION" disp="{{ hits }}"/> issues that match this query</source>
-        <target>Select all <ph id="0" equiv="INTERPOLATION" disp="{{ hits }}"/> issues that match this query</target>
-      </segment>
-    </unit>
-    <unit id="7813064084237500702">
-      <segment state="initial">
-        <source>All <ph id="0" equiv="INTERPOLATION" disp="{{ paginator()?.hits }}"/> issues are currently selected.</source>
-        <target>All <ph id="0" equiv="INTERPOLATION" disp="{{ paginator()?.hits }}"/> issues are currently selected.</target>
+        <source>All <ph id="0" equiv="INTERPOLATION" disp="{{ paginator()?.hits }}"/> matching issues are selected.</source>
+        <target>All <ph id="0" equiv="INTERPOLATION" disp="{{ paginator()?.hits }}"/> matching issues are selected.</target>
       </segment>
     </unit>
     <unit id="7997497639597459089">
@@ -2354,16 +2222,10 @@
         <target> Undo </target>
       </segment>
     </unit>
-    <unit id="7435061610486266714">
-      <segment state="initial">
-        <source> Events </source>
-        <target> Events </target>
-      </segment>
-    </unit>
-    <unit id="7079029906993509129">
-      <segment state="initial">
-        <source>Trend</source>
-        <target>Trend</target>
+    <unit id="1647770775567131539">
+      <segment state="translated">
+        <source>Trend:</source>
+        <target>Tendance :</target>
       </segment>
     </unit>
     <unit id="5696506580783597529">
@@ -2378,16 +2240,16 @@
         <target>Least Frequent</target>
       </segment>
     </unit>
-    <unit id="6924440309066833860">
-      <segment state="initial">
-        <source>Highest Priority</source>
-        <target>Highest Priority</target>
+    <unit id="5779414902367171810">
+      <segment state="translated">
+        <source>Highest priority</source>
+        <target>Priorité la plus haute</target>
       </segment>
     </unit>
-    <unit id="4178492713372346153">
-      <segment state="initial">
-        <source>Lowest Priority</source>
-        <target>Lowest Priority</target>
+    <unit id="2891559742752114171">
+      <segment state="translated">
+        <source>Lowest priority</source>
+        <target>Priorité la plus basse</target>
       </segment>
     </unit>
     <unit id="4029649057038200865">
@@ -2688,30 +2550,6 @@
       <segment state="initial">
         <source>Create organization</source>
         <target>Create organization</target>
-      </segment>
-    </unit>
-    <unit id="1629119505046572784">
-      <segment state="initial">
-        <source>Organization creation is currently disabled</source>
-        <target>Organization creation is currently disabled</target>
-      </segment>
-    </unit>
-    <unit id="8222944238757802324">
-      <segment state="initial">
-        <source> Create organization </source>
-        <target> Create organization </target>
-      </segment>
-    </unit>
-    <unit id="3076687427621376223">
-      <segment state="initial">
-        <source>Organization</source>
-        <target>Organization</target>
-      </segment>
-    </unit>
-    <unit id="2288513108450439427">
-      <segment state="initial">
-        <source>Support</source>
-        <target>Support</target>
       </segment>
     </unit>
     <unit id="1347241542439262355">
@@ -3734,16 +3572,6 @@
         <target>Organization Members</target>
       </segment>
     </unit>
-    <unit id="8453133049989433527">
-      <segment state="initial">
-        <source>
-          <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a mat-flat-button color=&quot;primary&quot; [routerLink]=&quot;[&apos;new&apos;]&quot; [disabled]=&quot;!accessMemberWrite()&quot; &gt;" dispEnd="&lt;/a &gt;">Invite Member</pc>
-        </source>
-        <target>
-          <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a mat-flat-button color=&quot;primary&quot; [routerLink]=&quot;[&apos;new&apos;]&quot; [disabled]=&quot;!accessMemberWrite()&quot; &gt;" dispEnd="&lt;/a &gt;">Invite Member</pc>
-        </target>
-      </segment>
-    </unit>
     <unit id="3008762316154356763">
       <segment state="initial">
         <source> Account Owner </source>
@@ -4344,12 +4172,6 @@
       <segment state="initial">
         <source>Alert <ph id="0" equiv="INTERPOLATION" disp="{{ i + 1 }}"/></source>
         <target>Alert <ph id="0" equiv="INTERPOLATION" disp="{{ i + 1 }}"/></target>
-      </segment>
-    </unit>
-    <unit id="4626870041082080988">
-      <segment state="initial">
-        <source> This alert isn&apos;t being sent anywhere. Select &quot;Add An Alert Recipient&quot; below to get started. </source>
-        <target> This alert isn&apos;t being sent anywhere. Select &quot;Add An Alert Recipient&quot; below to get started. </target>
       </segment>
     </unit>
     <unit id="5557936965735860825">
@@ -5082,18 +4904,6 @@
         <target>Each megabyte of file storage is counted as an event</target>
       </segment>
     </unit>
-    <unit id="4756014564250067539">
-      <segment state="initial">
-        <source>Resolve in next release</source>
-        <target>Resolve in next release</target>
-      </segment>
-    </unit>
-    <unit id="6286501917375397305">
-      <segment state="initial">
-        <source>Mark As</source>
-        <target>Mark As</target>
-      </segment>
-    </unit>
     <unit id="3339635399692804137">
       <segment state="initial">
         <source>To view issues for this project, add yourself to the corresponding team.</source>
@@ -5406,28 +5216,16 @@
         <target>No monitor checks were found.</target>
       </segment>
     </unit>
-    <unit id="7891490867363843855">
+    <unit id="8507842320502214175">
       <segment state="initial">
-        <source> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. This project has no uptime alerts configured, so no notifications will be sent for monitor events. Visit the <pc id="2" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to configure alerts. </source>
-        <target> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. This project has no uptime alerts configured, so no notifications will be sent for monitor events. Visit the <pc id="2" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to configure alerts. </target>
-      </segment>
-    </unit>
-    <unit id="4603043302897985198">
-      <segment state="initial">
-        <source> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. There <ph id="2" equiv="ICU" disp="{uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}" subFlows="1561221854942158918"/> set up for this project. Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to change your alerts. </source>
-        <target> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. There <ph id="2" equiv="ICU" disp="{uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}" subFlows="1561221854942158918"/> set up for this project. Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to change your alerts. </target>
+        <source> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. There <ph id="2" equiv="ICU" disp="{uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}" subFlows="1561221854942158918"/> set up for this project. Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to <ph id="4" equiv="INTERPOLATION_2" disp="{{ canWriteProject() ? &quot;change&quot; : &quot;see&quot; }}"/> your alerts. </source>
+        <target> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. There <ph id="2" equiv="ICU" disp="{uptimeAlertCount(), plural, =1 {is 1 uptime alert} other {are {{ uptimeAlertCount() }} uptime alerts}}" subFlows="1561221854942158918"/> set up for this project. Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to <ph id="4" equiv="INTERPOLATION_2" disp="{{ canWriteProject() ? &quot;change&quot; : &quot;see&quot; }}"/> your alerts. </target>
       </segment>
     </unit>
     <unit id="8325766446982949829">
       <segment state="initial">
         <source>{VAR_PLURAL, plural, =1 {is 1 uptime alert} other {are <ph id="0" equiv="INTERPOLATION"/> uptime alerts}}</source>
         <target>{VAR_PLURAL, plural, =1 {is 1 uptime alert} other {are <ph id="0" equiv="INTERPOLATION"/> uptime alerts}}</target>
-      </segment>
-    </unit>
-    <unit id="2802205481805661386">
-      <segment state="initial">
-        <source> There is no project associated with this monitor, so no notifications will be sent for monitor events. Visit the <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[&apos;./update&apos;]&quot;&gt;" dispEnd="&lt;/a&gt;">monitor settings</pc> page to associate this monitor with a project. </source>
-        <target> There is no project associated with this monitor, so no notifications will be sent for monitor events. Visit the <pc id="0" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[&apos;./update&apos;]&quot;&gt;" dispEnd="&lt;/a&gt;">monitor settings</pc> page to associate this monitor with a project. </target>
       </segment>
     </unit>
     <unit id="14674649579778080">
@@ -5638,6 +5436,564 @@
       <segment state="initial">
         <source>Create a New Uptime Monitor</source>
         <target>Create a New Uptime Monitor</target>
+      </segment>
+    </unit>
+    <unit id="6339199160877142273">
+      <segment state="translated">
+        <source>Steps before it</source>
+        <target>Étapes précédentes</target>
+      </segment>
+    </unit>
+    <unit id="5175148993209341456">
+      <segment state="translated">
+        <source>Security policy report</source>
+        <target>Rapport de politique de sécurité</target>
+      </segment>
+    </unit>
+    <unit id="1341903895269643083">
+      <segment state="translated">
+        <source>Where in the code</source>
+        <target>Où dans le code</target>
+      </segment>
+    </unit>
+    <unit id="6398752392522613511">
+      <segment state="translated">
+        <source>This time</source>
+        <target>Cette fois-ci</target>
+      </segment>
+    </unit>
+    <unit id="4519978959602054033">
+      <segment state="translated">
+        <source>Most common</source>
+        <target>Les plus fréquents</target>
+      </segment>
+    </unit>
+    <unit id="3239474234588340491">
+      <segment state="initial">
+        <source>Fixed in <ph id="0" equiv="INTERPOLATION" disp="{{ release }}"/></source>
+        <target>Fixed in <ph id="0" equiv="INTERPOLATION" disp="{{ release }}"/></target>
+      </segment>
+    </unit>
+    <unit id="7458870133993547687">
+      <segment state="translated">
+        <source>Mark as fixed</source>
+        <target>Marquer comme corrigé</target>
+      </segment>
+    </unit>
+    <unit id="3184916119686126402">
+      <segment state="translated">
+        <source> Mute </source>
+        <target> Mettre en sourdine </target>
+      </segment>
+    </unit>
+    <unit id="4725025947674868033">
+      <segment state="translated">
+        <source> Reopen </source>
+        <target> Rouvrir </target>
+      </segment>
+    </unit>
+    <unit id="117068237894470695">
+      <segment state="translated">
+        <source>More actions</source>
+        <target>Plus d&apos;actions</target>
+      </segment>
+    </unit>
+    <unit id="7390421489602989212">
+      <segment state="translated">
+        <source>Mark as fixed in the next release</source>
+        <target>Marquer comme corrigé dans la prochaine version</target>
+      </segment>
+    </unit>
+    <unit id="2618101617221155143">
+      <segment state="translated">
+        <source>Copy link</source>
+        <target>Copier le lien</target>
+      </segment>
+    </unit>
+    <unit id="431955930085342170">
+      <segment state="translated">
+        <source>Delete issue</source>
+        <target>Supprimer le problème</target>
+      </segment>
+    </unit>
+    <unit id="2088838495759658460">
+      <segment state="translated">
+        <source>What happened</source>
+        <target>Ce qui s&apos;est passé</target>
+      </segment>
+    </unit>
+    <unit id="6501386344990074537">
+      <segment state="initial">
+        <source>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> to <pc id="2" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="3" equiv="ICU_1" disp="{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}" subFlows="7747169762350532375"/></pc> since <pc id="4" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="5" equiv="INTERPOLATION_2" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</source>
+        <target>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> to <pc id="2" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="3" equiv="ICU_1" disp="{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}" subFlows="7747169762350532375"/></pc> since <pc id="4" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="5" equiv="INTERPOLATION_2" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</target>
+      </segment>
+    </unit>
+    <unit id="5376008226368173506">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =1 {once} other {<ph id="0" equiv="INTERPOLATION"/> times}}</source>
+        <target>{VAR_PLURAL, plural, =1 {once} other {<ph id="0" equiv="INTERPOLATION"/> times}}</target>
+      </segment>
+    </unit>
+    <unit id="2548204464334795778">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =1 {1 person} other {<ph id="0" equiv="INTERPOLATION"/> people}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 person} other {<ph id="0" equiv="INTERPOLATION"/> people}}</target>
+      </segment>
+    </unit>
+    <unit id="3875928342499212488">
+      <segment state="initial">
+        <source>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> since <pc id="2" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="3" equiv="INTERPOLATION_1" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</source>
+        <target>This has happened <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="ICU" disp="{issue.count, plural, =1 {once} other {{{ issue.count }} times}}" subFlows="1444858102423966892"/></pc> since <pc id="2" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;issue.firstSeen&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="3" equiv="INTERPOLATION_1" disp="{{ issue.firstSeen | date: &quot;MMM d&quot; }}"/></pc>.</target>
+      </segment>
+    </unit>
+    <unit id="5421076199587087589">
+      <segment state="translated">
+        <source>Times</source>
+        <target>Fois</target>
+      </segment>
+    </unit>
+    <unit id="1294134309093147342">
+      <segment state="translated">
+        <source>People affected</source>
+        <target>Personnes concernées</target>
+      </segment>
+    </unit>
+    <unit id="3326877877555410533">
+      <segment state="translated">
+        <source>Started</source>
+        <target>Commencé</target>
+      </segment>
+    </unit>
+    <unit id="771042789151401304">
+      <segment state="translated">
+        <source>Issue sections</source>
+        <target>Sections du problème</target>
+      </segment>
+    </unit>
+    <unit id="3008670307707760482">
+      <segment state="translated">
+        <source>Technical details</source>
+        <target>Détails techniques</target>
+      </segment>
+    </unit>
+    <unit id="8429316238784832901">
+      <segment state="translated">
+        <source>Feedback</source>
+        <target>Retours</target>
+      </segment>
+    </unit>
+    <unit id="8904685289655594624">
+      <segment state="translated">
+        <source>What to do next</source>
+        <target>Que faire ensuite</target>
+      </segment>
+    </unit>
+    <unit id="1243328179106709524">
+      <segment state="translated">
+        <source>Send it to the person who looks after this code.</source>
+        <target>Envoyez-le à la personne qui s&apos;occupe de ce code.</target>
+      </segment>
+    </unit>
+    <unit id="6143795228406387052">
+      <segment state="translated">
+        <source> Copy link </source>
+        <target> Copier le lien </target>
+      </segment>
+    </unit>
+    <unit id="7180995564793658999">
+      <segment state="initial">
+        <source>Once it is fixed, press <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;">Mark as fixed</pc>. If it happens again, it shows up here as open.</source>
+        <target>Once it is fixed, press <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;">Mark as fixed</pc>. If it happens again, it shows up here as open.</target>
+      </segment>
+    </unit>
+    <unit id="5028777105388019087">
+      <segment state="translated">
+        <source>Details</source>
+        <target>Détails</target>
+      </segment>
+    </unit>
+    <unit id="7647042449918022269">
+      <segment state="translated">
+        <source>Issue ID</source>
+        <target>ID du problème</target>
+      </segment>
+    </unit>
+    <unit id="8117668572148231876">
+      <segment state="translated">
+        <source>Project</source>
+        <target>Projet</target>
+      </segment>
+    </unit>
+    <unit id="4108478337308251505">
+      <segment state="translated">
+        <source>Fixed</source>
+        <target>Corrigé</target>
+      </segment>
+    </unit>
+    <unit id="7593555694782789615">
+      <segment state="translated">
+        <source>Open</source>
+        <target>Ouvert</target>
+      </segment>
+    </unit>
+    <unit id="3959826834147169200">
+      <segment state="translated">
+        <source>Muted</source>
+        <target>En sourdine</target>
+      </segment>
+    </unit>
+    <unit id="892073694820881630">
+      <segment state="translated">
+        <source>Link copied</source>
+        <target>Lien copié</target>
+      </segment>
+    </unit>
+    <unit id="1785835479650673585">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =0 {No <ph id="0" equiv="INTERPOLATION"/> issues} =1 {1 <ph id="1" equiv="INTERPOLATION"/> issue} other {<ph id="2" equiv="INTERPOLATION_1"/> <ph id="3" equiv="INTERPOLATION"/> issues}}</source>
+        <target>{VAR_PLURAL, plural, =0 {No <ph id="0" equiv="INTERPOLATION"/> issues} =1 {1 <ph id="1" equiv="INTERPOLATION"/> issue} other {<ph id="2" equiv="INTERPOLATION_1"/> <ph id="3" equiv="INTERPOLATION"/> issues}}</target>
+      </segment>
+    </unit>
+    <unit id="7909559206885649396">
+      <segment state="initial">
+        <source>The latest happened <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;newest&quot; [title]=&quot;newest | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ newest | daysAgo }}"/></pc>.</source>
+        <target>The latest happened <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [dateTime]=&quot;newest&quot; [title]=&quot;newest | date: &apos;medium&apos;&quot;&gt;" dispEnd="&lt;/time &gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ newest | daysAgo }}"/></pc>.</target>
+      </segment>
+    </unit>
+    <unit id="4332984489129002366">
+      <segment state="translated">
+        <source>Issue status</source>
+        <target>Statut du problème</target>
+      </segment>
+    </unit>
+    <unit id="4495473715837914478">
+      <segment state="translated">
+        <source>Search issues</source>
+        <target>Rechercher des problèmes</target>
+      </segment>
+    </unit>
+    <unit id="6947310957903677385">
+      <segment state="translated">
+        <source>Search by message, or level:error</source>
+        <target>Rechercher par message, ou level:error</target>
+      </segment>
+    </unit>
+    <unit id="5456934191466662376">
+      <segment state="translated">
+        <source>Search tips</source>
+        <target>Astuces de recherche</target>
+      </segment>
+    </unit>
+    <unit id="7980329899677846977">
+      <segment state="translated">
+        <source>Where:</source>
+        <target>Où :</target>
+      </segment>
+    </unit>
+    <unit id="2957614501673079633">
+      <segment state="translated">
+        <source>Sort:</source>
+        <target>Tri :</target>
+      </segment>
+    </unit>
+    <unit id="7905905520193121233">
+      <segment state="translated">
+        <source>Select all issues on this page</source>
+        <target>Sélectionner tous les problèmes de cette page</target>
+      </segment>
+    </unit>
+    <unit id="2494293689061559568">
+      <segment state="translated">
+        <source>Mute</source>
+        <target>Mettre en sourdine</target>
+      </segment>
+    </unit>
+    <unit id="6722197117273372334">
+      <segment state="translated">
+        <source>Reopen</source>
+        <target>Rouvrir</target>
+      </segment>
+    </unit>
+    <unit id="6962718667270436274">
+      <segment state="translated">
+        <source>Merge into one issue</source>
+        <target>Fusionner en un seul problème</target>
+      </segment>
+    </unit>
+    <unit id="2357482879735947487">
+      <segment state="translated">
+        <source>Select issues to fix, mute or merge several at once.</source>
+        <target>Sélectionnez des problèmes pour en corriger, en mettre en sourdine ou en fusionner plusieurs à la fois.</target>
+      </segment>
+    </unit>
+    <unit id="5280218112746407598">
+      <segment state="translated">
+        <source>New</source>
+        <target>Nouveau</target>
+      </segment>
+    </unit>
+    <unit id="8536506877071875924">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =1 {1 time} other {<ph id="0" equiv="INTERPOLATION"/> times}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 time} other {<ph id="0" equiv="INTERPOLATION"/> times}}</target>
+      </segment>
+    </unit>
+    <unit id="1055583240210668114">
+      <segment state="initial">
+        <source>Select all <ph id="0" equiv="INTERPOLATION" disp="{{ hits }}"/> matching issues</source>
+        <target>Select all <ph id="0" equiv="INTERPOLATION" disp="{{ hits }}"/> matching issues</target>
+      </segment>
+    </unit>
+    <unit id="5874794238234631522">
+      <segment state="translated">
+        <source>People</source>
+        <target>Personnes</target>
+      </segment>
+    </unit>
+    <unit id="1514632351136115483">
+      <segment state="translated">
+        <source>Mark fixed</source>
+        <target>Marquer corrigé</target>
+      </segment>
+    </unit>
+    <unit id="5452129511052208861">
+      <segment state="translated">
+        <source>Most recent</source>
+        <target>Les plus récents</target>
+      </segment>
+    </unit>
+    <unit id="7788789394151316565">
+      <segment state="translated">
+        <source>Oldest first</source>
+        <target>Les plus anciens d&apos;abord</target>
+      </segment>
+    </unit>
+    <unit id="9164111277354608745">
+      <segment state="translated">
+        <source>Happens most</source>
+        <target>Les plus fréquents</target>
+      </segment>
+    </unit>
+    <unit id="346455852111662674">
+      <segment state="translated">
+        <source>Happens least</source>
+        <target>Les moins fréquents</target>
+      </segment>
+    </unit>
+    <unit id="9010413891924313175">
+      <segment state="translated">
+        <source>open</source>
+        <target>ouverts</target>
+      </segment>
+    </unit>
+    <unit id="6266615344510674845">
+      <segment state="translated">
+        <source>fixed</source>
+        <target>corrigés</target>
+      </segment>
+    </unit>
+    <unit id="4637468059428262045">
+      <segment state="translated">
+        <source>muted</source>
+        <target>en sourdine</target>
+      </segment>
+    </unit>
+    <unit id="4894343405026152855">
+      <segment state="translated">
+        <source>New to catchnet?</source>
+        <target>Nouveau sur catchnet ?</target>
+      </segment>
+    </unit>
+    <unit id="1973729258428841501">
+      <segment state="translated">
+        <source>Jump to a page or project</source>
+        <target>Aller à une page ou un projet</target>
+      </segment>
+    </unit>
+    <unit id="7175334010878043826">
+      <segment state="initial">
+        <source>Nothing matches “<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>”.</source>
+        <target>Nothing matches “<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>”.</target>
+      </segment>
+    </unit>
+    <unit id="5665024218149019399">
+      <segment state="translated">
+        <source>catchnet home</source>
+        <target>Accueil catchnet</target>
+      </segment>
+    </unit>
+    <unit id="4565555372413614031">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =0 {No projects yet} =1 {1 project} other {<ph id="0" equiv="INTERPOLATION"/> projects}}</source>
+        <target>{VAR_PLURAL, plural, =0 {No projects yet} =1 {1 project} other {<ph id="0" equiv="INTERPOLATION"/> projects}}</target>
+      </segment>
+    </unit>
+    <unit id="3138286897942118726">
+      <segment state="translated">
+        <source>Creating organizations is turned off</source>
+        <target>La création d&apos;organisations est désactivée</target>
+      </segment>
+    </unit>
+    <unit id="2206413257232247685">
+      <segment state="translated">
+        <source>Jump to…</source>
+        <target>Aller à…</target>
+      </segment>
+    </unit>
+    <unit id="3815928829326879804">
+      <segment state="translated">
+        <source>Main</source>
+        <target>Principal</target>
+      </segment>
+    </unit>
+    <unit id="477793794632849846">
+      <segment state="translated">
+        <source>Settings and help</source>
+        <target>Paramètres et aide</target>
+      </segment>
+    </unit>
+    <unit id="7911416166208830577">
+      <segment state="translated">
+        <source>Help</source>
+        <target>Aide</target>
+      </segment>
+    </unit>
+    <unit id="4073760267688290583">
+      <segment state="translated">
+        <source>Your account</source>
+        <target>Votre compte</target>
+      </segment>
+    </unit>
+    <unit id="6330241466560626035">
+      <segment state="initial">
+        <source>catchnet · server <ph id="0" equiv="INTERPOLATION" disp="{{ version() }}"/></source>
+        <target>catchnet · server <ph id="0" equiv="INTERPOLATION" disp="{{ version() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="1144722711335201698">
+      <segment state="translated">
+        <source>Collapse sidebar</source>
+        <target>Replier la barre latérale</target>
+      </segment>
+    </unit>
+    <unit id="827200100431249089">
+      <segment state="translated">
+        <source>Expand sidebar</source>
+        <target>Déplier la barre latérale</target>
+      </segment>
+    </unit>
+    <unit id="1407560924967345762">
+      <segment state="translated">
+        <source>Page</source>
+        <target>Page</target>
+      </segment>
+    </unit>
+    <unit id="8014224611912664829">
+      <segment state="initial">
+        <source>Only organization owners can transfer account ownership.</source>
+        <target>Only organization owners can transfer account ownership.</target>
+      </segment>
+    </unit>
+    <unit id="2174738705830273795">
+      <segment state="initial">
+        <source>Invite Member</source>
+        <target>Invite Member</target>
+      </segment>
+    </unit>
+    <unit id="7658402240953727096">
+      <segment state="initial">
+        <source>Name:</source>
+        <target>Name:</target>
+      </segment>
+    </unit>
+    <unit id="335117862527248159">
+      <segment state="initial">
+        <source>If an event happens <ph id="0" equiv="INTERPOLATION" disp="{{ quantity() }}"/> <ph id="1" equiv="ICU" disp="{quantity(), plural, =1 {time} other {times}}" subFlows="5008579417033317628"/> in <ph id="2" equiv="INTERPOLATION_1" disp="{{ timespan() }}"/> <ph id="3" equiv="ICU_1" disp="{timespan(), plural, =1 {minute} other {minutes}}" subFlows="9191257308058195560"/>, send an alert.</source>
+        <target>If an event happens <ph id="0" equiv="INTERPOLATION" disp="{{ quantity() }}"/> <ph id="1" equiv="ICU" disp="{quantity(), plural, =1 {time} other {times}}" subFlows="5008579417033317628"/> in <ph id="2" equiv="INTERPOLATION_1" disp="{{ timespan() }}"/> <ph id="3" equiv="ICU_1" disp="{timespan(), plural, =1 {minute} other {minutes}}" subFlows="9191257308058195560"/>, send an alert.</target>
+      </segment>
+    </unit>
+    <unit id="2426027944398191739">
+      <segment state="initial">
+        <source>If an uptime monitor detects downtime.</source>
+        <target>If an uptime monitor detects downtime.</target>
+      </segment>
+    </unit>
+    <unit id="1170476787340591422">
+      <segment state="initial">
+        <source>Only in these environments: <ph id="0" equiv="INTERPOLATION" disp="{{ environments()?.join(&quot;, &quot;) }}"/></source>
+        <target>Only in these environments: <ph id="0" equiv="INTERPOLATION" disp="{{ environments()?.join(&quot;, &quot;) }}"/></target>
+      </segment>
+    </unit>
+    <unit id="1983398401066638617">
+      <segment state="initial">
+        <source>This alert isn&apos;t being sent anywhere.</source>
+        <target>This alert isn&apos;t being sent anywhere.</target>
+      </segment>
+    </unit>
+    <unit id="2417381612098826106">
+      <segment state="initial">
+        <source>Select &quot;Add An Alert Recipient&quot; below to get started.</source>
+        <target>Select &quot;Add An Alert Recipient&quot; below to get started.</target>
+      </segment>
+    </unit>
+    <unit id="5247417012054982935">
+      <segment state="translated">
+        <source>Settings sections</source>
+        <target>Sections des paramètres</target>
+      </segment>
+    </unit>
+    <unit id="566779619857361601">
+      <segment state="initial">
+        <source>Changing team settings requires the Admin role or above.</source>
+        <target>Changing team settings requires the Admin role or above.</target>
+      </segment>
+    </unit>
+    <unit id="3988396843447895249">
+      <segment state="initial">
+        <source>You aren&apos;t part of any teams. Join a team below.</source>
+        <target>You aren&apos;t part of any teams. Join a team below.</target>
+      </segment>
+    </unit>
+    <unit id="4996058620223747754">
+      <segment state="initial">
+        <source>You aren&apos;t part of any teams. Press the &quot;Create Team&quot; button in the upper right, or ask an organization Manager or Owner to add you to one.</source>
+        <target>You aren&apos;t part of any teams. Press the &quot;Create Team&quot; button in the upper right, or ask an organization Manager or Owner to add you to one.</target>
+      </segment>
+    </unit>
+    <unit id="3755188974614921924">
+      <segment state="initial">
+        <source>You aren&apos;t part of any teams. Ask an organization Manager or Owner to add you to one.</source>
+        <target>You aren&apos;t part of any teams. Ask an organization Manager or Owner to add you to one.</target>
+      </segment>
+    </unit>
+    <unit id="7015957513839092035">
+      <segment state="initial">
+        <source>Ask an organization Manager or Owner to create one.</source>
+        <target>Ask an organization Manager or Owner to create one.</target>
+      </segment>
+    </unit>
+    <unit id="164308497633977757">
+      <segment state="initial">
+        <source>Ask an organization owner, manager, or admin to create one.</source>
+        <target>Ask an organization owner, manager, or admin to create one.</target>
+      </segment>
+    </unit>
+    <unit id="2554609627485860092">
+      <segment state="initial">
+        <source> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. This project has no uptime alerts configured, so no notifications will be sent for monitor events. <pc id="2" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (canWriteProject()) {" dispEnd="}"> Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to configure alerts. </pc><pc id="4" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ask an organization Admin or above to set them up. </pc></source>
+        <target> This monitor is associated with the <pc id="0" equivStart="START_BOLD_TEXT" equivEnd="CLOSE_BOLD_TEXT" type="fmt" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ monitor.projectName }}"/></pc> project. This project has no uptime alerts configured, so no notifications will be sent for monitor events. <pc id="2" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (canWriteProject()) {" dispEnd="}"> Visit the <pc id="3" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[ &apos;../../settings/projects/&apos;, associatedProjectSlug, ]&quot; &gt;" dispEnd="&lt;/a &gt;">project settings</pc> page to configure alerts. </pc><pc id="4" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ask an organization Admin or above to set them up. </pc></target>
+      </segment>
+    </unit>
+    <unit id="816716477779850241">
+      <segment state="initial">
+        <source> There is no project associated with this monitor, so no notifications will be sent for monitor events. <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (canWriteProject()) {" dispEnd="}"> Visit the <pc id="1" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[&apos;./update&apos;]&quot;&gt;" dispEnd="&lt;/a&gt;">monitor settings</pc> page to associate this monitor with a project. </pc></source>
+        <target> There is no project associated with this monitor, so no notifications will be sent for monitor events. <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (canWriteProject()) {" dispEnd="}"> Visit the <pc id="1" equivStart="START_LINK" equivEnd="CLOSE_LINK" type="link" dispStart="&lt;a [routerLink]=&quot;[&apos;./update&apos;]&quot;&gt;" dispEnd="&lt;/a&gt;">monitor settings</pc> page to associate this monitor with a project. </pc></target>
+      </segment>
+    </unit>
+    <unit id="8234871669027443991">
+      <segment state="initial">
+        <source>Ask an organization Admin or above to add one.</source>
+        <target>Ask an organization Admin or above to add one.</target>
       </segment>
     </unit>
   </file>
