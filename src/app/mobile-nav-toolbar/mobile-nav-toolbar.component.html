@@ -1,10 +1,23 @@
+<!-- Phone and tablet: the sidebar folds into this 48px bar on the frame. -->
 <mat-toolbar (click)="buttonClicked.emit()">
-  <button matIconButton class="sidenav-toggle">
+  <button
+    matIconButton
+    class="sidenav-toggle"
+    i18n-aria-label
+    aria-label="Open navigation"
+  >
     <mat-icon>menu</mat-icon>
   </button>
+  <img
+    class="cn-mobile-bar__mark"
+    src="static/assets/images/catchnet-mark.svg"
+    alt=""
+    width="20"
+    height="20"
+  />
   @if (activeOrg) {
-    <div class="active-org">
-      <span>{{ activeOrg.name }}</span>
-    </div>
+    <span class="cn-mobile-bar__org">{{ activeOrg.name }}</span>
+  } @else {
+    <span class="cn-mobile-bar__org">catchnet</span>
   }
 </mat-toolbar>

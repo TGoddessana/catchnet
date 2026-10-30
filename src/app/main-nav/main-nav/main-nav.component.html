@@ -203,10 +203,20 @@
           i18n-aria-label
           aria-label="Your account"
         >
-          <span class="cn-avatar" aria-hidden="true">{{
-            initial(userEmail())
-          }}</span>
-          <span class="cn-user__email nav-text">{{ userEmail() }}</span>
+          <span class="cn-avatar" aria-hidden="true">
+            @if (userEmail()) {
+              {{ initial(userEmail()) }}
+            } @else {
+              <mat-icon>person</mat-icon>
+            }
+          </span>
+          <span class="cn-user__email nav-text">
+            @if (userEmail()) {
+              {{ userEmail() }}
+            } @else {
+              <ng-container i18n>Your account</ng-container>
+            }
+          </span>
         </button>
         @for (item of profileMenuItems; track item.route) {
           <a [routerLink]="item.route" style="display: none"></a>

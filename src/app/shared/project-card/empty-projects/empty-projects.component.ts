@@ -1,15 +1,15 @@
 import { Component, ChangeDetectionStrategy, input } from "@angular/core";
-import { MatCardModule } from "@angular/material/card";
-import { ProjectCardComponent } from "../project-card.component";
+import { RouterLink } from "@angular/router";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: "gt-empty-projects",
-  imports: [MatCardModule, ProjectCardComponent],
+  imports: [RouterLink, MatButtonModule],
   templateUrl: "./empty-projects.component.html",
-  styleUrls: ["./empty-projects.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmptyProjectsComponent {
   readonly activeOrgOnly = input(false);
   readonly canCreateProject = input(true);
+  readonly orgSlug = input<string>();
 }

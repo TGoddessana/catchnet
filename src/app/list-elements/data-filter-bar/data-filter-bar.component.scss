@@ -1,65 +1,46 @@
 @use "variables" as vars;
 
+// One toolbar row, the same as the issue list's: environment and search on
+// the left (search takes the free width), the trend period and sort on the
+// right, every control 32px. On a phone search takes its own row.
 .data-filter-bar-container {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 15px;
-  gap: 15px;
-
-  @media (max-width: vars.$small - 1) {
-    gap: 10px;
-  }
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-2);
+  margin-bottom: var(--gt-space-2);
 }
 
-.sort-form,
-.environment-form {
-  @media (max-width: vars.$medium - 1) {
-    mat-form-field {
-      width: 170px;
-    }
-  }
-
-  @media (max-width: vars.$small - 1) {
-    mat-form-field {
-      width: 160px;
-    }
-  }
-}
-.search-form {
-  @media (min-width: vars.$small) {
-    mat-form-field {
-      width: 350px;
-    }
-  }
-  @media (min-width: vars.$large) {
-    mat-form-field {
-      width: 450px;
-    }
-  }
-  @media (max-width: vars.$small - 1) {
-    width: 100%;
-    mat-form-field {
-      width: 100%;
-    }
-  }
-}
-
+.left-block,
 .right-block {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 15px;
-}
-
-.stats-period-select {
-  width: 110px;
+  align-items: center;
+  gap: var(--gt-space-2);
 }
 
 .left-block {
-  @media (min-width: vars.$medium) {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
+  flex: 1;
+  min-width: 0;
+}
+
+.environment-form mat-form-field,
+.sort-form mat-form-field {
+  width: 168px;
+}
+
+.search-form {
+  flex: 1;
+  min-width: 220px;
+  max-width: 420px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  @media (max-width: vars.$small - 1) {
+    flex-basis: 100%;
+    max-width: none;
   }
 }

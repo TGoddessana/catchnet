@@ -7,13 +7,16 @@ mat-sidenav-container {
   bottom: 0;
   left: 0;
   right: 0;
+  background: var(--gt-color-background);
 }
 
-// The sidebar is flat paper with a hairline on its right edge. Only the
-// organization switcher, a button, is raised.
+// The app is one tinted frame: the sidebar sits on it with no rule, and the
+// page is a white sheet inset 8px from the window's top, right and bottom
+// edges, with a 1px edge, soft corners and no shadow. Below $nav-fold the
+// frame goes away and the sheet is the screen.
 mat-sidenav {
   width: variables.$side-nav-width;
-  border-right: 1px solid var(--gt-color-border);
+  border-right: none;
   box-shadow: none;
 
   ::ng-deep .mat-drawer-inner-container {
@@ -63,6 +66,22 @@ mat-sidenav {
   }
 }
 
+mat-sidenav-content {
+  box-sizing: border-box;
+  height: calc(100% - 16px);
+  margin: 8px 8px 8px 0;
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-sheet);
+  background: var(--gt-color-surface);
+
+  @media screen and (max-width: variables.$nav-fold - 1) {
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+}
+
 .cn-avatar {
   display: inline-flex;
   flex-shrink: 0;
@@ -77,11 +96,18 @@ mat-sidenav {
   font-weight: var(--gt-weight-strong);
   line-height: 1;
 
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+
   &--accent {
-    width: 26px;
-    height: 26px;
-    background: var(--gt-color-accent-soft);
-    color: var(--gt-color-accent-text);
+    width: 24px;
+    height: 24px;
+    border-radius: var(--gt-radius-control);
+    background: var(--gt-color-active);
+    color: var(--gt-color-text-1);
   }
 
   &--sm {
@@ -97,16 +123,19 @@ mat-sidenav {
   align-items: center;
   gap: 10px;
   width: 100%;
-  height: 48px;
-  padding: 0 10px;
+  height: 44px;
+  padding: 0 8px;
   border: none;
   border-radius: var(--gt-radius-control);
-  background: var(--gt-raised-surface);
-  box-shadow: var(--gt-raised-shadow);
+  background: transparent;
   font: inherit;
   color: var(--gt-color-text-1);
   text-align: left;
   cursor: pointer;
+
+  &:hover {
+    background: var(--gt-color-active);
+  }
 }
 
 .cn-org__text {
@@ -120,8 +149,8 @@ mat-sidenav {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 13px;
-  font-weight: var(--gt-weight-strong);
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
 }
 
 .cn-org__meta {
@@ -146,11 +175,12 @@ mat-sidenav {
   align-items: center;
   gap: var(--gt-space-2);
   height: var(--gt-control-height);
-  margin: var(--gt-space-2) 0;
-  padding: 0 var(--gt-space-3);
+  margin: var(--gt-space-2) 0 var(--gt-space-3);
+  padding: 0 var(--gt-space-2) 0 10px;
   border: none;
   border-radius: var(--gt-radius-control);
-  background: var(--gt-color-subtle);
+  background: var(--gt-color-surface);
+  box-shadow: inset 0 0 0 1px var(--gt-color-border);
   font: inherit;
   font-size: 13px;
   color: var(--gt-color-text-3);
@@ -165,6 +195,7 @@ mat-sidenav {
 
   &:hover {
     color: var(--gt-color-text-2);
+    box-shadow: inset 0 0 0 1px var(--gt-color-control);
   }
 }
 
@@ -175,7 +206,7 @@ mat-sidenav {
 .cn-kbd {
   padding: 1px 6px;
   border-radius: var(--gt-radius-badge);
-  background: var(--gt-color-surface);
+  background: var(--gt-color-subtle);
   font-family: var(--gt-font-ui);
   font-size: 11px;
   color: var(--gt-color-text-3);
@@ -192,8 +223,8 @@ mat-sidenav {
   align-items: center;
   gap: 10px;
   width: 100%;
-  height: var(--gt-control-height);
-  padding: 0 var(--gt-space-3);
+  height: 32px;
+  padding: 0 10px;
   border: none;
   border-radius: var(--gt-radius-control);
   background: transparent;
@@ -207,21 +238,26 @@ mat-sidenav {
 
   mat-icon {
     flex-shrink: 0;
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--gt-color-text-3);
   }
 
   &:hover:not(.is-disabled, :disabled) {
-    background: var(--gt-color-subtle);
+    background: var(--gt-color-active);
     color: var(--gt-color-text-1);
     text-decoration: none;
   }
 
+  // The selected screen: a neutral grey pill, the label and icon in ink.
   &.is-active {
-    background: var(--gt-color-accent-soft);
-    color: var(--gt-color-accent-text);
-    font-weight: var(--gt-weight-strong);
+    background: var(--gt-color-active);
+    color: var(--gt-color-text-1);
+
+    mat-icon {
+      color: var(--gt-color-text-1);
+    }
   }
 
   &.is-disabled,
@@ -237,9 +273,7 @@ mat-sidenav {
 }
 
 .cn-user {
-  margin-top: var(--gt-space-1);
-  padding-top: var(--gt-space-2);
-  border-top: 1px solid var(--gt-color-subtle);
+  margin-top: var(--gt-space-2);
 }
 
 .cn-user__button {
@@ -247,8 +281,8 @@ mat-sidenav {
   align-items: center;
   gap: 10px;
   width: 100%;
-  height: 44px;
-  padding: 0 10px;
+  height: 40px;
+  padding: 0 8px;
   border: none;
   border-radius: var(--gt-radius-control);
   background: transparent;
@@ -259,7 +293,7 @@ mat-sidenav {
 
   &:hover,
   &.is-active {
-    background: var(--gt-color-subtle);
+    background: var(--gt-color-active);
   }
 }
 
@@ -279,7 +313,7 @@ mat-sidenav {
 }
 
 .active-menu-item {
-  background-color: var(--gt-color-subtle);
+  background-color: var(--gt-color-active);
 }
 
 .cn-version {
@@ -308,10 +342,5 @@ mat-sidenav.collapsed {
   .cn-user__button {
     justify-content: center;
     padding: 0;
-  }
-
-  .cn-org {
-    background: transparent;
-    box-shadow: none;
   }
 }

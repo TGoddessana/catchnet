@@ -1,90 +1,81 @@
+<!--
+  Home (every organization) and Projects (the active one) share this screen:
+  a title row with the one action, then one projects table per organization.
+-->
 <section class="l-body">
+  @let orgs = visibleOrgs();
+  @let single = orgs.length === 1 ? orgs[0] : null;
+
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Projects</h1>
+      @if (projectCount() > 0) {
+        <p class="cn-title-row__sub">
+          @if (single) {
+            <ng-container i18n
+              >{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}} in {{ single.name }}</ng-container
+            >
+          } @else {
+            <ng-container i18n
+              >{projectCount(), plural, =1 {1 project} other {{{ projectCount() }} projects}} in {{ orgs.length }} organizations</ng-container
+            >
+          }
+        </p>
+      }
+    </div>
+    @if (single && (!activeOrgOnly || canWriteProject())) {
+      <div class="cn-title-row__actions">
+        <a
+          mat-flat-button
+          [routerLink]="['/', single.slug, 'settings', 'projects', 'new']"
+        >
+          <mat-icon>add</mat-icon>
+          <ng-container i18n>New project</ng-container>
+        </a>
+      </div>
+    }
+  </header>
+
   @if (
     projects().length === 0 &&
     activeOrganization() === undefined &&
     orgServiceInitialLoad()
   ) {
-    <mat-card>
-      <mat-card-content>
-        <p class="body-text" i18n
-          >In order to use GlitchTip, you'll need to create an organization.</p
-        >
-        <a
-          mat-flat-button
-          color="primary"
-          [routerLink]="['/organizations', 'new']"
-          i18n
-          >Create New Organization</a
-        >
-      </mat-card-content>
-    </mat-card>
+    <div class="cn-empty">
+      <p class="cn-empty__text" i18n
+        >To start catching errors, create an organization first.</p
+      >
+      <a mat-flat-button [routerLink]="['/organizations', 'new']" i18n
+        >New organization</a
+      >
+    </div>
   }
-  @for (organization of orgsAndProjects(); track organization.id) {
-    @if (
-      !activeOrgOnly ||
-      (activeOrgOnly && organization.id === activeOrganization()?.id)
-    ) {
-      <section class="org-projects-section">
-        <header class="projects-section-header">
-          <h2 class="section-header-text">
-            @if (activeOrgOnly) {<ng-container i18n>Projects</ng-container>} @else {{{ organization.name }}}
-          </h2>
-          @if (!activeOrgOnly || canWriteProject()) {
-            <a
-              mat-stroked-button
-              [routerLink]="[
-                '/',
-                organization.slug,
-                'settings',
-                'projects',
-                'new',
-              ]"
-              class="new-project-button"
-              i18n
-              >Create new project in {{ organization.name }}
-            </a>
-          }
+
+  @for (organization of orgs; track organization.id) {
+    <section class="cn-org-projects">
+      @if (!single) {
+        <header class="cn-org-projects__head">
+          <h2 class="cn-org-projects__title">{{ organization.name }}</h2>
+          <a
+            mat-stroked-button
+            [routerLink]="['/', organization.slug, 'settings', 'projects', 'new']"
+            i18n
+            >New project</a
+          >
         </header>
-        @if (organization.projects.length === 0) {
-          <gt-empty-projects
-            [activeOrgOnly]="activeOrgOnly"
-            [canCreateProject]="!activeOrgOnly || canWriteProject()"
-          ></gt-empty-projects>
-        }
-        <div>
-          <div class="project-card-wrapper">
-            @for (project of organization.projects; track project) {
-              <gt-project-card
-                [cardLink]="['/', project.organization.slug, 'issues']"
-                [cardLinkQueryParams]="{ project: project.id }"
-                [title]="project.name"
-                [descriptionList]="[
-                  { key: organizationText, value: project.organization.name },
-                  { key: dateCreatedText, value: (project.dateCreated | date)! },
-                ]"
-                [isMember]="project.isMember"
-                [primaryButton]="{
-                  text: issuesText,
-                  icon: 'warning',
-                  query: { project: project.id },
-                  link: [project.organization.slug, 'issues'],
-                }"
-                [secondaryButton]="{
-                  text: settingsText,
-                  icon: 'settings',
-                  link: [
-                    '/',
-                    project.organization.slug,
-                    'settings',
-                    'projects',
-                    project.slug,
-                  ],
-                }"
-              ></gt-project-card>
-            }
-          </div>
-        </div>
-      </section>
-    }
+      }
+      @if (organization.projects.length === 0) {
+        <gt-empty-projects
+          [activeOrgOnly]="activeOrgOnly"
+          [canCreateProject]="!activeOrgOnly || canWriteProject()"
+          [orgSlug]="organization.slug"
+        ></gt-empty-projects>
+      } @else {
+        <gt-project-table
+          [projects]="organization.projects"
+          [orgSlug]="organization.slug"
+        />
+      }
+    </section>
   }
 </section>

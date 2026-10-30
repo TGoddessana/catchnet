@@ -1,0 +1,70 @@
+<table class="cn-projects">
+  <thead>
+    <tr>
+      <th i18n>Project</th>
+      <th class="cn-projects__platform" i18n>Platform</th>
+      <th class="cn-num" i18n>Open issues</th>
+      <th class="cn-num" i18n>Latest issue</th>
+      <th class="cn-num cn-projects__created" i18n>Created</th>
+      <th><span class="u-visually-hidden" i18n>Actions</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (project of projects(); track project.id) {
+      @let stats = activity()[project.id];
+      <tr>
+        <td class="cn-projects__name">
+          @if (project.isMember) {
+            <a
+              [routerLink]="['/', orgSlug(), 'issues']"
+              [queryParams]="{ project: project.id }"
+              >{{ project.name }}</a
+            >
+          } @else {
+            <span [matTooltip]="notMemberTooltip">{{ project.name }}</span>
+            <span class="cn-projects__note" i18n>Not a member</span>
+          }
+        </td>
+        <td class="cn-projects__platform">
+          {{ platformName(project.platform) ?? "—" }}
+        </td>
+        <td class="cn-num">
+          @if (stats) {
+            <span [class.cn-projects__zero]="stats.openIssues === 0">{{
+              stats.openIssues
+            }}</span>
+          } @else {
+            <span class="cn-projects__none">—</span>
+          }
+        </td>
+        <td class="cn-num">
+          @if (stats?.latest; as latest) {
+            <time [dateTime]="latest" [title]="latest | date: 'medium'">{{
+              latest | daysAgo
+            }}</time>
+          } @else {
+            <span class="cn-projects__none">—</span>
+          }
+        </td>
+        <td class="cn-num cn-projects__created">
+          {{ project.dateCreated | date: "yyyy-MM-dd" }}
+        </td>
+        <td class="cn-projects__action">
+          @if (project.slug) {
+            <a
+              [routerLink]="[
+                '/',
+                orgSlug(),
+                'settings',
+                'projects',
+                project.slug,
+              ]"
+              i18n
+              >Settings</a
+            >
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

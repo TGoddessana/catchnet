@@ -5,13 +5,20 @@
 
 // catchnet page header: a large title on the page itself, filters on the
 // right, no bar or hairlines.
+// The title row every list screen opens with: the title and a one-line
+// summary on the left, the screen's own action on the right. It shares the
+// canvas edges of .l-body.
+.list-app-bar {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
 .list-app-bar-primary-content {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gt-space-4);
-  min-height: vars.$top-app-bar-height;
-  align-items: flex-end;
-  padding: var(--gt-space-6) 36px 0;
+  align-items: flex-start;
+  padding: 28px 32px 0;
 }
 
 .left-section,
@@ -22,6 +29,10 @@
 
 .left-section {
   flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
 }
 
 .right-section {
@@ -78,7 +89,7 @@
   // Slightly inconsistent with top-app-bar because
   // vertical space is at a premium
   .list-app-bar-primary-content {
-    padding: var(--gt-space-4) 15px 0;
+    padding: 20px 16px 0;
   }
 
   .project-multiselect-container {

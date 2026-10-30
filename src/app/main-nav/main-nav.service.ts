@@ -26,7 +26,9 @@ export class MainNavService {
   readonly mobileNav = computed(() => this.state().mobileNav);
 
   constructor() {
-    const tabletSize = 768; // same as $tablet for scss
+    // Below this the sidebar folds into the top bar; same as $nav-fold in
+    // _variables.scss.
+    const tabletSize = 1024;
 
     if (window.innerWidth < tabletSize) {
       this.mobileNavSettings();

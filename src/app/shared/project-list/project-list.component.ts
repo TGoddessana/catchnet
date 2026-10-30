@@ -8,32 +8,26 @@ import {
 } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
 import { ProjectsService } from "src/app/projects/projects.service";
-import { ProjectCardComponent } from "../project-card/project-card.component";
+import { MatIconModule } from "@angular/material/icon";
+import { ProjectTable } from "../project-table/project-table";
 import { EmptyProjectsComponent } from "../project-card/empty-projects/empty-projects.component";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "gt-project-list",
   imports: [
     RouterModule,
     MatButtonModule,
-    DatePipe,
-    MatCardModule,
-    ProjectCardComponent,
+    MatIconModule,
     EmptyProjectsComponent,
+    ProjectTable,
   ],
   templateUrl: "./project-list.component.html",
   styleUrls: ["./project-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectListComponent implements OnInit {
-  organizationText = $localize`organization`;
-  dateCreatedText = $localize`date created`;
-  issuesText = $localize`Issues`;
-  settingsText = $localize`Settings`;
   private organizationsService = inject(OrganizationsService);
   private projectsService = inject(ProjectsService);
 
@@ -50,6 +44,14 @@ export class ProjectListComponent implements OnInit {
         (project) => project.organization.id.toString() === organization.id,
       ),
     })),
+  );
+  visibleOrgs = computed(() =>
+    this.orgsAndProjects().filter(
+      (org) => !this.activeOrgOnly || org.id === this.activeOrganization()?.id,
+    ),
+  );
+  projectCount = computed(() =>
+    this.visibleOrgs().reduce((n, org) => n + org.projects.length, 0),
   );
   // Scopes come from one selected org, so only the single-org view is gated.
   canWriteProject = this.organizationsService.canWriteProject;

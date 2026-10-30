@@ -2,11 +2,7 @@
 @use "variables" as vars;
 
 :host {
-  width: 225px;
-
-  @media screen and (max-width: vars.$medium - 1) {
-    flex: 2;
-  }
+  width: 168px;
 }
 
 .project-multiselect-formfield {

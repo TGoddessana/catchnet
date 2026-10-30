@@ -15,19 +15,6 @@
         </a>
       } @else {
         <gt-project-multiselect [queriedProjects]="queriedProjects" />
-        <button
-          matIconButton
-          [disabled]="!singleQueriedProjectSlug()"
-          [routerLink]="[
-            '/',
-            activeOrgSlug(),
-            'settings',
-            'projects',
-            singleQueriedProjectSlug(),
-          ]"
-        >
-          <mat-icon>settings</mat-icon>
-        </button>
       }
     </div>
   }
@@ -49,6 +36,7 @@
         [title]="listTitle()"
         [searchHits]="searchHits()"
       ></gt-list-title>
+      <ng-content select="[slot=summary]" />
     </div>
     @if (activeOrgLoaded()) {
       <div class="right-section">
@@ -64,7 +52,7 @@
             <mat-icon>add</mat-icon>
             <ng-container i18n>Add Project</ng-container>
           </a>
-        } @else {
+        } @else if (inlineFilters()) {
           @if (isLargeScreen()) {
             <ng-container *ngTemplateOutlet="filters" />
           } @else {
@@ -81,7 +69,7 @@
       </div>
     }
   </div>
-  @if (showExpandedFilters()) {
+  @if (inlineFilters() && showExpandedFilters()) {
     <div class="list-app-bar-expanded-content">
       <ng-container *ngTemplateOutlet="filters" />
     </div>

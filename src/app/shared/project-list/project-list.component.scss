@@ -1,25 +1,20 @@
 @use "variables" as vars;
 
-.org-projects-section {
-  margin-bottom: 70px;
+.cn-org-projects + .cn-org-projects {
+  margin-top: var(--gt-space-7);
 }
 
-.projects-section-header {
-  flex-wrap: wrap;
-
-  @media screen and (max-width: vars.$small - 1) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  h2 {
-    margin-right: 16px;
-    margin-bottom: 10px;
-  }
+.cn-org-projects__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  margin-bottom: var(--gt-space-2);
 }
 
-.new-project-button {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.cn-org-projects__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--gt-weight-strong);
 }

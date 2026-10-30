@@ -51,6 +51,11 @@ export class ListAppBar {
   // Determines whether or not to show "add project" button
   // instead of project-multiselect, for when org has no projects
   displayAddProject = input(false);
+  /**
+   * Show the project and time range pickers beside the title. Screens that
+   * keep them in their own toolbar (the issue list) turn this off.
+   */
+  inlineFilters = input(true);
   filtersApplied = computed(() => {
     let count = 0;
     if (this.queriedProjects()?.length) {

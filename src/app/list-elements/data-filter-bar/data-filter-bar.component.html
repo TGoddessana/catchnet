@@ -1,5 +1,5 @@
 @if (sortForm) {
-  <div class="data-filter-bar-container">
+  <div class="data-filter-bar-container cn-scope">
     <!-- Changes position based on screen size -->
     <ng-template #searchFormTemplate>
       @if (searchForm) {
@@ -10,10 +10,13 @@
           data-cy="list-search-form"
         >
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
-            <mat-label i18n>Search</mat-label>
             <input
               matInput
               type="search"
+              i18n-placeholder
+              placeholder="Search"
+              i18n-aria-label
+              aria-label="Search"
               formControlName="query"
               data-cy="list-search-field"
             />
@@ -97,8 +100,11 @@
       @if (environmentForm) {
         <form [formGroup]="environmentForm" class="environment-form">
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
-            <mat-label i18n>Environment</mat-label>
             <mat-select
+              i18n-placeholder
+              placeholder="All environments"
+              i18n-aria-label
+              aria-label="Environment"
               (selectionChange)="filterByEnvironment.emit($event)"
               formControlName="environment"
             >
@@ -138,8 +144,9 @@
       }
       <form [formGroup]="sortForm" class="sort-form">
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label i18n>Sort by</mat-label>
           <mat-select
+            i18n-aria-label
+            aria-label="Sort by"
             (selectionChange)="sortByChanged.emit($event)"
             formControlName="sort"
           >
