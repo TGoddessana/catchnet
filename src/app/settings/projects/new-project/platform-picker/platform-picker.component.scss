@@ -3,7 +3,12 @@
 .heading {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-bottom: var(--gt-space-2);
+
+  mat-form-field {
+    width: 220px;
+  }
 
   @media screen and (max-width: vars.$tablet - 1) {
     flex-direction: column;
@@ -58,13 +63,11 @@ li {
     padding-right: 0;
   }
 
+  // The chosen platform: the active fill and an ink edge.
   button.active {
-    color: var(--mat-sys-primary);
-    border: 1px solid var(--mat-sys-primary);
-  }
-
-  button:focus {
-    border: 1px solid var(--mat-sys-primary);
+    --mat-button-outlined-outline-color: var(--gt-color-text-1);
+    background: var(--gt-color-active) !important;
+    font-weight: var(--gt-weight-strong);
   }
 }
 

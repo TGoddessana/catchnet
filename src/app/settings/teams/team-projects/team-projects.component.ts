@@ -10,11 +10,9 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { ProjectSettingsService } from "../../projects/project-settings.service";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
-import { MatDividerModule } from "@angular/material/divider";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: "gt-team-projects",
@@ -22,12 +20,10 @@ import { MatCardModule } from "@angular/material/card";
   styleUrls: ["./team-projects.component.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatOptionModule,
-    MatDividerModule,
     RouterLink,
     LoadingButtonComponent,
   ],

@@ -1,11 +1,12 @@
 <div class="heading">
-  <div class="text-info">
+  <!-- The surrounding section names and explains the picker. -->
+  <div class="text-info u-visually-hidden">
     <label i18n for="project-picker" class="body-text">Platform</label>
     <p i18n class="caption-text">
       The primary platform for this project. Used for documentation.
     </p>
   </div>
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
     <mat-label i18n>Filter platforms</mat-label>
     <input i18n-aria-label
       #filterInput

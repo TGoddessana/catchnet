@@ -1,132 +1,95 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <h1 class="section-header-text" i18n>Teams</h1>
-  </ng-container>
-  <ng-container slot="right">
-    @if (canWriteTeam()) {
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="openCreateTeamDialog()"
-        id="new-team"
-        i18n
-        >Create Team</button
-      >
-    }
-  </ng-container>
-</gt-top-app-bar>
 <section class="l-body">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n>Your Teams</mat-card-title>
-      <p class="description body-text" i18n
-        >Teams are for managing issue notifications and workflow. View
-        permissions are handled through
-        <a routerLink="../members"> organization membership.</a>
-      </p>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      @if (yourTeams()?.length) {
-        <ul>
-          @if (errors(); as error) {
-            <mat-error class="center-text">{{
-              error.removeTeamMember
-            }}</mat-error>
-          }
-          @for (yourTeam of yourTeams(); track yourTeam) {
-            <li class="team-list-item">
-              <div class="team-list-item-text">
-                <a [routerLink]="[yourTeam.slug, 'members']">
-                  #{{ yourTeam.slug }}
-                </a>
-                <div>
-                  <ng-container i18n>{yourTeam.memberCount, plural, =1 {1 Member} other {{{ yourTeam.memberCount }} Members}}</ng-container>
-                </div>
-              </div>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Teams</h1>
+      <p class="cn-title-row__sub" i18n
+        >Teams decide which projects people see and who hears about their
+        issues.</p
+      >
+    </div>
+    @if (canWriteTeam()) {
+      <div class="cn-title-row__actions">
+        <button mat-flat-button (click)="openCreateTeamDialog()" id="new-team">
+          <mat-icon>add</mat-icon>
+          <ng-container i18n>New team</ng-container>
+        </button>
+      </div>
+    }
+  </header>
+
+  @if (errors(); as error) {
+    @if (error.removeTeamMember || error.addTeamMember) {
+      <mat-error class="cn-teams__error">{{
+        error.removeTeamMember || error.addTeamMember
+      }}</mat-error>
+    }
+  }
+
+  @if (yourTeams()?.length || otherTeams()?.length) {
+    <table class="cn-table">
+      <thead>
+        <tr>
+          <th i18n>Team</th>
+          <th class="cn-table__num" i18n>Members</th>
+          <th><span class="u-visually-hidden" i18n>Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (yourTeam of yourTeams(); track yourTeam) {
+          <tr>
+            <td class="cn-table__main">
+              <a [routerLink]="[yourTeam.slug, 'members']">#{{ yourTeam.slug }}</a>
+              <span class="cn-badge cn-teams__mine" i18n>You're in it</span>
+            </td>
+            <td class="cn-table__num">{{ yourTeam.memberCount }}</td>
+            <td class="cn-table__actions">
               @if (canLeaveTeam()) {
                 <gt-loading-button i18n-buttonText
-                  buttonText="Leave Team"
+                  buttonText="Leave"
                   buttonStyle="stroked"
                   [loading]="loading().removeTeamMember === yourTeam.slug"
                   (buttonClick)="leaveTeam(yourTeam.slug)"
                   id="leave-team"
                 ></gt-loading-button>
               }
-            </li>
-          }
-        </ul>
-      } @else {
-        @if (otherTeams()?.length) {
-          @if (canWriteTeam() && canJoinTeam()) {
-            <p i18n
-              >You aren't part of any teams. Join a team below or press the
-              "Create Team" button in the upper right.</p
-            >
-          } @else if (canJoinTeam()) {
-            <p i18n>You aren't part of any teams. Join a team below.</p>
-          } @else if (canWriteTeam()) {
-            <p i18n
-              >You aren't part of any teams. Press the "Create Team" button in
-              the upper right, or ask an organization Manager or Owner to add
-              you to one.</p
-            >
-          } @else {
-            <p i18n
-              >You aren't part of any teams. Ask an organization Manager or
-              Owner to add you to one.</p
-            >
-          }
-        } @else {
-          <p i18n
-            >You don't have any teams set up. Teams determine which users have
-            access to projects in your organization.</p
-          >
-          @if (canWriteTeam()) {
-            <p i18n
-              >To create a new team, press the "Create Team" button in the upper
-              right.</p
-            >
-          } @else {
-            <p i18n>Ask an organization Manager or Owner to create one.</p>
-          }
+            </td>
+          </tr>
         }
-      }
-    </mat-card-content>
-  </mat-card>
-
-  @if (otherTeams()?.length) {
-    <mat-card>
-      <mat-card-title i18n>Other Teams</mat-card-title>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <ul>
-          @if (errors(); as error) {
-            <mat-error class="center-text">{{ error.addTeamMember }}</mat-error>
-          }
-          @for (otherTeam of otherTeams(); track otherTeam) {
-            <li class="team-list-item">
-              <div class="team-list-item-text">
-                <a [routerLink]="[otherTeam.slug, 'members']">
-                  #{{ otherTeam.slug }}
-                </a>
-                <div>
-                  <ng-container i18n>{otherTeam.memberCount, plural, =1 {1 Member} other {{{ otherTeam.memberCount }} Members}}</ng-container>
-                </div>
-              </div>
+        @for (otherTeam of otherTeams(); track otherTeam) {
+          <tr>
+            <td class="cn-table__main">
+              <a [routerLink]="[otherTeam.slug, 'members']">#{{ otherTeam.slug }}</a>
+            </td>
+            <td class="cn-table__num">{{ otherTeam.memberCount }}</td>
+            <td class="cn-table__actions">
               @if (canJoinTeam()) {
                 <gt-loading-button i18n-buttonText
-                  buttonText="Join Team"
+                  buttonText="Join"
                   buttonStyle="stroked"
                   [loading]="loading().addTeamMember === otherTeam.slug"
                   (buttonClick)="joinTeam(otherTeam.slug)"
-                  id="leave-team"
+                  id="join-team"
                 ></gt-loading-button>
               }
-            </li>
-          }
-        </ul>
-      </mat-card-content>
-    </mat-card>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="cn-empty">
+      <p class="cn-empty__text">
+        @if (canWriteTeam()) {
+          <ng-container i18n
+            >No teams yet. Create one to group people around projects.</ng-container
+          >
+        } @else {
+          <ng-container i18n
+            >No teams yet. Ask an organization manager or owner to create
+            one.</ng-container
+          >
+        }
+      </p>
+    </div>
   }
 </section>

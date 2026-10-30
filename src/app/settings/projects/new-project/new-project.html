@@ -1,84 +1,117 @@
 <section class="l-body">
-  <header class="page-header">
-    <h1 i18n class="section-header-text">Create a New Project</h1>
-  </header>
-  <mat-card>
-    <mat-card-content>
-      <form
-        [formGroup]="form"
-        (ngSubmit)="onSubmit()"
-        data-cy="create-project-form"
+  <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+    <a routerLink="../" i18n>Projects</a>
+    <span aria-hidden="true">/</span>
+    <span i18n>New</span>
+  </nav>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>New project</h1>
+      <p class="cn-title-row__sub" i18n
+        >A project collects the errors of one app or service. You get its setup
+        code right after.</p
       >
-        <div class="form-center">
-          @if (error()) {
-            <mat-error>{{ error() }}</mat-error>
-          }
-          <gt-platform-picker
-            formControlName="platform"
-          ></gt-platform-picker>
-          <mat-form-field class="project-name" appearance="outline">
-            <mat-label i18n>Name</mat-label>
-            <input matInput formControlName="name" />
+    </div>
+  </header>
+
+  <form
+    class="cn-settings"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    data-cy="create-project-form"
+  >
+    @if (error()) {
+      <mat-error class="cn-new-project__error">{{ error() }}</mat-error>
+    }
+    <section class="cn-settings-section">
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Platform</h2>
+        <p class="cn-settings-section__text" i18n
+          >What the app is written in. It picks the setup guide.</p
+        >
+      </div>
+      <div class="cn-settings-section__body">
+        <gt-platform-picker formControlName="platform"></gt-platform-picker>
+      </div>
+    </section>
+    <section class="cn-settings-section">
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Name</h2>
+        <p class="cn-settings-section__text" i18n
+          >Usually the app's name, such as web or billing-api.</p
+        >
+      </div>
+      <div class="cn-settings-section__body">
+        <mat-form-field class="project-name" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n>Name</mat-label>
+          <input matInput formControlName="name" />
+          <mat-error>
+            @if (name?.errors?.required) {
+              <span i18n data-cy="project-name-error-required"
+                >Enter a project name</span
+              >
+            }
+            @if (name?.errors?.maxlength) {
+              <span i18n data-cy="project-name-error-length"
+                >Name must be 64 characters or less</span
+              >
+            }
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </section>
+    <section class="cn-settings-section">
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Team</h2>
+        <p class="cn-settings-section__text" i18n
+          >The team that sees this project's issues and gets its alerts.</p
+        >
+      </div>
+      <div class="cn-settings-section__body">
+        <div class="teams">
+        @if (teams(); as teams) {
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-select
+              (click)="teams.length ? undefined : openCreateTeamDialog()"
+              [placeholder]="
+                teams.length ? assignTeamText : createTeamText
+              "
+              formControlName="team"
+            >
+              @for (team of teams; track team) {
+                <mat-option [value]="team.slug">
+                  {{ team.slug }}
+                </mat-option>
+              }
+            </mat-select>
             <mat-error>
               @if (name?.errors?.required) {
-                <span i18n data-cy="project-name-error-required"
-                  >Enter a project name</span
-                >
-              }
-              @if (name?.errors?.maxlength) {
-                <span i18n data-cy="project-name-error-length"
-                  >Name must be 64 characters or less</span
-                >
+                <span i18n>Add a team to this project</span>
               }
             </mat-error>
           </mat-form-field>
-          <div class="teams">
-            @if (teams(); as teams) {
-              <mat-form-field appearance="outline">
-                <mat-select
-                  (click)="teams.length ? undefined : openCreateTeamDialog()"
-                  [placeholder]="
-                    teams.length ? assignTeamText : createTeamText
-                  "
-                  formControlName="team"
-                >
-                  @for (team of teams; track team) {
-                    <mat-option [value]="team.slug">
-                      {{ team.slug }}
-                    </mat-option>
-                  }
-                </mat-select>
-                <mat-error>
-                  @if (name?.errors?.required) {
-                    <span i18n>Add a team to this project</span>
-                  }
-                </mat-error>
-                <mat-hint i18n>
-                  Teams are for managing issue notifications and workflow.
-                </mat-hint>
-              </mat-form-field>
-            }
+        }
 
-            <button i18n-aria-label i18n-matTooltip
-              mat-icon-button
-              class="icon-button-shift"
-              aria-label="Add a team"
-              (click)="openCreateTeamDialog()"
-              id="create-team-from-projects"
-              matTooltip="Create a new team for this project"
-              matTooltipPosition="above"
-              type="button"
-            >
-              <mat-icon>add_circle_outline</mat-icon>
-            </button>
-          </div>
+          <button
+            mat-button
+            type="button"
+            (click)="openCreateTeamDialog()"
+            id="create-team-from-projects"
+          >
+            <mat-icon>add</mat-icon>
+            <ng-container i18n>New team</ng-container>
+          </button>
         </div>
-        <gt-loading-button i18n-buttonText
-          data-cy="create-project-submit"
-          [loading]="loading()"
-          buttonText="Create Project"
-        >
-        </gt-loading-button>
-      </form> </mat-card-content
-  ></mat-card>
+        <div class="cn-settings-section__footer">
+          <a mat-button routerLink="../" i18n>Cancel</a>
+          <gt-loading-button i18n-buttonText
+            data-cy="create-project-submit"
+            [loading]="loading()"
+            buttonText="Create project"
+          >
+          </gt-loading-button>
+        </div>
+      </div>
+    </section>
+  </form>
 </section>

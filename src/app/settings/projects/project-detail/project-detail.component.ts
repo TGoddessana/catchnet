@@ -33,15 +33,11 @@ import { CopyInputComponent } from "../../../shared/copy-input/copy-input.compon
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
-import { DetailHeaderComponent } from "src/app/shared/detail/header/header.component";
 import { ProjectDetailService } from "./project-detail.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import { BackLinkComponent } from "src/app/shared/detail/back-link/back-link.component";
 import { MatIconModule } from "@angular/material/icon";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
+import { DatePipe } from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 
@@ -72,10 +68,9 @@ class CustomErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: "./project-detail.component.html",
   styleUrls: ["./project-detail.component.scss"],
   imports: [
+    DatePipe,
     MatInputModule,
     MatAutocompleteModule,
-    MatCardModule,
-    MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -85,9 +80,6 @@ class CustomErrorStateMatcher implements ErrorStateMatcher {
     ProjectAlertsComponent,
     MatButtonModule,
     RouterLink,
-    DetailHeaderComponent,
-    BackLinkComponent,
-    TopAppBar,
   ],
   providers: [
     ProjectDetailService,

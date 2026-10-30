@@ -13,18 +13,17 @@ import {
   ValidationErrors,
   ReactiveFormsModule,
 } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { map } from "rxjs/operators";
 import { OrganizationDetailService } from "src/app/api/organizations/organization-detail.service";
 import { SettingsService } from "src/app/api/settings.service";
+import { MatButtonModule } from "@angular/material/button";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 
 /** Custom validator to vaildate emails separated by commas */
 function validateEmails(emails: string) {
@@ -53,8 +52,8 @@ function emailsValidator(control: AbstractControl): ValidationErrors | null {
   styleUrls: ["./new-member.component.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
-    MatDividerModule,
+    MatButtonModule,
+    RouterLink,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

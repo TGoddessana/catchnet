@@ -8,21 +8,13 @@ import {
 import { ProjectEnvironmentsService } from "./project-environments.service";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { LoadingButtonComponent } from "../../../../shared/loading-button/loading-button.component";
-import { MatListModule } from "@angular/material/list";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: "gt-project-environments",
   templateUrl: "./project-environments.html",
   styleUrls: ["./project-environments.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    MatCardModule,
-    MatDividerModule,
-    MatListModule,
-    LoadingButtonComponent,
-  ],
+  imports: [LoadingButtonComponent],
   providers: [ProjectEnvironmentsService],
 })
 export class ProjectEnvironments implements OnInit {

@@ -1,3 +1,4 @@
+import { MatIconModule } from "@angular/material/icon";
 import {
   Component,
   ChangeDetectionStrategy,
@@ -10,13 +11,9 @@ import { OrganizationDetailService } from "src/app/api/organizations/organizatio
 import { MembersService } from "src/app/settings/members/members.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { LoadingButtonComponent } from "../../shared/loading-button/loading-button.component";
-import { MatChipsModule } from "@angular/material/chips";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { components } from "src/app/api/api-schema";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 
@@ -28,14 +25,11 @@ type Member = components["schemas"]["OrganizationUserSchema"];
   styleUrls: ["./members.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    MatIconModule,
     MatButtonModule,
     RouterLink,
-    MatCardModule,
-    MatDividerModule,
-    MatChipsModule,
     LoadingButtonComponent,
     MatTooltipModule,
-    TopAppBar,
   ],
   providers: [MembersService],
 })

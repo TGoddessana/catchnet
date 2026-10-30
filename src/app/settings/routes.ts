@@ -34,6 +34,7 @@ export default [
             path: ":team-slug",
             component: TeamDetailsComponent,
             children: [
+              { path: "", redirectTo: "members", pathMatch: "full" },
               { path: "members", component: TeamMembersComponent },
               { path: "projects", component: TeamProjectsComponent },
               { path: "settings", component: TeamSettingsComponent },

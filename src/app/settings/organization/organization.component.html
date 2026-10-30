@@ -1,73 +1,88 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <h1 i18n class="section-header-text">General Settings</h1>
-  </ng-container>
-</gt-top-app-bar>
 <section class="l-body">
   @if (activeOrganizationDetail(); as activeOrg) {
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n>General</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
+    <header class="cn-title-row">
+      <div class="cn-title-row__text">
+        <h1 class="cn-page-title" i18n>General</h1>
+        <p class="cn-title-row__sub" i18n
+          >Settings for the {{ activeOrg.name }} organization.</p
+        >
+      </div>
+    </header>
+
+    <div class="cn-settings">
+      <section class="cn-settings-section">
+        <div>
+          <h2 class="cn-settings-section__title" i18n>Name</h2>
+          <p class="cn-settings-section__text" i18n
+            >Shown in the sidebar and in emails catchnet sends.</p
+          >
+        </div>
         @if (canWriteOrg()) {
-          <form [formGroup]="form" (ngSubmit)="updateOrganization()">
-            <mat-form-field appearance="outline">
+          <form
+            class="cn-settings-section__body"
+            [formGroup]="form"
+            (ngSubmit)="updateOrganization()"
+          >
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label i18n>Name</mat-label>
               <input matInput formControlName="name" [value]="activeOrg.name" />
             </mat-form-field>
-            <gt-loading-button i18n-buttonText
-              [disabled]="name?.value === activeOrg.name"
-              [loading]="loading().updateOrganization"
-              mat-flat-button
-              color="primary"
-              buttonText="Update Name"
-              id="update-org"
-            >
-            </gt-loading-button>
+            @if (errors().updateOrganization) {
+              <mat-error>{{ errors().updateOrganization }}</mat-error>
+            }
+            <div class="cn-settings-section__footer">
+              <gt-loading-button i18n-buttonText
+                [disabled]="name?.value === activeOrg.name"
+                [loading]="loading().updateOrganization"
+                buttonText="Save"
+                id="update-org"
+              >
+              </gt-loading-button>
+            </div>
           </form>
-          @if (errors().updateOrganization) {
-            <mat-error>{{ errors().updateOrganization }}</mat-error>
-          }
         } @else {
-          <p class="body-text">
-            <span class="body-text-strong" i18n>Name:</span>
-            {{ activeOrg.name }}
-          </p>
+          <div class="cn-settings-section__body">
+            <dl class="cn-kv">
+              <div>
+                <dt i18n>Name</dt>
+                <dd>{{ activeOrg.name }}</dd>
+              </div>
+            </dl>
+          </div>
         }
-      </mat-card-content>
-    </mat-card>
-    @if (canAdminOrg()) {
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title i18n>Delete Organization</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content class="remove-content">
+      </section>
+
+      @if (canAdminOrg()) {
+        <section class="cn-settings-section cn-settings-section--danger">
           <div>
-            <p i18n>
-              By deleting this organization, you will lose all data including
-              projects and their associated events.
-            </p>
+            <h2 class="cn-settings-section__title" i18n>Delete organization</h2>
+            <p class="cn-settings-section__text" i18n
+              >Removes every project, issue and event in it. This cannot be
+              undone.</p
+            >
+          </div>
+          <div class="cn-settings-section__body">
+            <div class="cn-settings-section__row">
+              <p class="cn-settings-section__text" i18n
+                >Delete {{ activeOrg.name }} and everything in it.</p
+              >
+              <gt-loading-button i18n-buttonText
+                class="cn-danger-button"
+                buttonStyle="stroked"
+                data-test
+                buttonText="Delete organization"
+                [loading]="loading().deleteOrganization"
+                (buttonClick)="removeOrganization(activeOrg.slug, activeOrg.name)"
+                id="delete-org"
+              >
+              </gt-loading-button>
+            </div>
             @if (errors().deleteOrganization) {
               <mat-error>{{ errors().deleteOrganization }}</mat-error>
             }
           </div>
-          <gt-loading-button i18n-buttonText
-            buttonStyle="stroked"
-            color="warn"
-            data-test
-            buttonText="Delete Organization"
-            buttonStyle="stroked"
-            color="warn"
-            [loading]="loading().deleteOrganization"
-            (buttonClick)="removeOrganization(activeOrg.slug, activeOrg.name)"
-            id="delete-org"
-          >
-          </gt-loading-button>
-        </mat-card-content>
-      </mat-card>
-    }
+        </section>
+      }
+    </div>
   }
 </section>

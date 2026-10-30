@@ -12,12 +12,9 @@ import { LoadingButtonComponent } from "../../shared/loading-button/loading-butt
 import { MatDialog } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 
 @Component({
   selector: "gt-organization",
@@ -25,13 +22,10 @@ import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
   styleUrls: ["./organization.component.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
-    MatDividerModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     LoadingButtonComponent,
-    TopAppBar,
   ],
 })
 export class OrganizationComponent implements OnDestroy, OnInit {

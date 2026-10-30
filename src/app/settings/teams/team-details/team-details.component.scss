@@ -1,6 +1,7 @@
-@use "@angular/material" as mat;
+.cn-team__head {
+  margin-bottom: var(--gt-space-4);
+}
 
-nav {
-  border-bottom: 1px solid
-    var(--gt-color-border);
+.cn-team__tabs {
+  margin-bottom: var(--gt-space-5);
 }

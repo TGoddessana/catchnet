@@ -23,7 +23,6 @@ import {
   SubscriptionState,
 } from "src/app/api/subscriptions/subscription.service";
 import { StatefulComponent } from "src/app/shared/stateful-service/signal-state.component";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 import { UpgradeBannerComponent } from "src/app/shared/upgrade-banner/upgrade-banner.component";
 import { environment } from "../../../environments/environment";
 import { PaymentComponent } from "./payment/payment.component";
@@ -39,7 +38,6 @@ import { SubscriptionChartsComponent } from "./subscription-charts/subscription-
   styleUrls: ["./subscription.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    TopAppBar,
     MatCardModule,
     RouterLink,
     MatButtonModule,

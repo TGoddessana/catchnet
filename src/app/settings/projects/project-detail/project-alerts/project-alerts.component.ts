@@ -19,7 +19,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
 import { components } from "src/app/api/api-schema";
 import { NewRecipientComponent } from "./new-recipient/new-recipient.component";
 import { RecipientType } from "src/app/api/projects/project-alerts/project-alerts.interface";
@@ -43,7 +42,6 @@ export function resolveRecipientIcon(type: RecipientType): string {
   templateUrl: "./project-alerts.component.html",
   styleUrls: ["./project-alerts.component.scss"],
   imports: [
-    MatCardModule,
     MatButtonModule,
     MatDialogModule,
     MatDividerModule,

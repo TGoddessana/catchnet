@@ -1,41 +1,98 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <gt-back-link i18n-backLinkText backLinkText="Back to Projects" />
-  </ng-container>
-</gt-top-app-bar>
-
 @if (activeProject(); as project) {
+  <!--
+    One settings section per topic, most needed first: the setup code a new
+    project is opened for, then name and platform, environments, alerts and
+    personal notifications. Deleting the project comes last.
+  -->
   <section class="l-body">
-    <gt-detail-header [title]="settingsFor(project.name)" />
+    <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
+      <a [routerLink]="['..']" i18n>Projects</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ project.name }}</span>
+    </nav>
+    <header class="cn-title-row">
+      <div class="cn-title-row__text">
+        <h1 class="cn-page-title">{{ project.name }}</h1>
+        <p class="cn-title-row__sub">
+          @if (project.platform) {
+            {{ getPlatformName(project.platform) }} ·
+          }
+          <ng-container i18n
+            >Created {{ project.dateCreated | date: "mediumDate" }}</ng-container
+          >
+        </p>
+      </div>
+      @if (project.isMember) {
+        <div class="cn-title-row__actions">
+          <a
+            mat-stroked-button
+            [routerLink]="['/', orgSlug(), 'issues']"
+            [queryParams]="{ project: project.id }"
+            i18n
+            >View issues</a
+          >
+        </div>
+      }
+    </header>
+
     @if (project.isMember === false) {
-      <mat-card
-        ><mat-card-content class="note-padding">
-          <p class="body-text-strong" i18n>Note</p>
-          <p i18n>
-            Because you are an admin for {{ project.organization.name }}, you
-            have access to all of its projects. However, if you want to view
-            issues for {{ project.name }}, you must be a member of one of its
-            teams.
-          </p></mat-card-content
-        ></mat-card
+      <p class="cn-notice" i18n
+        >You can change this project's settings because you are an admin of
+        {{ project.organization.name }}. To see its issues, join one of its
+        teams.</p
       >
     }
-    @if (canWriteProject()) {
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title i18n>Update Project</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          @if (updateNameError()) {
-            <mat-error class="server-error">{{ updateNameError() }}</mat-error>
-          }
+
+    <div class="cn-settings">
+      @for (projectKey of projectKeys() || []; track projectKey) {
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Setup code</h2>
+            <p class="cn-settings-section__text" i18n
+              >Install an SDK in your app and give it this DSN, so it knows
+              where to send errors.</p
+            >
+            @if (project.platform) {
+              <a
+                class="cn-settings-link"
+                href="https://glitchtip.com/sdkdocs/{{ project.platform }}"
+                target="_blank"
+                rel="noopener"
+                i18n
+                >Setup guide for {{ getPlatformName(project.platform) }}</a
+              >
+            }
+          </div>
+          <div class="cn-settings-section__body">
+            <gt-copy-input
+              [value]="projectKey.dsn.public"
+              placeholder="DSN"
+            ></gt-copy-input>
+            <gt-copy-input i18n-placeholder
+              [value]="projectKey.dsn.security"
+              placeholder="Security endpoint"
+            ></gt-copy-input>
+          </div>
+        </section>
+      }
+
+      @if (canWriteProject()) {
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Name</h2>
+            <p class="cn-settings-section__text" i18n
+              >Shown in lists and filters across catchnet.</p
+            >
+          </div>
           <form
+            class="cn-settings-section__body"
             [formGroup]="nameForm"
             (ngSubmit)="updateName()"
-            class="project-form"
           >
-            <mat-form-field appearance="outline">
+            @if (updateNameError()) {
+              <mat-error class="server-error">{{ updateNameError() }}</mat-error>
+            }
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label i18n>Name</mat-label>
               <input matInput formControlName="name" [value]="project.name" />
               <mat-error>
@@ -51,24 +108,36 @@
                 }
               </mat-error>
             </mat-form-field>
-            <gt-loading-button i18n-buttonText
-              [disabled]="name?.value === project.name"
-              buttonText="Update Name"
-              id="update-project-name"
-            >
-            </gt-loading-button>
+            <div class="cn-settings-section__footer">
+              <gt-loading-button i18n-buttonText
+                [disabled]="name?.value === project.name"
+                buttonText="Save"
+                id="update-project-name"
+              >
+              </gt-loading-button>
+            </div>
           </form>
-          @if (updatePlatformError()) {
-            <mat-error class="server-error">
-              {{ updatePlatformError() }}
-            </mat-error>
-          }
+        </section>
+
+        <section class="cn-settings-section">
+          <div>
+            <h2 class="cn-settings-section__title" i18n>Platform</h2>
+            <p class="cn-settings-section__text" i18n
+              >The language or framework the project runs on. It picks the
+              setup guide above.</p
+            >
+          </div>
           <form
+            class="cn-settings-section__body"
             [formGroup]="platformForm"
             (ngSubmit)="updatePlatform(project.name)"
-            class="platform-form"
           >
-            <mat-form-field class="platform-form-field" appearance="outline">
+            @if (updatePlatformError()) {
+              <mat-error class="server-error">
+                {{ updatePlatformError() }}
+              </mat-error>
+            }
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label i18n>Platform</mat-label>
               <input
                 data-cy="platform-input"
@@ -84,6 +153,8 @@
                 mat-icon-button
                 matSuffix
                 type="button"
+                i18n-aria-label
+                aria-label="Clear platform"
                 (click)="clearFilter()"
               >
                 <mat-icon>close</mat-icon>
@@ -102,104 +173,73 @@
                 <mat-error i18n>Select a valid platform</mat-error>
               }
             </mat-form-field>
-            <div class="docs-and-submit-container">
-              @if (platformCtrl && platformCtrl.value !== "") {
-                <a
-                  href="https://glitchtip.com/sdkdocs/{{ platformCtrl.value }}"
-                  target="_blank"
-                  i18n
-                >
-                  Platform Documentation
-                </a>
-              }
+            <div class="cn-settings-section__footer">
               <gt-loading-button i18n-buttonText
                 [disabled]="
                   platformCtrl.value === project.platform ||
                   platformCtrl.invalid
                 "
-                buttonText="Update Platform"
+                buttonText="Save"
                 id="update-project-platform"
               >
               </gt-loading-button>
             </div>
           </form>
-        </mat-card-content>
-      </mat-card>
-    }
-    @for (projectKey of projectKeys() || []; track projectKey) {
-      <mat-card>
-        <mat-card-header class="vertical-card-header">
-          <mat-card-title i18n>Client Keys (DSN)</mat-card-title>
-          <p class="caption-text" i18n>
-            Data Source Name: The code that connects your project to GlitchTip.
-            Install a library into your project, then configure it with the DSN
-            so that it knows how to send errors to your GlitchTip account.
-          </p>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          <gt-copy-input
-            [value]="projectKey.dsn.public"
-            placeholder="DSN"
-          ></gt-copy-input>
-          <gt-copy-input i18n-placeholder
-            [value]="projectKey.dsn.security"
-            placeholder="Security Endpoint"
-          ></gt-copy-input>
-        </mat-card-content>
-      </mat-card>
-    }
-    <gt-project-environments
-      [orgSlug]="orgSlug()"
-      [projectSlug]="projectSlug()"
-    ></gt-project-environments>
-    <gt-project-alerts
-      [orgSlug]="orgSlug()"
-      [projectSlug]="projectSlug()"
-    ></gt-project-alerts>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n>Personal Project Notifications</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content class="remove-content">
+        </section>
+      }
+
+      <gt-project-environments
+        [orgSlug]="orgSlug()"
+        [projectSlug]="projectSlug()"
+      ></gt-project-environments>
+      <gt-project-alerts
+        [orgSlug]="orgSlug()"
+        [projectSlug]="projectSlug()"
+      ></gt-project-alerts>
+
+      <section class="cn-settings-section">
         <div>
-          <p i18n
-            >Edit whether or not you want to receive notifications for this
-            project</p
+          <h2 class="cn-settings-section__title" i18n>Your notifications</h2>
+          <p class="cn-settings-section__text" i18n
+            >Whether you get emails about this project is set in your
+            account.</p
           >
         </div>
-        <div>
+        <div class="cn-settings-section__body cn-settings-section__row">
+          <p class="cn-settings-section__text" i18n
+            >Notification settings apply per project.</p
+          >
           <a mat-stroked-button routerLink="/profile/notifications" i18n
-            >Edit Preferences</a
+            >Open notification settings</a
           >
         </div>
-      </mat-card-content>
-    </mat-card>
-    @if (canAdminProject()) {
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title i18n>Delete Project</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content class="remove-content">
+      </section>
+
+      @if (canAdminProject()) {
+        <section class="cn-settings-section cn-settings-section--danger">
           <div>
-            <p i18n
-              >By deleting your project, you will lose all associated data. This
-              cannot be undone.</p
+            <h2 class="cn-settings-section__title" i18n>Delete project</h2>
+            <p class="cn-settings-section__text" i18n
+              >Removes the project with all its issues and events. This cannot
+              be undone.</p
             >
           </div>
-          <gt-loading-button i18n-buttonText
-            buttonText="Delete Project"
-            buttonStyle="stroked"
-            color="warn"
-            [loading]="deleteLoading()"
-            (buttonClick)="deleteProject()"
-            id="delete-project"
-          >
-          </gt-loading-button>
-        </mat-card-content>
-      </mat-card>
-    }
+          <div class="cn-settings-section__body cn-settings-section__row">
+            <p class="cn-settings-section__text" i18n
+              >Delete {{ project.name }} and everything it has received.</p
+            >
+            <gt-loading-button i18n-buttonText
+              buttonText="Delete project"
+              buttonStyle="stroked"
+              class="cn-danger-button"
+              [loading]="deleteLoading()"
+              (buttonClick)="deleteProject()"
+              id="delete-project"
+            >
+            </gt-loading-button>
+          </div>
+        </section>
+      }
+    </div>
   </section>
 }

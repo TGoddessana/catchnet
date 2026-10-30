@@ -1,68 +1,68 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <h1 i18n class="section-header-text">Organization Members</h1>
-  </ng-container>
-  <ng-container slot="right">
-    @if (canWriteMember()) {
-      <a i18n mat-flat-button color="primary" [routerLink]="['new']"
-        >Invite Member</a
-      >
-    }
-  </ng-container>
-</gt-top-app-bar>
 <section class="l-body">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        {{ activeOrganizationDetail()?.name }}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      <div class="list">
-        @for (member of members(); track member) {
-          <div class="list--item">
-            <div class="email-and-badge">
-              <a class="email" mat-line [routerLink]="[member.id]"
-                >{{ member.email }}
-              </a>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Members</h1>
+      @if (members(); as members) {
+        <p class="cn-title-row__sub" i18n
+          >{members.length, plural, =1 {1 person} other {{{ members.length }} people}} in {{ activeOrganizationDetail()?.name }}</p
+        >
+      }
+    </div>
+    @if (canWriteMember()) {
+      <div class="cn-title-row__actions">
+        <a mat-flat-button [routerLink]="['new']">
+          <mat-icon>add</mat-icon>
+          <ng-container i18n>Invite member</ng-container>
+        </a>
+      </div>
+    }
+  </header>
+
+  <table class="cn-table">
+    <thead>
+      <tr>
+        <th i18n>Email</th>
+        <th i18n>Role</th>
+        <th><span class="u-visually-hidden" i18n>Actions</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (member of members(); track member) {
+        <tr>
+          <td class="cn-table__main">
+            <span class="cn-member">
+              <a class="email" [routerLink]="[member.id]">{{ member.email }}</a>
               @if (member.isOwner) {
-                <mat-chip i18n
-                  class="caption-text"
-                  color="primary"
-                  highlighted="true"
-                >
-                  Account Owner
-                </mat-chip>
+                <span class="cn-badge" i18n>Account owner</span>
               }
               @if (member.pending) {
-                <mat-chip i18n class="caption-text" color="primary">
-                  Invite Pending
-                </mat-chip>
+                <span class="cn-badge cn-badge--warning" i18n>Invite pending</span>
               }
-            </div>
-            <div class="reinvite-and-role">
-              @if (member.pending) {
-                <div class="reinvite">
-                  @if (!member.loadingResendInvite && canWriteMember()) {
-                    <gt-loading-button
-                      class="resend-invite"
-                      [loading]="member.loadingResendInvite"
-                      [buttonText]="
-                        member.sentResendInvite
-                          ? inviteResentText
-                          : resendInviteText
-                      "
-                      [disabled]="member.sentResendInvite"
-                      (buttonClick)="resendInvite(member)"
-                      buttonStyle="stroked"
-                    >
-                    </gt-loading-button>
-                  }
-                </div>
-              }
-              <div class="role">@switch (member.role) { @case ("owner") {<ng-container i18n>Owner</ng-container>} @case ("manager") {<ng-container i18n>Manager</ng-container>} @case ("admin") {<ng-container i18n>Admin</ng-container>} @case ("member") {<ng-container i18n>Member</ng-container>} @default {{{ member.roleName }}} }</div>
-            </div>
+            </span>
+          </td>
+          <td class="role">
+            @switch (member.role) {
+              @case ("owner") {<ng-container i18n>Owner</ng-container>}
+              @case ("manager") {<ng-container i18n>Manager</ng-container>}
+              @case ("admin") {<ng-container i18n>Admin</ng-container>}
+              @case ("member") {<ng-container i18n>Member</ng-container>}
+              @default {{{ member.roleName }}}
+            }
+          </td>
+          <td class="cn-table__actions">
+            @if (member.pending && !member.loadingResendInvite && canWriteMember()) {
+              <gt-loading-button
+                class="resend-invite"
+                [loading]="member.loadingResendInvite"
+                [buttonText]="
+                  member.sentResendInvite ? inviteResentText : resendInviteText
+                "
+                [disabled]="member.sentResendInvite"
+                (buttonClick)="resendInvite(member)"
+                buttonStyle="basic"
+              >
+              </gt-loading-button>
+            }
             @if (member.isMe || canAdminMember()) {
               <gt-loading-button
                 i18n-matTooltip
@@ -75,9 +75,9 @@
                 buttonStyle="stroked"
               ></gt-loading-button>
             }
-          </div>
-        }
-      </div>
-    </mat-card-content>
-  </mat-card>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </section>

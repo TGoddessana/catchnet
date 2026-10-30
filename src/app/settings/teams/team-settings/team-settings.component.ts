@@ -15,8 +15,6 @@ import { TeamsService } from "src/app/api/teams/teams.service";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { OrganizationsService } from "src/app/api/organizations.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
@@ -27,8 +25,6 @@ import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-di
   styleUrls: ["./team-settings.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    MatCardModule,
-    MatDividerModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,

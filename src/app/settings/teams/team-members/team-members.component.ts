@@ -13,11 +13,9 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserService } from "src/app/api/user/user.service";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { LoadingButtonComponent } from "../../../shared/loading-button/loading-button.component";
-import { MatDividerModule } from "@angular/material/divider";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: "gt-team-members",
@@ -25,12 +23,10 @@ import { MatCardModule } from "@angular/material/card";
   styleUrls: ["./team-members.component.scss"],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatOptionModule,
-    MatDividerModule,
     RouterLink,
     LoadingButtonComponent,
   ],

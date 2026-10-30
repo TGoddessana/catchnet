@@ -1,3 +1,4 @@
+import { MatIconModule } from "@angular/material/icon";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,25 +14,20 @@ import { NewTeamComponent } from "./new-team/new-team";
 import { OrganizationDetailService } from "src/app/api/organizations/organization-detail.service";
 import { LoadingButtonComponent } from "../../shared/loading-button/loading-button.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 
 @Component({
   selector: "gt-teams",
   templateUrl: "./teams.component.html",
   styleUrls: ["./teams.component.scss"],
   imports: [
+    MatIconModule,
     MatButtonModule,
-    MatCardModule,
     MatDialogModule,
     RouterLink,
-    MatDividerModule,
     MatFormFieldModule,
     LoadingButtonComponent,
-    TopAppBar,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,21 +1,24 @@
-<mat-card>
-  <mat-card-header class="flex-common">
-    <mat-card-title i18n>Project Alerts</mat-card-title>
+<section class="cn-settings-section">
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Alerts</h2>
+    <p class="cn-settings-section__text" i18n
+      >Send an email or a webhook when this project's errors cross a
+      threshold you set.</p
+    >
     @if (canWriteProject()) {
       <button
-        mat-flat-button
+        mat-stroked-button
+        class="cn-alerts__new"
         id="create-new-alert"
-        color="primary"
         (click)="openNewAlert()"
         [disabled]="newAlertOpen() === true"
         i18n
-        >Create New Alert</button
+        >New alert</button
       >
     }
-  </mat-card-header>
-  <mat-divider></mat-divider>
+  </div>
 
-  <mat-card-content>
+  <div class="cn-settings-section__body">
     @if (initialLoad() === true) {
       <!-- New Alert -->
       @if (newAlertOpen() === true) {
@@ -363,5 +366,5 @@
         {{ error }}
       </div>
     }
-  </mat-card-content>
-</mat-card>
+  </div>
+</section>

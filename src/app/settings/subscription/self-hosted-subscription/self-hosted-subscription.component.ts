@@ -10,7 +10,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 import { SubscriptionChartsComponent } from "../subscription-charts/subscription-charts.component";
 import { environment } from "../../../../environments/environment";
 import { InstanceLicenseService } from "src/app/api/instance-license.service";
@@ -24,7 +23,6 @@ import { SupportBannerComponent } from "src/app/shared/support-banner/support-ba
   styleUrls: ["./self-hosted-subscription.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    TopAppBar,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

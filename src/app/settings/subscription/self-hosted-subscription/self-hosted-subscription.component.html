@@ -1,8 +1,8 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <h1 class="section-header-text" i18n>Subscription</h1>
-  </ng-container>
-  <ng-container slot="right">
+<header class="cn-title-row cn-subscription__head">
+  <div class="cn-title-row__text">
+    <h1 class="cn-page-title" i18n>Subscription</h1>
+  </div>
+  <div class="cn-title-row__actions">
     @if (paidForGlitchTip()) {
       <button
         mat-stroked-button
@@ -24,8 +24,8 @@
         }
       </button>
     }
-  </ng-container>
-</gt-top-app-bar>
+  </div>
+</header>
 <section class="l-body">
   @if (!paidForGlitchTip()) {
     <gt-support-banner [isSuperuser]="isSuperuser()" />

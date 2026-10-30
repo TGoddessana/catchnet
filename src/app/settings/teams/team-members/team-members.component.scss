@@ -1,28 +1,24 @@
-.card-header {
+.cn-team-toolbar {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
-}
+  justify-content: space-between;
+  gap: var(--gt-space-3);
+  max-width: 960px;
+  margin-bottom: var(--gt-space-2);
 
-mat-card {
-  margin: 24px 8px 8px 8px;
-}
-
-.center-text {
-  text-align: center;
-}
-
-mat-card-content {
-  margin-top: 16px;
-
-  .member-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-
-    &:nth-last-child(n + 2) {
-      border-bottom: 1px solid var(--mat-sys-outline-variant);
-    }
+  mat-form-field {
+    width: 240px;
   }
+}
+
+.cn-team-toolbar__count {
+  margin: 0;
+  font-size: 14px;
+  color: var(--gt-color-text-2);
+}
+
+.cn-team-error {
+  display: block;
+  margin-bottom: var(--gt-space-3);
 }

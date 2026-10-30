@@ -5,14 +5,13 @@ import {
   inject,
   input,
 } from "@angular/core";
-import { ProjectCardComponent } from "../../shared/project-card/project-card.component";
 import { EmptyProjectsComponent } from "../../shared/project-card/empty-projects/empty-projects.component";
 import { RouterLink } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
-import { DatePipe } from "@angular/common";
+import { MatIconModule } from "@angular/material/icon";
+import { ProjectTable } from "../../shared/project-table/project-table";
 import { SettingsProjectsService } from "./projects.service";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
 
 @Component({
   templateUrl: "./projects.component.html",
@@ -20,18 +19,13 @@ import { TopAppBar } from "src/app/shared/top-app-bar/top-app-bar";
   imports: [
     MatButtonModule,
     RouterLink,
+    MatIconModule,
     EmptyProjectsComponent,
-    ProjectCardComponent,
-    DatePipe,
-    TopAppBar,
+    ProjectTable,
   ],
   providers: [SettingsProjectsService],
 })
 export class ProjectsComponent {
-  organizationText = $localize`organization`;
-  dateCreatedText = $localize`date created`;
-  issuesText = $localize`Issues`;
-  settingsText = $localize`Settings`;
   private service = inject(SettingsProjectsService);
   private organizationsService = inject(OrganizationsService);
 

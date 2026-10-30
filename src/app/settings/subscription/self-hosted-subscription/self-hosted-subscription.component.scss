@@ -1,5 +1,17 @@
 @use "variables" as vars;
 
+// The title row sits outside .l-body here, so it takes the canvas edges
+// itself.
+.cn-subscription__head {
+  max-width: 1280px;
+  margin: 28px auto 0;
+  padding: 0 32px;
+
+  @media screen and (max-width: 599px) {
+    padding: 0 16px;
+  }
+}
+
 mat-card,
 .contribute-row {
   margin-top: 24px;

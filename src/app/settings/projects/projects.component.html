@@ -1,44 +1,35 @@
-<gt-top-app-bar>
-  <ng-container slot="left">
-    <h1 class="section-header-text" i18n>Projects</h1>
-  </ng-container>
-  <ng-container slot="right">
-    @if (canWriteProject()) {
-      <a mat-flat-button [routerLink]="['new']" color="primary" i18n
-        >Create New Project</a
-      >
-    }
-  </ng-container>
-</gt-top-app-bar>
 <section class="l-body">
-  <div>
-    @if (hasError()) {
-      @for (error of errors(); track $index) {
-        <p>{{ error.msg || error }}</p>
+  <header class="cn-title-row">
+    <div class="cn-title-row__text">
+      <h1 class="cn-page-title" i18n>Projects</h1>
+      @if (projects()?.length) {
+        <p class="cn-title-row__sub" i18n
+          >Open a project's settings for its setup code, environments and
+          teams.</p
+        >
       }
-    } @else if (projects()?.length === 0) {
-      <gt-empty-projects
-        [activeOrgOnly]="true"
-        [canCreateProject]="canWriteProject()"
-      ></gt-empty-projects>
+    </div>
+    @if (canWriteProject()) {
+      <div class="cn-title-row__actions">
+        <a mat-flat-button [routerLink]="['new']">
+          <mat-icon>add</mat-icon>
+          <ng-container i18n>New project</ng-container>
+        </a>
+      </div>
     }
-  </div>
-  <div class="project-card-wrapper">
-    @for (project of projects(); track project) {
-      <gt-project-card
-        [cardLink]="project.slug!"
-        [title]="project.name"
-        [descriptionList]="[
-          { key: organizationText, value: activeOrganization()?.name || '' },
-          { key: dateCreatedText, value: (project.dateCreated | date)! },
-        ]"
-        [isMember]="project.isMember"
-        [secondaryButton]="{
-          link: project.slug!,
-          icon: 'settings',
-          text: settingsText,
-        }"
-      ></gt-project-card>
+  </header>
+
+  @if (hasError()) {
+    @for (error of errors(); track $index) {
+      <p>{{ error.msg || error }}</p>
     }
-  </div>
+  } @else if (projects()?.length === 0) {
+    <gt-empty-projects
+      [activeOrgOnly]="true"
+      [canCreateProject]="canWriteProject()"
+      [orgSlug]="orgSlug()"
+    ></gt-empty-projects>
+  } @else if (projects(); as projects) {
+    <gt-project-table [projects]="projects" [orgSlug]="orgSlug()" />
+  }
 </section>

@@ -28,15 +28,16 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
   `,
   styles: `
     .cn-settings-nav {
-      padding: var(--gt-space-5) 36px 0;
-      overflow-x: auto;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 32px 0;
     }
     .cn-segmented__item {
       text-decoration: none;
     }
     @media (max-width: 599px) {
       .cn-settings-nav {
-        padding: var(--gt-space-4) 15px 0;
+        padding: 12px 16px 0;
       }
     }
   `,

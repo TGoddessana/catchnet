@@ -1,51 +1,45 @@
-<section>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n>Environments</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      @if (initialLoad() === false) {
-        <div class="loading"></div>
-      } @else {
-        @if (sortedEnvironments(); as sortedEnvironments) {
-          @for (
-            sortedEnvironment of sortedEnvironments;
-            track sortedEnvironment.heading
-          ) {
-            <h2>{{ sortedEnvironment.heading }}</h2>
-            <mat-list>
-              @for (
-                environment of sortedEnvironment.environments;
-                track environment.id
-              ) {
-                <mat-list-item>
-                  <div class="environment-list-item">
-                    <span class="body-text">
-                      {{ environment.name }}
-                    </span>
-                    @if (canWriteProject()) {
-                      <gt-loading-button
-                        (buttonClick)="toggleHidden(environment)"
-                        [loading]="environment.id === toggleHiddenloading()"
-                        [buttonText]="environment.isHidden ? showText : hideText"
-                        buttonStyle="stroked"
-                      ></gt-loading-button>
-                    }
-                  </div>
-                </mat-list-item>
-              }
-            </mat-list>
-          }
-        } @else {
-          <p i18n class="body-text">
-            If you initialize an open-source Sentry SDK with an environment, it
-            will tag events with that environment and GlitchTip will keep a
-            record of them. The environments persist even if the event that
-            reported it is deleted, which is why hiding is an option.
-          </p>
+<section class="cn-settings-section">
+  <div>
+    <h2 class="cn-settings-section__title" i18n>Environments</h2>
+    <p class="cn-settings-section__text" i18n
+      >Errors are tagged with the environment your SDK reports, such as
+      production or staging. Hide one to leave it out of filters.</p
+    >
+  </div>
+  <div class="cn-settings-section__body">
+    @if (initialLoad() === false) {
+      <div class="loading"></div>
+    } @else {
+      @if (sortedEnvironments(); as sortedEnvironments) {
+        @for (
+          sortedEnvironment of sortedEnvironments;
+          track sortedEnvironment.heading
+        ) {
+          <h3 class="cn-env__heading">{{ sortedEnvironment.heading }}</h3>
+          <ul class="cn-env__list">
+            @for (
+              environment of sortedEnvironment.environments;
+              track environment.id
+            ) {
+              <li class="cn-env__row">
+                <span>{{ environment.name }}</span>
+                @if (canWriteProject()) {
+                  <gt-loading-button
+                    (buttonClick)="toggleHidden(environment)"
+                    [loading]="environment.id === toggleHiddenloading()"
+                    [buttonText]="environment.isHidden ? showText : hideText"
+                    buttonStyle="stroked"
+                  ></gt-loading-button>
+                }
+              </li>
+            }
+          </ul>
         }
+      } @else {
+        <p class="cn-settings-section__text" i18n
+          >No environments yet. They appear here once an event reports one.</p
+        >
       }
-    </mat-card-content>
-  </mat-card>
+    }
+  </div>
 </section>

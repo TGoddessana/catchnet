@@ -1,17 +1,21 @@
-@if (canWriteTeam() && team(); as team) {
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n>Settings</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      @if (errors().updateName) {
-        <mat-error class="server-error center-text">{{
-          errors().updateName
-        }}</mat-error>
-      }
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
+<div class="cn-settings">
+  @if (canWriteTeam() && team(); as team) {
+    <section class="cn-settings-section">
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Name</h2>
+        <p class="cn-settings-section__text" i18n
+          >The team's slug, shown after # wherever the team appears.</p
+        >
+      </div>
+      <form
+        class="cn-settings-section__body"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        @if (errors().updateName) {
+          <mat-error class="server-error">{{ errors().updateName }}</mat-error>
+        }
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label i18n>Slug</mat-label>
           <input matInput formControlName="slug" [value]="team.slug" />
           <mat-error>
@@ -20,43 +24,42 @@
             }
           </mat-error>
         </mat-form-field>
+        <div class="cn-settings-section__footer">
+          <gt-loading-button i18n-buttonText
+            [disabled]="this.form.get('slug')?.value === team.slug"
+            [loading]="loading().updateName"
+            buttonText="Save"
+            id="update-project-name"
+          >
+          </gt-loading-button>
+        </div>
+      </form>
+    </section>
+  }
+  @if (canAdminTeam()) {
+    <section class="cn-settings-section cn-settings-section--danger">
+      <div>
+        <h2 class="cn-settings-section__title" i18n>Delete team</h2>
+        <p class="cn-settings-section__text" i18n
+          >Its projects and members stay in the organization. This cannot be
+          undone.</p
+        >
+      </div>
+      <div class="cn-settings-section__body cn-settings-section__row">
+        <p class="cn-settings-section__text" i18n>Delete #{{ team()?.slug }}.</p>
         <gt-loading-button i18n-buttonText
-          [disabled]="this.form.get('slug')?.value === team.slug"
-          [loading]="loading().updateName"
-          buttonText="Update Name"
-          id="update-project-name"
+          class="cn-danger-button"
+          buttonText="Delete team"
+          buttonStyle="stroked"
+          [loading]="loading().deleteTeam"
+          (buttonClick)="deleteTeam()"
         >
         </gt-loading-button>
-      </form>
-    </mat-card-content>
-  </mat-card>
-}
-@if (canAdminTeam()) {
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n>Delete Team</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="remove-content">
-      <div>
-        <p i18n
-          >By deleting your team, you will lose all associated data. This cannot
-          be undone.</p
-        >
-        <mat-error></mat-error>
       </div>
-      <gt-loading-button i18n-buttonText
-        buttonText="Delete Team"
-        buttonStyle="stroked"
-        color="warn"
-        [loading]="loading().deleteTeam"
-        (buttonClick)="deleteTeam()"
-      >
-      </gt-loading-button>
-    </mat-card-content>
-  </mat-card>
-} @else if (!canWriteTeam()) {
-  <p class="body-text" i18n
-    >Changing team settings requires the Admin role or above.</p
-  >
-}
+    </section>
+  } @else if (!canWriteTeam()) {
+    <p class="cn-notice" i18n
+      >Changing team settings needs the Admin role or above.</p
+    >
+  }
+</div>
