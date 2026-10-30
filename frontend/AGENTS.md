@@ -15,7 +15,7 @@
 
 ## Local Development
 
-- **Backend:** sibling repo `glitchtip-backend`. Start with `docker compose up -d` from that repo; API is served on `http://localhost:8000`.
+- **Backend:** `../backend` in this monorepo. Start with `docker compose up -d` from there; API is served on `http://localhost:8000`.
 - **Frontend:** `npm start` in this repo; dev server at `http://localhost:4200` proxies API calls to the backend.
 - **Test login:** the backend's first-run bootstrap prints a seeded admin user (email and password) in the `web` container logs — inspect with `docker compose logs web` in the backend repo to retrieve current credentials before logging in via the UI.
 - **API token for seeding:** the bootstrap also seeds a full-scope API token on the test user (label `bootstrap_dev`). Query it with `docker compose exec web python manage.py shell -c "from apps.api_tokens.models import APIToken; print(APIToken.objects.first().token)"` and use `Authorization: Bearer <token>` against `http://localhost:8000/api/0/...` to create orgs/projects/events/transactions. Prefer this over driving sessions via curl or clicking through the UI when generating test data.

@@ -6,7 +6,7 @@
 
 catchnet is an open source error tracker with uptime monitoring and logs. It focuses on a calmer interface that people can use without training: plain words, quiet colors, and the same rules on every screen.
 
-This repository is the web frontend. It is an Angular app that talks to an unmodified [GlitchTip backend](https://gitlab.com/glitchtip/glitchtip-backend) and accepts events from the MIT-licensed sentry SDKs.
+This folder is the web frontend of the catchnet monorepo. It is an Angular app that talks to an unmodified [GlitchTip backend](https://gitlab.com/glitchtip/glitchtip-backend) and accepts events from the MIT-licensed sentry SDKs.
 
 ## Based on GlitchTip
 

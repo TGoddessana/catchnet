@@ -1,0 +1,10 @@
+# Root of the catchnet monorepo. frontend/ and backend/ keep their own
+# .gitignore files from upstream.
+.DS_Store
+
+# Local work products: design screenshots and the taste skill's scratch.
+.taste-skill/
+screenshots/
+
+# Local test credentials for the screen-capture tools.
+tools/*.env

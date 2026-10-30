@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "source ~/.nvm/nvm.sh && nvm use 24 >/dev/null && cd frontend && npm start"
+      ],
+      "port": 4200
+    },
+    {
+      "name": "preview",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "source ~/.nvm/nvm.sh && nvm use 24 >/dev/null && cd frontend && npm run preview"
+      ],
+      "port": 4300
+    }
+  ]
+}
