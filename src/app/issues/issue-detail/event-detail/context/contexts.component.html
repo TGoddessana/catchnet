@@ -5,10 +5,13 @@
         @if (contexts.icon) {
           <img class="image" [src]="contexts.icon" [alt]="contexts.icon" />
         } @else {
-          <mat-icon class="image">{{ contexts.matIcon }}</mat-icon>
+          <mat-icon
+            class="image"
+            [svgIcon]="contexts.matIcon ?? 'help'"
+          ></mat-icon>
         }
       } @else {
-        <mat-icon class="image">help</mat-icon>
+        <mat-icon class="image" svgIcon="help"></mat-icon>
       }
       <div class="spacer">
         <p class="body-text-strong">{{ contexts.title }}</p>

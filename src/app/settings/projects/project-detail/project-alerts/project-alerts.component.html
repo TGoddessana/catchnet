@@ -57,7 +57,7 @@
                   [class.border-top]="recipientIndex === 0"
                 >
                   @if (recipient.recipientType === "email") {
-                    <mat-icon class="alert-type">email</mat-icon>
+                    <mat-icon class="alert-type" svgIcon="email"></mat-icon>
                     <div class="recipient-info">
                       <span i18n-matTooltip
                         class="tooltip"
@@ -119,7 +119,7 @@
                           openEditNewRecipientDialog(recipient, recipientIndex)
                         "
                       >
-                        <mat-icon>edit</mat-icon>
+                        <mat-icon svgIcon="edit"></mat-icon>
                       </button>
                     }
                     <button
@@ -128,7 +128,7 @@
                       [attr.aria-label]="deleteAlertForLabel(recipient.url)"
                       (click)="removeNewAlertRecipient(recipient.url)"
                     >
-                      <mat-icon>delete</mat-icon>
+                      <mat-icon svgIcon="delete"></mat-icon>
                     </button>
                   </div>
                 </div>
@@ -136,7 +136,7 @@
             }
           </ul>
           <button mat-stroked-button (click)="openCreateRecipientDialog()">
-            <mat-icon>add</mat-icon>
+            <mat-icon svgIcon="add"></mat-icon>
             <ng-container i18n>Add An Alert Recipient</ng-container>
           </button>
           <div class="new-alert-actions">
@@ -235,7 +235,7 @@
                     [class.border-top]="recipientIndex === 0"
                   >
                     @if (recipient.recipientType === "email") {
-                      <mat-icon class="alert-type">email</mat-icon>
+                      <mat-icon class="alert-type" svgIcon="email"></mat-icon>
                       <div i18n class="recipient-info">
                         <span i18n-matTooltip
                           class="tooltip"
@@ -309,7 +309,7 @@
                               @if (testAlertLoading() === recipient.id) {
                                 <mat-spinner diameter="16" />
                               } @else {
-                                <mat-icon>send</mat-icon>
+                                <mat-icon svgIcon="send"></mat-icon>
                               }
                             </button>
                             <button
@@ -320,7 +320,7 @@
                                 openEditRecipientDialog(recipient, alert)
                               "
                             >
-                              <mat-icon>edit</mat-icon>
+                              <mat-icon svgIcon="edit"></mat-icon>
                             </button>
                           }
                           <button
@@ -330,7 +330,7 @@
                             [attr.aria-label]="deleteAlertLabel(i + 0)"
                             (click)="removeAlertRecipient(recipient, alert)"
                           >
-                            <mat-icon>delete</mat-icon>
+                            <mat-icon svgIcon="delete"></mat-icon>
                           </button>
                         }
                       </div>
@@ -344,7 +344,7 @@
                 mat-stroked-button
                 (click)="openUpdateRecipientDialog(alert)"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon svgIcon="add"></mat-icon>
                 <ng-container i18n>Add An Alert Recipient</ng-container>
               </button>
             }

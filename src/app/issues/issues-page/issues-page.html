@@ -58,7 +58,7 @@
       >
         <span i18n>Where:</span>
         <span class="cn-chip__value">{{ environment() || allLabel }}</span>
-        <mat-icon aria-hidden="true">expand_more</mat-icon>
+        <mat-icon aria-hidden="true" svgIcon="expand_more"></mat-icon>
       </button>
       <mat-menu #environmentMenu="matMenu" xPosition="before">
         <button mat-menu-item (click)="setEnvironment(null)" i18n>All environments</button>
@@ -74,7 +74,7 @@
       >
         <span i18n>Sort:</span>
         <span class="cn-chip__value">{{ sortLabel() }}</span>
-        <mat-icon aria-hidden="true">expand_more</mat-icon>
+        <mat-icon aria-hidden="true" svgIcon="expand_more"></mat-icon>
       </button>
       <mat-menu #sortMenu="matMenu" xPosition="before">
         @for (s of sorts; track s.param) {
@@ -89,7 +89,7 @@
       data-cy="list-search-form"
       role="search"
     >
-      <mat-icon aria-hidden="true">search</mat-icon>
+      <mat-icon aria-hidden="true" svgIcon="search"></mat-icon>
       <label for="issue-search" class="u-visually-hidden" i18n
         >Search issues</label
       >
@@ -110,7 +110,7 @@
         aria-label="Search tips"
         data-cy="list-search-help"
       >
-        <mat-icon>help_outline</mat-icon>
+        <mat-icon svgIcon="help_outline"></mat-icon>
       </button>
     </form>
     <mat-menu #searchHelpMenu="matMenu" class="search-help-menu" xPosition="before">
@@ -210,7 +210,7 @@
                       i18n-aria-label
                       aria-label="More actions"
                     >
-                      <mat-icon>more_horiz</mat-icon>
+                      <mat-icon svgIcon="more_horiz"></mat-icon>
                     </button>
                     <mat-menu #moreMenu="matMenu">
                       @if (!isLargeScreen()) {
@@ -261,12 +261,12 @@
                   }
                   @if (element.status === "resolved") {
                     <span class="cn-badge cn-badge--success">
-                      <mat-icon aria-hidden="true">check</mat-icon>
+                      <mat-icon aria-hidden="true" svgIcon="check"></mat-icon>
                       <ng-container i18n>Fixed</ng-container>
                     </span>
                   } @else if (element.status === "ignored") {
                     <span class="cn-badge">
-                      <mat-icon aria-hidden="true">notifications_off</mat-icon>
+                      <mat-icon aria-hidden="true" svgIcon="notifications_off"></mat-icon>
                       <ng-container i18n>Muted</ng-container>
                     </span>
                   } @else if (isNew(element)) {
@@ -349,7 +349,7 @@
                 aria-label="Change the trend period"
               >
                 {{ statsPeriod() === "24h" ? last24Label : last14Label }}
-                <mat-icon aria-hidden="true">expand_more</mat-icon>
+                <mat-icon aria-hidden="true" svgIcon="expand_more"></mat-icon>
               </button>
               <mat-menu #trendMenu="matMenu">
                 <button mat-menu-item (click)="toggleStatsPeriod('24h')">{{ last24Label }}</button>

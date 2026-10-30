@@ -15,6 +15,8 @@ import { SettingsService } from "./api/settings.service";
 import { UserService } from "./api/user/user.service";
 import { setTheme } from "./shared/shared.utils";
 import { AuthService } from "./auth.service";
+import { DomSanitizer } from "@angular/platform-browser";
+import { registerCatchnetIcons } from "./shared/icons/catchnet-icons";
 import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
@@ -32,6 +34,8 @@ export class AppComponent implements OnInit {
   private matIconRegistry = inject(MatIconRegistry);
 
   constructor() {
+    // Icons are Lucide line icons registered under their Material names.
+    registerCatchnetIcons(this.matIconRegistry, inject(DomSanitizer));
     effect(() =>
       setTheme(
         this.userService.user()?.options.preferredTheme ||
@@ -41,7 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.matIconRegistry.setDefaultFontSetClass("material-symbols-filled");
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const params = this.route.snapshot.firstChild?.params;

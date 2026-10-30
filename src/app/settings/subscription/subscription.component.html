@@ -25,8 +25,8 @@
           >
           <mat-icon
             [style.visibility]="billingPortalLoading() ? 'hidden' : 'visible'"
-            >open_in_new</mat-icon
-          >
+            svgIcon="open_in_new"
+          ></mat-icon>
           @if (billingPortalLoading()) {
             <mat-spinner class="manage-subscription-spinner" diameter="18" />
           }

@@ -28,7 +28,7 @@
             type="button"
             (click)="clearTimeZone()"
           >
-            <mat-icon>close</mat-icon>
+            <mat-icon svgIcon="close"></mat-icon>
           </button>
           <mat-autocomplete #auto="matAutocomplete">
             @for (timeZone of filteredOptions(); track timeZone) {
@@ -54,13 +54,13 @@
             aria-label="Theme"
           >
             <mat-button-toggle i18n-title value="system" title="System">
-              <mat-icon>brightness_medium</mat-icon>
+              <mat-icon svgIcon="brightness_medium"></mat-icon>
             </mat-button-toggle>
             <mat-button-toggle i18n-title value="light" title="Light">
-              <mat-icon>light_mode</mat-icon>
+              <mat-icon svgIcon="light_mode"></mat-icon>
             </mat-button-toggle>
             <mat-button-toggle i18n-title value="dark" title="Dark">
-              <mat-icon>dark_mode</mat-icon>
+              <mat-icon svgIcon="dark_mode"></mat-icon>
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>

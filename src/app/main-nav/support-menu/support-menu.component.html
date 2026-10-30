@@ -9,7 +9,7 @@
     target="_blank"
     rel="noopener"
   >
-    <mat-icon>developer_guide</mat-icon>
+    <mat-icon svgIcon="developer_guide"></mat-icon>
     <span i18n>Documentation</span>
   </a>
   <a
@@ -18,7 +18,7 @@
     target="_blank"
     rel="noopener"
   >
-    <mat-icon>code</mat-icon>
+    <mat-icon svgIcon="code"></mat-icon>
     <span i18n>Report a bug</span>
   </a>
   @if (paidForGlitchTip() === false && billingEnabled() === false) {
@@ -28,7 +28,7 @@
       target="_blank"
       rel="noopener"
     >
-      <mat-icon>favorite</mat-icon>
+      <mat-icon svgIcon="favorite"></mat-icon>
       <span i18n>Sponsor on Liberapay</span>
     </a>
   }
@@ -43,7 +43,7 @@
       @if (supportChat.opening()) {
         <mat-icon><mat-spinner diameter="20" /></mat-icon>
       } @else {
-        <mat-icon>chat</mat-icon>
+        <mat-icon svgIcon="chat"></mat-icon>
       }
       <span i18n>Chat with support</span>
     </button>
@@ -56,7 +56,7 @@
       target="_blank"
       rel="noopener"
     >
-      <mat-icon>chat</mat-icon>
+      <mat-icon svgIcon="chat"></mat-icon>
       <span i18n>Open Support Chat</span>
     </a>
   } @else if (paidForGlitchTip() === false && billingEnabled() === false) {
@@ -67,7 +67,7 @@
       target="_blank"
       rel="noopener"
     >
-      <mat-icon>support</mat-icon>
+      <mat-icon svgIcon="support"></mat-icon>
       <span i18n>Get Priority Support</span>
     </a>
   }

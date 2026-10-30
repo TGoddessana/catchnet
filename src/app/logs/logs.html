@@ -38,7 +38,7 @@
           class="input-icon-button"
           aria-label="Search"
         >
-          <mat-icon>search</mat-icon>
+          <mat-icon svgIcon="search"></mat-icon>
         </button>
       </mat-form-field>
     </form>
@@ -77,7 +77,7 @@
 
     @if (query() || level().length || service_() || start() || end()) {
       <button mat-button (click)="clearFilters()" class="clear-btn">
-        <mat-icon>clear</mat-icon>
+        <mat-icon svgIcon="clear"></mat-icon>
         <span i18n>Clear filters</span>
       </button>
     }
@@ -148,7 +148,7 @@
             <span i18n>Loading...</span>
           } @else {
             <div class="load-more-icon-text">
-              <mat-icon matButtonIcon>expand_more</mat-icon>
+              <mat-icon matButtonIcon svgIcon="expand_more"></mat-icon>
               <span i18n>Load more</span>
             </div>
           }

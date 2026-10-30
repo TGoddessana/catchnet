@@ -29,7 +29,7 @@ export interface JumpTarget {
   template: `
     <div class="jump">
       <label class="jump__field">
-        <mat-icon aria-hidden="true">search</mat-icon>
+        <mat-icon aria-hidden="true" svgIcon="search"></mat-icon>
         <span class="u-visually-hidden" i18n>Jump to a page or project</span>
         <input
           #input
@@ -59,7 +59,7 @@ export interface JumpTarget {
             (mouseenter)="active.set(i)"
             (click)="go(t)"
           >
-            <mat-icon aria-hidden="true">{{ t.icon }}</mat-icon>
+            <mat-icon aria-hidden="true" [svgIcon]="t.icon"></mat-icon>
             <span class="jump__label">{{ t.label }}</span>
             <span class="jump__kind">{{ t.kind }}</span>
           </li>

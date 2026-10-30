@@ -33,9 +33,9 @@
           [attr.aria-label]="isCollapsed() ? expandLabel : collapseLabel"
         >
           @if (isCollapsed()) {
-            <mat-icon>left_panel_open</mat-icon>
+            <mat-icon svgIcon="left_panel_open"></mat-icon>
           } @else {
-            <mat-icon>left_panel_close</mat-icon>
+            <mat-icon svgIcon="left_panel_close"></mat-icon>
           }
         </button>
       </div>
@@ -48,7 +48,7 @@
             routerLink="/organizations/new"
             class="org-create-button"
             i18n
-            >Create Organization<mat-icon iconPositionEnd>add</mat-icon></a
+            >Create Organization<mat-icon iconPositionEnd svgIcon="add"></mat-icon></a
           >
         </div>
       } @else {
@@ -70,9 +70,7 @@
               >{projectCount(), plural, =0 {No projects yet} =1 {1 project} other {{{ projectCount() }} projects}}</span
             >
           </span>
-          <mat-icon class="cn-org__chevron nav-text" aria-hidden="true"
-            >expand_more</mat-icon
-          >
+          <mat-icon class="cn-org__chevron nav-text" aria-hidden="true" svgIcon="expand_more"></mat-icon>
         </button>
         <mat-menu #orgSwitchMenu="matMenu" class="nav-menu" xPosition="after">
           @for (organization of organizations(); track organization.id) {
@@ -88,7 +86,7 @@
               }}</span>
               <span>{{ organization.name }}</span>
               @if (organization.slug === activeOrganizationSlug()) {
-                <mat-icon class="cn-menu-check" aria-hidden="true">check</mat-icon>
+                <mat-icon class="cn-menu-check" aria-hidden="true" svgIcon="check"></mat-icon>
               }
             </button>
           }
@@ -99,12 +97,12 @@
               data-cy="createNewLink"
               routerLink="/organizations/new"
             >
-              <mat-icon>add</mat-icon>
+              <mat-icon svgIcon="add"></mat-icon>
               <span i18n>Create organization</span>
             </button>
           } @else {
             <button mat-menu-item disabled>
-              <mat-icon>add</mat-icon>
+              <mat-icon svgIcon="add"></mat-icon>
               <span i18n>Creating organizations is turned off</span>
             </button>
           }
@@ -120,7 +118,7 @@
         matTooltipPosition="right"
         [attr.aria-label]="jumpLabel"
       >
-        <mat-icon aria-hidden="true">search</mat-icon>
+        <mat-icon aria-hidden="true" svgIcon="search"></mat-icon>
         <span class="cn-jump__label nav-text" i18n>Jump to…</span>
         <kbd class="cn-kbd nav-text">{{ jumpShortcut }}</kbd>
       </button>
@@ -137,12 +135,12 @@
               [matTooltipDisabled]="!isCollapsed()"
               matTooltipPosition="right"
             >
-              <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+              <mat-icon aria-hidden="true" [svgIcon]="item.icon"></mat-icon>
               <span class="nav-text">{{ item.name }}</span>
             </a>
           } @else {
             <span class="cn-nav__item is-disabled" aria-disabled="true">
-              <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+              <mat-icon aria-hidden="true" [svgIcon]="item.icon"></mat-icon>
               <span class="nav-text">{{ item.name }}</span>
             </span>
           }
@@ -163,7 +161,7 @@
             [matTooltipDisabled]="!isCollapsed()"
             matTooltipPosition="right"
           >
-            <mat-icon aria-hidden="true">settings</mat-icon>
+            <mat-icon aria-hidden="true" svgIcon="settings"></mat-icon>
             <span class="nav-text" i18n>Settings</span>
           </a>
         }
@@ -179,7 +177,7 @@
           [matTooltipDisabled]="!isCollapsed()"
           matTooltipPosition="right"
         >
-          <mat-icon aria-hidden="true">help</mat-icon>
+          <mat-icon aria-hidden="true" svgIcon="help"></mat-icon>
           <span class="nav-text" i18n>Help</span>
         </button>
       </nav>
@@ -207,7 +205,7 @@
             @if (userEmail()) {
               {{ initial(userEmail()) }}
             } @else {
-              <mat-icon>person</mat-icon>
+              <mat-icon svgIcon="person"></mat-icon>
             }
           </span>
           <span class="cn-user__email nav-text">
@@ -231,13 +229,13 @@
             routerLinkActive="active-menu-item"
             [routerLinkActiveOptions]="{ exact: item.exactRoute ?? false }"
           >
-            <mat-icon>{{ item.icon }}</mat-icon>
+            <mat-icon [svgIcon]="item.icon"></mat-icon>
             <span>{{ item.name }}</span>
           </button>
         }
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
+          <mat-icon svgIcon="logout"></mat-icon>
           <span i18n>Log Out</span>
         </button>
         <mat-divider></mat-divider>

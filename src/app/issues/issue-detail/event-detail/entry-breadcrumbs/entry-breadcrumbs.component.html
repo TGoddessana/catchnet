@@ -34,7 +34,7 @@
           color="primary"
           (click)="expandBreadcrumbs()"
         >
-          <mat-icon>more_horiz</mat-icon> <ng-container i18n>Show All
+          <mat-icon svgIcon="more_horiz"></mat-icon> <ng-container i18n>Show All
           {{ breadcrumbs?.values?.length }} Breadcrumbs</ng-container>
         </button>
       }
@@ -58,17 +58,17 @@
                     <tr>
                       <td class="column-one">
                         @if (value.level === "error") {
-                          <mat-icon class="error">warning</mat-icon>
+                          <mat-icon class="error" svgIcon="warning"></mat-icon>
                         } @else {
                           @switch (value.category) {
                             @case ("ui.click") {
-                              <mat-icon class="ui">person</mat-icon>
+                              <mat-icon class="ui" svgIcon="person"></mat-icon>
                             }
                             @case ("xhr") {
-                              <mat-icon class="xhr">cached</mat-icon>
+                              <mat-icon class="xhr" svgIcon="cached"></mat-icon>
                             }
                             @default {
-                              <mat-icon>code</mat-icon>
+                              <mat-icon svgIcon="code"></mat-icon>
                             }
                           }
                         }

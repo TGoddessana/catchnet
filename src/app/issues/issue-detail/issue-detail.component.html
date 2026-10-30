@@ -66,7 +66,7 @@
             Mute
           </button>
           <button mat-flat-button (click)="updateIssueStatus('resolved')">
-            <mat-icon>check</mat-icon>
+            <mat-icon svgIcon="check"></mat-icon>
             <ng-container i18n>Mark as fixed</ng-container>
           </button>
         } @else {
@@ -80,22 +80,22 @@
           i18n-aria-label
           aria-label="More actions"
         >
-          <mat-icon>more_horiz</mat-icon>
+          <mat-icon svgIcon="more_horiz"></mat-icon>
         </button>
         <mat-menu #moreMenu="matMenu" xPosition="before">
           @if (issue.status !== "resolved") {
             <button mat-menu-item (click)="resolveInNextRelease()">
-              <mat-icon>rocket_launch</mat-icon>
+              <mat-icon svgIcon="rocket_launch"></mat-icon>
               <span i18n>Mark as fixed in the next release</span>
             </button>
           }
           <button mat-menu-item (click)="copyLink()">
-            <mat-icon>content_copy</mat-icon>
+            <mat-icon svgIcon="content_copy"></mat-icon>
             <span i18n>Copy link</span>
           </button>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="deleteIssue()">
-            <mat-icon>delete_outline</mat-icon>
+            <mat-icon svgIcon="delete_outline"></mat-icon>
             <span i18n>Delete issue</span>
           </button>
         </mat-menu>
@@ -206,7 +206,7 @@
               <dt i18n>State</dt>
               <dd>
                 <span class="cn-badge" [class]="'cn-badge--' + statusTone()">
-                  <mat-icon aria-hidden="true">{{ statusIcon() }}</mat-icon>
+                  <mat-icon aria-hidden="true" [svgIcon]="statusIcon()"></mat-icon>
                   {{ statusLabel() }}
                 </span>
               </dd>

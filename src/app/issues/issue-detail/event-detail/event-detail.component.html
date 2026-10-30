@@ -53,14 +53,14 @@
           [routerLink]="previousEventUrl() || ''"
           [disabled]="previousEvent() === false"
         >
-          <mat-icon>keyboard_arrow_left</mat-icon> <ng-container i18n>Older</ng-container>
+          <mat-icon svgIcon="keyboard_arrow_left"></mat-icon> <ng-container i18n>Older</ng-container>
         </button>
         <button
           mat-button
           [routerLink]="nextEventUrl() || ''"
           [disabled]="nextEvent() === false"
         >
-          <ng-container i18n>Newer</ng-container> <mat-icon iconPositionEnd>keyboard_arrow_right</mat-icon>
+          <ng-container i18n>Newer</ng-container> <mat-icon iconPositionEnd svgIcon="keyboard_arrow_right"></mat-icon>
         </button>
       </nav>
     </section>
@@ -94,7 +94,7 @@
                   rel="noopener noreferrer"
                   class="pseudo-chip-external-link"
                 >
-                  <mat-icon>open_in_new</mat-icon>
+                  <mat-icon svgIcon="open_in_new"></mat-icon>
                 </a>
               }
             </li>

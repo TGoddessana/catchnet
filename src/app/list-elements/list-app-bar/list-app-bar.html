@@ -10,7 +10,7 @@
           class="add-project-button"
           [routerLink]="['/', activeOrgSlug(), 'settings', 'projects', 'new']"
         >
-          <mat-icon>add</mat-icon>
+          <mat-icon svgIcon="add"></mat-icon>
           <ng-container i18n>Add Project</ng-container>
         </a>
       } @else {
@@ -49,7 +49,7 @@
             class="add-project-button"
             [routerLink]="['/', activeOrgSlug(), 'settings', 'projects', 'new']"
           >
-            <mat-icon>add</mat-icon>
+            <mat-icon svgIcon="add"></mat-icon>
             <ng-container i18n>Add Project</ng-container>
           </a>
         } @else if (inlineFilters()) {
@@ -62,7 +62,7 @@
               matBadgeSize="medium"
               (click)="toggleExpandedFilters()"
             >
-              <mat-icon>filter_list</mat-icon>
+              <mat-icon svgIcon="filter_list"></mat-icon>
             </button>
           }
         }
