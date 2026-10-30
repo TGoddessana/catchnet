@@ -77,9 +77,9 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
     <div class="preview-section">
       <div class="preview-section__title">Principles</div>
       <ul class="ov-list">
-        <li>Usable without training. Plain words, familiar patterns.</li>
-        <li>Calm, never alarming. Quiet colors; red only for errors.</li>
-        <li>One rule everywhere. Four radii, two control heights, three weights.</li>
+        <li>Usable without learning.</li>
+        <li>Never alarming.</li>
+        <li>The same rule everywhere.</li>
       </ul>
     </div>
 
@@ -138,8 +138,7 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
       <div class="preview-section__title">Adding a page</div>
       <p class="preview-section__note">
         Add an entry to the registry and, for a component, wrap the example in
-        the shared preview-doc so it inherits the section order. The full recipe
-        (which sections are required, the plain-voice rule) lives in DESIGN.md.
+        the shared preview-doc so it inherits the section order.
       </p>
     </div>
   `,

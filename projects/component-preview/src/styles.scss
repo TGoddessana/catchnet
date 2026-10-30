@@ -285,7 +285,7 @@ body {
 // @font-face paths and body rules would fight the product theme).
 // KEEP IN SYNC with projects/marketing/src/styles.scss and
 // projects/marketing/src/app/styles/_font-files.scss; extracting these into a
-// shared brand-tokens partial is a roadmap ticket (see DESIGN.md).
+// shared brand-tokens partial is a possible follow-up.
 :root {
   --mkt-accent-blue: #4a7fd9;
   --mkt-accent-yellow: #d9b44a;
