@@ -1,51 +1,38 @@
 @use "sass:meta";
 @use "sass:map";
 @use "@angular/material" as mat;
-@use "./assets/styles/theme-colors" as custom-theme;
+@use "./assets/styles/tokens";
 @use "./assets/styles/material-overrides";
 @use "./assets/styles/variables" as vars;
 @use "./assets/styles/font-files";
+@use "./assets/styles/catchnet-fonts";
 @use "./assets/styles/resets";
 @use "./scss/auth-forms";
 
 html {
   color-scheme: light dark;
+  // The palette only seeds roles catchnet does not use (the *-fixed roles).
+  // Every role in use is mapped onto the catchnet tokens right after.
   @include mat.theme(
     (
-      color: custom-theme.$primary-palette,
-      typography: vars.$font-sans-serif,
+      color: (
+        primary: mat.$violet-palette,
+        theme-type: color-scheme,
+      ),
+      typography: (
+        plain-family: vars.$font-sans-serif,
+        brand-family: vars.$font-sans-serif,
+        regular-weight: 400,
+        medium-weight: 500,
+        bold-weight: 600,
+      ),
       density: -4,
     )
   );
+  @include tokens.material-system-overrides;
 }
 
-// Brand color override
-@media (prefers-color-scheme: dark) {
-  :root {
-    --mat-sys-primary: #d94a5f;
-    --mat-sys-on-primary: #ffffff;
-    --mat-sys-error: #f54e6f;
-  }
-}
-
-// Extended color
 :root {
-  --warning-color: #e9b949;
-  --warning-container: #ffe7a3;
-  --on-warning: #2b1e00;
-
-  --info-color: #4b60b4;
-  --info-container: #d5d8ff;
-  --on-info: #001946;
-
-  --success-color: #4caf50;
-  --success-container: #c8e6c9;
-  --on-success: #1b5e20;
-
-  --issues-color: #f27121;
-  --uptime-color: #8a2387;
-  --logs-color: #2196f3;
-
   // Log severity palette: AA-compliant per mode (darker on light, bright on dark)
   --log-error-color: light-dark(#c62828, #ef4444);
   --log-warn-color: light-dark(#a16207, #f59e0b);
@@ -84,7 +71,7 @@ mat-card-content {
 a {
   color: var(--mat-sys-on-background);
   text-decoration: none;
-  font-weight: bold;
+  font-weight: var(--gt-weight-strong);
 }
 
 a:hover {
@@ -93,7 +80,7 @@ a:hover {
 
 // Used across auth components
 .auth-link {
-  color: var(--mat-sys-primary);
+  color: var(--gt-color-accent-text);
   text-decoration: underline;
 }
 
@@ -104,7 +91,7 @@ a:hover {
     margin-bottom: 0;
   }
   a {
-    color: var(--mat-sys-primary);
+    color: var(--gt-color-accent-text);
     text-decoration: underline;
   }
 }
@@ -131,6 +118,7 @@ markdown ol {
 body {
   background-color: var(--mat-sys-background);
   color: var(--mat-sys-on-background);
+  font-family: var(--gt-font-ui);
 }
 
 .flex-common {
@@ -430,14 +418,14 @@ gt-issue-chart {
 
 //Override for routerLinkActiveOptions in the side-nav
 .mat-mdc-list-item.mdc-list-item--activated {
-  background-color: var(--mat-sys-primary) !important;
+  background-color: var(--gt-color-accent-soft) !important;
 
   .mdc-list-item__primary-text {
-    color: var(--mat-sys-on-primary) !important;
+    color: var(--gt-color-accent-text) !important;
   }
 
   mat-icon {
-    color: var(--mat-sys-on-primary) !important;
+    color: var(--gt-color-accent-text) !important;
   }
 }
 
@@ -456,12 +444,14 @@ gt-pagination-buttons {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 24px;
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: 4px;
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-card);
+  background-color: var(--gt-color-surface);
+  box-shadow: var(--gt-card-shadow);
 }
 
 .table-header {
-  background-color: var(--mat-sys-surface-container-high) !important;
+  background-color: var(--gt-color-surface) !important;
 }
 
 .table-header__actions {
@@ -478,12 +468,3 @@ gt-pagination-buttons {
   padding: 1.5em 24px 0.5em;
 }
 
-// TODO: Find a better way to match this height with the height of mat formfield items
-.mat-button-toggle-group {
-  height: 40px;
-  align-items: center;
-
-  .mat-button-toggle-label-content {
-    line-height: 38px !important;
-  }
-}

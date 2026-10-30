@@ -1,0 +1,70 @@
+@use "variables" as vars;
+
+// catchnet fonts, all self-hosted variable woff2 under the SIL OFL 1.1 (each
+// folder carries its OFL.txt).
+//
+// Every face declares a weight range of 400 to 600. The type system only uses
+// 400, 500 and 600, and a variable font clamps any requested weight to its
+// declared range, so a stray `font-weight: bold` (700) anywhere in the app
+// renders at 600 instead of a heavier weight.
+
+$_latin: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+  U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+  U+2215, U+FEFF, U+FFFD;
+$_latin-ext: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+  U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+  U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+// Hangul jamo, compatibility jamo, syllables and CJK punctuation. Pretendard is
+// only downloaded when one of these characters is on the page.
+$_hangul: U+1100-11FF, U+3000-303F, U+3130-318F, U+A960-A97F, U+AC00-D7AF,
+  U+D7B0-D7FF, U+FF00-FFEF;
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("#{vars.$font-path}/inter/inter-latin-wght-normal.woff2")
+    format("woff2");
+  unicode-range: $_latin;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("#{vars.$font-path}/inter/inter-latin-ext-wght-normal.woff2")
+    format("woff2");
+  unicode-range: $_latin-ext;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("#{vars.$font-path}/pretendard/PretendardVariable.woff2")
+    format("woff2");
+  unicode-range: $_hangul;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("#{vars.$font-path}/jetbrains-mono/jetbrains-mono-latin-wght-normal.woff2")
+    format("woff2");
+  unicode-range: $_latin;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("#{vars.$font-path}/jetbrains-mono/jetbrains-mono-latin-ext-wght-normal.woff2")
+    format("woff2");
+  unicode-range: $_latin-ext;
+}

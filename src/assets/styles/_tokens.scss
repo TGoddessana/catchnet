@@ -1,0 +1,200 @@
+@use "@angular/material" as mat;
+@use "variables" as vars;
+
+// catchnet design tokens.
+//
+// One source of truth for color, shape, size, type and material. Light is the
+// default; dark follows the `color-scheme` on <html> (the OS setting, or the
+// user's theme preference via setTheme()). Every color is written with
+// light-dark() so both schemes live side by side and nothing depends on a
+// media query.
+//
+// Components should read these --gt-* properties, or the Material --mat-sys-*
+// roles mapped from them at the bottom of this file. Never a raw hex.
+
+:root {
+  // Color: surfaces
+  --gt-color-background: light-dark(#f7f6f3, #141412);
+  --gt-color-surface: light-dark(#ffffff, #1a1917);
+  --gt-color-subtle: light-dark(#f0efeb, #22211f);
+  --gt-color-border: light-dark(#e6e5e0, #2c2b28);
+
+  // Color: text. text-3 is the faintest text that still meets 4.5:1 on every
+  // surface above. Disabled text is exempt from contrast and must only be
+  // used on controls that cannot be pressed.
+  --gt-color-text-1: light-dark(#1c1b18, #e8e7e3);
+  --gt-color-text-2: light-dark(#53524d, #b1b0ab);
+  --gt-color-text-3: light-dark(#6a6964, #8d8c87);
+  --gt-color-text-disabled: light-dark(#9f9e98, #5f5e59);
+
+  // Color: accent. `accent` fills primary buttons and selection marks. Text in
+  // the accent color uses `accent-text`, because light `accent` reaches only
+  // 4.35:1 on the page background.
+  --gt-color-accent: light-dark(#5e6ad2, #8b95e8);
+  --gt-color-on-accent: light-dark(#ffffff, #141412);
+  --gt-color-accent-text: light-dark(#4652b8, #aeb5ee);
+  --gt-color-accent-soft: light-dark(#eef0fb, #262a45);
+
+  // Color: status. Each status has a dot (same lightness and chroma across
+  // statuses: OKLCH L 0.70, C 0.12), a text color and a soft background.
+  // Red is for errors only. Never show a status by color alone: pair it with
+  // a word or an icon.
+  --gt-color-error-dot: light-dark(#df8074, #e48a7e);
+  --gt-color-error-text: light-dark(#873f38, #e48a7e);
+  --gt-color-error-soft: light-dark(#fdefec, #3a2522);
+  --gt-color-warning-dot: light-dark(#ca933e, #d6a458);
+  --gt-color-warning-text: light-dark(#784e10, #d6a458);
+  --gt-color-warning-soft: light-dark(#fbf2e6, #362c1c);
+  --gt-color-success-dot: light-dark(#30b69a, #4dbfa2);
+  --gt-color-success-text: light-dark(#006955, #4dbfa2);
+  --gt-color-success-soft: light-dark(#e8f8f3, #1b322b);
+
+  // Shape: four radii only.
+  --gt-radius-badge: #{vars.$radius-badge};
+  --gt-radius-control: #{vars.$radius-control};
+  --gt-radius-card: #{vars.$radius-card};
+  --gt-radius-pill: #{vars.$radius-pill};
+
+  // Size: two control heights only.
+  --gt-control-height: #{vars.$control-height};
+  --gt-control-height-sm: #{vars.$control-height-sm};
+
+  // Spacing: multiples of 4.
+  --gt-space-0: 0;
+  --gt-space-1: 4px;
+  --gt-space-2: 8px;
+  --gt-space-3: 12px;
+  --gt-space-4: 16px;
+  --gt-space-5: 24px;
+  --gt-space-6: 32px;
+  --gt-space-7: 48px;
+
+  // Type: Inter for UI, Pretendard for Hangul, JetBrains Mono for code.
+  // Three weights only; 700 is never used.
+  --gt-font-ui: "Inter", "Pretendard", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --gt-font-code: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+  --gt-weight-regular: 400;
+  --gt-weight-medium: 500;
+  --gt-weight-strong: 600;
+  --gt-wordmark-tracking: -0.03em;
+
+  // Material: only things shaped like a button are raised. Everything else
+  // is flat like paper.
+  //
+  // Primary button: accent fill with a soft top highlight.
+  --gt-primary-highlight: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0)
+  );
+  --gt-primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 1px 2px light-dark(rgba(31, 31, 60, 0.3), rgba(0, 0, 0, 0.4)),
+    0 3px 8px light-dark(rgba(94, 106, 210, 0.22), rgba(139, 149, 232, 0.16));
+  // Secondary button, filter chip, selected tab. No border: the first shadow
+  // ring draws the edge.
+  --gt-raised-surface: linear-gradient(
+    180deg,
+    light-dark(#ffffff, #2a2926),
+    light-dark(#f8f7f4, #22211f)
+  );
+  --gt-raised-shadow: inset 0 1px 0 light-dark(transparent, rgba(255, 255, 255, 0.06)),
+    0 0 0 1px light-dark(rgba(31, 31, 29, 0.08), rgba(0, 0, 0, 0.45)),
+    0 1px 2px light-dark(rgba(31, 31, 29, 0.08), rgba(0, 0, 0, 0.4)),
+    0 2px 6px light-dark(rgba(31, 31, 29, 0.04), transparent);
+  // Card, table, panel: flat surface, 1px border, at most a whisper of shadow.
+  --gt-card-shadow: 0 1px 2px light-dark(rgba(31, 31, 29, 0.04), transparent);
+  // Overlay panels (menus, selects, autocomplete) float above the page.
+  --gt-overlay-shadow: 0 0 0 1px var(--gt-color-border),
+    0 4px 16px light-dark(rgba(31, 31, 29, 0.08), rgba(0, 0, 0, 0.4));
+  // Input: flat, slightly sunken.
+  --gt-input-shadow: inset 0 1px 2px light-dark(rgba(31, 31, 29, 0.05), rgba(0, 0, 0, 0.3));
+
+  // Legacy extended roles, kept so existing components pick up the palette.
+  --warning-color: var(--gt-color-warning-dot);
+  --warning-container: var(--gt-color-warning-soft);
+  --on-warning: var(--gt-color-warning-text);
+
+  --info-color: var(--gt-color-accent);
+  --info-container: var(--gt-color-accent-soft);
+  --on-info: var(--gt-color-accent-text);
+
+  --success-color: var(--gt-color-success-dot);
+  --success-container: var(--gt-color-success-soft);
+  --on-success: var(--gt-color-success-text);
+
+  // Product series colors for usage charts. Same lightness and chroma as the
+  // status dots so no series shouts.
+  --issues-color: var(--gt-color-accent);
+  --uptime-color: var(--gt-color-success-dot);
+  --logs-color: oklch(0.7 0.12 330);
+}
+
+// Material 3 system roles mapped onto the tokens above. Included inside the
+// `mat.theme` block in styles.scss.
+@mixin material-system-overrides {
+  @include mat.theme-overrides(
+    (
+      primary: var(--gt-color-accent),
+      on-primary: var(--gt-color-on-accent),
+      primary-container: var(--gt-color-accent-soft),
+      on-primary-container: var(--gt-color-accent-text),
+      inverse-primary: light-dark(#8b95e8, #5e6ad2),
+      surface-tint: var(--gt-color-accent),
+
+      secondary: var(--gt-color-text-2),
+      on-secondary: var(--gt-color-surface),
+      // Selected list items, nav items and chips use the accent soft fill.
+      secondary-container: var(--gt-color-accent-soft),
+      on-secondary-container: var(--gt-color-accent-text),
+
+      tertiary: var(--gt-color-success-text),
+      on-tertiary: var(--gt-color-surface),
+      tertiary-container: var(--gt-color-success-soft),
+      on-tertiary-container: var(--gt-color-success-text),
+
+      error: var(--gt-color-error-text),
+      on-error: light-dark(#ffffff, #141412),
+      error-container: var(--gt-color-error-soft),
+      on-error-container: var(--gt-color-error-text),
+
+      background: var(--gt-color-background),
+      on-background: var(--gt-color-text-1),
+      surface: var(--gt-color-surface),
+      on-surface: var(--gt-color-text-1),
+      surface-variant: var(--gt-color-subtle),
+      on-surface-variant: var(--gt-color-text-2),
+      surface-dim: var(--gt-color-subtle),
+      surface-bright: var(--gt-color-surface),
+      surface-container-lowest: var(--gt-color-surface),
+      surface-container-low: var(--gt-color-background),
+      surface-container: var(--gt-color-surface),
+      surface-container-high: var(--gt-color-subtle),
+      surface-container-highest: var(--gt-color-subtle),
+      inverse-surface: var(--gt-color-text-1),
+      inverse-on-surface: var(--gt-color-background),
+
+      // Material uses `outline` for meaningful icons and control edges, so it
+      // must reach 3:1. text-3 does on every surface.
+      outline: var(--gt-color-text-3),
+      outline-variant: var(--gt-color-border),
+      shadow: light-dark(#1f1f1d, #000000),
+      scrim: #000000,
+
+      // Material's corner scale collapsed onto the four catchnet radii.
+      corner-none: 0,
+      corner-extra-small: var(--gt-radius-badge),
+      corner-extra-small-top: var(--gt-radius-badge) var(--gt-radius-badge) 0 0,
+      corner-small: var(--gt-radius-control),
+      corner-medium: var(--gt-radius-card),
+      corner-large: var(--gt-radius-card),
+      corner-large-end: 0 var(--gt-radius-card) var(--gt-radius-card) 0,
+      corner-large-start: var(--gt-radius-card) 0 0 var(--gt-radius-card),
+      corner-large-top: var(--gt-radius-card) var(--gt-radius-card) 0 0,
+      corner-extra-large: var(--gt-radius-card),
+      corner-extra-large-top: var(--gt-radius-card) var(--gt-radius-card) 0 0,
+      corner-full: var(--gt-radius-pill),
+    )
+  );
+}

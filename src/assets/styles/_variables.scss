@@ -1,8 +1,27 @@
 $font-path: "../fonts";
-$font-sans-serif: "Plex Sans";
-$font-mono: "Plex Mono";
 
-$shape-radius: 4px;
+// IBM Plex families. The app now uses catchnet's fonts (see _tokens.scss), but
+// the marketing site still loads Plex through _font-files.scss.
+$font-plex-sans: "Plex Sans";
+$font-plex-mono: "Plex Mono";
+
+// Font stacks resolve through custom properties that only the app defines
+// (--gt-font-ui, --gt-font-code in _tokens.scss). Anything that does not
+// define them, like the marketing site, falls back to Plex.
+$font-sans-serif: var(--gt-font-ui, $font-plex-sans);
+$font-mono: var(--gt-font-code, $font-plex-mono);
+
+// Corner radius for controls (buttons, inputs, menu items). The full scale
+// lives in _tokens.scss as --gt-radius-*.
+$shape-radius: 10px;
+$radius-badge: 6px;
+$radius-control: 10px;
+$radius-card: 16px;
+$radius-pill: 999px;
+
+// Control heights. Everything clickable is one of these two.
+$control-height: 40px;
+$control-height-sm: 32px;
 
 $side-nav-width: 240px;
 $top-app-bar-height: 65px;

@@ -1,7 +1,7 @@
 @use "variables" as vars;
 
 @font-face {
-  font-family: vars.$font-sans-serif;
+  font-family: vars.$font-plex-sans;
   src:
     url("#{ vars.$font-path}/plex-sans/woff2/IBMPlexSans-Regular-Latin1.woff2")
       format("woff2"),
@@ -12,7 +12,7 @@
 }
 
 @font-face {
-  font-family: vars.$font-sans-serif;
+  font-family: vars.$font-plex-sans;
   src:
     url("#{ vars.$font-path}/plex-sans/woff2/IBMPlexSans-Medium-Latin1.woff2")
       format("woff2"),
@@ -23,7 +23,7 @@
 }
 
 @font-face {
-  font-family: vars.$font-sans-serif;
+  font-family: vars.$font-plex-sans;
   src:
     url("#{ vars.$font-path}/plex-sans/woff2/IBMPlexSans-BoldItalic-Latin1.woff2")
       format("woff2"),
@@ -34,7 +34,7 @@
 }
 
 @font-face {
-  font-family: vars.$font-mono;
+  font-family: vars.$font-plex-mono;
   src:
     url("#{ vars.$font-path}/plex-mono/woff2/IBMPlexMono-Regular-Latin1.woff2")
       format("woff2"),
@@ -85,11 +85,11 @@
 .section-header-text {
   font: var(--mat-sys-headline-small);
   letter-spacing: var(--mat-sys-headline-small-tracking);
-  font-weight: 700;
+  font-weight: 600;
 
   @media screen and (max-width: vars.$medium - 1) {
     font: var(--mat-sys-title-large);
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: var(--mat-sys-title-large-tracking);
   }
 }
