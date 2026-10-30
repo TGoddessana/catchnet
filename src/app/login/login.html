@@ -2,7 +2,7 @@
   <mat-card class="auth-form">
     <mat-card-content>
       <div class="logo-container">
-        <img src="static/assets/images/glitchtip-logo-v1.svg" alt="GlitchTip" />
+        <img src="static/assets/images/catchnet-logo.svg" alt="catchnet" />
       </div>
       @if (requiresMFA()) {
         @if (!hasWebAuthn() || preferTOTP()) {
@@ -88,7 +88,7 @@
         <div class="sign-up">
           @if (enableUserRegistration() || enableSocialAppsUserRegistration()) {
             <p class="body-text">
-              <ng-container i18n>New to GlitchTip?</ng-container>
+              <ng-container i18n>New to catchnet?</ng-container>
               <a
                 class="auth-link"
                 routerLink="../register"

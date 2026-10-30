@@ -1,10 +1,24 @@
-[![Gitter](https://badges.gitter.im/GlitchTip/community.svg)](https://gitter.im/GlitchTip/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+<p align="center">
+  <img src="src/assets/images/catchnet-logo.svg" alt="catchnet" width="180" />
+</p>
 
-<script src="https://liberapay.com/GlitchTip/widgets/button.js"></script>
+# catchnet
 
-<noscript><a href="https://liberapay.com/GlitchTip/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+catchnet is an open source error tracker with uptime monitoring and logs. It focuses on a calmer interface that people can use without training: plain words, quiet colors, and the same rules on every screen.
+
+This repository is the web frontend. It is an Angular app that talks to an unmodified [GlitchTip backend](https://gitlab.com/glitchtip/glitchtip-backend) and accepts events from the MIT-licensed sentry SDKs.
+
+## Based on GlitchTip
+
+catchnet is a fork of the [GlitchTip frontend](https://gitlab.com/glitchtip/glitchtip-frontend), created by the GlitchTip authors and released under the MIT License. The original copyright and license notices are kept unchanged in [LICENSE](./LICENSE) and [NOTICE.md](./NOTICE.md). catchnet is an independent project and is not affiliated with or endorsed by GlitchTip.
+
+Upstream changes are merged regularly. The `upstream` git remote points at the GlitchTip repository, and catchnet changes are kept in the theme layer (`src/styles.scss`, `src/assets/styles/`) as much as possible so merges stay small.
+
+Bundled fonts (Inter, Pretendard, JetBrains Mono) are licensed under the SIL Open Font License 1.1; each font folder in `src/assets/fonts/` carries its license.
 
 # GlitchTip Frontend
+
+The rest of this document is the upstream GlitchTip developer guide and still applies to this fork.
 
 This Angular CLI project is the frontend for GlitchTip, an open source implementation of Sentry bug tracking software. It works with [GlitchTip-Backend](https://gitlab.com/glitchtip/glitchtip-backend).
 

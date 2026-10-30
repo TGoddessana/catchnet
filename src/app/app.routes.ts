@@ -150,7 +150,7 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
     if (title !== undefined) {
       document.title = title;
     } else {
-      document.title = "GlitchTip";
+      document.title = "catchnet";
     }
   }
 }
