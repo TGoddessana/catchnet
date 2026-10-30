@@ -8,3 +8,6 @@ screenshots/
 
 # Local test credentials for the screen-capture tools.
 tools/*.env
+
+# Local secrets (Anthropic API key for the autofix runner and benchmark).
+.env
