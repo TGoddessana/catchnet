@@ -6,7 +6,13 @@ import {
   inject,
   signal,
 } from "@angular/core";
-import { CUSTOM_TYPE_CLASSES, resolveCssVar, TYPE_TOKENS } from "../foundations/tokens";
+import {
+  CUSTOM_TYPE_CLASSES,
+  FONT_TOKENS,
+  resolveCssVar,
+  TYPE_TOKENS,
+  WEIGHT_TOKENS,
+} from "../foundations/tokens";
 import { ThemeStore } from "../theme-store";
 
 interface ResolvedType {
@@ -71,6 +77,45 @@ interface ResolvedType {
     </header>
 
     <div class="preview-section">
+      <div class="preview-section__title">Fonts</div>
+      <p class="preview-section__note">
+        Inter for the interface, Pretendard for Hangul (loaded only when Korean
+        text is on the page), JetBrains Mono for code. All self-hosted.
+      </p>
+      @for (f of fonts(); track f.name) {
+        <div class="ft-row">
+          <div class="ft-meta">
+            <span class="ft-token">{{ f.name }}</span>
+            <span class="ft-label">{{ f.label }}</span>
+          </div>
+          <p class="ft-sample" [style.font-family]="'var(' + f.name + ')'">
+            Where in the code 코드의 위치 0123456789
+          </p>
+          <div class="ft-value">{{ f.value }}</div>
+        </div>
+      }
+    </div>
+
+    <div class="preview-section">
+      <div class="preview-section__title">Weights</div>
+      <p class="preview-section__note">
+        Three weights only. 700 is never used: the font files stop at 600, so
+        a stray bold renders at 600.
+      </p>
+      @for (w of weights(); track w.name) {
+        <div class="ft-row">
+          <div class="ft-meta">
+            <span class="ft-token">{{ w.name }}</span>
+            <span class="ft-label">{{ w.label }}</span>
+          </div>
+          <p class="ft-sample" [style.font-weight]="'var(' + w.name + ')'">
+            {{ w.value }} The quick brown fox jumps over the lazy dog
+          </p>
+        </div>
+      }
+    </div>
+
+    <div class="preview-section">
       <div class="preview-section__title">Type tokens</div>
       @for (t of types(); track t.name) {
         <div class="ft-row">
@@ -115,19 +160,23 @@ export class FoundationsTypographyPreview {
   private readonly themeStore = inject(ThemeStore);
 
   readonly types = signal<ResolvedType[]>([]);
+  readonly fonts = signal<ResolvedType[]>([]);
+  readonly weights = signal<ResolvedType[]>([]);
   readonly customClasses = CUSTOM_TYPE_CLASSES;
 
   constructor() {
     effect(() => {
       this.themeStore.theme();
       const el = this.host.nativeElement as Element;
-      this.types.set(
-        TYPE_TOKENS.map((t) => ({
+      const resolve = (list: typeof TYPE_TOKENS) =>
+        list.map((t) => ({
           name: t.name,
           label: t.label,
           value: resolveCssVar(t.name, el),
-        })),
-      );
+        }));
+      this.types.set(resolve(TYPE_TOKENS));
+      this.fonts.set(resolve(FONT_TOKENS));
+      this.weights.set(resolve(WEIGHT_TOKENS));
     });
   }
 }

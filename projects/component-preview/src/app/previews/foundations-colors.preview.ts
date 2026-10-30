@@ -100,10 +100,9 @@ interface ResolvedPair {
         change.
       </p>
       <p class="preview-note">
-        Note: the brand overrides for
-        <code>--mat-sys-primary</code> / <code>--mat-sys-error</code> in dark
-        mode are gated on your operating system's color-scheme setting, so those
-        specific swatches follow the OS rather than this in-app toggle.
+        Light is the default. Dark follows the operating system, or the
+        theme preference in a user's profile. Every color is written with
+        <code>light-dark()</code>, so both schemes come from the same token.
       </p>
     </header>
 
@@ -153,11 +152,11 @@ interface ResolvedPair {
       <div class="preview-section__title">Dark mode</div>
       <p class="preview-section__note">
         The theme ships light and dark, both driven by the same tokens, so
-        components adapt with no per-component work. Two things to keep in mind:
-        Material 3 signals elevation in dark mode mainly through lighter surface
-        tint (the higher <code>surface-container</code> tokens), not heavy
-        shadows; and contrast that passes in light can fail in dark, so check
-        new color pairings in both schemes.
+        components adapt with no per-component work. In dark mode a raised
+        surface reads as higher by being lighter (subtle sits above surface,
+        which sits above background), and shadows stay faint. Contrast that
+        passes in light can fail in dark, so check new pairings in both
+        schemes.
       </p>
     </div>
   `,

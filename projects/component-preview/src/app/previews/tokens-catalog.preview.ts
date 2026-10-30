@@ -12,6 +12,10 @@ import {
   TYPE_TOKENS,
   SPACE_TOKENS,
   ELEVATION_TOKENS,
+  RADIUS_TOKENS,
+  HEIGHT_TOKENS,
+  WEIGHT_TOKENS,
+  FONT_TOKENS,
   resolveCssVar,
   resolveComputedColor,
 } from "../foundations/tokens";
@@ -154,7 +158,11 @@ export class TokensCatalogPreview {
       g.tokens.map((t) => ({ name: t.name, group: g.group, isColor: true })),
     ),
     ...TYPE_TOKENS.map((t) => ({ name: t.name, group: "Typography", isColor: false })),
+    ...FONT_TOKENS.map((t) => ({ name: t.name, group: "Fonts", isColor: false })),
+    ...WEIGHT_TOKENS.map((t) => ({ name: t.name, group: "Weights", isColor: false })),
     ...SPACE_TOKENS.map((t) => ({ name: t.name, group: "Spacing", isColor: false })),
+    ...RADIUS_TOKENS.map((t) => ({ name: t.name, group: "Radius", isColor: false })),
+    ...HEIGHT_TOKENS.map((t) => ({ name: t.name, group: "Control height", isColor: false })),
     ...ELEVATION_TOKENS.map((t) => ({ name: t.name, group: "Elevation", isColor: false })),
   ];
 

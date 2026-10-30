@@ -293,11 +293,11 @@ body {
   // Brand monospace stack. Mirrors --mkt-font-mono in
   // projects/marketing/src/styles.scss so the real mkt-code-card (and any other
   // component that pins it with no fallback) renders in Plex Mono instead of
-  // falling back to the browser serif here. --gt-font-mono aliases it so the
-  // preview's own inline code samples use the brand mono too. Plex Mono is
-  // already loaded via the product @font-face (src/styles.scss).
+  // falling back to the browser serif here. Plex Mono is still declared by the
+  // shared _font-files.scss.
   --mkt-font-mono: "Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --gt-font-mono: var(--mkt-font-mono);
+  // The preview's own inline code samples use the product code font.
+  --gt-font-mono: var(--gt-font-code);
 
   // Marketing layout tokens, mirrored so the Brand > Layout page can resolve
   // them live. KEEP IN SYNC with the :root block in
@@ -320,16 +320,6 @@ body {
   --mkt-container-narrow: 600px;
   --mkt-gutter: 48px;
   --mkt-section: clamp(40px, 5vw, 64px);
-
-  // --gt-space-* scale, mirrored so the reference app is self-contained.
-  --gt-space-0: 0;
-  --gt-space-1: 4px;
-  --gt-space-2: 8px;
-  --gt-space-3: 12px;
-  --gt-space-4: 16px;
-  --gt-space-5: 24px;
-  --gt-space-6: 32px;
-  --gt-space-7: 48px;
 }
 
 .marketing-display {

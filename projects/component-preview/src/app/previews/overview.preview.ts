@@ -66,13 +66,22 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
   ],
   template: `
     <header class="preview-page-header">
-      <h1 class="preview-page-title">GlitchTip design system</h1>
+      <h1 class="preview-page-title">catchnet design system</h1>
       <p class="preview-lead">
-        The living rulebook for how GlitchTip looks and behaves. It renders the
+        The living rulebook for how catchnet looks and behaves. It renders the
         real components and reads token values live from the running theme, so
         it cannot drift from the app.
       </p>
     </header>
+
+    <div class="preview-section">
+      <div class="preview-section__title">Principles</div>
+      <ul class="ov-list">
+        <li>Usable without training. Plain words, familiar patterns.</li>
+        <li>Calm, never alarming. Quiet colors; red only for errors.</li>
+        <li>One rule everywhere. Four radii, two control heights, three weights.</li>
+      </ul>
+    </div>
 
     <div class="preview-section">
       <div class="preview-section__title">How this works</div>

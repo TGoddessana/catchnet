@@ -6,11 +6,24 @@ import {
   inject,
   signal,
 } from "@angular/core";
-import { ELEVATION_TOKENS, resolveCssVar, SPACE_TOKENS } from "../foundations/tokens";
+import {
+  ELEVATION_TOKENS,
+  HEIGHT_TOKENS,
+  MATERIAL_SAMPLES,
+  RADIUS_TOKENS,
+  resolveCssVar,
+  SPACE_TOKENS,
+} from "../foundations/tokens";
 import { ThemeStore } from "../theme-store";
 
 interface ResolvedSpace {
   name: string;
+  value: string;
+}
+
+interface ResolvedToken {
+  name: string;
+  label?: string;
   value: string;
 }
 
@@ -21,8 +34,8 @@ interface ResolvedElevation {
 }
 
 /**
- * Spacing, radius and elevation reference. The spacing scale is the additive
- * `--gt-space-*` token set (8px base grid). Elevation tokens are probed and
+ * Spacing, radius, control height, material and elevation reference. The
+ * spacing scale is the `--gt-space-*` token set (multiples of 4). Elevation tokens are probed and
  * any that resolve empty are hidden, so the page stays honest about what the
  * theme actually defines.
  */
@@ -61,6 +74,47 @@ interface ResolvedElevation {
         border: 1px solid var(--mat-sys-outline-variant);
         font-family: var(--gt-font-mono, monospace);
         font-size: 0.78rem;
+      }
+      .fs-radii,
+      .fs-materials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gt-space-4);
+      }
+      .fs-radius-item,
+      .fs-material-item {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gt-space-2);
+        max-width: 180px;
+      }
+      .fs-token-label {
+        font: var(--mat-sys-body-small);
+        color: var(--mat-sys-on-surface-variant);
+      }
+      .fs-height {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 var(--gt-space-4);
+        border-radius: var(--gt-radius-control);
+        background: var(--gt-raised-surface);
+        box-shadow: var(--gt-raised-shadow);
+        font: var(--mat-sys-label-large);
+      }
+      .fs-material {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: var(--gt-control-height);
+        border-radius: var(--gt-radius-control);
+        color: var(--gt-color-text-1);
+        font: var(--mat-sys-label-large);
+      }
+      .fs-materials {
+        padding: var(--gt-space-5);
+        border-radius: var(--gt-radius-card);
+        background-color: var(--gt-color-background);
       }
       .fs-bp-table {
         border-collapse: collapse;
@@ -134,8 +188,8 @@ interface ResolvedElevation {
     <div class="preview-section">
       <div class="preview-section__title">Spacing scale</div>
       <p class="preview-section__note">
-        8px base grid, exposed as <code>--gt-space-*</code> tokens. Prefer these
-        over ad-hoc pixel values in new code.
+        Multiples of 4, exposed as <code>--gt-space-*</code> tokens. Prefer
+        these over ad-hoc pixel values in new code.
       </p>
       @for (s of spaces(); track s.name) {
         <div class="fs-space-row">
@@ -194,10 +248,62 @@ interface ResolvedElevation {
     <div class="preview-section">
       <div class="preview-section__title">Radius</div>
       <p class="preview-section__note">
-        Corner radius used across surfaces (<code>$shape-radius</code>).
+        Four radii only, picked by what the thing is. Material's corner scale
+        is mapped onto these, so Material components follow the same rule.
       </p>
-      <div class="fs-radius" [style.border-radius]="radius()">
-        {{ radius() }}
+      <div class="fs-radii">
+        @for (r of radii(); track r.name) {
+          <div class="fs-radius-item">
+            <div class="fs-radius" [style.border-radius]="'var(' + r.name + ')'">
+              {{ r.value }}
+            </div>
+            <code>{{ r.name }}</code>
+            <span class="fs-token-label">{{ r.label }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="preview-section">
+      <div class="preview-section__title">Control height</div>
+      <p class="preview-section__note">
+        Two heights only. Buttons, inputs and toggles are the default height;
+        buttons inside lists and tables, and filter chips, are the small one.
+      </p>
+      <div class="fs-radii">
+        @for (h of heights(); track h.name) {
+          <div class="fs-radius-item">
+            <div class="fs-height" [style.height]="'var(' + h.name + ')'">
+              {{ h.value }}
+            </div>
+            <code>{{ h.name }}</code>
+            <span class="fs-token-label">{{ h.label }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="preview-section">
+      <div class="preview-section__title">Material</div>
+      <p class="preview-section__note">
+        Only things shaped like a button are raised. Everything else is flat
+        like paper. A disabled button drops the raised look so it reads as
+        "not now".
+      </p>
+      <div class="fs-materials">
+        @for (m of materials; track m.label) {
+          <div class="fs-material-item">
+            <div
+              class="fs-material"
+              [style.background]="m.background"
+              [style.box-shadow]="m.shadow"
+              [style.color]="m.color ?? null"
+            >
+              {{ m.label }}
+            </div>
+            <span class="fs-token-label">{{ m.use }}</span>
+          </div>
+        }
       </div>
     </div>
 
@@ -223,11 +329,9 @@ interface ResolvedElevation {
       <div class="preview-section">
         <div class="preview-section__title">Surface layering</div>
         <p class="preview-section__note">
-          The surface-container ladder is what actually separates layers in
-          dark mode: a surface reads as higher by being lighter. Components
-          choose a container for their role (a dialog uses container-high); the
-          theme defines no mapping from an elevation level to a container, so
-          pick by role, not by shadow level.
+          The surface-container ladder Material components read. catchnet maps
+          it onto three surfaces: low is the page background, container is the
+          card surface, and high and highest are the subtle fill.
         </p>
         <div class="fs-surfaces">
           @for (s of surfaceLadder; track s) {
@@ -245,7 +349,9 @@ export class FoundationsSpacingPreview {
   private readonly themeStore = inject(ThemeStore);
 
   readonly spaces = signal<ResolvedSpace[]>([]);
-  readonly radius = signal<string>("4px");
+  readonly radii = signal<ResolvedToken[]>([]);
+  readonly heights = signal<ResolvedToken[]>([]);
+  readonly materials = MATERIAL_SAMPLES;
   readonly elevations = signal<ResolvedElevation[]>([]);
 
   /**
@@ -284,8 +390,14 @@ export class FoundationsSpacingPreview {
         })),
       );
 
-      // No CSS custom property for radius today; surface the known value.
-      this.radius.set("4px");
+      const resolve = (list: typeof RADIUS_TOKENS) =>
+        list.map((t) => ({
+          name: t.name,
+          label: t.label,
+          value: resolveCssVar(t.name, el),
+        }));
+      this.radii.set(resolve(RADIUS_TOKENS));
+      this.heights.set(resolve(HEIGHT_TOKENS));
 
       this.elevations.set(
         ELEVATION_TOKENS.map((t) => ({

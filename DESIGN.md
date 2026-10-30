@@ -1,10 +1,18 @@
-# GlitchTip Design Language
+# catchnet Design Language
 
-This is the source of truth for GlitchTip's visual language: the tokens, the rules for using them, and the reasoning behind them. It is written for humans first, and its structure also makes it legible to AI coding assistants so generated UI stays on system.
+This is the source of truth for catchnet's visual language: the tokens, the rules for using them, and the reasoning behind them. It is written for humans first, and its structure also makes it legible to AI coding assistants so generated UI stays on system.
+
+catchnet is a fork of GlitchTip. The token and theme layer described here (`src/styles.scss`, `src/assets/styles/`) is where catchnet differs from upstream; component templates stay as close to upstream as possible so upstream changes keep merging cleanly.
 
 The living, interactive version of this document is the **Component Preview** app (`projects/component-preview/`, run with `npm run preview`). It renders real components and reads token values live from the running theme.
 
 The preview is the **north star**: it defines how each pattern should look and behave. Where the shipped product does not yet match a rule, that is tracked as a ticket, not a reason to water down the rule. Foundations (tokens, type, spacing) still read live from the theme so they cannot drift; component and pattern pages show the intended rule, and a `designNotes` chip flags any page whose ideal the product has not adopted yet.
+
+## Principles
+
+1. **Usable without training.** Plain words and familiar patterns. Nobody should need a manual to triage an error.
+2. **Calm, never alarming.** Quiet colors. Red means an error and nothing else.
+3. **One rule everywhere.** Four radii, two control heights, three weights. The same thing looks the same on every screen.
 
 ## Direction
 
@@ -16,27 +24,57 @@ We have been moving toward a **rapid-prototype, code-first, AI-readable design s
 
 ## Tokens
 
-All tokens are CSS custom properties. Read them live; never hardcode a raw value that a token already expresses.
+All tokens are CSS custom properties defined in `src/assets/styles/_tokens.scss`. Read them live; never hardcode a raw value that a token already expresses.
 
 ### Color
 
-- **Material 3 system roles:** `--mat-sys-*` (primary, surface, on-surface, error, outline, and their containers). Defined by `@include mat.theme(...)` in `src/styles.scss`.
-- **Extended app roles:** `--warning-color`, `--info-color`, `--success-color` (each with a `-container` and `on-` pair), plus product accents `--issues-color`, `--uptime-color`, `--logs-color`. Defined at `:root` in `src/styles.scss`.
-- **Theming:** light and dark are driven by `color-scheme` and `prefers-color-scheme`. The brand overrides for `--mat-sys-primary` and `--mat-sys-error` in dark mode are gated on the OS setting.
+Light is the default. Dark follows `color-scheme` on `<html>`: the operating system setting, or the theme preference a user picks in their profile. Every color is written with `light-dark()`, so both schemes come from one declaration and nothing depends on a media query.
 
-Rule: use a semantic role, not a raw hex. Text on a colored surface uses that surface's `on-` token so contrast holds in both schemes.
+| Token | Light | Dark | Use |
+| --- | --- | --- | --- |
+| `--gt-color-background` | #F7F6F3 | #141412 | The page |
+| `--gt-color-surface` | #FFFFFF | #1A1917 | Cards, tables, panels, inputs |
+| `--gt-color-subtle` | #F0EFEB | #22211F | Tracks, hovers, quiet fills, table row dividers |
+| `--gt-color-border` | #E6E5E0 | #2C2B28 | 1px borders |
+| `--gt-color-text-1` | #1C1B18 | #E8E7E3 | Primary text |
+| `--gt-color-text-2` | #53524D | #B1B0AB | Secondary text |
+| `--gt-color-text-3` | #6A6964 | #8D8C87 | Faintest text, labels, meta |
+| `--gt-color-text-disabled` | #9F9E98 | #5F5E59 | Controls that cannot be pressed |
+| `--gt-color-accent` | #5E6AD2 | #8B95E8 | Primary button fill, selection |
+| `--gt-color-on-accent` | #FFFFFF | #141412 | Text on an accent fill |
+| `--gt-color-accent-text` | #4652B8 | #AEB5EE | Text in the accent color (links, text buttons) |
+| `--gt-color-accent-soft` | #EEF0FB | #262A45 | Selected nav item, highlighted chip |
+| `--gt-color-error-dot / -text / -soft` | #DF8074 / #873F38 / #FDEFEC | #E48A7E / #E48A7E / #3A2522 | Errors only |
+| `--gt-color-warning-dot / -text / -soft` | #CA933E / #784E10 / #FBF2E6 | #D6A458 / #D6A458 / #362C1C | Warnings |
+| `--gt-color-success-dot / -text / -soft` | #30B69A / #006955 / #E8F8F3 | #4DBFA2 / #4DBFA2 / #1B322B | Healthy, fixed |
+
+Rules:
+
+- Use a token, not a raw hex. Text on a colored fill uses the matching text token so contrast holds in both schemes.
+- Light `accent` reaches only 4.35:1 on the page background, so text in the accent color always uses `accent-text`.
+- Status dots share one OKLCH lightness and chroma (L 0.70, C 0.12) so no status shouts louder than another.
+- Red is for errors only. There is no brand red.
+- Never show a status by color alone. Pair the dot with a word or an icon.
+
+**Material system roles.** Material components read `--mat-sys-*`. Every role in use is mapped onto a catchnet token in `material-system-overrides` in `_tokens.scss` (for example `primary` is `accent`, `secondary-container` is `accent-soft`, `surface-container-high` is `subtle`, `outline` is `text-3`, `outline-variant` is `border`). Prefer the `--gt-color-*` token in new code.
+
+**Legacy extended roles.** `--warning-color`, `--info-color`, `--success-color` (each with `-container` and `on-`), and the chart series `--issues-color`, `--uptime-color`, `--logs-color` still exist and now point at the catchnet palette. Use the `--gt-color-*` tokens in new code.
 
 ### Typography
 
-- **Material 3 type tokens:** `--mat-sys-headline-small`, `-title-large/medium/small`, `-body-large/medium/small`, `-label-large/medium`. Apply as `font: var(--token)`.
+- **Fonts:** Inter for the interface, Pretendard for Hangul, JetBrains Mono for code. All self-hosted as variable woff2 under the SIL OFL 1.1 (`src/assets/fonts/`, declared in `_catchnet-fonts.scss`). Pretendard is limited to Hangul ranges, so it downloads only when Korean text is on the page. Tokens: `--gt-font-ui`, `--gt-font-code`.
+- **Weights:** `--gt-weight-regular` (400) for body text, `--gt-weight-medium` (500) for labels, buttons and nav, `--gt-weight-strong` (600) for titles and emphasis. 700 is never used; the font faces declare a 400 to 600 range, so a stray `bold` renders at 600.
+- **Material type tokens:** `--mat-sys-headline-small`, `-title-large/medium/small`, `-body-large/medium/small`, `-label-large/medium`. Apply as `font: var(--token)`. They use the catchnet fonts and weights.
 - **Semantic classes** (in `src/assets/styles/_font-files.scss`): `.section-header-text` (page titles), `.section-header-text-light` (issue titles), `.body-text`, `.body-text-strong`, `.caption-text`. These are responsive.
-- **Fonts:** IBM Plex Sans (UI), IBM Plex Mono (code), Material Symbols (icons), all self-hosted as woff2.
+- **Wordmark:** `catchnet`, lowercase, Inter 600, tracking -0.03em (`--gt-wordmark-tracking`).
 
 Rule: prefer a semantic class where one exists; otherwise apply the matching type token.
 
+The marketing site still uses IBM Plex. The shared Sass font variables (`$font-sans-serif`, `$font-mono`) resolve through the app's custom properties and fall back to Plex where those are not defined.
+
 ### Spacing
 
-8px base grid, exposed as `--gt-space-*`:
+Multiples of 4, exposed as `--gt-space-*`:
 
 | Token | Value |
 | --- | --- |
@@ -51,9 +89,57 @@ Rule: prefer a semantic class where one exists; otherwise apply the matching typ
 
 Rule: use these in new code instead of ad-hoc pixel values. Migrating existing usage onto the scale is planned follow-up work.
 
-### Radius and elevation
+### Radius and control height
 
-Corner radius is `$shape-radius` (4px). Elevation uses Material 3 `--mat-sys-level*` shadows.
+Four radii, picked by what the thing is:
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `--gt-radius-badge` | 6px | Badges |
+| `--gt-radius-control` | 10px | Buttons, inputs, menu items |
+| `--gt-radius-card` | 16px | Cards, panels, tables, menus, dialogs |
+| `--gt-radius-pill` | 999px | Filter chips, tabs, avatars, counts |
+
+Material's corner scale (`--mat-sys-corner-*`) is collapsed onto these four, so Material components follow the same rule. Sass mirrors them as `$radius-*`; `$shape-radius` is the control radius.
+
+Two control heights: `--gt-control-height` (40px) by default, `--gt-control-height-sm` (32px) for buttons inside lists and tables, filter chips, and the segments of tabs and toggles.
+
+### Material
+
+**Only things shaped like a button are raised. Everything else is flat like paper.**
+
+| Surface | Look | Tokens |
+| --- | --- | --- |
+| Primary button | Accent fill, soft top highlight, drop shadow tinted with the accent | `--gt-primary-highlight`, `--gt-primary-shadow` |
+| Secondary button, filter chip, selected tab or toggle | Light gradient paper, no border: a 1px shadow ring draws the edge | `--gt-raised-surface`, `--gt-raised-shadow` |
+| Card, table, panel | Flat surface, 1px border, at most a whisper of shadow | `--gt-card-shadow` |
+| Menu, select, autocomplete panel | Surface, border ring, soft float shadow | `--gt-overlay-shadow` |
+| Input | Flat surface, 1px border, slight inset shadow | `--gt-input-shadow` |
+| Disabled button | Flat, subtle fill, disabled text: the raised look is gone, so it reads as "not now" | |
+
+These are applied to Material components in `src/assets/styles/material-overrides/`. Tabs and button toggles render as segmented controls: a flat subtle pill track with the selected segment raised.
+
+Each override partial wraps its tokens in `:root`, because `mat.theme` emits density tokens on `html` later in the cascade and `:root` is more specific.
+
+### Brand
+
+- Name: **catchnet**, always lowercase.
+- Logo: a 28px rounded square (rx 9) in the accent color holding a white C-shaped arc and a dot. Files: `src/assets/images/catchnet-logo.svg` (mark and wordmark, wordmark outlined from Inter 600 so it needs no font, light and dark aware) and `catchnet-mark.svg` (mark only). Favicons: `src/favicon.svg`, `src/favicon.ico`.
+
+## Writing
+
+Plain words over jargon. These replacements are agreed and will land with the screen redesigns (the current UI still uses the left column):
+
+| Today | catchnet |
+| --- | --- |
+| Unresolved | Open |
+| Resolved | Fixed |
+| Ignored | Muted |
+| Resolve | Mark as fixed |
+| Events | Times |
+| Users | People affected |
+| Breadcrumbs | Steps before it |
+| Stack trace | Where in the code |
 
 ## Components
 
@@ -67,7 +153,9 @@ Conventions for every component:
 
 ## Accessibility
 
-- Color pairings must meet WCAG contrast; the preview app shows on-color pairings for a quick check.
+- Text meets 4.5:1 (3:1 at 24px, or 18.66px and 600). Every text token passes on every surface in both schemes; the preview app shows the pairings for a quick check.
+- Meaningful icons and control edges meet 3:1. That is why Material's `outline` maps to `text-3`, not the disabled color.
+- Do not dim text with `opacity`. Use `text-2` or `text-3`, which are tuned to pass.
 - Interactive controls are keyboard reachable and have an accessible name.
 - State (loading, disabled, selected) is conveyed by more than color alone.
 
