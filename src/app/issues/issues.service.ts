@@ -303,30 +303,36 @@ export class IssuesService extends StatefulService<IssuesState> {
     if (status === "merge") {
       await this.mergeIssues(orgSlug, issues);
     } else {
-      const { data, error } = await client.PUT(
-        "/api/0/organizations/{organization_id_or_slug}/issues/",
-        {
-          params: {
-            path: this.organizationsService.orgPath(orgSlug),
-            query: {
-              id: issues.map((issue) => parseInt(issue)),
-            },
-          },
-          body: {
-            status,
+      await this.updateStatusForIssues(orgSlug, issues, status);
+    }
+  }
+
+  /** Set the status of specific issues, e.g. from a row's own buttons. */
+  async updateStatusForIssues(
+    orgSlug: string,
+    issues: string[],
+    status: IssueStatus,
+  ) {
+    const { data, error } = await client.PUT(
+      "/api/0/organizations/{organization_id_or_slug}/issues/",
+      {
+        params: {
+          path: this.organizationsService.orgPath(orgSlug),
+          query: {
+            id: issues.map((issue) => parseInt(issue)),
           },
         },
-      );
-      if (data?.status) {
-        // The backend normalizes "muted" and "resolvedInNextRelease" on input
-        this.setUpdateStatusByIssueIdComplete(
-          issues,
-          data.status as IssueStatus,
-        );
-      }
-      if (error) {
-        this.snackbar.open($localize`Error, unable to update issue`);
-      }
+        body: {
+          status,
+        },
+      },
+    );
+    if (data?.status) {
+      // The backend normalizes "muted" and "resolvedInNextRelease" on input
+      this.setUpdateStatusByIssueIdComplete(issues, data.status as IssueStatus);
+    }
+    if (error) {
+      this.snackbar.open($localize`Error, unable to update issue`);
     }
   }
 

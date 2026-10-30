@@ -1,37 +1,161 @@
 <gt-list-app-bar i18n-listTitle
   listTitle="Issues"
-  [searchHits]="$safeNavigationMigration(paginator()?.count)"
   [queriedProjects]="projects()"
   [queriedTimeRangeStart]="start()"
   [queriedTimeRangeEnd]="end()"
   [includeTimeRangeSelect]="true"
   [displayAddProject]="true"
 />
-<section class="l-body l-body--full-width l-body--flex mat-elevation-z0">
-  @if (availableEnvironments(); as availableEnvironments) {
-    <gt-data-filter-bar
-      [environmentForm]="environmentForm"
-      [searchForm]="form"
-      [searchHelp]="searchHelp"
-      [sortForm]="sortForm"
-      [currentStatsPeriod]="statsPeriod()"
-      [sorts]="sorts"
-      [organizationEnvironments]="availableEnvironments"
-      (onStatsPeriodToggle)="toggleStatsPeriod($event)"
-      [statsPeriodToggleDisabled]="issues().length === 0"
-      (filterByEnvironment)="filterByEnvironment($event)"
-      (searchSubmit)="searchSubmit()"
-      (sortByChanged)="sortByChanged($event)"
-    />
-  }
-  <div class="table-container">
+<section class="l-body l-body--full-width l-body--flex cn-issues">
+  <p class="cn-issues__summary" data-cy="issues-summary">
+    @if (initialLoadComplete()) {
+      <ng-container i18n
+        >{summaryCount(), plural, =0 {No {{ statusWord() }} issues} =1 {1 {{ statusWord() }} issue} other {{{ summaryCount() }} {{ statusWord() }} issues}}</ng-container
+      >
+      @if (newestSeen(); as newest) {
+        <span aria-hidden="true"> · </span>
+        <ng-container i18n
+          >The latest happened
+          <time [dateTime]="newest" [title]="newest | date: 'medium'">{{
+            newest | daysAgo
+          }}</time
+          >.</ng-container
+        >
+      }
+    } @else {
+      &nbsp;
+    }
+  </p>
+
+  <div class="cn-issues__toolbar">
+    <div class="cn-segmented" role="tablist" i18n-aria-label aria-label="Issue status">
+      @for (tab of statusTabs; track tab.value) {
+        <button
+          type="button"
+          role="tab"
+          class="cn-segmented__item"
+          [class.is-selected]="activeStatus() === tab.value"
+          [attr.aria-selected]="activeStatus() === tab.value"
+          (click)="setStatus(tab.value)"
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+
+    <div class="cn-issues__filters">
+      <form
+        class="cn-search"
+        [formGroup]="form"
+        (ngSubmit)="searchSubmit()"
+        data-cy="list-search-form"
+        role="search"
+      >
+        <mat-icon aria-hidden="true">search</mat-icon>
+        <label for="issue-search" class="u-visually-hidden" i18n
+          >Search issues</label
+        >
+        <input
+          id="issue-search"
+          type="search"
+          formControlName="query"
+          data-cy="list-search-field"
+          i18n-placeholder
+          placeholder="Search by message, or level:error"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          class="cn-search__help"
+          [matMenuTriggerFor]="searchHelpMenu"
+          i18n-aria-label
+          aria-label="Search tips"
+          data-cy="list-search-help"
+        >
+          <mat-icon>help_outline</mat-icon>
+        </button>
+      </form>
+      <mat-menu #searchHelpMenu="matMenu" class="search-help-menu" xPosition="before">
+        <div class="search-help" (click)="$event.stopPropagation()">
+          <h3 class="search-help__heading">{{ searchHelp.heading }}</h3>
+          @for (section of searchHelp.sections; track section.title) {
+            <div class="search-help__section">
+              <p class="search-help__section-title">{{ section.title }}</p>
+              <p class="search-help__samples">
+                @for (sample of section.examples ?? section.samples ?? []; track sample) {
+                  <code>{{ sample }}</code>
+                }
+              </p>
+              @if (section.note) {
+                <p class="search-help__section-note">{{ section.note }}</p>
+              }
+            </div>
+          }
+          @if (searchHelp.footer) {
+            <p class="search-help__footer">{{ searchHelp.footer }}</p>
+          }
+        </div>
+      </mat-menu>
+
+      <button
+        type="button"
+        class="cn-chip"
+        [matMenuTriggerFor]="environmentMenu"
+        [disabled]="(availableEnvironments() ?? []).length === 0"
+      >
+        <span i18n>Where:</span>
+        <span class="cn-chip__value">{{ environment() || allLabel }}</span>
+        <mat-icon aria-hidden="true">expand_more</mat-icon>
+      </button>
+      <mat-menu #environmentMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="setEnvironment(null)" i18n>All environments</button>
+        @for (env of availableEnvironments() ?? []; track env) {
+          <button mat-menu-item (click)="setEnvironment(env)">{{ env }}</button>
+        }
+      </mat-menu>
+
+      <button
+        type="button"
+        class="cn-chip"
+        [matMenuTriggerFor]="trendMenu"
+        [disabled]="issues().length === 0"
+      >
+        <span i18n>Trend:</span>
+        <span class="cn-chip__value">{{
+          statsPeriod() === "24h" ? last24Label : last14Label
+        }}</span>
+        <mat-icon aria-hidden="true">expand_more</mat-icon>
+      </button>
+      <mat-menu #trendMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="toggleStatsPeriod('24h')">{{ last24Label }}</button>
+        <button mat-menu-item (click)="toggleStatsPeriod('14d')">{{ last14Label }}</button>
+      </mat-menu>
+
+      <button
+        type="button"
+        class="cn-chip cn-chip--plain"
+        [matMenuTriggerFor]="sortMenu"
+        [disabled]="issues().length === 0"
+      >
+        <span i18n>Sort:</span>
+        <span class="cn-chip__value">{{ sortLabel() }}</span>
+        <mat-icon aria-hidden="true">expand_more</mat-icon>
+      </button>
+      <mat-menu #sortMenu="matMenu" xPosition="before">
+        @for (s of sorts; track s.param) {
+          <button mat-menu-item (click)="setSort(s.param)">{{ s.display }}</button>
+        }
+      </mat-menu>
+    </div>
+  </div>
+
+  <div class="table-container cn-issues__table">
     <gt-loading-overlay i18n-label [loading]="loading()" label="Loading issues">
       @if (issues(); as issues) {
         <table
           mat-table
           [dataSource]="issues"
           [trackBy]="trackIssues"
-          class="mat-elevation-z2"
           [class.fixedLayout]="issues.length === 0 && !loading()"
         >
           <ng-container matColumnDef="selectAll">
@@ -40,23 +164,19 @@
                 (change)="toggleSelectAllOnPage()"
                 [checked]="areAllSelected()"
                 [disabled]="issues.length === 0"
+                i18n-aria-label
+                aria-label="Select all issues on this page"
                 data-cy="selectAll"
               />
             </th>
           </ng-container>
           <ng-container matColumnDef="select">
-            <!-- Empty header cell -->
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td
-              mat-cell
-              *matCellDef="let row"
-              [class.resolved]="row.status === 'resolved'"
-              [class.ignored]="row.status === 'ignored'"
-              class="checkbox-cell level level--{{ row.level }}"
-            >
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row" class="checkbox-cell">
               <mat-checkbox
                 (click)="toggleCheck($event, row.id)"
                 [checked]="row.isSelected"
+                [attr.aria-label]="row.title"
               >
               </mat-checkbox>
             </td>
@@ -65,99 +185,61 @@
             <th
               mat-header-cell
               *matHeaderCellDef
-              mat-sort-header
               [attr.colspan]="displayedColumns().length - 1"
               class="table-header__actions"
             >
               <div class="action-button-container">
-                @if (isLargeScreen()) {
+                @if (thereAreSelectedIssues()) {
                   <div class="status-button-group">
+                    <span class="cn-selection-count" i18n
+                      >{numberOfSelectedIssues(), plural, =1 {1 selected} other {{{ numberOfSelectedIssues() }} selected}}</span
+                    >
                     <button
                       data-cy="bulkMarkResolved"
                       mat-flat-button
-                      color="primary"
                       (click)="updateStatus('resolved')"
-                      [disabled]="thereAreSelectedIssues() === false"
                       i18n
-                      >Mark resolved</button
+                      >Mark as fixed</button
                     >
+                    @if (isLargeScreen()) {
+                      <button mat-stroked-button (click)="updateStatus('ignored')" i18n
+                        >Mute</button
+                      >
+                      <button mat-stroked-button (click)="updateStatus('unresolved')" i18n
+                        >Reopen</button
+                      >
+                    }
                     <button
-                      mat-stroked-button
-                      (click)="updateStatus('unresolved')"
-                      [disabled]="thereAreSelectedIssues() === false"
-                      i18n
-                      >Mark unresolved</button
+                      mat-icon-button
+                      [matMenuTriggerFor]="moreMenu"
+                      i18n-aria-label
+                      aria-label="More actions"
                     >
-                    <button
-                      mat-stroked-button
-                      (click)="updateStatus('ignored')"
-                      [disabled]="thereAreSelectedIssues() === false"
-                      i18n
-                      >Mark ignored</button
-                    >
-                    <button
-                      mat-stroked-button
-                      (click)="mergeSelectedIssues()"
-                      [disabled]="
-                        numberOfSelectedIssues() < 2 ||
-                        allResultsSelected() ||
-                        multipleProjectIssuesSelected()
-                      "
-                      i18n
-                      >Merge</button
-                    >
-                    <button
-                      mat-stroked-button
-                      color="warn"
-                      (click)="deleteSelectedIssues()"
-                      [disabled]="thereAreSelectedIssues() === false"
-                      i18n
-                      >Delete</button
-                    >
+                      <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #moreMenu="matMenu">
+                      @if (!isLargeScreen()) {
+                        <button mat-menu-item (click)="updateStatus('ignored')" i18n>Mute</button>
+                        <button mat-menu-item (click)="updateStatus('unresolved')" i18n>Reopen</button>
+                      }
+                      <button
+                        mat-menu-item
+                        (click)="mergeSelectedIssues()"
+                        [disabled]="
+                          numberOfSelectedIssues() < 2 ||
+                          allResultsSelected() ||
+                          multipleProjectIssuesSelected()
+                        "
+                        i18n
+                        >Merge into one issue</button
+                      >
+                      <button mat-menu-item (click)="deleteSelectedIssues()" i18n>Delete</button>
+                    </mat-menu>
                   </div>
                 } @else {
-                  <button
-                    mat-icon-button
-                    [disabled]="thereAreSelectedIssues() === false"
-                    [matMenuTriggerFor]="menu"
+                  <span class="cn-table-hint" i18n
+                    >Select issues to fix, mute or merge several at once.</span
                   >
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button
-                      mat-menu-item
-                      (click)="updateStatus('resolved')"
-                      i18n
-                      >Mark resolved</button
-                    >
-                    <button
-                      mat-menu-item
-                      (click)="updateStatus('unresolved')"
-                      i18n
-                      >Mark unresolved</button
-                    >
-                    <button mat-menu-item (click)="updateStatus('ignored')" i18n
-                      >Mark ignored</button
-                    >
-                    <button
-                      mat-menu-item
-                      (click)="mergeSelectedIssues()"
-                      [disabled]="
-                        numberOfSelectedIssues() < 2 ||
-                        allResultsSelected() ||
-                        multipleProjectIssuesSelected()
-                      "
-                      i18n
-                      >Merge</button
-                    >
-                    <button
-                      mat-menu-item
-                      (click)="deleteSelectedIssues()"
-                      [disabled]="thereAreSelectedIssues() === false"
-                      i18n
-                      >Delete</button
-                    >
-                  </mat-menu>
                 }
                 <!-- Loading shown by the top progress bar; keep prev/next stable during reload. -->
                 <gt-pagination-buttons
@@ -168,139 +250,116 @@
             </th>
           </ng-container>
           <ng-container matColumnDef="title">
-            <th i18n
-              mat-header-cell
-              *matHeaderCellDef
-              mat-sort-header
-              class="status-header-cell"
-            >
-              Issue
-            </th>
+            <th i18n mat-header-cell *matHeaderCellDef>Issue</th>
             <td
               mat-cell
               *matCellDef="let element"
-              [class.resolved]="element.status === 'resolved'"
-              [class.ignored]="element.status === 'ignored'"
               class="title-cell"
+              [class.is-closed]="element.status !== 'unresolved'"
             >
-              <div class="table-group-label">
-                @if (element.status === "resolved") {
-                  <mat-icon inline="true" class="resolved-icon">
-                    done
-                  </mat-icon>
-                }
-                @if (element.status === "ignored") {
-                  <mat-icon inline="true" class="mute-icon">
-                    notifications_off
-                  </mat-icon>
-                }
-                <a [routerLink]="element.id" queryParamsHandling="merge">{{
-                  element.title
-                }}</a>
-              </div>
-              <div class="small-screen-event-count caption-text">
-                <ng-container i18n>{element.count, plural, =1 {1 event} other {{{ element.count }} events}}</ng-container>
-              </div>
-              <div>
-                @if (appliedProjectCount() !== 1) {
-                  <span class="caption-text"> {{ element.projectSlug }} </span>
-                }
-                <span class="caption-text">
-                  @if (appliedProjectCount() !== 1) {
-                    &mdash;
+              <a
+                class="cn-issue"
+                [routerLink]="element.id"
+                queryParamsHandling="merge"
+              >
+                <span class="cn-issue__line">
+                  <span
+                    class="cn-dot cn-dot--{{ levelTone(element.level) }}"
+                    aria-hidden="true"
+                    [title]="element.level"
+                  ></span>
+                  <span class="u-visually-hidden">{{ element.level }}:</span>
+                  <span class="cn-issue__type">{{ headline(element).type }}</span>
+                  @if (headline(element).message; as message) {
+                    <span class="cn-issue__message">{{ message }}</span>
                   }
-                  <time
-                    [dateTime]="element.firstSeen"
-                    [title]="element.firstSeen | date: 'medium'"
-                  >
-                    {{ element.firstSeen | daysOld }}</time
-                  >
-                  @if (element.firstSeen !== element.lastSeen) {
-                    <ng-container i18n>, seen
-                    <time
-                      [dateTime]="element.lastSeen"
-                      [title]="element.lastSeen | date: 'medium'"
-                    >
-                      {{ element.lastSeen | daysAgo }}
-                    </time></ng-container>
+                  @if (element.status === "resolved") {
+                    <span class="cn-badge cn-badge--success">
+                      <mat-icon aria-hidden="true">check</mat-icon>
+                      <ng-container i18n>Fixed</ng-container>
+                    </span>
+                  } @else if (element.status === "ignored") {
+                    <span class="cn-badge">
+                      <mat-icon aria-hidden="true">notifications_off</mat-icon>
+                      <ng-container i18n>Muted</ng-container>
+                    </span>
+                  } @else if (isNew(element)) {
+                    <span class="cn-badge cn-badge--accent" i18n>New</span>
                   }
                 </span>
-                @if (element.type && element.type === "csp") {
-                  <span class="caption-text">
-                    @if (appliedProjectCount() !== 1 && element.type) {
-                      <span> &mdash; </span>
-                    }
-                    <ng-container i18n>{{ element.type }} report</ng-container></span
-                  >
-                }
-              </div>
+                <span class="cn-issue__meta">
+                  @if (appliedProjectCount() !== 1) {
+                    <span>{{ element.projectSlug }}</span>
+                    <span aria-hidden="true">·</span>
+                  }
+                  @if (element.culprit) {
+                    <span class="cn-issue__culprit">{{ element.culprit }}</span>
+                    <span aria-hidden="true">·</span>
+                  }
+                  <span>
+                    <ng-container i18n>Started</ng-container>
+                    <time
+                      [dateTime]="element.firstSeen"
+                      [title]="element.firstSeen | date: 'medium'"
+                    >
+                      {{ element.firstSeen | daysAgo }}</time
+                    >
+                  </span>
+                  @if (element.type === "csp") {
+                    <span aria-hidden="true">·</span>
+                    <span i18n>Security policy report</span>
+                  }
+                  <span class="cn-issue__small-count">
+                    <span aria-hidden="true">·</span>
+                    <ng-container i18n
+                      >{element.count, plural, =1 {1 time} other {{{ element.count }} times}}</ng-container
+                    >
+                  </span>
+                </span>
+              </a>
             </td>
           </ng-container>
           <ng-container matColumnDef="bulkProjectSelect">
             <th
               mat-header-cell
               *matHeaderCellDef
-              colspan="4"
+              [attr.colspan]="displayedColumns().length"
               class="bulk-project-select"
             >
               @if (showBulkSelectProject() === true) {
                 @if (allResultsSelected() === false) {
                   <span i18n class="bulk-project-select__text"
-                    >{{ numberOfSelectedIssues() }} issues on this page
+                    >All {{ numberOfSelectedIssues() }} issues on this page are
                     selected.</span
                   >
                   <button
                     data-cy="bulkUpdateProject"
-                    mat-stroked-button
+                    mat-button
                     (click)="selectAllResults()"
                   >
                     @if (paginator()?.hits; as hits) {
-                      <ng-container i18n>Select all {{ hits }} issues that match this query</ng-container>
+                      <ng-container i18n>Select all {{ hits }} matching issues</ng-container>
                     }
                   </button>
                 } @else {
                   <span i18n class="bulk-project-select__text"
-                    >All {{ paginator()?.hits }} issues are currently
+                    >All {{ paginator()?.hits }} matching issues are
                     selected.</span
                   >
-                  <button i18n mat-stroked-button (click)="clearSelectAllResults()">
+                  <button i18n mat-button (click)="clearSelectAllResults()">
                     Undo
                   </button>
                 }
               }
             </th>
           </ng-container>
-          <ng-container matColumnDef="events">
-            <th i18n
-              mat-header-cell
-              *matHeaderCellDef
-              mat-sort-header
-              class="status-header-cell"
-            >
-              Events
-            </th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-              [class.resolved]="element.status === 'resolved'"
-              [class.ignored]="element.status === 'ignored'"
-              class="event-cell body-text"
-            >
-              <p>{{ element.count }}</p>
-            </td>
-          </ng-container>
           <ng-container matColumnDef="trend">
             <th mat-header-cell *matHeaderCellDef>
-              <div class="stats-cell-content">
-                <div i18n class="stats-header-label">Trend</div>
-              </div>
+              <span class="stats-header-label">{{
+                statsPeriod() === "24h" ? last24Label : last14Label
+              }}</span>
             </th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-              [class.resolved]="element.status === 'resolved'"
-              [class.ignored]="element.status === 'ignored'"
-            >
+            <td mat-cell *matCellDef="let element" class="trend-cell">
               <div class="stats-cell-content">
                 <gt-issue-chart
                   [formattedStats]="element.formattedStats"
@@ -310,6 +369,52 @@
                   [statsPeriod]="statsPeriod()"
                 />
               </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="events">
+            <th i18n mat-header-cell *matHeaderCellDef class="cn-num">Times</th>
+            <td mat-cell *matCellDef="let element" class="cn-num cn-num--strong">
+              {{ element.count }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="users">
+            <th i18n mat-header-cell *matHeaderCellDef class="cn-num">People</th>
+            <td mat-cell *matCellDef="let element" class="cn-num">
+              {{ element.userCount || "—" }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="lastSeen">
+            <th i18n mat-header-cell *matHeaderCellDef class="cn-num">Last seen</th>
+            <td mat-cell *matCellDef="let element" class="cn-num cn-last-seen">
+              <time
+                class="cn-last-seen__time"
+                [dateTime]="element.lastSeen"
+                [title]="element.lastSeen | date: 'medium'"
+                >{{ element.lastSeen | daysAgo }}</time
+              >
+              <span class="cn-row-actions">
+                @if (element.status === "resolved" || element.status === "ignored") {
+                  <button
+                    mat-stroked-button
+                    (click)="setIssueStatus(element.id, 'unresolved')"
+                    i18n
+                    >Reopen</button
+                  >
+                } @else {
+                  <button
+                    mat-flat-button
+                    (click)="setIssueStatus(element.id, 'resolved')"
+                    i18n
+                    >Mark fixed</button
+                  >
+                  <button
+                    mat-stroked-button
+                    (click)="setIssueStatus(element.id, 'ignored')"
+                    i18n
+                    >Mute</button
+                  >
+                }
+              </span>
             </td>
           </ng-container>
           <tr
@@ -330,10 +435,16 @@
           ></tr>
           <tr
             mat-header-row
+            class="cn-column-header"
             *matHeaderRowDef="displayedColumns()"
             [hidden]="(issues.length === 0 && !loading()) || !isLargeScreen()"
           ></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
+          <tr
+            mat-row
+            class="cn-issue-row"
+            [class.is-selected]="row.isSelected"
+            *matRowDef="let row; columns: displayedColumns()"
+          ></tr>
           <tr class="mat-row" *matNoDataRow>
             <td
               class="zero-states-cell"

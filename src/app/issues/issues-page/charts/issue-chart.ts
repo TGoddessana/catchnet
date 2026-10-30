@@ -40,8 +40,8 @@ export class IssueChart {
         name: d.name,
         value:
           d.value >= threshold
-            ? "var(--mat-sys-error)"
-            : "var(--mat-sys-secondary)",
+            ? "var(--gt-color-accent)"
+            : "var(--gt-color-chart-bar)",
       }));
   });
 }

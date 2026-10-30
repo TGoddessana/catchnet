@@ -12,23 +12,19 @@ import {
   ViewChild,
 } from "@angular/core";
 import { DatePipe } from "@angular/common";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
-import { MatSelectChange } from "@angular/material/select";
 import { MatTable, MatTableModule } from "@angular/material/table";
 import { Router, ActivatedRoute, RouterLink } from "@angular/router";
 import { IssuesService } from "../issues.service";
 import { SettingsService } from "src/app/api/settings.service";
-import { IssueStatus } from "../interfaces";
-import { DaysAgoPipe, DaysOldPipe } from "../../shared/days-ago.pipe";
+import { Issue, IssueStatus } from "../interfaces";
+import { DaysAgoPipe } from "../../shared/days-ago.pipe";
 import { IssueZeroStatesComponent } from "../issue-zero-states/issue-zero-states.component";
-import { DataFilterBarComponent } from "../../list-elements/data-filter-bar/data-filter-bar.component";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import { MatCardModule } from "@angular/material/card";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import {
   stringArrAttribute,
   stringAttribute,
@@ -49,9 +45,8 @@ import { SearchHelpConfig } from "../../list-elements/data-filter-bar/data-filte
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatTableModule,
-    DataFilterBarComponent,
+    ReactiveFormsModule,
     MatCheckboxModule,
-    MatCardModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
@@ -60,10 +55,8 @@ import { SearchHelpConfig } from "../../list-elements/data-filter-bar/data-filte
     IssueZeroStatesComponent,
     DatePipe,
     DaysAgoPipe,
-    DaysOldPipe,
     ListAppBar,
     IssueChart,
-    MatButtonToggleModule,
     PaginationButtons,
   ],
   providers: [IssuesService],
@@ -95,19 +88,6 @@ export class IssuesPage implements OnInit, OnDestroy {
   form = new FormGroup({
     query: new FormControl(""),
   });
-  sortForm = new FormGroup({
-    sort: new FormControl({
-      value: "",
-      disabled: true,
-    }),
-  });
-  environmentForm = new FormGroup({
-    environment: new FormControl(""),
-  });
-  dateForm = new FormGroup({
-    startDate: new FormControl<Date | string>(""),
-    endDate: new FormControl<Date | string>(""),
-  });
 
   issues = this.service.issuesWithSelected;
 
@@ -120,9 +100,9 @@ export class IssuesPage implements OnInit, OnDestroy {
     return selectedProjectsSet.size > 1;
   });
 
-  allColumns = ["select", "title", "trend", "events"];
+  allColumns = ["select", "title", "trend", "events", "users", "lastSeen"];
   xSmallScreenColumns = ["select", "title"];
-  mediumScreenColumns = ["select", "title", "events"];
+  mediumScreenColumns = ["select", "title", "events", "lastSeen"];
   isLargeScreen = signal(true);
   displayedColumns = signal(this.allColumns);
   private lastClickedIssueId = signal<string | null>(null);
@@ -145,13 +125,59 @@ export class IssuesPage implements OnInit, OnDestroy {
   activeOrganization = this.organizationsService.activeOrganization;
   // errors = this.service.errors;
   sorts = [
-    { param: "-last_seen", display: $localize`Last Seen` },
-    { param: "first_seen", display: $localize`First Seen` },
-    { param: "-count", display: $localize`Most Frequent` },
-    { param: "count", display: $localize`Least Frequent` },
-    { param: "-priority", display: $localize`Highest Priority` },
-    { param: "priority", display: $localize`Lowest Priority` },
+    { param: "-last_seen", display: $localize`Most recent` },
+    { param: "first_seen", display: $localize`Oldest first` },
+    { param: "-count", display: $localize`Happens most` },
+    { param: "count", display: $localize`Happens least` },
+    { param: "-priority", display: $localize`Highest priority` },
+    { param: "priority", display: $localize`Lowest priority` },
   ];
+
+  /** Status tabs. Each maps onto an `is:` token in the search query. */
+  readonly statusTabs: { value: IssueStatus | "all"; label: string }[] = [
+    { value: "unresolved", label: $localize`Open` },
+    { value: "resolved", label: $localize`Fixed` },
+    { value: "ignored", label: $localize`Muted` },
+    { value: "all", label: $localize`All` },
+  ];
+  readonly allLabel = $localize`All`;
+  readonly last24Label = $localize`Last 24 hours`;
+  readonly last14Label = $localize`Last 14 days`;
+
+  private readonly fullQuery = computed(() => this.query() ?? "is:unresolved");
+  activeStatus = computed<IssueStatus | "all">(() => {
+    const match = this.fullQuery().match(/(?:^|\s)is:(unresolved|resolved|ignored)\b/);
+    return (match?.[1] as IssueStatus | undefined) ?? "all";
+  });
+  /** The query without its status token; what the search box shows. */
+  private searchText = computed(() =>
+    this.fullQuery()
+      .replace(/(?:^|\s)is:(unresolved|resolved|ignored)\b/g, " ")
+      .trim(),
+  );
+  statusWord = computed(() => {
+    switch (this.activeStatus()) {
+      case "unresolved":
+        return $localize`open`;
+      case "resolved":
+        return $localize`fixed`;
+      case "ignored":
+        return $localize`muted`;
+      default:
+        return "";
+    }
+  });
+  summaryCount = computed(
+    () => this.paginator()?.hits ?? this.issues().length,
+  );
+  newestSeen = computed(() => {
+    const seen = this.issues().map((issue) => issue.lastSeen);
+    return seen.length ? seen.reduce((a, b) => (a > b ? a : b)) : null;
+  });
+  sortLabel = computed(() => {
+    const sort = this.sort() ?? "-last_seen";
+    return this.sorts.find((s) => s.param === sort)?.display ?? sort;
+  });
 
   readonly searchHelp: SearchHelpConfig = {
     heading: $localize`Search syntax`,
@@ -235,16 +261,6 @@ export class IssuesPage implements OnInit, OnDestroy {
         this.#environmentsService.projectSlug.set(null);
       }
     });
-    effect(() =>
-      this.issues().length === 0
-        ? this.sortForm.controls.sort.disable()
-        : this.sortForm.controls.sort.enable(),
-    );
-    effect(() =>
-      this.availableEnvironments().length === 0
-        ? this.environmentForm.controls.environment.disable()
-        : this.environmentForm.controls.environment.enable(),
-    );
     /**
      * When changing from one project to another, see if there is an environment
      * in the URL. If it doesn't match a project environment, reset the URL.
@@ -259,7 +275,6 @@ export class IssuesPage implements OnInit, OnDestroy {
         environment &&
         !environments.includes(environment)
       ) {
-        this.environmentForm.setValue({ environment: null });
         this.router.navigate([], {
           queryParams: { environment: null },
           queryParamsHandling: "merge",
@@ -267,22 +282,7 @@ export class IssuesPage implements OnInit, OnDestroy {
       }
     });
     effect(() => {
-      const query = this.query();
-      this.form.setValue({
-        query: query ?? "is:unresolved",
-      });
-    });
-    effect(() => {
-      const sort = this.sort();
-      this.sortForm.setValue({
-        sort: sort ?? "-last_seen",
-      });
-    });
-    effect(() => {
-      const environment = this.environment();
-      this.environmentForm.setValue({
-        environment: environment ?? "",
-      });
+      this.form.setValue({ query: this.searchText() });
     });
     // Ensure sticky headers stay properly aligned
     // After showing/hiding headers based on whether or
@@ -320,14 +320,68 @@ export class IssuesPage implements OnInit, OnDestroy {
     return issue.id;
   }
 
-  searchSubmit() {
+  private navigateQuery(status: IssueStatus | "all", text: string) {
+    const query = [status === "all" ? "" : `is:${status}`, text.trim()]
+      .filter(Boolean)
+      .join(" ");
     this.router.navigate([], {
-      queryParams: {
-        query: this.form.value.query,
-        cursor: null,
-      },
+      queryParams: { query, cursor: null },
       queryParamsHandling: "merge",
     });
+  }
+
+  searchSubmit() {
+    this.navigateQuery(this.activeStatus(), this.form.value.query ?? "");
+  }
+
+  setStatus(status: IssueStatus | "all") {
+    this.navigateQuery(status, this.searchText());
+  }
+
+  setEnvironment(environment: string | null) {
+    this.router.navigate([], {
+      queryParams: { cursor: null, environment },
+      queryParamsHandling: "merge",
+    });
+  }
+
+  setSort(sort: string) {
+    this.router.navigate([], {
+      queryParams: { cursor: null, sort },
+      queryParamsHandling: "merge",
+    });
+  }
+
+  /** Mark one issue fixed, muted or open again from its row. */
+  setIssueStatus(issueId: string, status: IssueStatus) {
+    this.service.updateStatusForIssues(this.orgSlug(), [issueId], status);
+  }
+
+  /** Error type and message, e.g. "TypeError" and "x is undefined". */
+  headline(issue: Issue): { type: string; message: string } {
+    const { type, value } = issue.metadata ?? {};
+    if (type && value) {
+      return { type, message: value };
+    }
+    return { type: issue.title, message: "" };
+  }
+
+  /** First seen within the last day. */
+  isNew(issue: Issue) {
+    return Date.now() - new Date(issue.firstSeen).getTime() < 86_400_000;
+  }
+
+  /** Dot color for a level. The level is also read out as text. */
+  levelTone(level: string) {
+    switch (level) {
+      case "fatal":
+      case "error":
+        return "error";
+      case "warning":
+        return "warning";
+      default:
+        return "neutral";
+    }
   }
 
   updateStatus(status: IssueStatus) {
@@ -445,20 +499,6 @@ export class IssuesPage implements OnInit, OnDestroy {
 
   clearSelectAllResults() {
     this.service.cancelAllResultsSelection();
-  }
-
-  sortByChanged(event: MatSelectChange) {
-    this.router.navigate([], {
-      queryParams: { cursor: null, sort: event.value },
-      queryParamsHandling: "merge",
-    });
-  }
-
-  filterByEnvironment(event: MatSelectChange) {
-    this.router.navigate([], {
-      queryParams: { cursor: null, environment: event.value },
-      queryParamsHandling: "merge",
-    });
   }
 
   toggleStatsPeriod(period: "24h" | "14d") {
