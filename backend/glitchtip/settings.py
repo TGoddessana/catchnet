@@ -1,0 +1,1610 @@
+"""
+Django settings for GlitchTip project.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/dev/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/dev/ref/settings/
+"""
+
+import logging
+import os
+import sys
+import tempfile
+import warnings
+from datetime import timedelta
+
+import environ
+from corsheaders.defaults import default_headers
+from django.conf import global_settings
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.csp import CSP
+from django.utils.module_loading import import_string
+from django_vtasks.scheduler import crontab
+
+from glitchtip import db_iam as _db_iam
+
+env = environ.FileAwareEnv(
+    ALLOWED_HOSTS=(list, ["*"]),
+    DEFAULT_FILE_STORAGE=(str, global_settings.STORAGES["default"]["BACKEND"]),
+    AWS_ACCESS_KEY_ID=(str, None),
+    AWS_SECRET_ACCESS_KEY=(str, None),
+    AWS_STORAGE_BUCKET_NAME=(str, None),
+    AWS_S3_ENDPOINT_URL=(str, None),
+    AWS_LOCATION=(str, ""),
+    AWS_S3_USE_SSL=(bool, True),
+    AWS_S3_VERIFY=(str, None),
+    AZURE_ACCOUNT_NAME=(str, None),
+    AZURE_ACCOUNT_KEY=(str, None),
+    AZURE_CONTAINER=(str, None),
+    AZURE_URL_EXPIRATION_SECS=(int, None),
+    GS_BUCKET_NAME=(str, None),
+    GS_PROJECT_ID=(str, None),
+    DEBUG=(bool, False),
+    DEBUG_TOOLBAR=(bool, False),
+    STATIC_URL=(str, "/"),
+    ENABLE_OBSERVABILITY_API=(bool, False),
+    READ_ONLY_DATABASE_URL=(str, None),
+    MAINTENANCE_DATABASE_URL=(str, None),
+    GLITCHTIP_CHUNK_UPLOAD_USE_RELATIVE_URL=(bool, False),
+)
+path = environ.Path()
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env.str("SECRET_KEY", "change_me")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env("DEBUG")
+
+# Enable only for running end to end testing. Debug must be True to use.
+ENABLE_TEST_API = env.bool("ENABLE_TEST_API", False)
+if DEBUG is False:
+    ENABLE_TEST_API = False
+if DEBUG and ENABLE_TEST_API:
+    ACCOUNT_RATE_LIMITS = False  # Disable for e2e tests
+
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+# Necessary for kubernetes health checks
+POD_IP = env.str("POD_IP", default=None)
+if POD_IP:
+    ALLOWED_HOSTS.append(POD_IP)
+
+
+ENVIRONMENT = env.str("ENVIRONMENT", None)
+GLITCHTIP_VERSION = env.str("GLITCHTIP_VERSION", "0.0.0-unknown")
+# Multiline, markdown accepted. Example: "[Burke Software's](https://burkesoftware.com) GlitchTip Server"
+GLITCHTIP_INSTANCE_NAME: str | None = None
+if "GLITCHTIP_INSTANCE_NAME" in os.environ:
+    GLITCHTIP_INSTANCE_NAME = env.str("GLITCHTIP_INSTANCE_NAME", None, multiline=True)
+
+# Used in email and DSN generation. Set to full domain such as https://glitchtip.example.com
+# GLITCHTIP_DOMAIN is the original name, still what install.md documents.
+default_url = env.str(
+    "APP_URL", env.str("GLITCHTIP_DOMAIN", "http://localhost:8000")
+)  # DigitalOcean App Platform uses APP_URL
+GLITCHTIP_URL = env.url("GLITCHTIP_URL", default_url)
+if GLITCHTIP_URL.scheme not in ["http", "https"]:
+    raise ImproperlyConfigured(
+        "The GlitchTip URL must start with http or https "
+        "(set via GLITCHTIP_URL, GLITCHTIP_DOMAIN, or APP_URL)"
+    )
+
+# If True, use a relative URL in chunk upload responses.
+GLITCHTIP_CHUNK_UPLOAD_USE_RELATIVE_URL = env.bool(
+    "GLITCHTIP_CHUNK_UPLOAD_USE_RELATIVE_URL", False
+)
+
+# Is running unit test
+TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
+
+# Warn (but don't refuse to boot) about unsafe defaults when running outside
+# development. A forced failure here would break existing self-hosters on
+# upgrade, so escalation to a hard check is deferred to a major release.
+# Operators who miss these in logs end up with forgeable signed cookies /
+# password-reset tokens and host-header attacks respectively.
+if not DEBUG and not TESTING:
+    if SECRET_KEY == "change_me":
+        warnings.warn(
+            "SECRET_KEY is still the placeholder default 'change_me'. "
+            "Set SECRET_KEY to a unique random secret before running in "
+            "production. Generate one with: "
+            "python -c 'import secrets; print(secrets.token_urlsafe(50))'",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+    if ALLOWED_HOSTS == ["*"]:
+        warnings.warn(
+            "ALLOWED_HOSTS is the wildcard default. Restrict to known "
+            "hostnames via the ALLOWED_HOSTS env var (comma-separated) in "
+            "production deployments.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+
+# Limits size (in bytes) of uncompressed event payloads. Mitigates DOS risk.
+# Enforced at decompression time inside gt_rust (the ingest decompression
+# primitive) and is the source of truth for ingest body size.
+# DATA_UPLOAD_MAX_MEMORY_SIZE below sits just above this to give Django's own
+# check a matching ceiling.
+GLITCHTIP_MAX_UNZIPPED_PAYLOAD_SIZE = env.int(
+    "GLITCHTIP_MAX_UNZIPPED_PAYLOAD_SIZE",
+    5 * 1024 * 1024,  # 5 MB
+)
+
+# Limits size (in bytes) of an uploaded zip (an artifact bundle, or a zip of
+# ProGuard mappings) once expanded, and the number of entries it may contain.
+# Both are per upload, across all of its entries. A zip's compression ratio
+# has no ceiling, so without these a small upload can fill a worker's local
+# disk and take unrelated work on that pod down with it. Enforced against the
+# bytes actually written; the sizes an archive declares for itself are
+# uploader-supplied metadata.
+#
+# Both are also applied to the archive before it is opened. That is not
+# redundant: reading a zip's directory allocates an entry object per member
+# well before any post-open check could count them, so on their own these
+# would cap the files written without capping the memory spent deciding to
+# write them.
+#
+# 512 MB is well past any real source-map bundle — a large single-page app's
+# minified chunks plus their maps, sourcesContent included, land in the tens
+# of MB, as does a large app's R8 mapping — while keeping one upload's worst
+# case bounded. 10,000 entries
+# is likewise far above a real bundle's file count. Operators building
+# something genuinely larger can raise either via env.
+GLITCHTIP_MAX_UNZIPPED_ARCHIVE_SIZE = env.int(
+    "GLITCHTIP_MAX_UNZIPPED_ARCHIVE_SIZE",
+    512 * 1024 * 1024,  # 512 MB
+)
+GLITCHTIP_MAX_ARCHIVE_MEMBERS = env.int("GLITCHTIP_MAX_ARCHIVE_MEMBERS", 10_000)
+
+# Mean seconds between in-process gc.collect() + malloc_trim() passes that
+# return freed heap pages to the OS (see glitchtip/memory_trim.py). 0 disables.
+GLITCHTIP_MALLOC_TRIM_INTERVAL = env.int("GLITCHTIP_MALLOC_TRIM_INTERVAL", 3600)
+
+# Raw request body cap before view handling. For ingest endpoints gt_rust
+# enforces GLITCHTIP_MAX_UNZIPPED_PAYLOAD_SIZE on the decompressed bytes, but
+# the *compressed* body Django reads is smaller than that, so this only needs
+# to cover uncompressed ingest bodies. Multipart file uploads (minidumps,
+# source-map chunks) go through FILE_UPLOAD_MAX_MEMORY_SIZE and spill to disk,
+# so this does not need to cover them.
+#
+# 15 MB default gives plenty of headroom over the 5 MB ingest cap for any
+# non-ingest JSON bodies (webhooks, bulk invites, assemble manifests) while
+# still killing the pre-existing 4 GB DoS vector. Operators can raise via env;
+# if GLITCHTIP_MAX_UNZIPPED_PAYLOAD_SIZE is itself raised above 15 MB, this
+# default scales with it so the two stay coherent.
+DATA_UPLOAD_MAX_MEMORY_SIZE = env.int(
+    "DATA_UPLOAD_MAX_MEMORY_SIZE",
+    default=max(15 * 1024 * 1024, GLITCHTIP_MAX_UNZIPPED_PAYLOAD_SIZE + 1024 * 1024),
+)
+DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int(
+    "DATA_UPLOAD_MAX_NUMBER_FIELDS",
+    default=global_settings.DATA_UPLOAD_MAX_NUMBER_FIELDS,
+)
+
+# Hash sub-partitions per time partition. Scale it with the number of
+# organizations; 2 is the floor that still sub-partitions, so a query that
+# forgets to filter on organization_id is visible in development instead of
+# only in production. Raising it multiplies the partitions, and the indexes on
+# them, that Postgres locks for work it can't narrow to one organization
+# (retention sweeps, archival, DDL on a parent) — so raise
+# max_locks_per_transaction with it; 512 is a reasonable floor at any count.
+PARTITION_HASH_BUCKETS = env.int("PARTITION_HASH_BUCKETS", 2)
+
+# ── Retention settings ──────────────────────────────────────────────
+# More retention days means more partitions, which spends the same lock budget.
+# Master default for every per-type retention below.
+GLITCHTIP_RETENTION_DAYS = env.int("GLITCHTIP_RETENTION_DAYS", default=90)
+
+# Per-type total retention (hot + cold combined)
+GLITCHTIP_EVENT_RETENTION_DAYS = env.int(
+    "GLITCHTIP_EVENT_RETENTION_DAYS", default=GLITCHTIP_RETENTION_DAYS
+)
+GLITCHTIP_TRANSACTION_RETENTION_DAYS = env.int(
+    "GLITCHTIP_TRANSACTION_RETENTION_DAYS", default=GLITCHTIP_RETENTION_DAYS
+)
+# Reject transaction/span events whose timestamp is further in the future
+# than this (clearly-broken clients) — bounds garbage so cold-storage
+# hour-bucketing isn't polluted. Clients with badly skewed clocks that
+# previously squeaked through now get HTTP 400 "Event time in the
+# future." on transaction ingest. Not an operator knob.
+GLITCHTIP_TRANSACTION_FUTURE_SKEW = timedelta(hours=1)
+
+# Retention for raw span Parquet (the T1 hourly / T2 daily tiers). Most
+# span data is never read; raw is kept only long enough for recent
+# debugging and point lookups, then dropped. Trend rollups
+# (performance_spans_rollup) are kept for the much longer
+# GLITCHTIP_TRANSACTION_RETENTION_DAYS instead. Operator-tunable.
+GLITCHTIP_SPAN_RAW_RETENTION_DAYS = env.int(
+    "GLITCHTIP_SPAN_RAW_RETENTION_DAYS", default=30
+)
+GLITCHTIP_UPTIME_RETENTION_DAYS = env.int(
+    "GLITCHTIP_UPTIME_RETENTION_DAYS", default=GLITCHTIP_RETENTION_DAYS
+)
+GLITCHTIP_FILE_RETENTION_DAYS = env.int(
+    "GLITCHTIP_FILE_RETENTION_DAYS", default=GLITCHTIP_RETENTION_DAYS
+)
+
+
+def _megabytes_setting(name: str, default: int) -> int:
+    """A whole number of MB, 0 or more. Anything else (blank, "1.5", a
+    negative number) warns and falls back to the default, so a typo never
+    stops the server from starting."""
+    raw = env.str(name, default="").strip()
+    if not raw:
+        return default
+    try:
+        value = int(raw)
+        if value < 0:
+            raise ValueError
+    except ValueError:
+        warnings.warn(
+            f"{name}={raw!r} is not a whole number of MB; using {default}.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        return default
+    return value
+
+
+# Symbolication caches (apps/symbolication). Internal knobs, deliberately
+# undocumented: the defaults suit every install.
+#
+# In-process LRU of loaded caches, in MB; 0 disables it.
+GLITCHTIP_SYMBOLICATION_RAM_CACHE_MB = _megabytes_setting(
+    "GLITCHTIP_SYMBOLICATION_RAM_CACHE_MB", 32
+)
+# Optional node-local directory for memory-mapped copies; empty disables it.
+GLITCHTIP_SYMBOLICATION_DISK_CACHE_DIR = env.str(
+    "GLITCHTIP_SYMBOLICATION_DISK_CACHE_DIR", default=""
+)
+GLITCHTIP_SYMBOLICATION_DISK_CACHE_MB = _megabytes_setting(
+    "GLITCHTIP_SYMBOLICATION_DISK_CACHE_MB", 1024
+)
+# Peak memory one cache build may use; each kind's input cap derives from it.
+GLITCHTIP_SYMBOLICATION_BUILD_MEMORY_MB = _megabytes_setting(
+    "GLITCHTIP_SYMBOLICATION_BUILD_MEMORY_MB", 700
+)
+GLITCHTIP_LOG_RETENTION_DAYS = env.int(
+    "GLITCHTIP_LOG_RETENTION_DAYS", default=GLITCHTIP_RETENTION_DAYS
+)
+GLITCHTIP_RELEASE_RETENTION_DAYS = env.int(
+    "GLITCHTIP_RELEASE_RETENTION_DAYS", default=365
+)
+
+# Check if a throttle is needed 1 out of every 5000 event requests
+GLITCHTIP_THROTTLE_CHECK_INTERVAL = env.int("GLITCHTIP_THROTTLE_CHECK_INTERVAL", 5000)
+SEARCH_MAX_LEXEMES = 3800  # Postgres search vectors will truncate after
+
+GLITCHTIP_FREE_TIER_EVENTS = env.int("GLITCHTIP_FREE_TIER_EVENTS", 1000)
+
+# Metered (overage) billing. Opt-in, off by default per organization. When an
+# org enables it, billable events above its plan quota are reported to a Stripe
+# Billing Meter and charged at the graduated rates below, up to a per-org dollar
+# cap. This schedule is the single source of truth: the provisioning command
+# builds the Stripe tiered price from it, and the throttle logic uses it to
+# convert between overage units and cost. Each tier is (up_to_overage_events,
+# per_event_usd_decimal); the final tier uses up_to=None for "and beyond".
+# Name of the Stripe Billing Meter that overage events are reported to. This is
+# the join key between the meter (created by the provisioning command) and the
+# meter events the throttle logic reports — Stripe matches events to a meter by
+# event_name and silently drops events with no matching meter. It is a constant,
+# not env-configurable, on purpose: every instance reporting to the same Stripe
+# account must agree on it, so one shared meter receives all overage. (Stripe
+# routes each event to the right customer by stripe_customer_id, not by which
+# instance sent it.) Re-provisioning a fresh meter is the only reason this would
+# ever change, and Stripe meter event_names are immutable once created.
+# The meter this names must aggregate by ``last``: each report is the cycle-to-date
+# total, not an increment. The ``_total`` suffix keeps reports off any older
+# ``sum`` meter, where the same figures would compound on every sweep.
+GLITCHTIP_OVERAGE_METER_EVENT_NAME = "glitchtip_overage_events_total"
+# Upper bound on a per-org overage spend cap, in cents. Guards against a
+# fat-fingered or malicious cap; also keeps the value within PositiveIntegerField
+# range. Default $10,000/cycle — a cap this high is effectively a "contact us"
+# case, so raise it per env for the rare very large customer.
+GLITCHTIP_OVERAGE_MAX_CAP_CENTS = env.int("GLITCHTIP_OVERAGE_MAX_CAP_CENTS", 1_000_000)
+GLITCHTIP_OVERAGE_TIERS: list[tuple[int | None, str]] = [
+    (1_000_000, "0.00017"),  # first 1M overage events: $0.17 / 1k
+    (10_000_000, "0.00015"),  # next, up to 10M total overage: $0.15 / 1k
+    (None, "0.00012"),  # beyond 10M overage: $0.12 / 1k
+]
+
+# Enable/disable logs feature. When False, log events are rejected at ingest.
+GLITCHTIP_ENABLE_LOGS = env.bool("GLITCHTIP_ENABLE_LOGS", True)
+
+# Fleet-wide default for server-side PII scrubbing at ingest. A project's own
+# `scrub_config` (JSON on the Project model) overrides this; when a project has
+# none, this default applies. Set GLITCHTIP_PII_SCRUB_DEFAULT to a JSON object
+# matching apps.event_ingest.pii_scrubber.ScrubConfig to turn scrubbing on for
+# every project at once, e.g. '{"enabled": true, "scrub_emails": false}'.
+# Default {} means scrubbing is off unless a project opts in.
+GLITCHTIP_PII_SCRUB_DEFAULT = env.json("GLITCHTIP_PII_SCRUB_DEFAULT", {})
+
+# Enable/disable uptime monitoring. When False, uptime checks are not dispatched
+# and uptime API endpoints are not registered.
+GLITCHTIP_ENABLE_UPTIME = env.bool("GLITCHTIP_ENABLE_UPTIME", True)
+
+# Allow uptime monitors to target private/internal IPs (RFC1918, loopback, link-local).
+# Set to True if running GlitchTip on an internal network to monitor private services.
+# Default False blocks SSRF attacks against internal infrastructure.
+GLITCHTIP_UPTIME_ALLOW_PRIVATE_IPS = env.bool(
+    "GLITCHTIP_UPTIME_ALLOW_PRIVATE_IPS", False
+)
+
+# Allow alert webhooks (Discord, Slack-style, Teams, ntfy, Zulip, generic) to target
+# private/internal IPs. Kept separate from the uptime flag: a user may legitimately
+# want to monitor an internal service without also permitting webhook-triggered
+# fetches to internal addresses, which are an exfiltration channel.
+GLITCHTIP_ALLOW_PRIVATE_IPS = env.bool("GLITCHTIP_ALLOW_PRIVATE_IPS", False)
+
+
+# Hot storage (PostgreSQL retention before archival to cold)
+GLITCHTIP_EVENT_HOT_DAYS = env.int("GLITCHTIP_EVENT_HOT_DAYS", default=30)
+GLITCHTIP_LOG_HOT_DAYS = env.int("GLITCHTIP_LOG_HOT_DAYS", default=7)
+
+# DuckDB extension directory (pre-installed in Docker image at /opt/duckdb/extensions)
+DUCKDB_EXTENSION_DIRECTORY = env.str("DUCKDB_EXTENSION_DIRECTORY", None)
+
+
+def _get_cgroup_memory_bytes() -> int | None:
+    """Read cgroup v2 memory limit (Docker/Kubernetes). Returns None if unavailable."""
+    try:
+        with open("/sys/fs/cgroup/memory.max") as f:
+            val = f.read().strip()
+            if val != "max":
+                return int(val)
+    except (FileNotFoundError, PermissionError, ValueError):
+        pass
+    return None
+
+
+def _get_cgroup_cpu_count() -> int | None:
+    """Read cgroup v2 CPU quota (Docker/Kubernetes). Returns None if unavailable.
+
+    Reads cpu.max which contains "quota period" (e.g. "200000 100000" = 2 CPUs).
+    Returns the effective CPU count, minimum 1.
+    """
+    try:
+        with open("/sys/fs/cgroup/cpu.max") as f:
+            parts = f.read().strip().split()
+            if parts[0] == "max":
+                return None  # No CPU limit set
+            quota = int(parts[0])
+            period = int(parts[1])
+            return max(1, quota // period)
+    except (FileNotFoundError, PermissionError, ValueError, IndexError):
+        pass
+    return None
+
+
+def _default_duckdb_memory_limit() -> str:
+    """Auto-detect a safe DuckDB memory limit from container/system memory.
+
+    Uses 25% of container memory (cgroup v2) or system memory, capped at
+    256 MB. This is conservative because DuckDB's memory_limit only bounds
+    its internal buffer pool — thread stacks, mmap'd file regions, and
+    jemalloc overhead are all OUTSIDE this limit. A 256 MB buffer pool
+    with 2 threads typically peaks at ~400-500 MB total process impact.
+    """
+    try:
+        total = _get_cgroup_memory_bytes()
+        if total is None:
+            total = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+        quarter = total // 4
+        mb = quarter // (1024 * 1024)
+        return f"{min(mb, 256)}MB"
+    except (ValueError, OSError, AttributeError):
+        return "128MB"
+
+
+def _default_duckdb_threads() -> int:
+    """Auto-detect DuckDB thread count from container CPU limit.
+
+    Reads cgroup v2 cpu.max (Docker/Kubernetes) to get the pod's CPU
+    quota. Falls back to min(os.cpu_count(), 4) for bare-metal.
+
+    Without this, DuckDB defaults to os.cpu_count() which in Kubernetes
+    returns the NODE's cores (e.g. 64), not the pod's limit (e.g. 2).
+    Each thread allocates scan buffers outside memory_limit, so uncapped
+    threads are the primary cause of VmPeak explosion.
+    """
+    cgroup_cpus = _get_cgroup_cpu_count()
+    if cgroup_cpus is not None:
+        return max(1, cgroup_cpus)
+    # Bare-metal / no cgroup: cap at 4 to be safe
+    return min(os.cpu_count() or 2, 4)
+
+
+# DuckDB memory limit — controls peak RAM for analytical reads.
+# Also used as a proxy for the deployment's memory budget to size
+# arro3 write batches during archival.
+# Auto-detected from cgroup memory limit (25%, capped at 256 MB).
+# Set to empty string to disable (unbounded memory).
+DUCKDB_MEMORY_LIMIT = env.str("DUCKDB_MEMORY_LIMIT", _default_duckdb_memory_limit())
+# Max threads for DuckDB queries. Auto-detected from cgroup CPU quota
+# (Kubernetes/Docker) or capped at 4 for bare-metal.
+# DuckDB's default (host core count) causes VmPeak explosion in containers.
+DUCKDB_THREADS = env.int("DUCKDB_THREADS", _default_duckdb_threads())
+# Writable directory for DuckDB spill-to-disk. Set to empty string to disable
+# the memory limit (needed for read-only root filesystems with no writable mount).
+DUCKDB_TEMP_DIRECTORY = env.str("DUCKDB_TEMP_DIRECTORY", "/tmp")
+
+# Cold storage bucket — defaults to AWS_STORAGE_BUCKET_NAME so users with S3
+# configured get cold storage automatically. Files use cold_storage/ prefix.
+GLITCHTIP_COLD_STORAGE_BUCKET = env.str(
+    "GLITCHTIP_COLD_STORAGE_BUCKET",
+    default=env.str("AWS_STORAGE_BUCKET_NAME", None),
+)
+
+# Local directory for cold storage (alternative to S3 for simple deployments)
+GLITCHTIP_COLD_STORAGE_DIR = env.str("GLITCHTIP_COLD_STORAGE_DIR", None)
+
+# Set to "true" to enable DuckDB cold storage archival.
+# Requires a storage backend (GLITCHTIP_COLD_STORAGE_BUCKET, GLITCHTIP_COLD_STORAGE_DIR,
+# or a "cold" STORAGES alias).
+GLITCHTIP_ENABLE_DUCKDB = env.str("GLITCHTIP_ENABLE_DUCKDB", None)
+
+# Cold storage cleanup: True = GT deletes old files, False = use S3 lifecycle policies
+# High-scale deployments should disable this and configure lifecycle policies on the bucket
+GLITCHTIP_COLD_STORAGE_CLEANUP_ENABLED = env.bool(
+    "GLITCHTIP_COLD_STORAGE_CLEANUP_ENABLED", True
+)
+
+# Client IP resolution for the Python ingest paths (/store/, /security/).
+# django-ipware 8 defaults to a "modern" algorithm that trusts CDN headers
+# such as True-Client-IP and skips private leading X-Forwarded-For hops;
+# "legacy" keeps the 7.x behavior, which the Rust /envelope/ path mirrors,
+# so one request resolves to the same IP whichever path serves it.
+IPWARE_ALGORITHM = "legacy"
+
+# Freezes acceptance of new events, for use during db maintenance
+MAINTENANCE_EVENT_FREEZE = env.bool("MAINTENANCE_EVENT_FREEZE", False)
+
+GLITCHTIP_ENABLE_MCP = env.bool("GLITCHTIP_ENABLE_MCP", False)
+
+# For development purposes only, prints out inbound event store json
+EVENT_STORE_DEBUG = env.bool("EVENT_STORE_DEBUG", False)
+
+
+STATIC_URL = "static/"
+# Base HREF, such as example.com/glitchtip/ where BASE_PATH would be "/glitchtip".
+# FORCE_SCRIPT_NAME is Django's own name for this setting and is accepted too.
+if "BASE_PATH" in os.environ or "FORCE_SCRIPT_NAME" in os.environ:
+    FORCE_SCRIPT_NAME = env.str("BASE_PATH", env.str("FORCE_SCRIPT_NAME", ""))
+
+
+# GlitchTip can track GlitchTip's own errors.
+# When SENTRY_DSN points back to the same instance, InternalTransport
+# bypasses HTTP to prevent feedback loops while still capturing errors.
+SENTRY_DSN = env.str("SENTRY_DSN", None)
+# Optionally allow a different DSN for the frontend
+SENTRY_FRONTEND_DSN = env.str("SENTRY_FRONTEND_DSN", SENTRY_DSN)
+# Set sample_rate to 1.0 to capture 100%.
+SENTRY_SAMPLE_RATE = env.float("SENTRY_SAMPLE_RATE", 1.0)
+# Set traces_sample_rate to 1.0 to capture 100%. Recommended to keep this value low.
+SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", 0.01)
+# Enable sentry-sdk logs feature to send logs to the configured DSN
+SENTRY_ENABLE_LOGS = env.bool("SENTRY_ENABLE_LOGS", False)
+
+
+def _is_self_referencing_dsn(sentry_dsn, glitchtip_url):
+    """Check if SENTRY_DSN points back to this GlitchTip instance."""
+    from urllib.parse import urlparse
+
+    dsn = urlparse(sentry_dsn)
+    dsn_port = dsn.port or (443 if dsn.scheme == "https" else 80)
+    gt_port = glitchtip_url.port or (443 if glitchtip_url.scheme == "https" else 80)
+    return dsn.hostname == glitchtip_url.hostname and dsn_port == gt_port
+
+
+if SENTRY_DSN:
+    import inspect
+
+    import sentry_sdk
+    from django.http import UnreadablePostError
+    from sentry_sdk.integrations.asyncio import AsyncioIntegration
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.django import views as _sentry_django_views
+    from sentry_sdk.integrations.modules import ModulesIntegration
+
+    # Sentry's Django integration binds the deprecated asyncio.iscoroutinefunction
+    # alias in django/views.py and calls it once per request inside
+    # sentry_patched_make_view_atomic. On Python 3.14 that alias runs the warnings
+    # machinery (frame inspection + message formatting) on every call even when the
+    # DeprecationWarning is filtered out, churning the heap on every request. Point
+    # that one module-level name at the non-deprecated inspect.iscoroutinefunction
+    # instead of mutating the asyncio module globally. Sentry already guards
+    # django/asgi.py the same way but missed views.py; see
+    # https://github.com/getsentry/sentry-python/issues/6085
+    _sentry_django_views.iscoroutinefunction = inspect.iscoroutinefunction
+
+    from glitchtip.internal_transport import InternalTransport
+
+    _is_self_referencing = env.bool(
+        "SENTRY_SELF_REFERENCING",
+        _is_self_referencing_dsn(SENTRY_DSN, GLITCHTIP_URL),
+    )
+
+    def before_send(event, hint):
+        """Don't log useless, inactionable errors in Sentry."""
+        if (
+            "log_record" in hint
+            and hint["log_record"].name == "django.security.DisallowedHost"
+        ):
+            return None
+        if "exc_info" in hint:
+            _, exc_value, _ = hint["exc_info"]
+            if isinstance(exc_value, UnreadablePostError):
+                return None
+
+        # --- Self-referencing loop protection ---
+        # Synchronous recursion guard: drops events generated while
+        # InternalTransport is processing an envelope. Async queue loops
+        # are handled by the transport's rate limiter instead.
+        if _is_self_referencing:
+            from glitchtip.internal_transport import _processing_internal
+
+            if _processing_internal.get():
+                return None
+
+        return event
+
+    # Ignore static file routes. ServeStatic answers the ones that exist
+    # above Django (glitchtip/asgi.py), so what reaches this sampler is a
+    # request for a static file that is missing -- still not worth a
+    # transaction. The path comes off the ASGI
+    # scope; STATIC_URL is stored without a leading slash, so it is compared
+    # against the request path in the rooted form the scope carries, including
+    # any BASE_PATH the app is mounted under. A prefix of "/" would match every
+    # request, so an unset or root STATIC_URL disables the filter instead.
+    _static_path_prefix = "/" + STATIC_URL.lstrip("/")
+    if _static_path_prefix == "/":
+        _static_path_prefix = None
+
+    def traces_sampler(sampling_context):
+        if _static_path_prefix:
+            scope = sampling_context.get("asgi_scope", {})
+            # The scope's path already carries root_path, so the prefix has to
+            # as well when the app is mounted under a sub-path.
+            prefix = scope.get("root_path", "") + _static_path_prefix
+            if scope.get("path", "").startswith(prefix):
+                return 0.0
+        return SENTRY_TRACES_SAMPLE_RATE
+
+    release = "glitchtip@" + GLITCHTIP_VERSION if GLITCHTIP_VERSION else None
+
+    SENTRY_SERVICE_NAME = env.str("SENTRY_SERVICE_NAME", "glitchtip")
+
+    # Only the integrations listed below run. Auto-discovery is off because the
+    # SDK imports every auto-enabling integration module before it consults
+    # disabled_integrations, so each one (aiohttp, starlette, boto3, httpx, ...)
+    # costs its import in every process whether or not it is disabled. Add an
+    # integration here by name when GlitchTip itself uses the library.
+    # ModulesIntegration is a default (not auto-enabled) integration and has to
+    # be disabled explicitly: it serializes all ~2600 sys.modules on every error.
+    _disabled_integrations = [ModulesIntegration()]
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        transport=InternalTransport if _is_self_referencing else None,
+        integrations=[DjangoIntegration(), AsyncioIntegration()],
+        auto_enabling_integrations=False,
+        disabled_integrations=_disabled_integrations,
+        before_send=before_send,
+        release=release,
+        environment=ENVIRONMENT,
+        auto_session_tracking=False,
+        send_client_reports=False,
+        sample_rate=SENTRY_SAMPLE_RATE,
+        traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
+        traces_sampler=traces_sampler,
+        max_value_length=2048,
+        max_breadcrumbs=20,
+        enable_logs=SENTRY_ENABLE_LOGS,
+    )
+    sentry_sdk.get_global_scope().set_attribute("service.name", SENTRY_SERVICE_NAME)
+
+
+def show_toolbar(request):
+    return env("DEBUG_TOOLBAR")
+
+
+DEBUG_TOOLBAR = env("DEBUG_TOOLBAR")
+DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
+DEBUG_TOOLBAR_PANELS = [
+    "debug_toolbar.panels.versions.VersionsPanel",
+    "debug_toolbar.panels.timer.TimerPanel",
+    "debug_toolbar.panels.settings.SettingsPanel",
+    "debug_toolbar.panels.headers.HeadersPanel",
+    "debug_toolbar.panels.request.RequestPanel",
+    "debug_toolbar.panels.sql.SQLPanel",
+    # "debug_toolbar.panels.history.HistoryPanel",
+    # "debug_toolbar.panels.profiling.ProfilingPanel",
+]
+
+
+# Should GlitchTip trust and use proxy settings from environment variables (HTTP_PROXY, HTTPS_PROXY, NO_PROXY)
+PROXY_ENV = env.bool("PROXY_ENV", False)
+# Seconds. Session-level default for every outbound aiohttp request that doesn't
+# set its own. aiohttp's built-in default is 5 minutes — long enough for a hung
+# upstream to tie up a worker — so cap it at a sane 30s. Call sites needing a
+# different bound pass their own timeout, per request or through
+# ``session_kwargs(timeout=...)``, which overrides this: uptime checks use the
+# per-monitor value and Stripe uses STRIPE_TIMEOUT. A number, not an
+# aiohttp.ClientTimeout, so loading settings doesn't import aiohttp.
+AIOHTTP_TIMEOUT = 30
+AIOHTTP_CONFIG = {
+    "headers": {"User-Agent": "GlitchTip/" + GLITCHTIP_VERSION},
+    "trust_env": PROXY_ENV,
+    "max_field_size": 16380,  # 2x default
+}
+
+# Application definition
+ENABLE_ADMIN = env.bool("ENABLE_ADMIN", True)
+ENABLE_OPENAPI = env.bool("ENABLE_OPENAPI", True)
+
+INSTALLED_APPS = [
+    *(["django.contrib.admin"] if ENABLE_ADMIN else []),
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "ninja",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.humanize",
+    "django.contrib.postgres",
+    "django_prometheus",
+    "django_async_backend",
+    "allauth",
+    "allauth.account",
+    "allauth.headless",
+    "allauth.mfa",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.digitalocean",
+    "allauth.socialaccount.providers.gitea",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.gitlab",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.microsoft",
+    "allauth.socialaccount.providers.nextcloud",
+    "allauth.socialaccount.providers.openid_connect",
+    "allauth.socialaccount.providers.okta",
+    "corsheaders",
+    "django_extensions",
+]
+if DEBUG_TOOLBAR:
+    INSTALLED_APPS.append("debug_toolbar")
+INSTALLED_APPS += [
+    "storages",
+    "django_vtasks",
+    "glitchtip",
+    "apps.alerts",
+    "apps.environments",
+    "apps.organizations_ext",
+    "apps.users",
+    "apps.importer",
+    "apps.uptime",
+    "apps.performance",
+    "apps.projects",
+    "apps.teams",
+    "apps.releases",
+    "apps.stripe",
+    "apps.sourcecode",
+    "apps.difs",
+    "apps.symbolication",
+    "apps.api_tokens",
+    "apps.files",
+    "apps.issue_events",
+    "apps.logs",
+    "apps.event_ingest",
+    "apps.mcp",
+    "apps.oauth",
+    "import_export",  # Contains import management command, keep under apps.importer
+]
+
+# Ensure no one uses runsslserver in production
+if SECRET_KEY == "change_me" and DEBUG is True:
+    INSTALLED_APPS += ["sslserver"]
+
+ENABLE_OBSERVABILITY_API = env("ENABLE_OBSERVABILITY_API")
+if ENABLE_OBSERVABILITY_API:
+    INSTALLED_APPS.append("apps.observability")
+
+# Workaround https://github.com/korfuri/django-prometheus/issues/34
+PROMETHEUS_EXPORT_MIGRATIONS = False
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.csp.ContentSecurityPolicyMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+if DEBUG_TOOLBAR:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+MIDDLEWARE += [
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "allauth_async.account.middleware.AsyncAccountMiddleware",
+]
+
+if ENABLE_OBSERVABILITY_API:
+    MIDDLEWARE.insert(0, "django_prometheus.middleware.PrometheusBeforeMiddleware")
+    MIDDLEWARE.append("django_prometheus.middleware.PrometheusAfterMiddleware")
+
+# django-async-backend 6.1 connects close_old_async_connections to
+# request_started / request_finished. That closes each request's async
+# connections but leaves the wrapper stamped with the task that claimed it,
+# so the next task to use the alias is refused — and an async receiver makes
+# every response pay a Signal.send -> async_to_sync hop. Switch them off and
+# use our own middleware, which closes *and* unclaims; see glitchtip.async_db.
+ASYNC_BACKEND_DISABLE_REQUEST_SIGNALS = True
+
+# Async DB cursors live in django-async-backend's ``async_connections``
+# store (served by the gt_rust engine; see the ENGINE assignment in the
+# DATABASES loop below). Inserted at the head of the chain so async cursors
+# are returned to the pool before any other middleware finalises the
+# response. glitchtip.async_db.check_async_connection_recycling fails the
+# system checks if this goes missing.
+MIDDLEWARE.insert(0, "glitchtip.async_db.recycle_async_connections_middleware")
+
+# Compresses the SPA's index.html and every API response. Static files are
+# already compressed on disk and never reach here. Nothing to configure, and a
+# CDN or compressing proxy in front still works. See glitchtip/compression.py.
+#
+# Inserted last so it is outermost: the response phase runs in reverse, so the
+# body is compressed after every other middleware is done with it -- including
+# close_async_connections, so the pooled database connection is back first.
+MIDDLEWARE.insert(0, "glitchtip.compression.compression_middleware")
+
+ROOT_URLCONF = "glitchtip.urls"
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [path("dist"), path("templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.csp",
+            ],
+        },
+    },
+]
+
+# Defaults to True because Sentry SDKs send events from arbitrary user domains.
+# Set to False and configure CORS_ORIGIN_WHITELIST only if you control all client origins.
+CORS_ORIGIN_ALLOW_ALL = env.bool("CORS_ORIGIN_ALLOW_ALL", True)
+CORS_ORIGIN_WHITELIST = env.tuple("CORS_ORIGIN_WHITELIST", str, default=())
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "x-sentry-auth",
+    "baggage",
+    "sentry-trace",
+]
+
+BILLING_ENABLED = False
+STRIPE_PUBLIC_KEY = env.str("STRIPE_PUBLIC_KEY", None)
+STRIPE_SECRET_KEY = env.str("STRIPE_SECRET_KEY", None)
+STRIPE_WEBHOOK_SECRET = env.str("STRIPE_WEBHOOK_SECRET", None)
+STRIPE_WEBHOOK_SECRET_SUBSCRIPTION = env.str(
+    "STRIPE_WEBHOOK_SECRET_SUBSCRIPTION", STRIPE_WEBHOOK_SECRET
+)
+# Signing secret of the v2 event destination that delivers billing-meter
+# error reports (v1.billing.meter.error_report_triggered) to
+# /stripe/webhook/meter/. Event destinations have their own secrets, so unlike
+# STRIPE_WEBHOOK_SECRET_SUBSCRIPTION there is deliberately no fallback to the
+# classic secret — that value can never verify these deliveries, and falling
+# back would turn "unset" into quiet signature failures instead of a loud
+# not-configured error.
+STRIPE_WEBHOOK_SECRET_METER = env.str("STRIPE_WEBHOOK_SECRET_METER", None)
+STRIPE_REGION = env.str("STRIPE_REGION", "")  # Sets stripe customer metadata
+STRIPE_REGION_DOMAINS = env.dict(
+    "STRIPE_REGION_DOMAINS", default={}
+)  # Forward webhooks to appropriate domain
+if STRIPE_PUBLIC_KEY and STRIPE_SECRET_KEY:
+    BILLING_ENABLED = True
+
+# Set to chatwoot website token to enable live help widget. Assumes app.chatwoot.com.
+CHATWOOT_WEBSITE_TOKEN = env.str("CHATWOOT_WEBSITE_TOKEN", None)
+CHATWOOT_IDENTITY_TOKEN = env.str("CHATWOOT_IDENTITY_TOKEN", None)
+
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", str, [])
+SECURE_BROWSER_XSS_FILTER = True
+
+# Consider tracking CSP reports with GlitchTip itself
+# Enable Chatwoot only when configured
+default_connect_src = [CSP.SELF, "https://*.glitchtip.com"]
+if CHATWOOT_WEBSITE_TOKEN:
+    default_connect_src.append("https://app.chatwoot.com")
+# Enable stripe by default only when configured
+stripe_domain = "https://js.stripe.com"
+default_script_src = [
+    CSP.SELF,
+    "https://*.glitchtip.com",
+    "'sha256-iRcDQ27XiXX4k+jbJ8nGeQFBnBOjmII7FdMlixb6QE4='",  # Theme picker inline JS
+]
+default_frame_src = [CSP.SELF]
+if BILLING_ENABLED:
+    default_script_src.append(stripe_domain)
+    default_frame_src.append(stripe_domain)
+SECURE_CSP_DIRECTIVES = {
+    "default-src": env.list("CSP_DEFAULT_SRC", str, [CSP.SELF]) + [CSP.NONCE],
+    "style-src": env.list("CSP_STYLE_SRC", str, [CSP.SELF]) + [CSP.NONCE],
+    "font-src": env.list("CSP_FONT_SRC", str, [CSP.SELF, "data:"]),
+    "connect-src": env.list("CSP_CONNECT_SRC", str, default_connect_src),
+    "script-src": env.list("CSP_SCRIPT_SRC", str, default_script_src) + [CSP.NONCE],
+    "img-src": env.list("CSP_IMG_SRC", str, [CSP.SELF]),
+    "frame-src": env.list("CSP_FRAME_SRC", str, default_frame_src),
+}
+if report_uri := env.tuple("CSP_REPORT_URI", str, None):
+    SECURE_CSP_DIRECTIVES["report-uri"] = report_uri
+
+if "CSP_STYLE_SRC_ELEM" in os.environ:
+    SECURE_CSP_DIRECTIVES["style-src-elem"] = env.list("CSP_STYLE_SRC_ELEM", str)
+if "CSP_WORKER_SRC" in os.environ:
+    SECURE_CSP_DIRECTIVES["worker-src"] = env.list("CSP_WORKER_SRC", str)
+
+csp_report_only = env.bool("CSP_REPORT_ONLY", False)
+if csp_report_only:
+    SECURE_CSP_REPORT_ONLY = SECURE_CSP_DIRECTIVES
+    SECURE_CSP = {}
+else:
+    SECURE_CSP = SECURE_CSP_DIRECTIVES
+    SECURE_CSP_REPORT_ONLY = {}
+
+
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", 0)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", False)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", False)
+# Cookie Secure flags default to True when GLITCHTIP_URL is https so typical
+# production deploys get secure cookies out of the box. Keep False for http
+# so a local/internal-LAN deploy (no TLS) still lets users log in without
+# manual config. Both are env-overridable in either direction.
+_cookie_secure_default = GLITCHTIP_URL.scheme == "https"
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", _cookie_secure_default)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", _cookie_secure_default)
+SESSION_COOKIE_SAMESITE = env.str("SESSION_COOKIE_SAMESITE", "Lax")
+
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+
+ANYMAIL_SETTINGS = [
+    "MAILGUN_API_KEY",
+    "MAILGUN_SENDER_DOMAIN",
+    "MAILGUN_API_URL",
+    "MAILGUN_WEBHOOK_SIGNING_KEY",
+    "SENDGRID_API_KEY",
+    "SENDGRID_API_URL",
+    "POSTMARK_SERVER_TOKEN",
+    "POSTMARK_API_URL",
+    "MANDRILL_API_KEY",
+    "MANDRILL_WEBHOOK_KEY",
+    "MANDRILL_WEBHOOK_URL",
+    "MANDRILL_API_URL",
+    "SENDINBLUE_API_KEY",
+    "SENDINBLUE_API_URL",
+    "MAILJET_API_KEY",
+    "MAILJET_SECRET_KEY",
+    "MAILJET_API_URL",
+    "POSTAL_API_KEY",
+    "POSTAL_API_URL",
+    "POSTAL_WEBHOOK_KEY",
+    "SPARKPOST_API_KEY",
+    "SPARKPOST_API_URL",
+    "SPARKPOST_TRACK_INITIAL_OPEN_AS_OPENED",
+    "SCALEWAY_SECRET_KEY",
+    "SCALEWAY_PROJECT_ID",
+]
+
+ANYMAIL = {
+    anymail_var: env.str(anymail_var)
+    for anymail_var in ANYMAIL_SETTINGS
+    if anymail_var in os.environ
+}
+
+ACCOUNT_EMAIL_SUBJECT_PREFIX = env.str("ACCOUNT_EMAIL_SUBJECT_PREFIX", "")
+
+# AWS RDS IAM database authentication. When enabled there is no database
+# password for the aliases it covers: the driver calls
+# django_vpg.contrib.aws.rds_iam_token for the connections it opens and
+# authenticates with a short-lived IAM token, so any PASSWORD in DATABASE_URL
+# is ignored by the driver. See glitchtip/db_iam.py for the AWS prerequisites.
+DATABASE_IAM_AUTH = env.bool("DATABASE_IAM_AUTH", False)
+# Which DATABASES aliases authenticate with IAM. Defaults to "default" only,
+# because not every endpoint can validate a token; glitchtip/db_iam.py says
+# which can. Widen it for any alias that reaches an IAM-aware endpoint, and
+# remember an alias left off this list must not use a role holding rds_iam,
+# which no longer has a password to fall back on.
+DATABASE_IAM_AUTH_ALIASES = [
+    alias.strip()
+    for alias in env.str("DATABASE_IAM_AUTH_ALIASES", "default").split(",")
+    if alias.strip()
+]
+# Accept a database server whose identity is not verified. Only meaningful
+# with IAM auth, where it means a live token may be handed to anything that
+# answers on the hostname. Exists so the insecure choice has to be made
+# deliberately rather than by following an error message.
+DATABASE_IAM_ALLOW_UNVERIFIED_TLS = env.bool("DATABASE_IAM_ALLOW_UNVERIFIED_TLS", False)
+# TLS to the database. Independent of IAM auth, but required by it.
+DATABASE_SSLMODE = env.str("DATABASE_SSLMODE", None)
+DATABASE_SSLROOTCERT = env.str("DATABASE_SSLROOTCERT", None)
+
+# Database
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# Use either DATABASE_URL or individual components
+DATABASES = {
+    "default": env.db(
+        "DATABASE_URL", default="postgres://postgres:postgres@postgres:5432/postgres"
+    )
+}
+if env("READ_ONLY_DATABASE_URL"):
+    DATABASES["read_only"] = env.db("READ_ONLY_DATABASE_URL")
+if env("MAINTENANCE_DATABASE_URL"):
+    DATABASES["maintenance"] = env.db("MAINTENANCE_DATABASE_URL")
+
+MAINTENANCE_DATABASE_ALIAS = "maintenance" if "maintenance" in DATABASES else "default"
+
+# If component variables like DATABASE_HOST are provided, update the base config
+if env.str("DATABASE_HOST", None):
+    DATABASES["default"].update(
+        {
+            "NAME": env.str("DATABASE_NAME", "postgres"),
+            "USER": env.str("DATABASE_USER", "postgres"),
+            # Not required when IAM auth covers THIS alias, where there is
+            # no password to supply. Gated on alias membership, not on
+            # DATABASE_IAM_AUTH alone: enabling IAM for some other alias must
+            # not quietly turn a mandatory password into an empty one here,
+            # which against a trust/peer-configured server would connect
+            # unauthenticated.
+            "PASSWORD": env.str(
+                "DATABASE_PASSWORD",
+                ""
+                if (DATABASE_IAM_AUTH and "default" in DATABASE_IAM_AUTH_ALIASES)
+                else environ.Env.NOTSET,
+            ),
+            "HOST": env.str("DATABASE_HOST"),
+            "PORT": env.str("DATABASE_PORT", "5432"),
+        }
+    )
+# Database engine. gt_rust.django_backend is the only supported engine: the
+# ORM (sync + async) runs on the Rust Postgres driver — one shared tokio pool
+# on the same runtime as the valkey driver. psycopg remains installed as a
+# library (SQL composition via psycopg.sql, Jsonb/Json parameter wrappers,
+# and the import Django's stock postgresql backend — which this engine
+# extends — performs at load), but no database I/O flows through it.
+DATABASE_ENGINE = "gt_rust.django_backend"
+
+# Valkey/Redis connection. VALKEY_URL is the source of truth — supports any scheme
+# that django-vcache understands: redis://, rediss://, valkey://, valkeys://, sentinel://
+# Component env vars (VALKEY_HOST, etc.) are a convenience for simple single-node setups.
+VALKEY_HOST = env.str("VALKEY_HOST", env.str("REDIS_HOST", None))
+if VALKEY_HOST:
+    VALKEY_PORT = env.str("VALKEY_PORT", env.str("REDIS_PORT", "6379"))
+    VALKEY_DATABASE = env.str("VALKEY_DATABASE", env.str("REDIS_DATABASE", "0"))
+    VALKEY_PASSWORD = env.str("VALKEY_PASSWORD", env.str("REDIS_PASSWORD", None))
+    if VALKEY_PASSWORD:
+        VALKEY_URL = (
+            f"redis://:{VALKEY_PASSWORD}@{VALKEY_HOST}:{VALKEY_PORT}/{VALKEY_DATABASE}"
+        )
+    else:
+        VALKEY_URL = f"redis://{VALKEY_HOST}:{VALKEY_PORT}/{VALKEY_DATABASE}"
+else:
+    VALKEY_URL = env.str("VALKEY_URL", env.str("REDIS_URL", "redis://redis:6379/0"))
+
+if DATABASE_IAM_AUTH:
+    if not DATABASE_IAM_AUTH_ALIASES:
+        # An env var that is set but empty reads as "" rather than falling
+        # back to the default, and an empty value is the normal rendering of
+        # an unset Helm/compose variable. Without this the list is empty, no
+        # alias is covered, and every connection quietly keeps using the
+        # password that enabling IAM auth was meant to remove.
+        raise ImproperlyConfigured(
+            "DATABASE_IAM_AUTH is enabled but DATABASE_IAM_AUTH_ALIASES is "
+            "empty, so no alias would use IAM and every connection would "
+            "authenticate with its static password. Name at least one alias, "
+            "or leave DATABASE_IAM_AUTH_ALIASES unset to cover 'default'."
+        )
+    _unknown = set(DATABASE_IAM_AUTH_ALIASES) - set(DATABASES)
+    if _unknown:
+        raise ImproperlyConfigured(
+            f"DATABASE_IAM_AUTH_ALIASES names unknown aliases: {sorted(_unknown)}. "
+            f"Configured aliases are {sorted(DATABASES)}. A typo here silently "
+            "leaves an alias on password authentication."
+        )
+    # Fail closed if the installed driver cannot honour credential_provider.
+    # Without this the backend warns about an unsupported OPTIONS key, drops
+    # it, and connects with the static PASSWORD instead — so turning on a
+    # security feature would silently do nothing.
+    #
+    # Import the configured engine first and inspect the extension it
+    # installs, not django_vpg directly: gt_rust substitutes its own compiled
+    # module for django_vpg._vpg_driver and refuses if django_vpg was imported
+    # ahead of it, and that substituted module is the one whose capability
+    # actually decides this.
+    import importlib
+    import inspect
+
+    importlib.import_module(f"{DATABASE_ENGINE}.base")
+    from django_vpg._vpg_driver import RustPgDriver as _vpg_driver_cls
+
+    try:
+        _vpg_params = inspect.signature(_vpg_driver_cls.connect).parameters
+    except (TypeError, ValueError):  # pragma: no cover - builtin without one
+        _vpg_params = {}
+    if "credential_provider" not in _vpg_params:
+        raise ImproperlyConfigured(
+            "DATABASE_IAM_AUTH requires a database driver with "
+            "rotating-credential support, but the loaded "
+            f"{_vpg_driver_cls.__module__} extension does not accept "
+            "credential_provider and would fall back to password "
+            "authentication. Upgrade glitchtip-rust, which supplies it."
+        )
+    # The provider is a dotted path the driver resolves at connect time, so an
+    # absent django_vpg.contrib.aws (or a slim image without boto3) would sail
+    # past a guard whose whole purpose is to fail closed at startup, and show
+    # up as an InterfaceError on the first query instead.
+    import_string(_db_iam.RDS_IAM_PROVIDER)
+
+# Settings applied to every DATABASES entry, however it was configured above.
+for _db_alias, db_config in DATABASES.items():
+    # gt_rust.django_backend extends Django's stock postgresql backend and
+    # adds the AsyncDatabaseWrapper that django-async-backend's
+    # ``async_connections`` discovers via load_backend, so sync paths (ORM,
+    # migrations, admin) and async cursors all run on the Rust driver.
+    db_config["ENGINE"] = DATABASE_ENGINE
+    # Persistent connections are not supported. Django's own documentation
+    # says to disable them under ASGI in favour of the driver's pooling, and
+    # GlitchTip only runs as an ASGI application. Assigned rather than
+    # defaulted, so neither a DATABASE_URL nor an explicit DATABASES entry can
+    # reintroduce one: a non-zero value skipped the pool configuration below,
+    # which left the driver pooling at its own built-in size and ignoring
+    # every DATABASE_POOL_* setting.
+    db_config["CONN_MAX_AGE"] = 0
+    db_config.setdefault(
+        "CONN_HEALTH_CHECKS", env.bool("DATABASE_CONN_HEALTH_CHECKS", False)
+    )
+    db_config.setdefault("DISABLE_SERVER_SIDE_CURSORS", True)
+
+    # Check if 'OPTIONS' exists and if 'pool' is already defined (e.g. via specific dict config)
+    options = db_config.setdefault("OPTIONS", {})
+    pooling_already_configured = "pool" in options
+
+    # Pooling is what replaces persistent connections, so it is configured
+    # unless the operator supplied their own pool above.
+    if not pooling_already_configured:
+        options["pool"] = {
+            "min_size": env.int("DATABASE_POOL_MIN_SIZE", 2),
+            "max_size": env.int("DATABASE_POOL_MAX_SIZE", 20),
+            "timeout": env.int("DATABASE_POOL_TIMEOUT", 30),
+        }
+        # Optional pooled-connection recycling horizon. A connection retains
+        # buffer memory sized to the largest message it ever carried;
+        # recycling bounds how long that lasts. Unset keeps the driver's
+        # default lifetime; drivers jitter the deadline to avoid reconnect
+        # stampedes.
+        _pool_max_lifetime = env.int("DATABASE_POOL_MAX_LIFETIME", 0)
+        if _pool_max_lifetime > 0:
+            options["pool"]["max_lifetime"] = _pool_max_lifetime
+
+    # Server-side prepared statements. The driver defaults them off to match
+    # Django's postgresql backend; GlitchTip opts in because the ingest path
+    # repeats the same statements and preparing them costs 1.3-2x less
+    # database CPU. Off is safe, just slower: use it behind a transaction-mode
+    # pooler that cannot track prepared statements (PgBouncer needs >= 1.21
+    # with max_prepared_statements), or where migrations change what a SQL
+    # function returns while old code is still serving ("cached plan must not
+    # change result type" until the connection is recycled).
+    _prepare_threshold = env.str("DATABASE_PREPARE_THRESHOLD", "5").strip().lower()
+    if _prepare_threshold in ("", "off", "none", "false", "disabled"):
+        options.setdefault("prepare_threshold", None)
+    else:
+        try:
+            options.setdefault("prepare_threshold", int(_prepare_threshold))
+        except ValueError:
+            raise ImproperlyConfigured(
+                "DATABASE_PREPARE_THRESHOLD must be an integer (prepare a "
+                "statement after N uses, 0 = on first use) or 'off' to "
+                f"disable prepared statements; got {_prepare_threshold!r}"
+            )
+
+    # TLS and, when enabled, RDS IAM authentication. An OPTIONS entry set
+    # explicitly in a DATABASES override still wins over the environment.
+    _db_iam.configure_options(
+        options,
+        iam_auth=DATABASE_IAM_AUTH and _db_alias in DATABASE_IAM_AUTH_ALIASES,
+        sslmode=DATABASE_SSLMODE,
+        sslrootcert=DATABASE_SSLROOTCERT,
+        allow_unverified_tls=DATABASE_IAM_ALLOW_UNVERIFIED_TLS,
+    )
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Time in seconds to debounce some frequently run tasks
+TASK_DEBOUNCE_DELAY = env.int("TASK_DEBOUNCE_DELAY", 30)
+UPTIME_CHECK_INTERVAL = 1
+ALERT_NOTIFICATION_INTERVAL = env.int("ALERT_NOTIFICATION_INTERVAL", 60)
+VTASKS_SCHEDULE = {
+    "send-alert-notifications": {
+        "task": "apps.alerts.tasks.process_event_alerts",
+        "schedule": ALERT_NOTIFICATION_INTERVAL,
+    },
+    "perform-maintenance": {
+        "task": "glitchtip.tasks.perform_maintenance",
+        "schedule": crontab(hour=5, minute=0),
+    },
+}
+
+if str(GLITCHTIP_ENABLE_DUCKDB or "").lower() == "true":
+    VTASKS_SCHEDULE["promote-spans"] = {
+        "task": "apps.performance.tasks.promote_spans",
+        "schedule": 300,
+    }
+    VTASKS_SCHEDULE["compact-span-chunks"] = {
+        "task": "apps.performance.tasks.compact_span_chunks",
+        # Collapse each day shortly after it seals (now - MAX_AGE - margin)
+        # rather than once daily. Cheap when nothing is newly sealed.
+        "schedule": 15 * 60,
+    }
+
+if GLITCHTIP_ENABLE_UPTIME:
+    VTASKS_SCHEDULE["uptime-dispatch-checks"] = {
+        "task": "apps.uptime.tasks.dispatch_checks",
+        "schedule": UPTIME_CHECK_INTERVAL,
+    }
+
+# Non-batch queues tasks may be sent to (batch queues in VTASKS_QUEUES are
+# added by django-vtasks).
+TASK_QUEUE_NAMES = ["default", "symbolication"]
+TASKS = {
+    "default": {
+        "BACKEND": "django_vtasks.backends.db.DatabaseTaskBackend",
+        "QUEUES": TASK_QUEUE_NAMES,
+    }
+}
+
+# Queues this worker consumes, with per-queue options (django-vtasks 3.0
+# consolidated form; batching must be declared here — VTASKS_BATCH_QUEUES
+# is removed).
+VTASKS_QUEUES = {
+    "default": {},
+    "ingest": {
+        # Batch size and per-queue concurrency bound the worker's peak working
+        # set: every fetched batch holds its full envelope payloads in memory
+        # until the batch completes, so worst case ≈ worker_concurrency × count
+        # payloads resident at once while draining a backlog. 25 × 12 drains a
+        # deep backlog as fast as 100-task batches on the shared pool did, at
+        # roughly a quarter of the peak RSS.
+        "worker_concurrency": env.int("VTASKS_INGEST_CONCURRENCY", 12),
+        "batch": {
+            "count": env.int("VTASKS_INGEST_BATCH_COUNT", 25),
+            "timeout": 2.0,
+        },
+    },
+    # Symbolication cache builds, one at a time: each can take a lot of memory.
+    "symbolication": {
+        "worker_concurrency": 1,
+    },
+}
+
+# Per-task sentry-sdk scope isolation. Without it, embedded workers share the
+# ambient isolation scope with HTTP requests and each other, cross-polluting
+# breadcrumbs.
+VTASKS_TASK_CONTEXT = "glitchtip.vtasks_context.sentry_task_scope"
+
+# Maximum number of issues send in a single alert payload
+MAX_ISSUES_PER_ALERT = env.int("MAX_ISSUES_PER_ALERT", 3)
+
+# VALKEY_URL drives both cache and task broker. Empty string disables valkey.
+# TLS: use rediss:// or valkeys:// URL scheme. For custom CA or mTLS, set
+# VALKEY_SSL_CA_CERTS, VALKEY_SSL_CERTFILE, VALKEY_SSL_KEYFILE env vars.
+# Set VALKEY_SSL_CERT_REQS=none to skip certificate verification.
+if VALKEY_URL:
+    # Route the cache (django-vtasks) through single gt-rust tokio pool
+    _valkey_options = {"DRIVER_CLASS": "gt_rust.valkey.RustValkeyDriver"}
+    if _ssl_ca := env.str("VALKEY_SSL_CA_CERTS", None):
+        _valkey_options["ssl_ca_certs"] = _ssl_ca
+    if _ssl_cert := env.str("VALKEY_SSL_CERTFILE", None):
+        _valkey_options["ssl_certfile"] = _ssl_cert
+    if _ssl_key := env.str("VALKEY_SSL_KEYFILE", None):
+        _valkey_options["ssl_keyfile"] = _ssl_key
+    if _ssl_reqs := env.str("VALKEY_SSL_CERT_REQS", None):
+        _valkey_options["ssl_cert_reqs"] = _ssl_reqs
+    CACHES = {
+        "default": {
+            "BACKEND": "django_vcache.backend.ValkeyCache",
+            "LOCATION": VALKEY_URL,
+            **({"OPTIONS": _valkey_options} if _valkey_options else {}),
+        }
+    }
+    TASKS = {
+        "default": {
+            "BACKEND": "django_vtasks.backends.valkey.ValkeyTaskBackend",
+            "OPTIONS": {"cache_alias": "default"},
+            "QUEUES": TASK_QUEUE_NAMES,
+        }
+    }
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+else:  # Fallback to database cache
+    # The django_cache table is also the store the Rust ingest path reads
+    # and writes (block/dedupe keys) when it runs without a Valkey — one
+    # cache either way. MAX_ENTRIES is raised from Django's default 300:
+    # ingest dedupe writes one 5-minute key per event, and the default would
+    # make every Python-side set() cull a third of the table (dropping live
+    # dedupe/block keys) under even modest event volume.
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache",
+            "OPTIONS": {"MAX_ENTRIES": 100_000},
+        }
+    }
+    INSTALLED_APPS.append("django.contrib.sessions")
+    if "django_vtasks.db" not in INSTALLED_APPS:
+        INSTALLED_APPS.append("django_vtasks.db")
+
+SESSION_COOKIE_AGE = env.int("SESSION_COOKIE_AGE", global_settings.SESSION_COOKIE_AGE)
+
+# Password validation
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+]
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/dev/topics/i18n/
+
+LANGUAGE_CODE = "en-us"
+
+TIME_ZONE = env.str("TIME_ZONE", "UTC")
+
+USE_I18N = True
+
+USE_TZ = True
+
+# Underscored because Django removed its own STATICFILES_STORAGE setting and an
+# upper-case name here would look like one. The env var keeps the familiar name.
+_staticfiles_storage = env.str(
+    "STATICFILES_STORAGE", "servestatic.storage.CompressedStaticFilesStorage"
+)
+if _staticfiles_storage.startswith("whitenoise.storage."):
+    # WhiteNoise is no longer installed, so a pinned WhiteNoise backend would
+    # fail at boot. ServeStatic is a fork of it and keeps the same class names,
+    # so translate and warn rather than refuse to start. Removed next major.
+    _servestatic_backend = _staticfiles_storage.replace(
+        "whitenoise.storage.", "servestatic.storage.", 1
+    )
+    warnings.warn(
+        f"STATICFILES_STORAGE={_staticfiles_storage} names a WhiteNoise backend, "
+        f"which GlitchTip no longer ships. Falling back to "
+        f"{_servestatic_backend}. Update the setting: this fallback is removed "
+        f"in the next major release.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    _staticfiles_storage = _servestatic_backend
+
+STORAGES = {
+    "default": {
+        "BACKEND": env("DEFAULT_FILE_STORAGE"),
+    },
+    "staticfiles": {
+        # Compressed, not Manifest*: the frontend build already content-hashes
+        # its own filenames, which is what the browser requests. Manifest
+        # hashing added a second, unused copy of every file plus a public
+        # staticfiles.json, and made a single missing reference a hard
+        # collectstatic failure mid-deploy. Operators who serve Django's own
+        # {% static %} assets from a long-lived cache can opt back in via the
+        # STATICFILES_STORAGE env var.
+        "BACKEND": _staticfiles_storage
+    },
+}
+
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")
+AWS_LOCATION = env("AWS_LOCATION")
+AWS_S3_USE_SSL = env("AWS_S3_USE_SSL")
+AWS_S3_VERIFY = env("AWS_S3_VERIFY")
+
+AZURE_ACCOUNT_NAME = env("AZURE_ACCOUNT_NAME")
+AZURE_ACCOUNT_KEY = env("AZURE_ACCOUNT_KEY")
+AZURE_CONTAINER = env("AZURE_CONTAINER")
+AZURE_URL_EXPIRATION_SECS = env("AZURE_URL_EXPIRATION_SECS")
+
+GS_BUCKET_NAME = env("GS_BUCKET_NAME")
+GS_PROJECT_ID = env("GS_PROJECT_ID")
+
+
+def _storage_spool_bytes() -> int:
+    """How much of an opened S3 or GCS object django-storages keeps in
+    memory before spooling the rest to a temporary file: 4 MB, since
+    uploads and symbolication caches can be tens of MB. Without a writable
+    temporary directory (a read-only root) spooling would fail every large
+    read, so then 0: django-storages' default, all in memory."""
+    try:
+        with tempfile.NamedTemporaryFile():
+            pass
+    except OSError:
+        warnings.warn(
+            "No writable temporary directory: objects read from S3 or GCS "
+            "storage are kept in memory whole. Mount one (or set TMPDIR) to "
+            "spool large objects to disk instead.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        return 0
+    return 4 * 1024 * 1024
+
+
+AWS_S3_MAX_MEMORY_SIZE = GS_MAX_MEMORY_SIZE = _storage_spool_bytes()
+
+if AWS_S3_ENDPOINT_URL or "s3" in str(STORAGES["default"]["BACKEND"]).lower():
+    # One download thread per transfer, not boto3's pool of ten: downloads
+    # happen from worker threads already, and each extra thread costs a
+    # malloc arena.
+    from boto3.s3.transfer import TransferConfig
+
+    AWS_S3_TRANSFER_CONFIG = TransferConfig(use_threads=False)
+if AWS_S3_ENDPOINT_URL:
+    MEDIA_URL = env.str("MEDIA_URL", f"https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/")
+    STORAGES["default"] = {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"}
+else:
+    MEDIA_URL = "media/"
+MEDIA_ROOT = env.str("MEDIA_ROOT", "")
+
+STATICFILES_DIRS = [
+    "assets",
+    # The frontend build, source maps included. Publishing them is deliberate:
+    # GlitchTip is open source, and a readable stack trace is worth more than
+    # the bytes -- which are few, since they compress well and are only fetched
+    # with devtools open. Do not strip them to save space.
+    "dist",
+]
+STATIC_ROOT = path("static/")
+
+# collectstatic writes a compressed copy beside every compressible file, once
+# per image build. ServeStatic then serves the smallest one the client accepts.
+#
+# Zstandard is off: brotli was smaller for all but one file in the tree even
+# against zstd at its highest level, and every browser sending `zstd` also sends
+# `br`, so the .zstd copies would never be chosen.
+SERVESTATIC_USE_ZSTD = False
+
+EMAIL_BACKEND = env.str(
+    "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+)
+if os.getenv("EMAIL_HOST_USER"):
+    EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+if os.getenv("EMAIL_HOST_PASSWORD"):
+    EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+if os.getenv("EMAIL_HOST"):
+    EMAIL_HOST = env.str("EMAIL_HOST")
+if os.getenv("EMAIL_PORT"):
+    EMAIL_PORT = env.str("EMAIL_PORT")
+if os.getenv("EMAIL_USE_TLS"):
+    EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+if os.getenv("EMAIL_USE_SSL"):
+    EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
+if os.getenv("EMAIL_TIMEOUT"):
+    EMAIL_TIMEOUT = env.int("EMAIL_TIMEOUT")
+if os.getenv("EMAIL_FILE_PATH"):
+    EMAIL_FILE_PATH = env.str("EMAIL_FILE_PATH")
+if os.getenv(
+    "EMAIL_URL"
+):  # Careful, this will override most EMAIL_*** settings. Set them all individually, or use EMAIL_URL to set them all at once, but don't do both.
+    EMAIL_CONFIG = env.email_url("EMAIL_URL")
+    vars().update(EMAIL_CONFIG)
+# Anymail's app only registers system checks, and loading it imports `requests`
+# (several MiB per process), so install it only when it is the mail transport.
+# Its backends import fine without the app installed.
+if EMAIL_BACKEND.startswith("anymail."):
+    INSTALLED_APPS.append("anymail")
+EMAIL_INVITE_THROTTLE_COUNT = env.int("EMAIL_THROTTLE_COUNT", 50)
+EMAIL_INVITE_THROTTLE_INTERVAL = env.int("EMAIL_THROTTLE_INTERVAL", 300)  # 5 minutes
+EMAIL_INVITE_REQUIRE_VERIFICATION = env.bool("EMAIL_INVITE_REQUIRE_VERIFICATION", False)
+
+# Email is optional. With no transport configured, email is disabled: nothing
+# is sent, account verification and password reset are off, and /api/settings/
+# omits "email" so the frontend hides email-only UI. Disabling is implicit so a
+# bare install with no MTA doesn't crash on the default smtp -> localhost:25.
+#
+# Auto-enabled by any explicit transport: an EMAIL_* var below, an Anymail
+# provider, or a non-default EMAIL_BACKEND. So pointing at localhost:25 yourself
+# enables it (and fails loudly if broken) -- only the untouched default is
+# "unconfigured". Set EMAIL_ENABLED to override the auto-detection either way.
+_EMAIL_TRANSPORT_ENV_VARS = (
+    "EMAIL_URL",
+    "EMAIL_HOST",
+    "EMAIL_PORT",
+    "EMAIL_HOST_USER",
+    "EMAIL_HOST_PASSWORD",
+    "EMAIL_USE_TLS",
+    "EMAIL_USE_SSL",
+    "EMAIL_TIMEOUT",
+    "EMAIL_FILE_PATH",
+)
+EMAIL_ENABLED = env.bool(
+    "EMAIL_ENABLED",
+    default=TESTING
+    or bool(ANYMAIL)
+    or any(var in os.environ for var in _EMAIL_TRANSPORT_ENV_VARS)
+    or EMAIL_BACKEND != "django.core.mail.backends.smtp.EmailBackend",
+)
+
+AUTH_USER_MODEL = "users.User"
+ACCOUNT_ADAPTER = "glitchtip.adapters.CustomDefaultAccountAdapter"
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# Without a mail transport an account's email can never be confirmed, so treat
+# it as unverified/untrusted: skip verification entirely rather than minting
+# confirmations that can't be delivered. With email configured, keep allauth's
+# default "optional" behavior (login allowed, confirmation sent in background).
+ACCOUNT_EMAIL_VERIFICATION = "optional" if EMAIL_ENABLED else "none"
+ACCOUNT_REAUTHENTICATION_TIMEOUT = SESSION_COOKIE_AGE  # Disabled for now
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login"
+HEADLESS_ONLY = True
+HEADLESS_FRONTEND_URLS = {
+    "account_signup": "/login",
+    "account_reset_password": "/reset-password",
+    "account_confirm_email": "/profile/confirm-email/{key}/",
+    "account_reset_password_from_key": "/reset-password/set-new-password/{key}",
+    "socialaccount_login_error": "/login?socialLoginError=true",
+}
+HEADLESS_CLIENTS = ("browser",)
+HEADLESS_SERVE_SPECIFICATION = True
+MFA_ADAPTER = "allauth_async.mfa.adapter.AsyncDefaultMFAAdapter"
+HEADLESS_ADAPTER = "allauth_async.headless.adapter.AsyncDefaultHeadlessAdapter"
+MFA_TOTP_ISSUER = GLITCHTIP_URL.hostname
+MFA_TOTP_TOLERANCE = 1
+MFA_SUPPORTED_TYPES = ["totp", "webauthn", "recovery_codes"]
+MFA_PASSKEY_LOGIN_ENABLED = True
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = DEBUG
+SOCIALACCOUNT_ADAPTER = "glitchtip.adapters.CustomSocialAccountAdapter"
+INVITATION_BACKEND = "apps.organizations_ext.invitation_backend.InvitationBackend"
+SOCIALACCOUNT_PROVIDERS = {}
+if GITLAB_URL := env.url("SOCIALACCOUNT_PROVIDERS_gitlab_GITLAB_URL", None):
+    SOCIALACCOUNT_PROVIDERS["gitlab"] = {"GITLAB_URL": GITLAB_URL.geturl()}
+if GITEA_URL := env.url("SOCIALACCOUNT_PROVIDERS_gitea_GITEA_URL", None):
+    SOCIALACCOUNT_PROVIDERS["gitea"] = {"GITEA_URL": GITEA_URL.geturl()}
+if NEXTCLOUD_URL := env.url("SOCIALACCOUNT_PROVIDERS_nextcloud_SERVER", None):
+    SOCIALACCOUNT_PROVIDERS["nextcloud"] = {"SERVER": NEXTCLOUD_URL.geturl()}
+if MICROSOFT_TENANT := env.str("SOCIALACCOUNT_PROVIDERS_microsoft_TENANT", None):
+    SOCIALACCOUNT_PROVIDERS["microsoft"] = {"TENANT": MICROSOFT_TENANT}
+
+ENABLE_USER_REGISTRATION = env.bool("ENABLE_USER_REGISTRATION", True)
+ENABLE_SOCIAL_APPS_USER_REGISTRATION = env.bool(
+    "ENABLE_SOCIAL_APPS_USER_REGISTRATION", ENABLE_USER_REGISTRATION
+)
+ENABLE_ORGANIZATION_CREATION = env.bool("ENABLE_ORGANIZATION_CREATION", False)
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`.
+    # Subclassed to keep the unknown-user dummy hash off the event loop;
+    # revert to django.contrib.auth.backends.ModelBackend on Django 6.1+.
+    "apps.users.auth_backends.ModelBackend",
+    # `allauth` authentication methods (login by e-mail), with a native
+    # aauthenticate() so async login paths never fall back to thread offload
+    "allauth_async.account.auth_backends.AsyncAuthenticationBackend",
+)
+
+NINJA_PAGINATION_CLASS = "glitchtip.api.pagination.AsyncLinkHeaderPagination"
+
+NINJA_PAGINATION_PER_PAGE = 50
+
+LOGGING_HANDLER_CLASS = env.str("DJANGO_LOGGING_HANDLER_CLASS", "logging.StreamHandler")
+LOG_LEVEL = env.str("LOG_LEVEL", "WARNING").upper()
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "null": {
+            "class": "logging.NullHandler",
+        },
+        "console": {
+            "class": LOGGING_HANDLER_CLASS,
+        },
+    },
+    "loggers": {
+        "django.security.DisallowedHost": {
+            "handlers": ["null"],
+            "propagate": False,
+        },
+        # Reports the proxies it sees once, so operators can set TRUSTED_PROXIES.
+        "glitchtip.proxy_headers": {
+            "level": "INFO" if LOG_LEVEL == "WARNING" else LOG_LEVEL,
+        },
+    },
+    "root": {"handlers": ["console"], "level": LOG_LEVEL},
+}
+
+# Support license key — typically a Stripe subscription ID.
+# Hides the "Support GlitchTip" banner and enables future support features.
+GLITCHTIP_LICENSE_KEY = env.str("GLITCHTIP_LICENSE_KEY", None)
+
+# Legacy setting — still accepted. New deployments should use GLITCHTIP_LICENSE_KEY.
+I_PAID_FOR_GLITCHTIP = env.bool("I_PAID_FOR_GLITCHTIP", bool(GLITCHTIP_LICENSE_KEY))
+
+MARKETING_URL = "https://glitchtip.com"
+if BILLING_ENABLED:
+    I_PAID_FOR_GLITCHTIP = True
+    VTASKS_SCHEDULE["check-all-organizations-throttle"] = {
+        "task": "apps.organizations_ext.tasks.check_all_organizations_throttle",
+        "schedule": timedelta(hours=4),
+    }
+elif TESTING:
+    # Must run tests with billing enabled
+    BILLING_ENABLED = True
+    logging.disable(logging.WARNING)
+
+# Refuse social-auth outbound HTTP (OIDC discovery, token/userinfo calls) to
+# private/internal addresses. Organization-managed OIDC providers make these
+# URLs partially user-controlled, so this closes the SSRF vector. Defaults on
+# whenever organization managers who are not instance admins can exist: billing
+# enabled (SaaS) or open organization creation (multi-tenant self-host).
+# Single-organization self-host installs keep private IdPs (e.g. an intranet
+# Keycloak) working by default.
+SOCIAL_AUTH_BLOCK_PRIVATE_IPS = env.bool(
+    "SOCIAL_AUTH_BLOCK_PRIVATE_IPS",
+    default=BILLING_ENABLED or ENABLE_ORGANIZATION_CREATION,
+)
+
+
+if TESTING:
+    TEST_RUNNER = "glitchtip.test_runner.TimedTestRunner"
+    # Optimization
+    PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
+    for db_config in DATABASES.values():
+        db_config["CONN_MAX_AGE"] = None
+        if "OPTIONS" in db_config:
+            db_config["OPTIONS"]["pool"] = False
+    TASKS = {
+        "default": {
+            "BACKEND": "django_vtasks.backends.immediate.ImmediateBackend",
+            "QUEUES": TASK_QUEUE_NAMES,
+        }
+    }
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+    STORAGES = global_settings.STORAGES
+    # Tests import glitchtip.asgi, which indexes STATIC_ROOT; a test run has not
+    # collected static and does not serve it. The module is ours because
+    # ServeStatic warns with a stacklevel that attributes it to the caller.
+    warnings.filterwarnings(
+        "ignore", message="No directory at", module="glitchtip.asgi"
+    )
+if TESTING:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        }
+    }
+CACHE_IS_VALKEY = "valkey" in CACHES["default"]["BACKEND"].lower()

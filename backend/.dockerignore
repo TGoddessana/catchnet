@@ -1,0 +1,11 @@
+.env
+.venv
+env
+*.sql
+*/tests
+*/*/tests
+*/test_data
+*/*/test_data
+**/.git
+uploads/*
+!uploads/.gitignore

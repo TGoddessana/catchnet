@@ -1,0 +1,5 @@
+{
+  "files.trimTrailingWhitespace": true,
+  "ruff.lint.run": "onSave",
+  "editor.formatOnSave": true
+}
