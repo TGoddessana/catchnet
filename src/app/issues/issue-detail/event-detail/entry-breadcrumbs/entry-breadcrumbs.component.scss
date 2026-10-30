@@ -7,20 +7,28 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 32px;
+  margin-top: 0;
   margin-bottom: 12px;
   h3 {
     margin: 0;
   }
   mat-form-field {
-    min-width: 200px;
+    width: 180px;
   }
 }
 
 .wrapper {
   position: relative;
   margin-bottom: 24px;
-  border: 1px solid var(--mat-sys-outline-variant);
+  border: 1px solid var(--gt-color-border);
+  border-radius: var(--gt-radius-card);
+  overflow: hidden;
+}
+
+// One rule between steps, with no section spacing of its own.
+li mat-divider {
+  margin: 0 !important;
+  border-top-color: var(--gt-color-rule) !important;
 }
 
 ul {
@@ -30,7 +38,7 @@ ul {
 
   li {
     list-style: none;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
   }
 }
@@ -43,8 +51,7 @@ ul {
   position: absolute;
   bottom: 0;
   background: var(--gt-color-surface);
-  border-top: 1px solid var(--mat-sys-outline-variant);
-  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12);
+  border-top: 1px solid var(--gt-color-border);
   z-index: 1;
 
   mat-icon {
@@ -62,12 +69,11 @@ ul {
 }
 
 .table-wrapper {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 2px 12px;
 }
 
 .category {
-  font-weight: var(--gt-weight-strong);
+  font-weight: var(--gt-weight-medium);
 }
 
 .error {
@@ -83,16 +89,20 @@ table {
     width: 24px;
     padding-right: 8px;
 
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
     .error {
       color: var(--gt-color-error-text);
     }
 
-    .ui {
-      color: var(--gt-color-accent-text);
-    }
-
+    .ui,
     .xhr {
-      color: var(--gt-color-success-text);
+      color: var(--gt-color-text-3);
     }
   }
 

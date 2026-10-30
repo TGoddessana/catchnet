@@ -37,6 +37,8 @@ import { IssueChart } from "./charts/issue-chart";
 import { PaginationButtons } from "src/app/list-elements/pagination-buttons/pagination-buttons";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { MatMenuModule } from "@angular/material/menu";
+import { ProjectMultiselect } from "../../list-elements/project-multiselect/project-multiselect";
+import { TimeRangeSelect } from "../../list-elements/timerange-select/time-range-select";
 import { SearchHelpConfig } from "../../list-elements/data-filter-bar/data-filter-bar.component";
 
 @Component({
@@ -58,6 +60,8 @@ import { SearchHelpConfig } from "../../list-elements/data-filter-bar/data-filte
     ListAppBar,
     IssueChart,
     PaginationButtons,
+    ProjectMultiselect,
+    TimeRangeSelect,
   ],
   providers: [IssuesService],
 })

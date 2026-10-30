@@ -11,14 +11,8 @@
       <mat-error i18n> Enter comment text. </mat-error>
     }
   </mat-form-field>
+  <!-- Actions sit at the form's bottom right, the primary last. -->
   <div class="buttons">
-    <gt-loading-button
-      class="submit-button"
-      [disabled]="disableSubmissions()"
-      [loading]="loading()"
-      [buttonText]="comment() ? updateCommentText : submitCommentText"
-    >
-    </gt-loading-button>
     @if (comment()) {
       <button i18n
         class="cancel-button"
@@ -28,5 +22,12 @@
         >Cancel</button
       >
     }
+    <gt-loading-button
+      class="submit-button"
+      [disabled]="disableSubmissions()"
+      [loading]="loading()"
+      [buttonText]="comment() ? updateCommentText : submitCommentText"
+    >
+    </gt-loading-button>
   </div>
 </form>

@@ -1,13 +1,16 @@
 @if (breadcrumbs(); as breadcrumbs) {
   <section class="mat-typography">
     <mat-divider></mat-divider>
-    <div class="breadcrumbs-header">
+    <div class="breadcrumbs-header cn-scope">
       <h3 i18n>Steps before it</h3>
       @if (availableCategories().length > 1) {
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label i18n>Filter by category</mat-label>
           <mat-select
             multiple
+            i18n-placeholder
+            placeholder="All categories"
+            i18n-aria-label
+            aria-label="Filter by category"
             [ngModel]="selectedCategories()"
             (ngModelChange)="selectedCategories.set($event)"
           >

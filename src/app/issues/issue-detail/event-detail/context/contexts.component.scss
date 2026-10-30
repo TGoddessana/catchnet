@@ -1,8 +1,8 @@
 .grid-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax((334px), 1fr));
-  grid-gap: 24px;
-  padding: 16px 0;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gt-space-4);
+  padding: var(--gt-space-2) 0;
 }
 
 .wrapper {
@@ -11,7 +11,9 @@
 }
 
 .spacer {
-  margin-left: 16px;
+  min-width: 0;
+  margin-left: 12px;
+  font-size: 14px;
 }
 
 .spacer-small {
@@ -28,7 +30,9 @@ p {
 }
 
 .image {
-  width: 40px;
-  height: 40px;
-  font-size: 40px;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  font-size: 28px;
+  color: var(--gt-color-text-3);
 }

@@ -34,7 +34,7 @@
 .cn-tag__bars {
   display: flex;
   gap: 2px;
-  height: 6px;
+  height: 4px;
   overflow: hidden;
   border-radius: var(--gt-radius-pill);
   background: var(--gt-color-subtle);
@@ -43,7 +43,9 @@
 .cn-tag__bar {
   background: var(--gt-color-chart-bar);
 
+  // Thin and grey: the share is read from the number, the bar only shows
+  // how lopsided it is.
   &.is-top {
-    background: var(--gt-color-accent);
+    background: var(--gt-color-text-3);
   }
 }

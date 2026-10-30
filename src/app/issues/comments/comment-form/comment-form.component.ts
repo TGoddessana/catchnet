@@ -37,7 +37,7 @@ type Comment = components["schemas"]["CommentSchema"];
 })
 export class CommentFormComponent implements OnInit {
   updateCommentText = $localize`Update Comment`;
-  submitCommentText = $localize`Submit Comment`;
+  submitCommentText = $localize`Comment`;
   readonly comment = input<Comment>();
   readonly loading = input.required<boolean>();
   readonly commentSubmitted = output<{

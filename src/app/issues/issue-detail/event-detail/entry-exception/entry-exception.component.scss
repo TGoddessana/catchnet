@@ -70,14 +70,34 @@
     margin-bottom: -1px;
   }
 
+  // Stack frames: one 40px row each, the path in mono at body size.
+  mat-expansion-panel {
+    box-shadow: none !important;
+  }
+
   mat-expansion-panel-header {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    height: 40px !important;
+    padding: 0 12px;
     border: 1px solid var(--gt-color-border);
 
     gt-frame-title {
+      min-width: 0;
       padding-right: 16px;
+      font-family: var(--gt-font-code);
+      font-size: 13px;
+      color: var(--gt-color-text-1);
+
+      ::ng-deep .mat-typography {
+        font: inherit;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
+  }
+
+  mat-expansion-panel:first-child mat-expansion-panel-header {
+    border-radius: var(--gt-radius-card) var(--gt-radius-card) 0 0;
   }
 
   .disabled-panel {

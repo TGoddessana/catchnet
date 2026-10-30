@@ -25,31 +25,34 @@
   </section>
 }
 @if (issue(); as issue) {
-  <section class="l-body l-body--full-width cn-detail">
+  <!--
+    Reading order: where it is (breadcrumb), what it is (title, message,
+    culprit) with the actions beside it, how big it is (the summary strip),
+    then the evidence (tabs over the event). The aside opens with the issue's
+    status, the slot where an automatic fix will report its pull request.
+  -->
+  <section class="l-body cn-detail">
     <nav class="cn-breadcrumb" i18n-aria-label aria-label="Breadcrumb">
       <a [routerLink]="['..']" [queryParams]="generateBackLink(issue.project.id)" i18n
         >Issues</a
       >
       <span aria-hidden="true">/</span>
       <span>{{ issue.project.name }}</span>
+      <span aria-hidden="true">/</span>
+      <span class="cn-detail__short-id">{{ issue.shortId }}</span>
     </nav>
 
     <header class="cn-detail__header">
       <div class="cn-detail__heading">
-        <div class="cn-detail__badges">
-          <span class="cn-badge cn-badge--{{ levelTone() }}">
-            <span class="cn-dot cn-dot--{{ levelTone() }}" aria-hidden="true"></span>
-            {{ issue.level | titlecase }}
-          </span>
-          <span class="cn-badge" [class]="'cn-badge--' + statusTone()">
-            <mat-icon aria-hidden="true">{{ statusIcon() }}</mat-icon>
-            {{ statusLabel() }}
-          </span>
-          @if (resolvedInRelease(); as release) {
-            <span class="cn-badge" i18n>Fixed in {{ release }}</span>
-          }
-        </div>
-        <h1 class="cn-detail__title">{{ issueTitle()[0] }}</h1>
+        <h1 class="cn-detail__title">
+          <span
+            class="cn-dot cn-dot--{{ levelTone() }}"
+            [title]="issue.level"
+            aria-hidden="true"
+          ></span>
+          <span class="u-visually-hidden">{{ issue.level }}:</span>
+          {{ issueTitle()[0] }}
+        </h1>
         @if (issueSubtitle()) {
           <p class="cn-detail__message">{{ issueSubtitle() }}</p>
         }
@@ -59,12 +62,12 @@
       </div>
       <div class="cn-detail__actions">
         @if (issue.status === "unresolved") {
+          <button mat-stroked-button (click)="updateIssueStatus('ignored')" i18n>
+            Mute
+          </button>
           <button mat-flat-button (click)="updateIssueStatus('resolved')">
             <mat-icon>check</mat-icon>
             <ng-container i18n>Mark as fixed</ng-container>
-          </button>
-          <button mat-stroked-button (click)="updateIssueStatus('ignored')" i18n>
-            Mute
           </button>
         } @else {
           <button mat-stroked-button (click)="updateIssueStatus('unresolved')" i18n>
@@ -99,177 +102,136 @@
       </div>
     </header>
 
+    <dl class="cn-strip" i18n-aria-label aria-label="How often">
+      <div class="cn-strip__cell">
+        <dt i18n>Events</dt>
+        <dd>{{ issue.count }}</dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>People affected</dt>
+        <dd>
+          @if (issue.userCount) {
+            {{ issue.userCount }}
+          } @else {
+            <span class="cn-strip__none">—</span>
+          }
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>First seen</dt>
+        <dd>
+          <time [dateTime]="issue.firstSeen" [title]="issue.firstSeen | date: 'medium'">{{
+            issue.firstSeen | daysAgo
+          }}</time>
+        </dd>
+      </div>
+      <div class="cn-strip__cell">
+        <dt i18n>Last seen</dt>
+        <dd>
+          <time [dateTime]="issue.lastSeen" [title]="issue.lastSeen | date: 'medium'">{{
+            issue.lastSeen | daysAgo
+          }}</time>
+        </dd>
+      </div>
+    </dl>
+
     <div class="cn-detail__grid">
       <div class="cn-detail__main">
-        <section class="cn-panel" i18n-aria-label aria-label="What happened">
-          <h2 class="cn-panel__title" i18n>What happened</h2>
-          <p class="cn-detail__story">
-            @if (issue.userCount) {
-              <ng-container i18n
-                >This has happened
-                <strong>{issue.count, plural, =1 {once} other {{{ issue.count }} times}}</strong>
-                to
-                <strong>{issue.userCount, plural, =1 {1 person} other {{{ issue.userCount }} people}}</strong>
-                since
-                <time [dateTime]="issue.firstSeen">{{ issue.firstSeen | date: "MMM d" }}</time>.</ng-container
-              >
-            } @else {
-              <ng-container i18n
-                >This has happened
-                <strong>{issue.count, plural, =1 {once} other {{{ issue.count }} times}}</strong>
-                since
-                <time [dateTime]="issue.firstSeen">{{ issue.firstSeen | date: "MMM d" }}</time>.</ng-container
-              >
-            }
-            @if (issue.status === "unresolved") {
-              {{ " " }}<ng-container i18n
-                >The last time was
-                <time [dateTime]="issue.lastSeen" [title]="issue.lastSeen | date: 'medium'">{{
-                  issue.lastSeen | daysAgo
-                }}</time
-                >.</ng-container
-              >
-            }
-          </p>
-          <dl class="cn-stats">
-            <div class="cn-stat">
-              <dt i18n>Times</dt>
-              <dd>{{ issue.count }}</dd>
-            </div>
-            <div class="cn-stat">
-              <dt i18n>People affected</dt>
-              <dd>{{ issue.userCount || "—" }}</dd>
-            </div>
-            <div class="cn-stat">
-              <dt i18n>Started</dt>
-              <dd>
-                <time [dateTime]="issue.firstSeen" [title]="issue.firstSeen | date: 'medium'">{{
-                  issue.firstSeen | daysAgo
-                }}</time>
-              </dd>
-            </div>
-            <div class="cn-stat">
-              <dt i18n>Last seen</dt>
-              <dd>
-                <time [dateTime]="issue.lastSeen" [title]="issue.lastSeen | date: 'medium'">{{
-                  issue.lastSeen | daysAgo
-                }}</time>
-              </dd>
-            </div>
-          </dl>
-        </section>
-
-        <div class="cn-detail__tabs">
-          <nav
-            class="cn-segmented"
-            mat-tab-nav-bar
-            mat-stretch-tabs="false"
-            [tabPanel]="tabPanel"
-            i18n-aria-label
-            aria-label="Issue sections"
+        <nav
+          class="cn-segmented cn-detail__tabs"
+          mat-tab-nav-bar
+          mat-stretch-tabs="false"
+          [tabPanel]="tabPanel"
+          i18n-aria-label
+          aria-label="Issue sections"
+        >
+          <a
+            mat-tab-link
+            [routerLink]="['./']"
+            routerLinkActive
+            [active]="details.isActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+            #details="routerLinkActive"
+            i18n
+            >Technical details</a
           >
-            <a
-              mat-tab-link
-              [routerLink]="['./']"
-              routerLinkActive
-              [active]="details.isActive"
-              [routerLinkActiveOptions]="{ exact: true }"
-              #details="routerLinkActive"
-              i18n
-              >Technical details</a
-            >
-            <a
-              mat-tab-link
-              [routerLink]="['user-reports']"
-              routerLinkActive
-              [active]="reports.isActive"
-              #reports="routerLinkActive"
-            >
-              <ng-container i18n>Feedback</ng-container>
-              @if (issue.userReportCount > 0) {
-                <span class="cn-count">{{
-                  issue.userReportCount < 100 ? issue.userReportCount : "99+"
-                }}</span>
-              }
-            </a>
-            <a
-              mat-tab-link
-              [routerLink]="['comments']"
-              routerLinkActive
-              [active]="comments.isActive"
-              #comments="routerLinkActive"
-            >
-              <ng-container i18n>Comments</ng-container>
-              @if (issue.numComments > 0) {
-                <span class="cn-count">{{
-                  issue.numComments < 100 ? issue.numComments : "99+"
-                }}</span>
-              }
-            </a>
-            <a
-              mat-tab-link
-              [routerLink]="['merged']"
-              routerLinkActive
-              [active]="merged.isActive"
-              #merged="routerLinkActive"
-              i18n
-              >Merged</a
-            >
-          </nav>
-        </div>
-        <section class="cn-panel cn-detail__tab-panel">
-          <mat-tab-nav-panel #tabPanel>
-            <router-outlet></router-outlet>
-          </mat-tab-nav-panel>
-        </section>
+          <a
+            mat-tab-link
+            [routerLink]="['user-reports']"
+            routerLinkActive
+            [active]="reports.isActive"
+            #reports="routerLinkActive"
+          >
+            <ng-container i18n>Feedback</ng-container>
+            @if (issue.userReportCount > 0) {
+              <span class="cn-count">{{
+                issue.userReportCount < 100 ? issue.userReportCount : "99+"
+              }}</span>
+            }
+          </a>
+          <a
+            mat-tab-link
+            [routerLink]="['comments']"
+            routerLinkActive
+            [active]="comments.isActive"
+            #comments="routerLinkActive"
+          >
+            <ng-container i18n>Comments</ng-container>
+            @if (issue.numComments > 0) {
+              <span class="cn-count">{{
+                issue.numComments < 100 ? issue.numComments : "99+"
+              }}</span>
+            }
+          </a>
+          <a
+            mat-tab-link
+            [routerLink]="['merged']"
+            routerLinkActive
+            [active]="merged.isActive"
+            #merged="routerLinkActive"
+            i18n
+            >Merged</a
+          >
+        </nav>
+        <mat-tab-nav-panel #tabPanel class="cn-detail__tab-panel">
+          <router-outlet></router-outlet>
+        </mat-tab-nav-panel>
       </div>
 
       <aside class="cn-detail__aside">
-        @if (issue.status === "unresolved") {
-          <section class="cn-panel" i18n-aria-label aria-label="What to do next">
-            <h2 class="cn-panel__title" i18n>What to do next</h2>
-            <ol class="cn-steps">
-              <li>
-                <span class="cn-steps__n" aria-hidden="true">1</span>
-                <div>
-                  <p i18n>Send it to the person who looks after this code.</p>
-                  <button mat-stroked-button (click)="copyLink()" i18n>
-                    Copy link
-                  </button>
-                </div>
-              </li>
-              <li>
-                <span class="cn-steps__n" aria-hidden="true">2</span>
-                <p i18n
-                  >Once it is fixed, press <strong>Mark as fixed</strong>. If it
-                  happens again, it shows up here as open.</p
-                >
-              </li>
-            </ol>
-          </section>
-        }
-        <gt-issue-detail-tags [issueID]="issueID()"></gt-issue-detail-tags>
-        <section class="cn-panel" i18n-aria-label aria-label="Details">
-          <h2 class="cn-panel__title" i18n>Details</h2>
+        <section class="cn-panel" i18n-aria-label aria-label="Status">
+          <h2 class="cn-panel__title" i18n>Status</h2>
           <dl class="cn-facts">
             <div>
-              <dt i18n>Issue ID</dt>
-              <dd>{{ issue.shortId }}</dd>
+              <dt i18n>State</dt>
+              <dd>
+                <span class="cn-badge" [class]="'cn-badge--' + statusTone()">
+                  <mat-icon aria-hidden="true">{{ statusIcon() }}</mat-icon>
+                  {{ statusLabel() }}
+                </span>
+              </dd>
+            </div>
+            @if (resolvedInRelease(); as release) {
+              <div>
+                <dt i18n>Fixed in</dt>
+                <dd>{{ release }}</dd>
+              </div>
+            }
+            <div>
+              <dt i18n>Level</dt>
+              <dd>{{ issue.level | titlecase }}</dd>
             </div>
             <div>
               <dt i18n>Project</dt>
               <dd>{{ issue.project.name }}</dd>
             </div>
             <div>
-              <dt i18n>First seen</dt>
-              <dd>{{ issue.firstSeen | date: "medium" }}</dd>
-            </div>
-            <div>
-              <dt i18n>Last seen</dt>
-              <dd>{{ issue.lastSeen | date: "medium" }}</dd>
+              <dt i18n>Issue ID</dt>
+              <dd class="cn-facts__mono">{{ issue.shortId }}</dd>
             </div>
           </dl>
         </section>
+        <gt-issue-detail-tags [issueID]="issueID()"></gt-issue-detail-tags>
       </aside>
     </div>
   </section>

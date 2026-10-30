@@ -1,6 +1,7 @@
 @if (eventEntryRequest(); as request) {
   <section class="mat-typography">
     <mat-divider></mat-divider>
+    <h3 i18n>Request</h3>
     <section class="location">
       <span class="method mat-body-strong">{{
         request?.method ? request?.method : "GET"
