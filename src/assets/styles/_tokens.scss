@@ -49,6 +49,9 @@
   --gt-color-success-text: light-dark(#006955, #4dbfa2);
   --gt-color-success-soft: light-dark(#e8f8f3, #1b322b);
 
+  // Color: charts. Quiet bars; the accent marks the peak.
+  --gt-color-chart-bar: light-dark(#dddcd6, #3a3935);
+
   // Shape: four radii only.
   --gt-radius-badge: #{vars.$radius-badge};
   --gt-radius-control: #{vars.$radius-control};

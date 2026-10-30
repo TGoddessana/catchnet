@@ -3,31 +3,29 @@
 // Ensure that layout stays aligned between this component
 // and top-app-bar, on which it is based
 
+// catchnet page header: a large title on the page itself, filters on the
+// right, no bar or hairlines.
 .list-app-bar-primary-content {
   display: flex;
-  height: vars.$top-app-bar-height;
-  align-content: center;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  flex-wrap: wrap;
+  gap: var(--gt-space-4);
+  min-height: vars.$top-app-bar-height;
+  align-items: flex-end;
+  padding: var(--gt-space-6) 36px 0;
 }
 
 .left-section,
 .right-section {
   display: flex;
   align-items: center;
-  padding: 0 24px;
-  height: 100%;
 }
 
 .left-section {
   flex: 1;
 }
 
-.right-section:has(*) {
-  border-left: 1px solid var(--mat-sys-outline-variant);
-}
-
-.list-app-bar-expanded-content {
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
+.right-section {
+  gap: var(--gt-space-3);
 }
 
 .add-project-button {
@@ -43,12 +41,9 @@
 
 @media screen and (min-width: vars.$medium) {
   .time-range-select-container {
-    padding: 0 0 0 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    border-left: 1px solid var(--mat-sys-outline-variant);
   }
 }
 
@@ -83,7 +78,7 @@
   // Slightly inconsistent with top-app-bar because
   // vertical space is at a premium
   .list-app-bar-primary-content {
-    height: 60px;
+    padding: var(--gt-space-4) 15px 0;
   }
 
   .project-multiselect-container {

@@ -1,4 +1,3 @@
-@use "@angular/material" as mat;
 @use "variables";
 
 // This make the app cover the whole screen at all times
@@ -10,149 +9,309 @@ mat-sidenav-container {
   right: 0;
 }
 
-mat-nav-list {
-  padding: 10px;
-
-  button[mat-list-item] {
-    border: none;
-    text-align: inherit;
-  }
-
-  .nav-section-divider {
-    margin-left: -10px;
-    margin-right: -10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-color: var(--mat-sys-outline-variant);
-  }
-
-  // TODO: Find a more reliable way to change icon color
-  .mdc-list-item--disabled {
-    mat-icon {
-      opacity: 0.25;
-    }
-  }
-}
-
-.active-section {
-  background-color: var(--mat-sys-secondary-container);
-
-  .mdc-list-item__primary-text,
-  span[matListItemTitle],
-  mat-icon {
-    color: var(--mat-sys-on-secondary-container);
-  }
-
-  .arrow-icon {
-    color: var(--mat-sys-on-secondary-container);
-  }
-}
-
-.active-menu-item {
-  background-color: var(--mat-sys-surface-container-highest);
-}
-
+// The sidebar is flat paper with a hairline on its right edge. Only the
+// organization switcher, a button, is raised.
 mat-sidenav {
   width: variables.$side-nav-width;
+  border-right: 1px solid var(--gt-color-border);
+  box-shadow: none;
 
-  mat-icon[matListItemIcon] {
-    margin-right: 8px;
-    margin-left: 8px;
-  }
-
-  &.collapsed {
-    width: 72px;
-
-    .org-create-button-container,
-    .org-dropdown-container,
-    .version {
-      display: none;
-    }
-
-    .nav-text {
-      display: none;
-    }
-
-    mat-nav-list {
-      padding: 16px;
-    }
-
-    mat-list-item {
-      justify-content: center;
-      padding: 0;
-    }
-
-    [matListItemMeta] {
-      display: none;
-    }
-
-    .logo-toolbar {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 8px;
-
-      .collapsed-logo {
-        width: 24px;
-        margin-bottom: 20px;
-        cursor: pointer;
-      }
-
-      .collapse-toggle {
-        margin-right: 0;
-      }
-    }
+  ::ng-deep .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gt-space-1);
+    padding: var(--gt-space-4) var(--gt-space-3);
+    box-sizing: border-box;
   }
 }
 
-.logo-toolbar {
-  height: fit-content;
-  padding-top: 16px;
+.cn-brand {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-
-  .main-logo {
-    width: 115px;
-    cursor: pointer;
-  }
-
-  .collapse-toggle {
-    margin-right: 8px;
-    @media screen and (max-width: variables.$small) {
-      display: none;
-    }
-  }
+  padding: 0 0 var(--gt-space-3) var(--gt-space-2);
 }
 
-.org-create-button-container,
-.org-dropdown-container {
-  width: 100%;
-  padding: 25px 15px 0 15px;
-}
+.cn-brand__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gt-color-text-1);
+  text-decoration: none;
 
-.org-create-button {
-  height: 48px;
-}
-
-.version {
-  text-align: center;
-
-  a {
-    color: var(--mat-sys-on-surface-variant);
-    font-weight: 300;
-    font-size: small;
+  &:hover {
     text-decoration: none;
   }
 }
 
-mat-list-item,
-button[mat-list-item] {
-  .arrow-icon {
-    transition:
-      transform 200ms ease-in-out,
-      color 200ms ease-in-out;
+.cn-brand__mark {
+  display: block;
+  flex-shrink: 0;
+}
+
+.cn-wordmark {
+  font-size: 18px;
+  font-weight: var(--gt-weight-strong);
+  letter-spacing: var(--gt-wordmark-tracking);
+}
+
+.collapse-toggle {
+  color: var(--gt-color-text-3);
+
+  @media screen and (max-width: variables.$small) {
+    display: none;
+  }
+}
+
+.cn-avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--gt-radius-pill);
+  background: var(--gt-color-subtle);
+  color: var(--gt-color-text-2);
+  font-size: 12px;
+  font-weight: var(--gt-weight-strong);
+  line-height: 1;
+
+  &--accent {
+    width: 26px;
+    height: 26px;
+    background: var(--gt-color-accent-soft);
+    color: var(--gt-color-accent-text);
   }
 
-  &[aria-expanded="true"] .arrow-icon {
-    transform: rotate(180deg);
+  &--sm {
+    width: 22px;
+    height: 22px;
+    margin-right: var(--gt-space-3);
+    font-size: 11px;
+  }
+}
+
+.cn-org {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  padding: 0 10px;
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-raised-surface);
+  box-shadow: var(--gt-raised-shadow);
+  font: inherit;
+  color: var(--gt-color-text-1);
+  text-align: left;
+  cursor: pointer;
+}
+
+.cn-org__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.cn-org__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: var(--gt-weight-strong);
+}
+
+.cn-org__meta {
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-org__chevron {
+  color: var(--gt-color-text-3);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.cn-menu-check {
+  margin-left: auto;
+  margin-right: 0 !important;
+}
+
+.cn-jump {
+  display: flex;
+  align-items: center;
+  gap: var(--gt-space-2);
+  height: var(--gt-control-height);
+  margin: var(--gt-space-2) 0;
+  padding: 0 var(--gt-space-3);
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: var(--gt-color-subtle);
+  font: inherit;
+  font-size: 13px;
+  color: var(--gt-color-text-3);
+  text-align: left;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: var(--gt-color-text-2);
+  }
+}
+
+.cn-jump__label {
+  flex: 1;
+}
+
+.cn-kbd {
+  padding: 1px 6px;
+  border-radius: var(--gt-radius-badge);
+  background: var(--gt-color-surface);
+  font-family: var(--gt-font-ui);
+  font-size: 11px;
+  color: var(--gt-color-text-3);
+}
+
+.cn-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cn-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: var(--gt-control-height);
+  padding: 0 var(--gt-space-3);
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--gt-weight-medium);
+  color: var(--gt-color-text-2);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+
+  mat-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover:not(.is-disabled, :disabled) {
+    background: var(--gt-color-subtle);
+    color: var(--gt-color-text-1);
+    text-decoration: none;
+  }
+
+  &.is-active {
+    background: var(--gt-color-accent-soft);
+    color: var(--gt-color-accent-text);
+    font-weight: var(--gt-weight-strong);
+  }
+
+  &.is-disabled,
+  &:disabled {
+    color: var(--gt-color-text-disabled);
+    cursor: default;
+  }
+}
+
+.cn-nav-spacer {
+  flex: 1;
+  min-height: var(--gt-space-5);
+}
+
+.cn-user {
+  margin-top: var(--gt-space-1);
+  padding-top: var(--gt-space-2);
+  border-top: 1px solid var(--gt-color-subtle);
+}
+
+.cn-user__button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 44px;
+  padding: 0 10px;
+  border: none;
+  border-radius: var(--gt-radius-control);
+  background: transparent;
+  font: inherit;
+  color: var(--gt-color-text-2);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover,
+  &.is-active {
+    background: var(--gt-color-subtle);
+  }
+}
+
+.cn-user__email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.org-create-button-container {
+  width: 100%;
+}
+
+.org-create-button {
+  width: 100%;
+}
+
+.active-menu-item {
+  background-color: var(--gt-color-subtle);
+}
+
+.cn-version {
+  font-size: 12px;
+  color: var(--gt-color-text-3);
+}
+
+// Collapsed: icons only, centered.
+mat-sidenav.collapsed {
+  width: 72px;
+
+  .nav-text,
+  .cn-kbd {
+    display: none;
+  }
+
+  .cn-brand {
+    flex-direction: column;
+    gap: var(--gt-space-2);
+    padding-left: 0;
+  }
+
+  .cn-org,
+  .cn-jump,
+  .cn-nav__item,
+  .cn-user__button {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .cn-org {
+    background: transparent;
+    box-shadow: none;
   }
 }

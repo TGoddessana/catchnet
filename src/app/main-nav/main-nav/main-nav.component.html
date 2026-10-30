@@ -9,28 +9,28 @@
       [mode]="mobileNav() === true ? 'over' : 'side'"
       [class.collapsed]="isCollapsed()"
     >
-      <mat-toolbar class="logo-toolbar">
-        @if (!isCollapsed()) {
+      <div class="cn-brand">
+        <a
+          class="cn-brand__link"
+          routerLink="."
+          (click)="reload()"
+          i18n-aria-label
+          aria-label="catchnet home"
+        >
           <img
-            class="main-logo"
-            routerLink="."
-            (click)="reload()"
-            src="static/assets/images/catchnet-logo.svg"
-            alt="catchnet"
-          />
-        } @else {
-          <img
-            class="collapsed-logo"
-            routerLink="."
-            (click)="reload()"
+            class="cn-brand__mark"
             src="static/assets/images/catchnet-mark.svg"
-            alt="catchnet"
+            alt=""
+            width="26"
+            height="26"
           />
-        }
+          <span class="cn-wordmark nav-text">catchnet</span>
+        </a>
         <button
-          mat-icon-button
+          matIconButton
           class="collapse-toggle"
           (click)="toggleCollapse()"
+          [attr.aria-label]="isCollapsed() ? expandLabel : collapseLabel"
         >
           @if (isCollapsed()) {
             <mat-icon>left_panel_open</mat-icon>
@@ -38,7 +38,8 @@
             <mat-icon>left_panel_close</mat-icon>
           }
         </button>
-      </mat-toolbar>
+      </div>
+
       @if (contextLoaded() && organizations().length === 0 && canCreateOrg()) {
         <div class="org-create-button-container">
           <a
@@ -51,80 +52,106 @@
           >
         </div>
       } @else {
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="org-dropdown-container"
+        <button
+          type="button"
+          class="cn-org"
+          data-cy="orgSelect"
+          [matMenuTriggerFor]="orgSwitchMenu"
+          [matTooltip]="activeOrganization()?.name ?? ''"
+          [matTooltipDisabled]="!isCollapsed()"
+          matTooltipPosition="right"
         >
-          <mat-select
-            #orgSelect
-            data-cy="orgSelect"
-            [value]="activeOrganizationSlug()"
-            formControlName="orgSelectControl"
-            (selectionChange)="onOrgSelectChange($event, orgSelect)"
-            hideSingleSelectionIndicator
-            canSelectNullableOptions
+          <span class="cn-avatar cn-avatar--accent" aria-hidden="true">{{
+            initial(activeOrganization()?.name)
+          }}</span>
+          <span class="cn-org__text nav-text">
+            <span class="cn-org__name">{{ activeOrganization()?.name }}</span>
+            <span class="cn-org__meta" i18n
+              >{projectCount(), plural, =0 {No projects yet} =1 {1 project} other {{{ projectCount() }} projects}}</span
+            >
+          </span>
+          <mat-icon class="cn-org__chevron nav-text" aria-hidden="true"
+            >expand_more</mat-icon
           >
-            @for (
-              organization of organizations();
-              track organization.id;
-              let last = $last
-            ) {
-              <mat-option [value]="organization.slug">
-                {{ organization.name }}
-              </mat-option>
-              @if (last) {
-                <mat-divider class="dropdown-divider"></mat-divider>
+        </button>
+        <mat-menu #orgSwitchMenu="matMenu" class="nav-menu" xPosition="after">
+          @for (organization of organizations(); track organization.id) {
+            <button
+              mat-menu-item
+              (click)="selectOrganization(organization.slug)"
+              [attr.aria-current]="
+                organization.slug === activeOrganizationSlug() ? 'true' : null
+              "
+            >
+              <span class="cn-avatar cn-avatar--sm" aria-hidden="true">{{
+                initial(organization.name)
+              }}</span>
+              <span>{{ organization.name }}</span>
+              @if (organization.slug === activeOrganizationSlug()) {
+                <mat-icon class="cn-menu-check" aria-hidden="true">check</mat-icon>
               }
-            }
-            @if (canCreateOrg()) {
-              <mat-option data-cy="createNewLink" i18n
-                >Create organization</mat-option
-              >
-            } @else {
-              <mat-option i18n i18n-matTooltip
-                disabled
-                matTooltip="Organization creation is currently disabled"
-                matTooltipPosition="below"
-              >
-                Create organization
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+            </button>
+          }
+          <mat-divider></mat-divider>
+          @if (canCreateOrg()) {
+            <button
+              mat-menu-item
+              data-cy="createNewLink"
+              routerLink="/organizations/new"
+            >
+              <mat-icon>add</mat-icon>
+              <span i18n>Create organization</span>
+            </button>
+          } @else {
+            <button mat-menu-item disabled>
+              <mat-icon>add</mat-icon>
+              <span i18n>Creating organizations is turned off</span>
+            </button>
+          }
+        </mat-menu>
       }
-      <mat-nav-list>
-        <mat-divider class="nav-section-divider"></mat-divider>
-        <!-- Main nav items -->
+
+      <button
+        type="button"
+        class="cn-jump"
+        (click)="openJumpTo()"
+        [matTooltip]="jumpLabel"
+        [matTooltipDisabled]="!isCollapsed()"
+        matTooltipPosition="right"
+        [attr.aria-label]="jumpLabel"
+      >
+        <mat-icon aria-hidden="true">search</mat-icon>
+        <span class="cn-jump__label nav-text" i18n>Jump to…</span>
+        <kbd class="cn-kbd nav-text">{{ jumpShortcut }}</kbd>
+      </button>
+
+      <nav class="cn-nav" i18n-aria-label aria-label="Main">
         @for (item of visibleNavItems(); track item.route) {
           @if (activeOrganization()) {
             <a
-              mat-list-item
+              class="cn-nav__item"
               [routerLink]="getRouteWithOrgSlug(item.route)"
-              routerLinkActive="mdc-list-item--activated"
+              routerLinkActive="is-active"
+              ariaCurrentWhenActive="page"
               [matTooltip]="item.name"
               [matTooltipDisabled]="!isCollapsed()"
               matTooltipPosition="right"
             >
-              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
               <span class="nav-text">{{ item.name }}</span>
             </a>
           } @else {
-            <mat-list-item
-              disabled
-              [matTooltip]="item.name"
-              [matTooltipDisabled]="!isCollapsed()"
-              matTooltipPosition="right"
-            >
-              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span class="cn-nav__item is-disabled" aria-disabled="true">
+              <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
               <span class="nav-text">{{ item.name }}</span>
-            </mat-list-item>
+            </span>
           }
         }
+      </nav>
 
-        <mat-divider class="nav-section-divider"></mat-divider>
+      <div class="cn-nav-spacer"></div>
 
-        <!-- Organization menu item -->
+      <nav class="cn-nav cn-nav--secondary" i18n-aria-label aria-label="Settings and help">
         <div
           routerLinkActive
           [routerLinkActiveOptions]="{
@@ -136,20 +163,18 @@
           #orgWrapper="routerLinkActive"
         >
           <button
-            mat-list-item
+            type="button"
+            class="cn-nav__item"
+            [class.is-active]="orgWrapper.isActive"
             [matMenuTriggerFor]="orgMenu"
             [disabled]="!activeOrganization()"
-            [class.active-section]="orgWrapper.isActive"
-            matTooltip="Organization"
+            i18n-matTooltip
+            matTooltip="Settings"
             [matTooltipDisabled]="!isCollapsed()"
             matTooltipPosition="right"
-            i18n-matTooltip
           >
-            <mat-icon matListItemIcon>account_tree</mat-icon>
-            <span matListItemTitle class="nav-text" i18n>Organization</span>
-            <div matListItemMeta>
-              <mat-icon class="arrow-icon">arrow_drop_down</mat-icon>
-            </div>
+            <mat-icon aria-hidden="true">settings</mat-icon>
+            <span class="nav-text" i18n>Settings</span>
           </button>
           @for (item of visibleOrgMenuItems; track item.route) {
             <a
@@ -159,55 +184,50 @@
           }
         </div>
 
-        <!-- Profile menu item -->
-        <div
-          routerLinkActive
-          [routerLinkActiveOptions]="{
-            paths: 'subset',
-            queryParams: 'ignored',
-            fragment: 'ignored',
-            matrixParams: 'ignored',
-          }"
-          #profileWrapper="routerLinkActive"
-        >
-          <button
-            mat-list-item
-            [matMenuTriggerFor]="profileMenu"
-            [class.active-section]="profileWrapper.isActive"
-            matTooltip="Profile"
-            [matTooltipDisabled]="!isCollapsed()"
-            matTooltipPosition="right"
-            i18n-matTooltip
-          >
-            <mat-icon matListItemIcon>account_circle</mat-icon>
-            <span matListItemTitle class="nav-text" i18n>Profile</span>
-            <div matListItemMeta>
-              <mat-icon class="arrow-icon">arrow_drop_down</mat-icon>
-            </div>
-          </button>
-          @for (item of profileMenuItems; track item.route) {
-            <a [routerLink]="item.route" style="display: none"></a>
-          }
-        </div>
-
-        <!-- Support menu item -->
         <gt-support-menu #supportMenuComponent />
         <button
-          mat-list-item
+          type="button"
+          class="cn-nav__item"
           [matMenuTriggerFor]="supportMenuComponent.menu"
           (menuOpened)="supportMenuComponent.loadSupportLink()"
-          matTooltip="Support"
+          i18n-matTooltip
+          matTooltip="Help"
           [matTooltipDisabled]="!isCollapsed()"
           matTooltipPosition="right"
-          i18n-matTooltip
         >
-          <mat-icon matListItemIcon>help</mat-icon>
-          <span matListItemTitle class="nav-text" i18n>Support</span>
-          <div matListItemMeta>
-            <mat-icon class="arrow-icon">arrow_drop_down</mat-icon>
-          </div>
+          <mat-icon aria-hidden="true">help</mat-icon>
+          <span class="nav-text" i18n>Help</span>
         </button>
-      </mat-nav-list>
+      </nav>
+
+      <div
+        class="cn-user"
+        routerLinkActive
+        [routerLinkActiveOptions]="{
+          paths: 'subset',
+          queryParams: 'ignored',
+          fragment: 'ignored',
+          matrixParams: 'ignored',
+        }"
+        #profileWrapper="routerLinkActive"
+      >
+        <button
+          type="button"
+          class="cn-user__button"
+          [class.is-active]="profileWrapper.isActive"
+          [matMenuTriggerFor]="profileMenu"
+          i18n-aria-label
+          aria-label="Your account"
+        >
+          <span class="cn-avatar" aria-hidden="true">{{
+            initial(userEmail())
+          }}</span>
+          <span class="cn-user__email nav-text">{{ userEmail() }}</span>
+        </button>
+        @for (item of profileMenuItems; track item.route) {
+          <a [routerLink]="item.route" style="display: none"></a>
+        }
+      </div>
 
       <mat-menu #orgMenu="matMenu" class="nav-menu" xPosition="after">
         @if (activeOrganization()) {
@@ -242,13 +262,15 @@
           <mat-icon>logout</mat-icon>
           <span i18n>Log Out</span>
         </button>
-      </mat-menu>
-
-      <div class="caption-text version">
-        <a [routerLink]="['/system-info']" routerLinkActive="active-route" i18n
-          >GlitchTip {{ version() }}</a
+        <mat-divider></mat-divider>
+        <a
+          mat-menu-item
+          class="cn-version"
+          [routerLink]="['/system-info']"
+          i18n
+          >catchnet · server {{ version() }}</a
         >
-      </div>
+      </mat-menu>
     </mat-sidenav>
   }
 

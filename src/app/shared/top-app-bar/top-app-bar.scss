@@ -1,24 +1,26 @@
 @use "src/assets/styles/_variables.scss" as vars;
 
+// catchnet page header: content sits on the page, no bar or hairlines.
 .top-app-bar {
   display: flex;
-  height: vars.$top-app-bar-height;
+  flex-wrap: wrap;
+  gap: var(--gt-space-3);
+  min-height: vars.$top-app-bar-height;
   align-items: center;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  padding: var(--gt-space-5) 36px 0;
+
+  @media screen and (max-width: vars.$small - 1) {
+    padding: var(--gt-space-4) 15px 0;
+  }
 }
 
 .left-section,
 .right-section {
   display: flex;
   align-items: center;
-  padding: 0 24px;
-  height: 100%;
+  gap: var(--gt-space-2);
 }
 
 .left-section {
   flex: 1;
-}
-
-.right-section:has(*) {
-  border-left: 1px solid var(--mat-sys-outline-variant);
 }

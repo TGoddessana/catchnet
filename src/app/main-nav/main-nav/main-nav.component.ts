@@ -1,33 +1,27 @@
 import {
   Component,
   ChangeDetectionStrategy,
+  HostListener,
   inject,
   computed,
   signal,
 } from "@angular/core";
-import { Router } from "@angular/router";
 import { MainNavService } from "../main-nav.service";
 import { SettingsService } from "src/app/api/settings.service";
 import { UserService } from "src/app/api/user/user.service";
 import { MobileNavToolbarComponent } from "../../mobile-nav-toolbar/mobile-nav-toolbar.component";
 import { SupportMenuComponent } from "../support-menu/support-menu.component";
-import { MatCardModule } from "@angular/material/card";
-import { MatListModule } from "@angular/material/list";
+import { MatDialog } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { AuthService } from "src/app/auth.service";
 import { OrganizationsService } from "src/app/api/organizations.service";
-import {
-  MatSelect,
-  MatSelectChange,
-  MatSelectModule,
-} from "@angular/material/select";
+import { JumpTarget, JumpToComponent } from "../jump-to/jump-to.component";
 
 interface NavItem {
   name: string;
@@ -44,28 +38,31 @@ interface NavItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatSidenavModule,
-    MatToolbarModule,
     MatIconModule,
     RouterLink,
     MatButtonModule,
-    MatSelectModule,
     MatDividerModule,
-    MatListModule,
     MatMenuModule,
     MatTooltipModule,
     RouterLinkActive,
-    MatCardModule,
     MobileNavToolbarComponent,
     SupportMenuComponent,
   ],
 })
 export class MainNavComponent {
-  private router = inject(Router);
   private mainNav = inject(MainNavService);
   private organizationsService = inject(OrganizationsService);
   private auth = inject(AuthService);
   private settingsService = inject(SettingsService);
   private userService = inject(UserService);
+  private dialog = inject(MatDialog);
+
+  readonly collapseLabel = $localize`Collapse sidebar`;
+  readonly expandLabel = $localize`Expand sidebar`;
+  readonly jumpLabel = $localize`Jump to a page or project`;
+  readonly jumpShortcut = /Mac|iPhone|iPad/.test(globalThis.navigator?.platform ?? "")
+    ? "⌘K"
+    : "Ctrl K";
 
   navItems: NavItem[] = [
     {
@@ -182,6 +179,8 @@ export class MainNavComponent {
   paidForGlitchTip = this.settingsService.paidForGlitchTip;
   mobileNav = this.mainNav.mobileNav;
   version = this.settingsService.version;
+  userEmail = computed(() => this.userService.user()?.email ?? "");
+  projectCount = this.organizationsService.projectsCount;
 
   contextLoaded = computed(
     () =>
@@ -223,16 +222,68 @@ export class MainNavComponent {
     }
   }
 
-  onOrgSelectChange(
-    event: MatSelectChange<string | undefined>,
-    component: MatSelect,
-  ) {
-    if (event.value) {
-      this.organizationsService.setActiveOrganizationSlug(event.value);
-    } else {
-      component.value = this.activeOrganizationSlug();
-      this.router.navigate(["organizations", "new"]);
+  selectOrganization(slug: string) {
+    this.organizationsService.setActiveOrganizationSlug(slug);
+  }
+
+  /** First letter for an avatar, e.g. "acme" → "A". */
+  initial(name: string | null | undefined) {
+    return (name ?? "").trim().charAt(0).toUpperCase() || "?";
+  }
+
+  @HostListener("document:keydown", ["$event"])
+  onKeydown(event: KeyboardEvent) {
+    if (
+      (event.metaKey || event.ctrlKey) &&
+      event.key.toLowerCase() === "k" &&
+      this.isLoggedIn()
+    ) {
+      event.preventDefault();
+      this.openJumpTo();
     }
+  }
+
+  openJumpTo() {
+    if (this.dialog.getDialogById("jump-to")) {
+      return;
+    }
+    const pages: JumpTarget[] = this.visibleNavItems().map((item) => ({
+      label: item.name,
+      kind: $localize`Page`,
+      icon: item.icon,
+      route: this.getRouteWithOrgSlug(item.route),
+    }));
+    const settings: JumpTarget[] = this.orgMenuItems.map((item) => ({
+      label: item.name,
+      kind: $localize`Settings`,
+      icon: item.icon,
+      route: this.getRouteWithOrgSlug(item.route),
+    }));
+    const projects: JumpTarget[] = this.organizationsService
+      .activeOrganizationProjects()
+      .map((project) => ({
+        label: project.name,
+        kind: $localize`Project`,
+        icon: "folder",
+        route: [this.activeOrganizationSlug(), "issues"],
+        queryParams: { project: String(project.id) },
+      }));
+    const account: JumpTarget[] = this.profileMenuItems.map((item) => ({
+      label: item.name,
+      kind: $localize`Account`,
+      icon: item.icon,
+      route: item.route,
+    }));
+    this.dialog.open(JumpToComponent, {
+      id: "jump-to",
+      data: this.activeOrganization()
+        ? [...pages, ...projects, ...settings, ...account]
+        : account,
+      position: { top: "12vh" },
+      maxWidth: "calc(100vw - 32px)",
+      autoFocus: "input",
+      panelClass: "cn-jump-panel",
+    });
   }
 
   reload() {
