@@ -126,9 +126,30 @@ Each override partial wraps its tokens in `:root`, because `mat.theme` emits den
 - Name: **catchnet**, always lowercase.
 - Logo: a 28px rounded square (rx 9) in the accent color holding a white C-shaped arc and a dot. Files: `src/assets/images/catchnet-logo.svg` (mark and wordmark, wordmark outlined from Inter 600 so it needs no font, light and dark aware) and `catchnet-mark.svg` (mark only). Favicons: `src/favicon.svg`, `src/favicon.ico`.
 
+## Layout and patterns
+
+**Shell.** A 240px sidebar, flat surface with a hairline on its right edge: the mark and wordmark, a raised organization switcher (avatar, name, project count), a "Jump to" button that also opens with Cmd/Ctrl K, the main nav (Issues, Performance, Uptime, Logs, Releases, Projects), and Settings, Help and the signed-in person at the bottom. The current page uses the soft accent fill. Collapsed, the sidebar shows icons only.
+
+**Page header.** No app bar. The title is 28px, weight 600, sitting on the page; list pages may follow it with a one-line summary ("8 open issues · The latest happened 3 hours ago."). Filters sit to the right.
+
+**Shared patterns** (`src/assets/styles/_catchnet-patterns.scss`):
+
+| Class | Use |
+| --- | --- |
+| `.cn-segmented`, `.cn-segmented__item.is-selected` | Status tabs, section tabs, settings sections |
+| `.cn-chip`, `.cn-chip__value` | Filter chips: "Where: production ▾" |
+| `.cn-badge` (`--accent`, `--error`, `--warning`, `--success`) | New, Fixed, Muted, level |
+| `.cn-dot` (`--error`, `--warning`, `--success`, `--accent`) | Level and status marks, always with text |
+| `.cn-panel`, `.cn-panel__title` | Flat cards on detail pages |
+| `.cn-page-title`, `.cn-page-title__count` | Page title with a count pill |
+
+**Issue list.** Status tabs (Open, Fixed, Muted, All) map to the `is:` search token. Rows are 72px: level dot, bold error type, message, a New/Fixed/Muted badge, then a meta line (project, code location in the code font, when it started). Columns: trend, Times, People, Last seen. Hovering or focusing a row swaps Last seen for Mark fixed and Mute. Bulk actions appear only once something is selected.
+
+**Issue detail.** Breadcrumb, then badges, the error type as title, message and code location, with Mark as fixed and Mute as the main actions and the rest under More. A "What happened" panel tells the story in a sentence with four stats. Sections are a segmented control above one panel. The aside holds What to do next, Most common and Details.
+
 ## Writing
 
-Plain words over jargon. These replacements are agreed and will land with the screen redesigns (the current UI still uses the left column):
+Plain words over jargon. These replacements are in use on the issue list and issue detail:
 
 | Today | catchnet |
 | --- | --- |
