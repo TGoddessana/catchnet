@@ -53,7 +53,9 @@ const ids = await page.eval(async () => {
   const releases = (await j("/api/0/organizations/org/releases/")) || [];
   const teams = (await j("/api/0/organizations/org/teams/")) || [];
   const members = (await j("/api/0/organizations/org/members/")) || [];
-  return { issue, event: events[0]?.eventID, monitor: monitors[0]?.id, release: releases[0]?.version, team: teams[0]?.slug, member: members[0]?.id };
+  const fixes = (await j("/api/0/organizations/org/fixes/")) || [];
+  const fixed = fixes.find((f) => f.prUrl)?.issueID;
+  return { issue, event: events[0]?.eventID, monitor: monitors[0]?.id, release: releases[0]?.version, team: teams[0]?.slug, member: members[0]?.id, fixed };
 });
 console.log("ids", JSON.stringify(ids));
 
@@ -65,6 +67,8 @@ const S = [
   ["issue-comments", ids.issue && `/org/issues/${ids.issue}/comments`],
   ["issue-feedback", ids.issue && `/org/issues/${ids.issue}/user-reports`],
   ["issue-merged", ids.issue && `/org/issues/${ids.issue}/merged`],
+  ["issue-autofix", ids.fixed && `/org/issues/${ids.fixed}`],
+  ["fixes", "/org/fixes"],
   ["performance", "/org/performance"],
   ["uptime", "/org/uptime-monitors"],
   ["uptime-new", "/org/uptime-monitors/new"],
